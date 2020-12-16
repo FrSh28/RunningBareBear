@@ -10,6 +10,8 @@ src/*
 !src/*.cpp
 !src/*.h
 !src/*.c
+src/SDL_bgi.cpp
+src/SDL_bgi.h
 
 ## C++
 # Prerequisites
