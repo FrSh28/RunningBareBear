@@ -4,6 +4,12 @@ include/
 lib/
 *.sublime-project
 *.sublime-workspace
+.DS_Store
+.idea
+src/*
+!src/*.cpp
+!src/*.h
+!src/*.c
 
 ## C++
 # Prerequisites
