@@ -12,6 +12,7 @@ src/*
 !src/*.c
 src/SDL_bgi.cpp
 src/SDL_bgi.h
+SDL2_Devcpp/
 
 ## C++
 # Prerequisites
