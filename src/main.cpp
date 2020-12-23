@@ -1,14 +1,26 @@
 #include <iostream>
+#include <cstdlib>
+#include <string>
 #include "includeSDL.h"
+#include "Game.h"
 using namespace std;
+
+string PROJECTNAME = "ProjectUnknown";
 
 int main(int argc, char* argv[])
 {
-	int sdl2 = SDL_INIT_VIDEO;
-	int sdl2_image = IMG_INIT_JPG;
-	int sdl2_mixer = MIX_DEFAULT_FORMAT;
-	int sdl2_ttf = TTF_STYLE_BOLD;
-	int sdl2_bgi = CENTER_TEXT;
-	cout << "TEST";
+	Game game(PROJECTNAME);
+	game.Init(1280, 720);
+	cout << "Game started!" << endl;
+	while(game.isRunning())
+	{
+		game.HandleEvents();
+		game.Update();
+		game.Render();
+	}
+	game.Quit();
+	cout << "Game ended!" << endl;
+
+	atexit(SDL_Quit);
 	return 0;
 }
