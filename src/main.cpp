@@ -9,18 +9,24 @@ string PROJECTNAME = "ProjectUnknown";
 
 int main(int argc, char* argv[])
 {
+	atexit(SDL_Quit);	// for safe exit
+
 	Game game(PROJECTNAME);
 	game.Init(1280, 720);
 	cout << "Game started!" << endl;
+
+	unsigned int startTime = SDL_GetTicks();
+	unsigned int framCount = 1;
 	while(game.isRunning())
 	{
-		game.HandleEvents();
+		while(SDL_GetTicks() - startTime < framCount * 50 / 3)
+			game.HandleEvents();
 		game.Update();
 		game.Render();
+		++framCount;
 	}
 	game.Quit();
 	cout << "Game ended!" << endl;
 
-	atexit(SDL_Quit);
 	return 0;
 }

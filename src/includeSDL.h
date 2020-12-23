@@ -17,4 +17,4 @@
 #include "SDL_bgi.h"
 #endif
 
-#endif	//INCLUDE_SDL_H
+#endif	// INCLUDE_SDL_H
