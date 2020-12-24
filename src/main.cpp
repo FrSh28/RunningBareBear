@@ -11,19 +11,20 @@ int main(int argc, char* argv[])
 {
 	atexit(SDL_Quit);	// for safe exit
 
-	Game game(PROJECTNAME);
-	game.Init(1280, 720);
+	Game game(PROJECTNAME, 1280, 720, 60);
+	if(!game.Init())
+	{
+		cout << "Game init failed." << endl;
+		return -1;
+	}
 	cout << "Game started!" << endl;
 
-	unsigned int startTime = SDL_GetTicks();
-	unsigned int framCount = 1;
+	game.Start(SDL_GetTicks());
 	while(game.isRunning())
 	{
-		while(SDL_GetTicks() - startTime < framCount * 50 / 3)
-			game.HandleEvents();
+		game.HandleEvents();
 		game.Update();
 		game.Render();
-		++framCount;
 	}
 	game.Quit();
 	cout << "Game ended!" << endl;

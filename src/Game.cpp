@@ -1,22 +1,29 @@
+#include <iostream>
 #include <string>
+#include <algorithm>
 #include "includeSDL.h"
 #include "Game.h"
 #include "Layer.h"
 using namespace std;
 
-Game::Game(string _name)
- : name(_name), window(NULL), renderer(NULL), running(false)
-{}
+Game *Game::s_gameInstance = NULL;
+
+Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned int _frameRate)
+ : name(_name), width(_width), height(_height), frameRate(_frameRate), window(NULL), renderer(NULL)
+	, running(false), layerInsertIndex(0U), startTime(0U), frameCount(0U)
+{
+	s_gameInstance = this;
+}
 
 Game::~Game()
 {}
 
-int Game::Init(int width, int height)
+bool Game::Init()
 {
 	if(SDL_Init(SDL_INIT_TIMER|SDL_INIT_AUDIO|SDL_INIT_VIDEO) < 0)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL: %s", SDL_GetError());
-		return -1;
+		return false;
 	}
 
 	window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -24,65 +31,110 @@ int Game::Init(int width, int height)
 	if(!window)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
-		return -1;
+		return false;
 	}
 
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	if(!renderer)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create renderer: %s", SDL_GetError());
-		return -1;
+		return false;
 	}
-	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, SDL_ALPHA_OPAQUE);
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x40, SDL_ALPHA_OPAQUE);
 
-	running = true;
-	return 0;
+	return true;
 }
 
-int Game::HandleEvents()
+void Game::Start(unsigned int _startTime)
 {
-	while(SDL_PollEvent(&event))
+	startTime = _startTime;
+	frameCount = 1;
+	running = true;
+}
+
+void Game::HandleEvents()
+{
+	while(SDL_PollEvent(&event) or SDL_GetTicks() - startTime < frameCount * 1000 / frameRate)
 	{
 		if(event.type == SDL_QUIT)
 		{
 			running = false;
-			return 0;
+			return;
 		}
 
-		for(auto it = layers.end(); it != layers.begin(); --it)
+		for(auto it = layers.rbegin(); it != layers.rend(); ++it)
 		{
-			//it->handleEvents();
+			(*it)->handleEvents(event);
+
 		}
 	}
-	return 0;
+	return;
 }
 
-int Game::Update()
+void Game::Update()
 {
-	return 0;
+	for(auto it = layers.begin(); it != layers.end(); ++it)
+	{
+		(*it)->update();
+	}
+	return;
 }
 
-int Game::Render()
+void Game::Render()
 {
 	SDL_RenderClear(renderer);
 	for(auto it = layers.begin(); it != layers.end(); ++it)
 	{
-		//it->render();
+		(*it)->render();
 	}
 	SDL_RenderPresent(renderer);
-	return 0;
+	++frameCount;
+	//cout << frameCount << endl;	// debug
+	return;
 }
 
-int Game::Quit()
+void Game::Quit()
 {
-	running = false;
+	for(auto it = layers.begin(); it != layers.end(); ++it)
+	{
+		delete *it;
+	}
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
-	return 0;
+	return;
 }
 
-bool Game::isRunning() const
+void Game::pushLayer(Layer *_layer)
 {
-	return running;
+	layers.insert(layers.begin() + layerInsertIndex, _layer);
+	++layerInsertIndex;
+	return;
+}
+
+void Game::pushOverlayer(Layer *_overlayer)
+{
+	layers.push_back(_overlayer);
+	return;
+}
+
+void Game::popLayer(Layer *_layer)
+{
+	auto iter = find(layers.begin(), layers.begin() + layerInsertIndex, _layer);
+	if (iter != layers.begin() + layerInsertIndex)
+	{
+		layers.erase(iter);
+		--layerInsertIndex;
+	}
+	return;
+}
+
+void Game::popOverlayer(Layer *_overlayer)
+{
+	auto iter = find(layers.begin() + layerInsertIndex, layers.end(), _overlayer);
+	if (iter != layers.end())
+	{
+		layers.erase(iter);
+	}
+	return;
 }
