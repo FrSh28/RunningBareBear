@@ -30,7 +30,8 @@ public:
 	inline unsigned int getWidth()  const { return width; }
 	inline unsigned int getHeight() const { return height; }
 	inline unsigned int getFrameRate() const { return frameRate; }
-	inline SDL_Renderer* getRenderer() const { return renderer; }
+	inline SDL_Renderer *getRenderer() const { return renderer; }
+	inline unsigned int getLayersSize() const { return layers.size(); }
 
 	inline static Game &GetGame() { return *s_gameInstance; }
 

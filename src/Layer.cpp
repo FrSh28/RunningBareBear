@@ -15,20 +15,14 @@ Layer::Layer(string _name)
 	}
 }
 
-Layer::~Layer()
-{
-	free();
-	// free the textures
-}
-
 void Layer::free()
 {
-
+	
 }
 
 void Layer::handleEvents(SDL_Event &e)
 {
-
+	
 }
 
 void Layer::update()
@@ -38,5 +32,5 @@ void Layer::update()
 
 void Layer::render()
 {
-
+	
 }

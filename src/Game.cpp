@@ -16,7 +16,13 @@ Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned in
 }
 
 Game::~Game()
-{}
+{
+	for(auto it = layers.begin(); it != layers.end(); ++it)
+	{
+		(*it)->free();
+		delete (*it);
+	}
+}
 
 bool Game::Init()
 {
@@ -41,6 +47,9 @@ bool Game::Init()
 		return false;
 	}
 	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x40, SDL_ALPHA_OPAQUE);
+	SDL_RenderClear(renderer);
+
+	//pushLayer(new esssentialLayer);
 
 	return true;
 }
@@ -82,6 +91,7 @@ void Game::Update()
 
 void Game::Render()
 {
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x40, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(renderer);
 	for(auto it = layers.begin(); it != layers.end(); ++it)
 	{
