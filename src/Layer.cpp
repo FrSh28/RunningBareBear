@@ -1,4 +1,5 @@
 #include <string>
+#include <algorithm>
 #include "includeSDL.h"
 #include "Layer.h"
 #include "Game.h"
