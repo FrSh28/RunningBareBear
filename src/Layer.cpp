@@ -17,20 +17,41 @@ Layer::Layer(string _name)
 
 void Layer::free()
 {
-	
+	for(auto it = elements.begin(); it != elements.end(); ++it)
+	{
+		delete (*it);
+	}
+	SDL_DestroyTexture(mainTexture);
 }
 
 void Layer::handleEvents(SDL_Event &e)
 {
-	
+
 }
 
 void Layer::update()
 {
-	
+
 }
 
 void Layer::render()
 {
-	
+
 }
+
+void Layer::pushElement(Renderable *_element)
+{
+	elements.push_back(_element);
+	return;
+}
+
+void Layer::popElement(Renderable *_element)
+{
+	auto iter = find(elements.begin(), elements.begin(), _element);
+	if (iter != elements.begin())
+	{
+		elements.erase(iter);
+	}
+	return;
+}
+

@@ -13,10 +13,13 @@ public:
 	Layer(string _name = "");
 	virtual ~Layer() = 0;
 
-	virtual void free();					// destroy all textures and surfaces
+	void free();							// destroy all textures and surfaces
 	virtual void handleEvents(SDL_Event &);	// handle events on current layer
-	virtual void update();					// update changes current layer
+	virtual void update();					// update changes on current layer
 	virtual void render();					// render elements to mainTexture
+
+	void pushElement(Renderable *);
+	void popElement(Renderable *);
 
 	inline string getName() const { return name; }
 	inline unsigned int getElementsSize() const { return elements.size(); }

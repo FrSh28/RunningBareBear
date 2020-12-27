@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-class Renderable
+class Renderable	// may change member funcs
 {
 public:
 	Renderable();
