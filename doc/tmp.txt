@@ -56,40 +56,36 @@ int main(int argc, char *argv[])
 
     Uint32 startTime = 0;
     std::stringstream timeText;
-    int start = 30;
-    double rest = start;
-    double pass = 0;
-    int minite = start / 60;
-    double second = 0;
+    int start = 60; //從幾秒開始倒數 
+    double rest = start; //剩下的秒數 
+    int minite = rest / 60;  
+    int second = rest - minite*60;
 	
 	bool initial = false;
 	bool quit = false;
     while (!quit) {
         while( SDL_PollEvent(&event) ){
             if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE) {
+            	//按空白離開 
                 quit = true;
             }
             else if( event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_UP)
+            //假如按了上鍵-->開始計時or重新開始 
             {
             	initial = true;
             	startTime = SDL_GetTicks();
             	rest = start - (SDL_GetTicks() - startTime)/100;
 			}
-            else if( event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN )
-            {
-                startTime = SDL_GetTicks();
-            }
         }
         
 		timeText.str( "" );
-        if (initial && rest > 1) rest = start - (SDL_GetTicks() - startTime)/100;
- 		minite = rest / 60;
- 		second = rest - minite*60;
-		if(minite < 10) timeText << "0";
-		timeText << minite << ":" ;
-		if(second < 10) timeText << "0";
-		if(second > 1) timeText << second << " left";
-		else timeText << "0 left";
+        if (initial && rest > 1) rest = start - (SDL_GetTicks() - startTime)/100; 
+		//rest>1是為了怕他最後不會停在00:00 
+ 		minite = rest / 60; //剩餘的分鐘 
+ 		second = rest - minite*60; // 剩餘的秒鐘 
+		timeText << std::fixed << std::setw(2) << std::setfill('0') << minite << ":" ;
+		if(second > 1) timeText << std::fixed << std::setw(2) << std::setfill('0') << second << " left";
+		else timeText << "00 left";//最後停留在00:00 
         
         
         surface = TTF_RenderText_Solid(font, timeText.str().c_str(), color);
@@ -107,6 +103,7 @@ int main(int argc, char *argv[])
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
         SDL_RenderPresent(renderer);
+        SDL_DestroyTexture(texture); //每次都要free 
     }
 
     close:
