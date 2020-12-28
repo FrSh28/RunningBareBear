@@ -25,9 +25,14 @@ void Layer::free()
 	SDL_DestroyTexture(mainTexture);
 }
 
-void Layer::handleEvents(SDL_Event &e)
+bool Layer::handleEvents(SDL_Event &e)
 {
-
+	for(auto it = elements.rbegin(); it != elements.rend(); ++it)
+	{
+		if((*it)->handleEvents(e))	// if handled
+			return true;
+	}
+	return false;
 }
 
 void Layer::update()
@@ -37,7 +42,10 @@ void Layer::update()
 
 void Layer::render()
 {
-
+	for(auto it = elements.begin(); it != elements.end(); ++it)
+	{
+		//render (*it) onto mainTexture
+	}
 }
 
 void Layer::pushElement(Renderable *_element)

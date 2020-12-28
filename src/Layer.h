@@ -14,7 +14,7 @@ public:
 	virtual ~Layer() = 0;
 
 	void free();							// destroy all textures and surfaces
-	virtual void handleEvents(SDL_Event &);	// handle events on current layer
+	virtual bool handleEvents(SDL_Event &);	// handle events on current layer
 	virtual void update();					// update changes on current layer
 	virtual void render();					// render elements to mainTexture
 
@@ -24,7 +24,7 @@ public:
 	inline string getName() const { return name; }
 	inline unsigned int getElementsSize() const { return elements.size(); }
 
-private:
+protected:
 	string name;
 
 	SDL_Texture* mainTexture;

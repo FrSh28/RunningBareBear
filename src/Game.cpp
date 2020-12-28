@@ -73,8 +73,8 @@ void Game::HandleEvents()
 
 		for(auto it = layers.rbegin(); it != layers.rend(); ++it)
 		{
-			(*it)->handleEvents(event);
-
+			if((*it)->handleEvents(event))	// if handled
+				break;
 		}
 	}
 	return;

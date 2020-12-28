@@ -10,7 +10,7 @@ using namespace std;
 class Game
 {
 public:
-	Game(string, unsigned int _width = 1280, unsigned int _height = 720, unsigned int _framRate = 60);
+	Game(string, unsigned int _width = 1280, unsigned int _height = 720, unsigned int _frameRate = 60);
 	~Game();
 
 	bool Init();				// initialize the game
