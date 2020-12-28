@@ -66,3 +66,23 @@
       ├*失敗
       └自首
     (回開始畫面)
+
+
+Classes:
+Map
+ Wall
+ ItemOnMap
+Status - a layer
+ MiniMap
+ Setting
+ Backpack
+ CharacterInfo
+ MissionInfo
+ ItemInfo
+ ProgressBar
+Button(activate by mouse)
+Runner
+Hunter
+
+Mission
+Item

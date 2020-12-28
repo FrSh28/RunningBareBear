@@ -17,11 +17,7 @@ Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned in
 
 Game::~Game()
 {
-	for(auto it = layers.begin(); it != layers.end(); ++it)
-	{
-		(*it)->free();
-		delete (*it);
-	}
+	Game::Quit();
 }
 
 bool Game::Init()
@@ -33,7 +29,7 @@ bool Game::Init()
 	}
 
 	window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-								width, height, SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE);
+								width, height, SDL_WINDOW_SHOWN);//|SDL_WINDOW_RESIZABLE);
 	if(!window)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
@@ -107,6 +103,7 @@ void Game::Quit()
 {
 	for(auto it = layers.begin(); it != layers.end(); ++it)
 	{
+		(*it)->free();
 		delete *it;
 	}
 	SDL_DestroyRenderer(renderer);

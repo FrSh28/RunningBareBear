@@ -12,6 +12,7 @@ public:
 	virtual ~Renderable() = 0;
 
 	virtual bool handleEvents(SDL_Event &) = 0;	// return true if handled
+	virtual void update() = 0;
 
 	inline string getName() const { return name; }
 	inline const SDL_Rect &getPosOnWindow() const { return posOnWindow;}
