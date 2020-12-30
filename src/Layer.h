@@ -5,12 +5,11 @@
 #include <string>
 #include "includeSDL.h"
 #include "Renderable.h"
-using namespace std;
 
 class Layer
 {
 public:
-	Layer(string _name = "");
+	Layer(std::string _name = "");
 	virtual ~Layer() = 0;
 
 	void free();							// destroy all textures and surfaces
@@ -21,14 +20,14 @@ public:
 	void pushElement(Renderable *);
 	void popElement(Renderable *);
 
-	inline string getName() const { return name; }
+	inline std::string getName() const { return name; }
 	inline unsigned int getElementsSize() const { return elements.size(); }
 
 protected:
-	string name;
+	std::string name;
 
 	SDL_Texture* mainTexture;
-	vector<Renderable*> elements;
+	std::vector<Renderable*> elements;
 };
 
 #endif	// LAYER_H

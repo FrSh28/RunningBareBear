@@ -5,12 +5,11 @@
 #include <vector>
 #include "includeSDL.h"
 #include "Layer.h"
-using namespace std;
 
 class Game
 {
 public:
-	Game(string, unsigned int _width = 1280, unsigned int _height = 720, unsigned int _frameRate = 60);
+	Game(std::string, unsigned int _width = 1280, unsigned int _height = 720, unsigned int _frameRate = 60);
 	~Game();
 
 	bool Init();				// initialize the game
@@ -26,7 +25,7 @@ public:
 	void popOverlayer(Layer *);	// pop overlayer from layers
 
 	inline bool isRunning() const { return running; }
-	inline string getName() const { return name; }
+	inline std::string getName() const { return name; }
 	inline unsigned int getWidth()  const { return width; }
 	inline unsigned int getHeight() const { return height; }
 	inline unsigned int getFrameRate() const { return frameRate; }
@@ -36,7 +35,7 @@ public:
 	inline static Game &GetGame() { return *s_gameInstance; }
 
 private:
-	string name;
+	std::string name;
 	unsigned int width;
 	unsigned int height;
 	unsigned int frameRate;
@@ -46,7 +45,7 @@ private:
 	SDL_Event event;
 	bool running;
 
-	vector<Layer*> layers;
+	std::vector<Layer*> layers;
 	unsigned int layerInsertIndex;
 
 	unsigned int startTime;

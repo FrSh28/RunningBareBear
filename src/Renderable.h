@@ -3,7 +3,6 @@
 
 #include <string>
 #include "includeSDL.h"
-using namespace std;
 
 class Renderable	// may change member funcs
 {
@@ -14,12 +13,12 @@ public:
 	virtual bool handleEvents(SDL_Event &) = 0;	// return true if handled
 	virtual void update() = 0;
 
-	inline string getName() const { return name; }
+	inline std::string getName() const { return name; }
 	inline const SDL_Rect &getPosOnWindow() const { return posOnWindow;}
 	inline const SDL_Rect &getPosOnTexture() const { return posOnWindow;}
 
 protected:
-	string name;
+	std::string name;
 
 	SDL_Texture *texture;
 	SDL_Rect posOnWindow;

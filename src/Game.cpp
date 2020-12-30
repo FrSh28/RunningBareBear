@@ -29,7 +29,7 @@ bool Game::Init()
 	}
 
 	window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-								width, height, SDL_WINDOW_SHOWN);//|SDL_WINDOW_RESIZABLE);
+								width, height, SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE);
 	if(!window)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
