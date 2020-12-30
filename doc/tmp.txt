@@ -1,4 +1,4 @@
-
+獵人模板
 class Hunter : public Renderable
 {
 	...
@@ -30,4 +30,93 @@ void Hunter::handleEvents(SDL_Event &e)
 void Hunter::update()
 {
 	posOnWindow = Map::convertPos(pos);
+}
+
+任務模板
+class mission : public Randerable
+{
+public:
+	mission(int a=0);
+	~mission();
+	virtual void handleEvents();
+	virtual void update();
+};
+
+class Mission1_1 : public mission
+{
+public:
+	Mission1_1();
+	~Mission1_1();
+	void handleEvents();
+	void update();
+};
+class Mission1_2 : public mission
+{
+public:
+	Mission1_2();
+	~Mission1_2();
+	void handleEvents();
+	void update();
+};
+class Mission1_3 : public mission
+{
+public:
+	Mission1_3();
+	~Mission1_3();
+	void handleEvents();
+	void update();
+};
+class Mission2_1 : public mission
+{
+public:
+	Mission2_1();
+	~Mission2_1();
+	void handleEvents();
+	void update();
+};
+class Mission2_2 : public mission
+{
+public:
+	Mission2_2();
+	~Mission2_2();
+	void handleEvents();
+	void update();
+};
+class Mission2_3 : public mission
+{
+public:
+	Mission2_3();
+	~Mission2_3();
+	void handleEvents();
+	void update();
+};
+
+//某個地方 
+//srand(time(0));
+//CreateMission(rand()%MissionTotal);
+
+enum types
+{
+	Mission1Type1, Mission1Type2, Mission1Type3,
+	Mission2Type1, Mission2Type2, Mission2Type3,
+	MissionTotal
+};
+mission *CreateMission(int choice)
+{
+	switch (choice)
+	{
+		case Mission1Type1:
+			return new Mission1_1();
+		case Mission1Type2:
+			return new Mission1_2();
+		case Mission1Type3:
+			return new Mission1_3();
+		case Mission2Type1:
+			return new Mission2_1();
+		case Mission2Type2:
+			return new Mission2_2();
+		case Mission2Type3:
+			return new Mission2_3();			
+
+	}
 }
