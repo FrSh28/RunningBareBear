@@ -1,0 +1,4 @@
+**fonts**
+Some fonts may be used if needed
+
+genkai-mincho.ttf: a font for Chinese allow for commercial use
