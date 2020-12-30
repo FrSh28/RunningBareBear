@@ -10,7 +10,7 @@ class Layer
 {
 public:
 	Layer(std::string _name = "");
-	virtual ~Layer() = 0;
+	virtual ~Layer();
 
 	void free();							// destroy all textures and surfaces
 	virtual bool handleEvents(SDL_Event &);	// handle events on current layer

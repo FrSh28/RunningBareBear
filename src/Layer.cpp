@@ -3,12 +3,13 @@
 #include "includeSDL.h"
 #include "Layer.h"
 #include "Game.h"
+#include "Files.h"
 using namespace std;
 
 Layer::Layer(string _name)
  : name(_name), mainTexture(NULL)
 {
-	Game &game = Game::GetGame();
+	Game game = Game::GetGame();
 	mainTexture = SDL_CreateTexture(game.getRenderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET, game.getWidth(), game.getHeight());
 	if(!mainTexture)
 	{
@@ -16,12 +17,22 @@ Layer::Layer(string _name)
 	}
 }
 
+Layer::~Layer()
+{
+	free();
+}
+
 void Layer::free()
 {
 	for(auto it = elements.begin(); it != elements.end(); ++it)
 	{
-		delete (*it);
+		if(*it)
+		{
+			delete (*it);
+			*it = NULL;
+		}
 	}
+	elements.clear();
 	SDL_DestroyTexture(mainTexture);
 }
 
@@ -37,30 +48,33 @@ bool Layer::handleEvents(SDL_Event &e)
 
 void Layer::update()
 {
-
+	for(auto it = elements.begin(); it != elements.end(); ++it)
+	{
+		(*it)->update();
+	}
 }
 
 void Layer::render()
 {
+	SDL_Renderer *renderer = Game::GetGame().getRenderer();
+	SDL_SetRenderTarget(renderer, mainTexture);
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x40, 0x00);
 	for(auto it = elements.begin(); it != elements.end(); ++it)
 	{
-		//render (*it) onto mainTexture
+		
 	}
 }
 
 void Layer::pushElement(Renderable *_element)
 {
 	elements.push_back(_element);
-	return;
 }
 
 void Layer::popElement(Renderable *_element)
 {
 	auto iter = find(elements.begin(), elements.begin(), _element);
-	if (iter != elements.begin())
+	if (iter != elements.end())
 	{
 		elements.erase(iter);
 	}
-	return;
 }
-

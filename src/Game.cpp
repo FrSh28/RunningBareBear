@@ -17,7 +17,7 @@ Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned in
 
 Game::~Game()
 {
-	Game::Quit();
+	Quit();
 }
 
 bool Game::Init()
@@ -45,6 +45,20 @@ bool Game::Init()
 	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x40, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(renderer);
 
+	int IMG_flags = IMG_INIT_JPG|IMG_INIT_PNG;
+	if((IMG_Init(IMG_flags) & IMG_flags) != IMG_flags)
+	{
+		printf("IMG_Init: Failed to init required jpg and png support!\n");
+		printf("IMG_Init: %s\n", IMG_GetError());
+	}
+
+	int Mix_flags = MIX_INIT_FLAC|MIX_INIT_MOD|MIX_INIT_MP3|MIX_INIT_OGG;
+	if((Mix_Init(Mix_flags) & Mix_flags) != Mix_flags)
+	{
+		printf("Mix_Init: Failed to init required ogg and mod support!\n");
+		printf("Mix_Init: %s\n", Mix_GetError());
+	}
+
 	//pushLayer(new esssentialLayer);
 
 	return true;
@@ -64,16 +78,15 @@ void Game::HandleEvents()
 		if(event.type == SDL_QUIT)
 		{
 			running = false;
-			return;
+			break;	// while
 		}
 
 		for(auto it = layers.rbegin(); it != layers.rend(); ++it)
 		{
 			if((*it)->handleEvents(event))	// if handled
-				break;
+				break;	// for
 		}
 	}
-	return;
 }
 
 void Game::Update()
@@ -82,7 +95,6 @@ void Game::Update()
 	{
 		(*it)->update();
 	}
-	return;
 }
 
 void Game::Render()
@@ -96,33 +108,37 @@ void Game::Render()
 	SDL_RenderPresent(renderer);
 	++frameCount;
 	//cout << frameCount << endl;	// debug
-	return;
 }
 
 void Game::Quit()
 {
 	for(auto it = layers.begin(); it != layers.end(); ++it)
 	{
-		(*it)->free();
-		delete *it;
+		if(*it)
+		{
+			(*it)->free();
+			delete *it;
+			*it = NULL;
+		}		
 	}
+	layers.clear();
+	while(Mix_Init(0))
+		Mix_Quit();
+	IMG_Quit();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
-	return;
 }
 
 void Game::pushLayer(Layer *_layer)
 {
 	layers.insert(layers.begin() + layerInsertIndex, _layer);
 	++layerInsertIndex;
-	return;
 }
 
 void Game::pushOverlayer(Layer *_overlayer)
 {
 	layers.push_back(_overlayer);
-	return;
 }
 
 void Game::popLayer(Layer *_layer)
@@ -133,7 +149,6 @@ void Game::popLayer(Layer *_layer)
 		layers.erase(iter);
 		--layerInsertIndex;
 	}
-	return;
 }
 
 void Game::popOverlayer(Layer *_overlayer)
@@ -143,5 +158,4 @@ void Game::popOverlayer(Layer *_overlayer)
 	{
 		layers.erase(iter);
 	}
-	return;
 }

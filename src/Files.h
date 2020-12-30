@@ -15,7 +15,9 @@ namespace P_Maps
 
 namespace P_Music
 {
-	std::string Opening = "../media/audio/"
+	std::string Opening = "../media/audio/";
 }
+
+//SDL_Texture *tex = IMG_LoadTexture(SDL_Renderer *renderer, const char *file);
 
 #endif	// FILES_H
