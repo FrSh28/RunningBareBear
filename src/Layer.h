@@ -13,7 +13,7 @@ public:
 	virtual ~Layer();
 
 	void free();							// destroy all textures and surfaces
-	virtual bool handleEvents(SDL_Event &);	// handle events on current layer
+	virtual bool HandleEvents(SDL_Event &);	// handle events on current layer
 	virtual void update();					// update changes on current layer
 	virtual void render();					// render elements to mainTexture
 

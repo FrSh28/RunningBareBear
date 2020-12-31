@@ -40,7 +40,7 @@ void Layer::free()
 	SDL_DestroyTexture(mainTexture);
 }
 
-bool Layer::handleEvents(SDL_Event &e)
+bool Layer::HandleEvents(SDL_Event &e)
 {
 	for(auto it = elements.rbegin(); it != elements.rend(); ++it)
 	{

@@ -10,7 +10,7 @@ public:
 	Renderable(std::string _name = "");
 	virtual ~Renderable();
 
-	virtual bool handleEvents(SDL_Event &) = 0;	// return true if handled
+	virtual bool HandleEvents(SDL_Event &) = 0;	// return true if handled
 	virtual void update() = 0;
 
 	inline std::string getName() const { return name; }
