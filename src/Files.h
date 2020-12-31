@@ -3,19 +3,32 @@
 
 #include <string>
 
-namespace P_Sprites
+enum Sprites
 {
-	std::string Background = "../media/image/";
-}
 
-namespace P_Maps
-{
-	std::string Default = "../media/map/";
-}
+};
 
-namespace P_Music
+enum Maps
 {
-	std::string Opening = "../media/audio/";
+	
+};
+
+enum Fonts
+{
+	
+};
+
+enum Musics
+{
+	
+};
+
+namespace Path
+{
+	std::string P_Sprites[] = {"../media/image/"};
+	std::string P_Maps[] = {"../media/map/"};
+	std::string P_Fonts[] = {"../media/font/"};
+	std::string P_Musics[] = {"../media/audio/"};
 }
 
 //SDL_Texture *tex = IMG_LoadTexture(SDL_Renderer *renderer, const char *file);
