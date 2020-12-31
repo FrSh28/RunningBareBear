@@ -9,11 +9,15 @@ using namespace std;
 Layer::Layer(string _name)
  : name(_name), mainTexture(NULL)
 {
-	Game game = Game::GetGame();
+	Game &game = Game::GetGame();
 	mainTexture = SDL_CreateTexture(game.getRenderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET, game.getWidth(), game.getHeight());
 	if(!mainTexture)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create texture for layer %s: %s", name.c_str(), SDL_GetError());
+	}
+	else
+	{
+		SDL_SetTextureBlendMode(mainTexture, SDL_BLENDMODE_BLEND);
 	}
 }
 
@@ -58,7 +62,7 @@ void Layer::render()
 {
 	SDL_Renderer *renderer = Game::GetGame().getRenderer();
 	SDL_SetRenderTarget(renderer, mainTexture);
-	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0x00);
+	SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0xFF, 0x00);
 	SDL_RenderClear(renderer);
 	for(auto it = elements.begin(); it != elements.end(); ++it)
 	{

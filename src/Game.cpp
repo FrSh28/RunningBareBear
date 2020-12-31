@@ -44,22 +44,27 @@ bool Game::Init()
 	}
 	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x40, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(renderer);
+	SDL_RenderPresent(renderer);
 
 	int IMG_flags = IMG_INIT_JPG|IMG_INIT_PNG;
 	if((IMG_Init(IMG_flags) & IMG_flags) != IMG_flags)
 	{
-		printf("IMG_Init: Failed to init required image support!\n");
-		printf("IMG_Init: %s\n", IMG_GetError());
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "IMG_Init: Failed to init required image support: %s", IMG_GetError());
+		return false;
 	}
 
 	int Mix_flags = MIX_INIT_FLAC|MIX_INIT_MOD|MIX_INIT_MP3|MIX_INIT_OGG;
 	if((Mix_Init(Mix_flags) & Mix_flags) != Mix_flags)
 	{
-		printf("Mix_Init: Failed to init required audio support!\n");
-		printf("Mix_Init: %s\n", Mix_GetError());
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Mix_Init: Failed to init required audio support: %s", Mix_GetError());
+		return false;
 	}
 
-	//pushLayer(new esssentialLayer);
+	// for testing
+	Layer *l = new Layer("TestLayer");
+	pushLayer(l);
+	//layers[0]->pushElement(someRenderableObj);
+	// for testing
 
 	return true;
 }
@@ -99,12 +104,16 @@ void Game::Update()
 
 void Game::Render()
 {
-	SDL_RenderTarget(renderer, NULL);
+	for(auto it = layers.begin(); it != layers.end(); ++it)
+	{
+		(*it)->render();
+	}
+	SDL_SetRenderTarget(renderer, NULL);
 	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x40, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(renderer);
 	for(auto it = layers.begin(); it != layers.end(); ++it)
 	{
-		(*it)->render();
+		SDL_RenderCopy(renderer, (*it)->getTexture(), NULL, NULL);
 	}
 	SDL_RenderPresent(renderer);
 	++frameCount;

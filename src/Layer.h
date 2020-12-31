@@ -21,6 +21,7 @@ public:
 	void popElement(Renderable *);
 
 	inline std::string getName() const { return name; }
+	inline SDL_Texture *getTexture() { return mainTexture; }
 	inline unsigned int getElementsSize() const { return elements.size(); }
 
 protected:
