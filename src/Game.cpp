@@ -48,14 +48,14 @@ bool Game::Init()
 	int IMG_flags = IMG_INIT_JPG|IMG_INIT_PNG;
 	if((IMG_Init(IMG_flags) & IMG_flags) != IMG_flags)
 	{
-		printf("IMG_Init: Failed to init required jpg and png support!\n");
+		printf("IMG_Init: Failed to init required image support!\n");
 		printf("IMG_Init: %s\n", IMG_GetError());
 	}
 
 	int Mix_flags = MIX_INIT_FLAC|MIX_INIT_MOD|MIX_INIT_MP3|MIX_INIT_OGG;
 	if((Mix_Init(Mix_flags) & Mix_flags) != Mix_flags)
 	{
-		printf("Mix_Init: Failed to init required ogg and mod support!\n");
+		printf("Mix_Init: Failed to init required audio support!\n");
 		printf("Mix_Init: %s\n", Mix_GetError());
 	}
 
@@ -99,6 +99,7 @@ void Game::Update()
 
 void Game::Render()
 {
+	SDL_RenderTarget(renderer, NULL);
 	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x40, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(renderer);
 	for(auto it = layers.begin(); it != layers.end(); ++it)

@@ -4,7 +4,7 @@
 #include <string>
 #include "includeSDL.h"
 
-class Renderable	// may change member funcs
+class Renderable
 {
 public:
 	Renderable(std::string _name = "");

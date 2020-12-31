@@ -58,10 +58,11 @@ void Layer::render()
 {
 	SDL_Renderer *renderer = Game::GetGame().getRenderer();
 	SDL_SetRenderTarget(renderer, mainTexture);
-	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x40, 0x00);
+	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0x00);
+	SDL_RenderClear(renderer);
 	for(auto it = elements.begin(); it != elements.end(); ++it)
 	{
-		
+		SDL_RenderCopy(renderer, (*it)->getTexture(), (*it)->getPosOnTexture(), (*it)->getPosOnWindow());
 	}
 }
 
