@@ -7,6 +7,7 @@ using namespace std;
 
 string PROJECTNAME = "ProjectUnknown";
 
+int mode=1;
 int main(int argc, char* argv[])
 {
 	atexit(SDL_Quit);	// for safe exit
