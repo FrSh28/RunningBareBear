@@ -15,7 +15,7 @@ private:
 public:
     runner(char * ,int );
     ~runner();
-    void HandleEvents(SDL_Event &e);
+    void handleEvents(SDL_Event &e);
     void update();
 
 };

@@ -24,7 +24,7 @@ runner::~runner()
 
 }
 
-void runner::HandleEvents(SDL_Event &e)
+void runner::handleEvents(SDL_Event &e)
 {
     if(mode==1)
     {
