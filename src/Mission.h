@@ -8,7 +8,7 @@
 
 unsigned int MISSION;
 
-class Mission : public Randerable
+class Mission : public Renderable
 {
 public:
 	Mission();
