@@ -24,12 +24,14 @@ runner::~runner()
 
 }
 
-void runner::handleEvents(SDL_Event &e)
+bool runner::handleEvents(SDL_Event &e)
 {
+    bool success;
     if(mode==1)
     {
 
     }
+    return success;
 }
 
 void runner::update()

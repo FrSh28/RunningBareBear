@@ -70,7 +70,7 @@ public:
 	void update();
 };
 
-//¬Y­Ó¦a¤è 
+//ï¿½Yï¿½Ó¦aï¿½ï¿½ 
 //srand(time(0));
 //CreateMission(rand()%MissionTotal);
 
