@@ -22,13 +22,40 @@ Game::~Game()
 
 bool Game::Init()
 {
+	// SDL
 	if(SDL_Init(SDL_INIT_TIMER|SDL_INIT_AUDIO|SDL_INIT_VIDEO) < 0)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL: %s", SDL_GetError());
 		return false;
 	}
 
-	window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+	// SDL_ttf
+	if(!TTF_WasInit())
+	{
+		if(!TTF_Init())
+		{
+			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "IMG_Init: Failed to init required image support: %s", TTF_GetError());
+			return false;
+		}
+	}
+
+	// SDL_mixer
+	int Mix_flags = MIX_INIT_FLAC|MIX_INIT_MOD|MIX_INIT_MP3|MIX_INIT_OGG;
+	if(Mix_Init(Mix_flags) ^ Mix_flags)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Mix_Init: Failed to init required audio support: %s", Mix_GetError());
+		return false;
+	}
+
+	// SDL_image
+	int IMG_flags = IMG_INIT_JPG|IMG_INIT_PNG;
+	if(IMG_Init(IMG_flags) ^ IMG_flags)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "IMG_Init: Failed to init required image support: %s", IMG_GetError());
+		return false;
+	}
+
+	window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED, 40,
 								width, height, SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE);
 	if(!window)
 	{
@@ -45,20 +72,6 @@ bool Game::Init()
 	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x40, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(renderer);
 	SDL_RenderPresent(renderer);
-
-	int IMG_flags = IMG_INIT_JPG|IMG_INIT_PNG;
-	if((IMG_Init(IMG_flags) & IMG_flags) != IMG_flags)
-	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "IMG_Init: Failed to init required image support: %s", IMG_GetError());
-		return false;
-	}
-
-	int Mix_flags = MIX_INIT_FLAC|MIX_INIT_MOD|MIX_INIT_MP3|MIX_INIT_OGG;
-	if((Mix_Init(Mix_flags) & Mix_flags) != Mix_flags)
-	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Mix_Init: Failed to init required audio support: %s", Mix_GetError());
-		return false;
-	}
 
 	// for testing
 	Layer *l = new Layer("TestLayer");
@@ -132,11 +145,13 @@ void Game::Quit()
 		}		
 	}
 	layers.clear();
-	while(Mix_Init(0))
-		Mix_Quit();
-	IMG_Quit();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	IMG_Quit();
+	while(Mix_Init(0))
+		Mix_Quit();
+	if(TTF_WasInit())
+		TTF_Quit();
 	SDL_Quit();
 }
 
