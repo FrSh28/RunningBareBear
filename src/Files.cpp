@@ -7,13 +7,13 @@ using namespace std;
 
 namespace Files
 {
-	string P_Images[IMAGE_COUNT]	= { "../media/image/",
+	string P_Images[IMAGE_COUNT]	= { "../media/image/image.txt",
 										};
-	string P_Fonts[FONT_COUNT]		= { "../media/font/",
+	string P_Fonts[FONT_COUNT]		= { "../media/font/fonts.txt",
 										};
-	string P_Musics[MUSIC_COUNT]	= { "../media/music/",
+	string P_Musics[MUSIC_COUNT]	= { "../media/music/music.txt",
 										};
-	string P_Maps[MAP_COUNT]		= { "../media/map/",
+	string P_Maps[MAP_COUNT]		= { "../media/map/map.txt",
 										};
 }
 
