@@ -3,8 +3,9 @@
 #include "Hunter.h"
 #include <iostream>
 #include <cmath>
+
 Hunter::Hunter() :
-	name(NULL), texture(NULL), posOnWindow(NULL), posOnTexture(NULL),HunterSpeed(0)
+	HunterSpeed(0)
 {
 	SetSuccess = false;
 	while(!SetSuccess)
@@ -29,7 +30,7 @@ Hunter::~Hunter()
 	
 }
 
-void Hunter::handleEvents(SDL_Event &e)
+bool Hunter::handleEvents(SDL_Event &e)
 {
 	
 }

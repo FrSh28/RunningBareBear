@@ -6,11 +6,11 @@
 #include "Mission.h"
 using namespace std;
 
-MISSION = SDL_RegisterEvents(0);
+unsigned int MISSION = SDL_RegisterEvents(0);
 
-Mission :: Mission() :
-	name(NULL), texture(NULL), posOnWindow(NULL), posOnTexture(NULL)
-{ 
+Mission :: Mission(string _name)
+ : Renderable(_name)
+{
 	//posOnWindow->x = ;
 	//posOnWindow->y = ;
 	//posOnWindow->w = ;
@@ -45,7 +45,7 @@ Mission *CreateMission(int choice)
 
 
 Mission1_1 :: Mission1_1 ()
- : name("ヴ叭1 "), texture(NULL), success(false)
+ : Mission("Mission 1 ")
 {
 	Game &game = Game::GetGame();
 	//game.Map.addItem();                    
@@ -58,7 +58,7 @@ Mission1_1 :: ~Mission1_1 ()
 	texture = NULL;
 }
 
-Mission1_1 :: handleEvents(SDL_Event &e)
+bool Mission1_1 :: handleEvents(SDL_Event &e)
 {
 	if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 	{
@@ -86,14 +86,14 @@ Mission1_1 :: handleEvents(SDL_Event &e)
 		}
 }
 
-Mission1_1 :: update()
+void Mission1_1 :: update()
 {
 	//ぐ或常⊿Τ妓 
 }
 
 
 Mission1_2 :: Mission1_2 ()
- : name("ヴ叭1 "), texture(NULL), success(false)
+ : Mission("Mission 1 ")
 {
 	Game &game = Game::GetGame();
 	//game.Map.addItem();                    
@@ -106,7 +106,7 @@ Mission1_2 :: ~Mission1_2 ()
 	texture = NULL;
 }
 
-Mission1_2 :: handleEvents(SDL_Event &e)
+bool Mission1_2 :: handleEvents(SDL_Event &e)
 {
 	if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 	{
@@ -134,13 +134,13 @@ Mission1_2 :: handleEvents(SDL_Event &e)
 		}
 }
 
-Mission1_2 :: update()
+void Mission1_2 :: update()
 {
 	//ぐ或常⊿Τ妓 
 }
 
 Mission1_3 :: Mission1_3 ()
- : name("ヴ叭1 "), texture(NULL), success(false)
+ : Mission("Mission 1 ")
 {
 	Game &game = Game::GetGame();
 	//game.Map.addItem();                    
@@ -153,7 +153,7 @@ Mission1_3 :: ~Mission1_3 ()
 	texture = NULL;
 }
 
-Mission1_3 :: handleEvents(SDL_Event &e)
+bool Mission1_3 :: handleEvents(SDL_Event &e)
 {
 	if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 	{
@@ -181,14 +181,14 @@ Mission1_3 :: handleEvents(SDL_Event &e)
 		}
 }
 
-Mission1_3 :: update()
+void Mission1_3 :: update()
 {
 	//ぐ或常⊿Τ妓 
 }
 
 
 Mission2_1 :: Mission2_1 ()
- : name("ヴ叭2 "), texture(NULL), success(false)
+ : Mission("Mission 2 ")
 {
 	Game &game = Game::GetGame();
 	//game.Map.addItem();                    
@@ -201,7 +201,7 @@ Mission2_1 :: ~Mission2_1 ()
 	texture = NULL;
 }
 
-Mission2_1 :: handleEvents(SDL_Event &e)
+bool Mission2_1 :: handleEvents(SDL_Event &e)
 {
 	if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 	{
@@ -229,14 +229,14 @@ Mission2_1 :: handleEvents(SDL_Event &e)
 		}
 }
 
-Mission2_2 :: update()
+void Mission2_2 :: update()
 {
 	//ぐ或常⊿Τ妓 
 }
 
 
 Mission2_2 :: Mission2_2 ()
- : name("ヴ叭2 "), texture(NULL), success(false)
+ : Mission("Mission 2 ")
 {
 	Game &game = Game::GetGame();
 	//game.Map.addItem();                    
@@ -249,7 +249,7 @@ Mission2_1 :: ~Mission2_2 ()
 	texture = NULL;
 }
 
-Mission2_2 :: handleEvents(SDL_Event &e)
+bool Mission2_2 :: handleEvents(SDL_Event &e)
 {
 	if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 	{
@@ -277,13 +277,13 @@ Mission2_2 :: handleEvents(SDL_Event &e)
 		}
 }
 
-Mission2_2 :: update()
+void Mission2_2 :: update()
 {
 	//ぐ或常⊿Τ妓 
 }
 
 Mission2_3 :: Mission2_3 ()
- : name("ヴ叭2 "), texture(NULL), success(false)
+ : Mission("Mission 2 ")
 {
 	Game &game = Game::GetGame();
 	//game.Map.addItem();                    
@@ -296,7 +296,7 @@ Mission2_3 :: ~Mission2_3 ()
 	texture = NULL;
 }
 
-Mission2_3 :: handleEvents(SDL_Event &e)
+bool Mission2_3 :: handleEvents(SDL_Event &e)
 {
 	if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 	{
@@ -324,7 +324,7 @@ Mission2_3 :: handleEvents(SDL_Event &e)
 		}
 }
 
-Mission2_3 :: update()
+void Mission2_3 :: update()
 {
 	//ぐ或常⊿Τ妓 
 }

@@ -32,9 +32,9 @@ bool Game::Init()
 	// SDL_ttf
 	if(!TTF_WasInit())
 	{
-		if(!TTF_Init())
+		if(TTF_Init() < 0)
 		{
-			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "IMG_Init: Failed to init required image support: %s", TTF_GetError());
+			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "IMG_Init: Failed to init required font support: %s", TTF_GetError());
 			return false;
 		}
 	}

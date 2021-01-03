@@ -1,5 +1,5 @@
-#ifndef HUNTER.H
-#define HUNTER.H
+#ifndef HUNTER_H
+#define HUNTER_H
 #include <vector>
 #include <string>
 #include "includeSDL.h"
@@ -15,10 +15,10 @@ class Hunter : public Renderable
 public:
 	Hunter();
 	~Hunter();
-	int getHunterPosX_OnMap const(return HunterPosOnMap.x);
-	int getHunterPosY_OnMap const(return HunterPosOnMap.y);
+	int getHunterPosX_OnMap() const {return HunterPosOnMap.x}
+	int getHunterPosY_OnMap() const {return HunterPosOnMap.y}
 	
-	void handleEvents(SDL_Event &e);
+	bool handleEvents(SDL_Event &e);
 	void update();
 	bool RunnerVisible();
 	bool GameOver();

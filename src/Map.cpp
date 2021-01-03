@@ -2,24 +2,24 @@
 #include <fstream>
 #include <sstream>
 #include "includeSDL.h"
-#include "Maps.h"
+#include "Map.h"
 #include "Files.h"
 using namespace std;
 
-Maps::Maps()
+Map::Map()
  : row(0U), col(0U)
 {
 
 }
 
-Maps::~Maps()
+Map::~Map()
 {
 
 }
 
-void Maps::loadMap(Maps index)
+void Map::loadMap(Maps index)
 {
-	ifstream* inMapFile = openMapFile(Maps index);
+	ifstream* inMapFile = openMapFile(index);
 	char c;
 	string s;
 	stringstream ss;
@@ -30,7 +30,7 @@ void Maps::loadMap(Maps index)
 	ss >> row >> c;
 	ss >> col >> c;
 
-	for(int i = 0; i < row; ++i)
+	for(unsigned int i = 0; i < row; ++i)
 	{
 		if(!getline(*inMapFile, s))
 		{
@@ -41,7 +41,7 @@ void Maps::loadMap(Maps index)
 		}
 		ss.str(s);
 		ss.clear();
-		for(int j = 0; j < col; ++j)
+		for(unsigned int j = 0; j < col; ++j)
 		{
 			if(!getline(ss, s, ','))
 			{
