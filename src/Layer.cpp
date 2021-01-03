@@ -37,7 +37,11 @@ void Layer::free()
 		}
 	}
 	elements.clear();
-	SDL_DestroyTexture(mainTexture);
+	if(mainTexture)
+	{
+		SDL_DestroyTexture(mainTexture);
+		mainTexture = NULL;
+	}
 }
 
 bool Layer::handleEvents(SDL_Event &e)

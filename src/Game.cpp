@@ -145,8 +145,16 @@ void Game::Quit()
 		}		
 	}
 	layers.clear();
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
+	if(renderer)
+	{
+		SDL_DestroyRenderer(renderer);
+		renderer = NULL;
+	}
+	if(window)
+	{
+			SDL_DestroyWindow(window);
+		window = NULL;
+	}
 	IMG_Quit();
 	while(Mix_Init(0))
 		Mix_Quit();

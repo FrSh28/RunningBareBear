@@ -2,47 +2,51 @@
 #define FILES_H
 
 #include <string>
+#include <fstream>
 #include "includeSDL.h"
 
-SDL_Texture *loadSprite(Sprites index);
-SDL_Texture *loadMap(Maps index);
-Mix_Music *loadMusic(Musics index);
-
-enum Sprites
+enum Images
 {
-
-};
-
-enum Maps
-{
-	
+	SAMPLE_IMAGE,
+	IMAGE_COUNT,
 };
 
 enum Fonts
 {
-	
+	SAMPLE_FONT,
+	FONT_COUNT,
 };
 
 enum Musics
 {
-	
+	SAMPLE_MUSIC,
+	MUSIC_COUNT,
 };
+
+enum Maps
+{
+	SAMPLE_MAP,
+	MAP_COUNT,
+};
+
+SDL_Texture *loadImage(Images index);
+TTF_Font *loadFont(Fonts index, int ptSize);
+Mix_Music *loadMusic(Musics index);
+std::ifstream *openMapFile(Maps index);
 
 namespace Path
 {
-	std::string P_Sprites[] = {"../media/image/"};
-	std::string P_Maps[] = {"../media/map/"};
-	std::string P_Fonts[] = {"../media/font/"};
-	std::string P_Musics[] = {"../media/audio/"};
+	std::string P_Images[IMAGE_COUNT]	= { "../media/image/",
+											};
+
+	std::string P_Fonts[FONT_COUNT]		= { "../media/font/",
+											};
+
+	std::string P_Musics[MUSIC_COUNT]	= { "../media/audio/",
+											};
+	
+	std::string P_Maps[MAP_COUNT]		= { "../media/map/",
+											};
 }
-
-SDL_Texture *loadMedia(int type, int index)
-{
-
-}
-
-//SDL_Texture *tex = IMG_LoadTexture(SDL_Renderer *renderer, const char *file);
-//TTF_Font *font = TTF_OpenFont(const char *file, int ptsize);
-//Mix_Music *mus = Mix_LoadMUS(const char *file);
 
 #endif	// FILES_H
