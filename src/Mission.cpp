@@ -66,10 +66,10 @@ Mission1_1 :: handleEvents(SDL_Event &e)
         SDL_GetMouseState( &X, &Y );
 
         bool inside = true; 
-        if( X < mPosition->x || X > posOnWindow->x + posOnWindow->w){
+        if( X < posOnWindow->x || X > posOnWindow->x + posOnWindow->w){
             inside = false;
         }    
-        else if( Y < mPosition->y || Y > posOnWindow->y + posOnWindow->h ){
+        else if( Y < posOnWindow->y || Y > posOnWindow->y + posOnWindow->h ){
             inside = false;
         }
         
@@ -114,10 +114,10 @@ Mission1_2 :: handleEvents(SDL_Event &e)
         SDL_GetMouseState( &X, &Y );
 
         bool inside = true; 
-        if( X < mPosition->x || X > posOnWindow->x + posOnWindow->w){
+        if( X < posOnWindow->x || X > posOnWindow->x + posOnWindow->w){
             inside = false;
         }    
-        else if( Y < mPosition->y || Y > posOnWindow->y + posOnWindow->h ){
+        else if( Y < posOnWindow->y || Y > posOnWindow->y + posOnWindow->h ){
             inside = false;
         }
         
@@ -161,10 +161,10 @@ Mission1_3 :: handleEvents(SDL_Event &e)
         SDL_GetMouseState( &X, &Y );
 
         bool inside = true; 
-        if( X < mPosition->x || X > posOnWindow->x + posOnWindow->w){
+        if( X < posOnWindow->x || X > posOnWindow->x + posOnWindow->w){
             inside = false;
         }    
-        else if( Y < mPosition->y || Y > posOnWindow->y + posOnWindow->h ){
+        else if( Y < posOnWindow->y || Y > posOnWindow->y + posOnWindow->h ){
             inside = false;
         }
         
@@ -209,10 +209,10 @@ Mission2_1 :: handleEvents(SDL_Event &e)
         SDL_GetMouseState( &X, &Y );
 
         bool inside = true; 
-        if( X < mPosition->x || X > posOnWindow->x + posOnWindow->w){
+        if( X < posOnWindow->x || X > posOnWindow->x + posOnWindow->w){
             inside = false;
         }    
-        else if( Y < mPosition->y || Y > posOnWindow->y + posOnWindow->h ){
+        else if( Y < posOnWindow->y || Y > posOnWindow->y + posOnWindow->h ){
             inside = false;
         }
         
@@ -257,10 +257,10 @@ Mission2_2 :: handleEvents(SDL_Event &e)
         SDL_GetMouseState( &X, &Y );
 
         bool inside = true; 
-        if( X < mPosition->x || X > posOnWindow->x + posOnWindow->w){
+        if( X < posOnWindow->x || X > posOnWindow->x + posOnWindow->w){
             inside = false;
         }    
-        else if( Y < mPosition->y || Y > posOnWindow->y + posOnWindow->h ){
+        else if( Y < posOnWindow->y || Y > posOnWindow->y + posOnWindow->h ){
             inside = false;
         }
         
@@ -304,10 +304,10 @@ Mission2_3 :: handleEvents(SDL_Event &e)
         SDL_GetMouseState( &X, &Y );
 
         bool inside = true; 
-        if( X < mPosition->x || X > posOnWindow->x + posOnWindow->w){
+        if( X < posOnWindow->x || X > posOnWindow->x + posOnWindow->w){
             inside = false;
         }    
-        else if( Y < mPosition->y || Y > posOnWindow->y + posOnWindow->h ){
+        else if( Y < posOnWindow->y || Y > posOnWindow->y + posOnWindow->h ){
             inside = false;
         }
         
