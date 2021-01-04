@@ -4,10 +4,21 @@
 
 #ifndef ITEM_H
 #define ITEM_H
+#include"includeSDL.h"
+#include"Renderable.h"
 
 
-class Item {
+enum itemlist{star,gun,invisible_cloap};
+class Item :public Renderable{
+private:
+    SDL_Point pos_on_map;
+    SDL_Point pos_on_screen;
 
+public:
+    void createitem(itemlist&);
+    bool handleEvents(SDL_Event& e);
+    void update();
+    bool use();
 };
 
 

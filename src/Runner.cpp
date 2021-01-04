@@ -60,7 +60,8 @@ bool Runner::handleEvents(SDL_Event &e)
                 case SDLK_DOWN: Rvelocity_y += Rvelocity; break;
                 case SDLK_LEFT: Rvelocity_x -= Rvelocity; break;
                 case SDLK_RIGHT: Rvelocity_y += Rvelocity; break;
-                    //case SDLK_LSHIFT: pick item up?
+                case SDLK_LSHIFT: //pick item up?
+                ;
             }
         }
     }
