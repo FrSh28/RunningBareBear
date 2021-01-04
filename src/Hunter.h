@@ -12,6 +12,14 @@ class Hunter : public Renderable
 	int HunterWalk;
 	bool SetSuccess;
 	bool Discovered;
+	bool visible;
+	double deltaX;
+	double deltaY;
+	double a;
+	double b;
+	int findX;
+	int findY;
+	
 public:
 	Hunter();
 	~Hunter();

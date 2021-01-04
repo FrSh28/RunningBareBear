@@ -5,7 +5,7 @@
 #include <cmath>
 
 Hunter::Hunter() :
-	HunterSpeed(0)
+	HunterSpeed(0), deltaX(0), deltaY(0), findX(0), findY(0), a(0), b(0)
 {
 	SetSuccess = false;
 	while(!SetSuccess)
@@ -65,6 +65,7 @@ void Hunter::Stage1()
 {
 	HunterSpeed = HunterRun;
 	Discovered = true; //will become false if Stage2 && Hunter go to an intersection && !RunnerVisible 
+	
 	//remembered the runner's position
 	//run to the runner
 }
@@ -89,62 +90,30 @@ void Hunter::Stage3()
 bool Hunter::GameOver()
 {
 	bool gameover = false;
-	if(abs(HunterPosOnMap.x - getRunnerPos_XOnMap()) <= Size && 
-	   abs(HunterPosOnMap.y - getRunnerPos_YOnMap()) <= Size)
-	   {
-			gameover = true;   	
-	   }
+	a = getRunnerPos_XOnMap() - HunterPosOnMap.x;
+	b = getRunnerPos_YOnMap() - HunterPosOnMap.y;
+	if(abs(a) <= 1 && abs(b) <= 1)	   
+	{
+		gameover = true;   	
+   }
 	return gameover;
 }
 
 bool Hunter::RunnerVisible()
-{
-	bool visible = false;
-	int temp;
-	if(abs(HunterPosOnMap.x - getRunnerPos_XOnMap()) <= Size)
+{	
+	visible = true;
+	a = getRunnerPos_XOnMap() - HunterPosOnMap.x;
+	b = getRunnerPos_YOnMap() - HunterPosOnMap.y;
+	deltaX = a / (a+b);
+	deltaY = b / (a+b);	
+	findX = HunterPosOnMap.x;
+	findY = HunterPosOnMap.y;
+	while(abs(findX - getRunnerPos_XOnMap()) >= 1 || abs(findY - getRunnerPos_YOnMap()) >= 1)
 	{
-		visible = true;
-		temp = HunterPosOnMap.y - HunterPosOnMap.y % Size;
-		
-		if(HunterPosOnMap.y < getRunnerPos_YOnMap()) 
-		//such as Hunter(900,710) Runner(846,950) it will find out whether (900,700) (900,800) (900,900) have wall(if Size=100)
-		{
-			for(int i=temp; i<=getRunnerPos_YOnMap(); i+=Size) //size is how big a wall or object is
-			{
-				if(WhatsOnTheMap(HunterPosOnMap.x,i) == WALL)
-					visible = false;
-			}
-		}
-		else
-		{
-			for(int i=temp;i>=HunterPosOnMap.y;i-=Size) //size is how big a wall or object is
-			{
-				if(WhatsOnTheMap(i,HunterPosOnMap.y) == WALL)
-					visible = false;
-			}
-		}
-	}
-	if(abs(HunterPosOnMap.y - getRunnerPos_YOnMap()) <= Size)
-	{
-		visible = false;
-		temp = HunterPosOnMap.x - HunterPosOnMap.x % Size;
-		
-		if(HunterPosOnMap.x < getRunnerPos_XOnMap())
-		{
-			for(int i=temp; i<=getRunnerPos_XOnMap(); i+=Size) //size is how big a wall or object is
-			{
-				if(WhatsOnTheMap(i,HunterPosOnMap.y) == WALL)
-					visible = false;
-			}
-		}
-		else
-		{
-			for(int i=temp; i<=HunterPosOnMap.y; i-=Size) //size is how big a wall or object is
-			{
-				if(WhatsOnTheMap(i,HunterPosOnMap.y) == WALL)
-					visible = false;
-			}
-		}
+		findX += deltaX;
+		findY += deltaY;
+		if(WhatsOnTheMap(round(findX), round(findY)) == WALL)
+			visible = false;
 	}
 	return visible;
 }
