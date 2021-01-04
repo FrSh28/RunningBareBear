@@ -7,18 +7,19 @@
 class Hunter : public Renderable
 {
 	SDL_Point HunterPosOnMap;
-	int HunterSpeed;
-	int HunterRun;
-	int HunterWalk;
+	int Hvelocity, Run, Walk;
 	bool SetSuccess;
 	bool Discovered;
+	bool gameover;
 	bool visible;
-	double deltaX;
-	double deltaY;
-	double a;
-	double b;
-	int findX;
-	int findY;
+	double deltaX, deltaY;
+	double a, b;
+	double up_d, down_d, right_d, left_d;
+	double minimum;
+	int findX, findY;
+	int rememberX, rememberY;
+	SDL_Point up, down, right, left;
+	
 	
 public:
 	Hunter();
@@ -33,28 +34,8 @@ public:
 	void Stage1();
 	void Stage2();
 	void Stage3();
+	void Chase();
 };
 
-/*
-Hunter::Hunter()
-{
-	posOnWindow = NULL;
-	pos
-}
 
-Hunter::~Hunter()
-{
-	
-}
-
-void Hunter::handleEvents(SDL_Event &e)
-{
-	
-}
-
-void Hunter::update()
-{
-	posOnWindow = Map::convertPos(pos);
-}
-*/
 #endif

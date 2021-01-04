@@ -44,8 +44,8 @@ Runner::~Runner()
 }
 
 
-int Runner::get_Xposition_on_map() const{return pos_on_map.x;}
-int Runner::get_Yposition_on_map() const {return pos_on_map.y;}
+int Runner::R_get_Xpos_on_map() const{return pos_on_map.x;}
+int Runner::R_get_Ypos_on_map() const {return pos_on_map.y;}
 
 bool Runner::handleEvents(SDL_Event &e)
 {

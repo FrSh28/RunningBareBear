@@ -24,8 +24,8 @@ public:
     ~Runner();
     bool handleEvents(SDL_Event &e);
     void update();
-    int get_Xposition_on_map()const;
-    int get_Yposition_on_map()const;
+    int R_get_Xpos_on_map()const;
+    int R_get_Ypos_on_map()const;
     void move(Wall&);
 
 
