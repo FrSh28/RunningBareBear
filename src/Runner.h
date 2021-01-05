@@ -1,6 +1,3 @@
-//
-// Created by 劉瑄穎 on 2020/12/31.
-//
 extern int mode;
 #ifndef RUNNER_H
 #define RUNNER_H
@@ -17,6 +14,7 @@ private:
     int Rvelocity_y;
     int Rvelocity;
     int Rstrength;
+    int sprint_velocity;
     std::string name;
 
 public:
@@ -27,6 +25,7 @@ public:
     int R_get_Xpos_on_map()const;
     int R_get_Ypos_on_map()const;
     void move(Wall&);
+    void collision(Wall&);
 
 
     //change character?

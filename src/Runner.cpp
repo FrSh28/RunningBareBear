@@ -2,6 +2,13 @@
 // Created by 劉瑄穎 on 2020/12/31.
 //
 #include "Runner.h"
+
+bool checkcollision(Runner& player)
+{
+
+}
+
+Wall* getwall()
 character_list character;
 Runner::Runner(character_list character )
 {
@@ -21,16 +28,19 @@ Runner::Runner(character_list character )
         {
             case professor_hsieh:
                 Rvelocity = 00000;
+                sprint_velocity = 00000;
                 name="professor";
                 break;
 
             case bear:
                 Rvelocity = 00000;
+                sprint_velocity = 00000;
                 name = "bear";
                 break;
 
             case soldier:
                 Rvelocity = 00000;
+                sprint_velocity = 00000;
                 name = "soldier";
                 break;
         }
@@ -56,21 +66,23 @@ bool Runner::handleEvents(SDL_Event &e)
         {
             switch(e.key.keysym.sym)
             {
-                case SDLK_UP: Rvelocity_x -= Rvelocity; break;
-                case SDLK_DOWN: Rvelocity_y += Rvelocity; break;
-                case SDLK_LEFT: Rvelocity_x -= Rvelocity; break;
-                case SDLK_RIGHT: Rvelocity_y += Rvelocity; break;
-                case SDLK_LSHIFT: //pick item up?
-                ;
+                case SDLK_q: Rvelocity += sprint_velocity;
+                case SDLK_UP: Rvelocity_y += Rvelocity; break;
+                case SDLK_DOWN: Rvelocity -= Rvelocity; break;
+                case SDLK_LEFT: Rvelocity_x += Rvelocity; break;
+                case SDLK_RIGHT: Rvelocity_x -= Rvelocity; break;
+
             }
         }
     }
     return success;
 }
 
-void move(Wall& wall)
+void Runner::move(Wall& wall)
 {
+
     //dealing collision
+
 
 }
 
