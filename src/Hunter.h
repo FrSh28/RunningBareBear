@@ -13,6 +13,7 @@ class Hunter : public Renderable
 	bool Discovered;
 	bool arrive;
 	bool visible;
+	bool HaveFound;
 	int a;
 	int b;
 	double deltaX;
@@ -27,9 +28,9 @@ public:
 	~Hunter();
 	int getHunterPosX_OnMap() const {return HunterPosOnMap.x}
 	int getHunterPosY_OnMap() const {return HunterPosOnMap.y}
-	
-	bool handleEvents(SDL_Event &e);
+	void handleEvents(SDL_Event &e);
 	void update();
+	SDL_Point Set();
 	bool RunnerVisible();
 	bool Arrive();
 	void Stage1();

@@ -7,21 +7,26 @@
 Hunter::Hunter() :
 	HunterSpeed(0), gameover(false), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0), findX(0), findY(0)
 {
+	HunterPosOnMap = Set();
+	Game &game = Game::GetGame();
+	game.pushLayer(new hunterLayer);
+}
+
+SDL_Point Hunter::Set()
+{
 	SetSuccess = false;
+	SDL_Point SetPos;
 	while(!SetSuccess)
 	{
 		srand(time(0));
-		HunterPosOnMap.x = rand()%(getMapWidth()); 
+		SetPos.x = rand()%(getMapWidth()); 
 		srand(time(0));
-		HunterPosOnMap.y = rand()%(getMapHeight());
-		if(WhatsOnTheMap(HunterPosOnMap.x,HunterPosOnMap.y) == EMPTY) //EMPTY(a number) represent [HunterPosOnMap.x][HunterPosOnMap.y] is empty 
+		SetPos.y = rand()%(getMapHeight());
+		if(WhatsOnTheMap(SetPos.x,SetPos.y) == EMPTY) 
 		{
 			SetSuccess = true;
-			//may need to set [HunterPosOnMap.x][HunterPosOnMap.y] into HUNTER(a number)
-			Game &game = Game::GetGame();
-			game.pushLayer(new hunterLayer);
+			return SetPos;
 		} 
-		//getMapWidth() and getMapHeight() are just temporary name, used to return how many matrixs do map have.
 	}
 }
 //somewhere set initial walk direction
@@ -30,7 +35,7 @@ Hunter::~Hunter()
 	
 }
 
-bool Hunter::handleEvents(SDL_Event &e)
+void Hunter::handleEvents(SDL_Event &e)
 {
 	
 }
@@ -51,13 +56,9 @@ void Hunter::update()
 		{
 			Stage3();
 		}
-	}	
+	}
+	
 }
-
-enum direction
-{
-	UP, DOWN, RIGHT, LEFT 
-}direct;
 
 bool Hunter::RunnerVisible()
 {	
@@ -73,11 +74,70 @@ bool Hunter::RunnerVisible()
 		findX += deltaX;
 		findY += deltaY;
 		if(WhatsOnTheMap(round(findX), round(findY)) == WALL)
+		{
 			visible = false;
+			break;
+		}
 	}
 	return visible;
 }
 
+
+
+void Hunter::Stage1()
+{
+	Hvelocity = Run;
+	Discovered = true; 
+	//every 60 frames
+	directPos.x = R_get_Xpos_on_map();
+	directPos.y = R_get_Ypos_on_map();
+	HaveFound = false;
+	Chase(HunterPosOnMap, directPos);
+	
+	
+}
+
+void Hunter::Stage2()
+{
+	Hvelocity = Run;
+	if(!HaveFound)
+	{
+		HaveFound = true;
+		Chase(HunterPosOnMap, directPos);
+	}
+	if(Arrive())
+	{
+		Discovered = false;
+		Stage3();	
+	}	
+}
+
+void Hunter::Stage3()
+{
+	Hvelocity = Walk;
+	if(Arrive())
+	{
+		directPos = Set();
+		HaveFound = false;
+	}
+	if(!HaveFound)
+	{
+		HaveFound = true;
+		Chase(HunterPosOnMap, directPos);
+	}
+	
+}
+bool Hunter::Arrive()
+{
+	arrive = false;
+	if(HunterPosOnMap.x == directPos.x && HunterPosOnMap.y == directPos.y)
+	{
+		arrive = true;
+	}
+	return arrive;
+}
+// PosOnMap.x = (PosOnWindow.x + 0.5*w) / 50
+ 
 void Hunter::Chase(SDL_Point HunterPosOnMap, SDL_Point directPos)
 {
 	bool visited[row][col];
@@ -98,6 +158,7 @@ void Hunter::Chase(SDL_Point HunterPosOnMap, SDL_Point directPos)
 	Node* init = new Node; 
 	init->step = 0;
 	init->way.push_back(HunterPosOnMap);  
+	visited[HunterPosOnMap.x][HunterPosOnMap.y];
 	q.push(init);
 	while(!q.empty())
 	{
@@ -124,7 +185,7 @@ void Hunter::Chase(SDL_Point HunterPosOnMap, SDL_Point directPos)
 				visited[curP.x + 1][curP.y] = true;
 				Node* tmp = new Node;
 				tmp->step = curNode->step + 1;
-				for(int i=0; i<step; i++)
+				for(int i=0; i<tmp->step; i++)
 				{
 					tmp->way.push_back(curNode->way[i]);
 				}
@@ -140,7 +201,15 @@ void Hunter::Chase(SDL_Point HunterPosOnMap, SDL_Point directPos)
 		{
 			if(curP.x - 1 == directPos.x && curP.y == directPos.y)
 			{
-				
+				while(!go.empty())
+				{
+					go.pop();
+				}
+				for(int i=0; i<step; i++)
+				{
+					go.push(curNode->way[i]);
+				}
+				break;
 			}
 			else
 			{
@@ -163,7 +232,15 @@ void Hunter::Chase(SDL_Point HunterPosOnMap, SDL_Point directPos)
 		{
 			if(curP.x == directPos.x && curP.y + 1 == directPos.y)
 			{
-				
+				while(!go.empty())
+				{
+					go.pop();
+				}
+				for(int i=0; i<step; i++)
+				{
+					go.push(curNode->way[i]);
+				}
+				break;				
 			}
 			else
 			{
@@ -186,7 +263,15 @@ void Hunter::Chase(SDL_Point HunterPosOnMap, SDL_Point directPos)
 		{
 			if(curP.x == directPos.x && curP.y - 1 == directPos.y)
 			{
-				
+				while(!go.empty())
+				{
+					go.pop();
+				}
+				for(int i=0; i<step; i++)
+				{
+					go.push(curNode->way[i]);
+				}
+				break;				
 			}
 			else
 			{
@@ -211,53 +296,5 @@ void Hunter::Chase(SDL_Point HunterPosOnMap, SDL_Point directPos)
 		delete q.front();
 		q.pop();
 	}
-	
-	
-
 }
-
-
-void Hunter::Stage1()
-{
-	Hvelocity = Run;
-	Discovered = true; //will become false if Stage2 && Hunter go to an intersection && !RunnerVisible 
-	//every 60 frame
-	directPos.x = R_get_Xpos_on_map();
-	directPos.y = R_get_Ypos_on_map();
-	Chase(HunterPosOnMap, directPos);
-	
-}
-
-void Hunter::Stage2()
-{
-	Hvelocity = Run;
-	Chase(HunterPosOnMap, directPos);
-	if(Arrive())
-	{
-		if(!RunnerVisible())
-	}
-	//run to the place where Stage1 remember
-		//if it is an intersection
-			//if !RunnerVisible --> Discovered = false
-			//else Stage 1 (or do nothing?)
-		//if it is corner
-			//keep running until it's intersection
-		
-}
-
-void Hunter::Stage3()
-{
-	Hvelocity = Walk;
-}
-bool Hunter::Arrive()
-{
-	arrive = false;
-	if(HunterPosOnMap.x == directPos.x && HunterPosOnMap.y == directPos.y)
-	{
-		arrive = true;
-	}
-	return arrive;
-}
-// PosOnMap.x = (PosOnWindow.x + 0.5*w) / 50
- 
 
