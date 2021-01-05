@@ -7,18 +7,19 @@
 class Hunter : public Renderable
 {
 	SDL_Point HunterPosOnMap;
+	SDL_Point directPos;
 	int Hvelocity, Run, Walk;
 	bool SetSuccess;
 	bool Discovered;
-	bool gameover;
+	bool arrive;
 	bool visible;
-	double deltaX, deltaY;
-	double a, b;
-	double up_d, down_d, right_d, left_d;
-	double minimum;
-	int findX, findY;
-	int rememberX, rememberY;
-	SDL_Point up, down, right, left;
+	int a;
+	int b;
+	double deltaX;
+	double deltaY;
+	double findX;
+	double findY;
+	std::queue<SDL_Point> go;
 	
 	
 public:
@@ -30,11 +31,11 @@ public:
 	bool handleEvents(SDL_Event &e);
 	void update();
 	bool RunnerVisible();
-	bool GameOver();
+	bool Arrive();
 	void Stage1();
 	void Stage2();
 	void Stage3();
-	void Chase();
+	void Chase(SDL_Point, SDL_Point);
 };
 
 

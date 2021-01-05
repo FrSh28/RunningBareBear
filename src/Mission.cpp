@@ -335,7 +335,7 @@ void Mission2_3 :: update()
 if (MISSION != ((Uint32)-1)) {
     SDL_Event event;
     SDL_zero(event);
-	event.type = Mission;
+	event.type = Pick_Up;
     event.user.code = mission_code;
     event.user.data1 = significant_data1;
     event.user.data2 = 0;
