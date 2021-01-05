@@ -16,6 +16,7 @@ private:
     int Rvelocity;
     double Rstrength;
     int sprint_velocity;
+    bool pickup;
     std::string username;
 
 public:
@@ -33,7 +34,7 @@ public:
     //change character?
     // runner* operator=(runner&);
 
-
+    Game &game = Game::GetGame();
 };
 
 

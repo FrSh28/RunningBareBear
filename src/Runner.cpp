@@ -55,9 +55,9 @@ Renderable("Runner"),Rstrength(100)
         }
     }
     rec_on_map.x = pos_on_map.x;
-    rec_on_map.y = pos_on_map.y + 50;
-    rec_on_map.w = 50;
-    rec_on_map.h = 50;
+    rec_on_map.y = pos_on_map.y;
+    rec_on_map.w = 40;
+    rec_on_map.h = 32;
 }
 
 Runner::~Runner()
@@ -81,12 +81,12 @@ bool Runner::handleEvents(SDL_Event &e)
             //adjust velocity
             switch(e.key.keysym.sym)
             {
-                case SDLK_q: Rvelocity += sprint_velocity;
-                case SDLK_UP: Rvelocity_y += Rvelocity; break;
-                case SDLK_DOWN: Rvelocity -= Rvelocity; break;
-                case SDLK_LEFT: Rvelocity_x += Rvelocity; break;
-                case SDLK_RIGHT: Rvelocity_x -= Rvelocity; break;
-
+                case SDLK_SPACE: Rvelocity += sprint_velocity;
+                case SDLK_s: Rvelocity_y += Rvelocity; break;
+                case SDLK_w: Rvelocity -= Rvelocity; break;
+                case SDLK_d: Rvelocity_x += Rvelocity; break;
+                case SDLK_a: Rvelocity_x -= Rvelocity; break;
+                case SDLK_e: pickup = true;
             }
         }
         //if a key is released
@@ -95,11 +95,12 @@ bool Runner::handleEvents(SDL_Event &e)
             //Adjust the velocity
             switch( e.key.keysym.sym )
             {
-                case SDLK_q: Rvelocity -= sprint_velocity;
+                case SDLK_SPACE: Rvelocity -= sprint_velocity;
                 case SDLK_UP: Rvelocity_y -= Rvelocity; break;
                 case SDLK_DOWN: Rvelocity += Rvelocity; break;
                 case SDLK_LEFT: Rvelocity_x -= Rvelocity; break;
                 case SDLK_RIGHT: Rvelocity_x += Rvelocity; break;
+                case SDLK_e: pickup = false;
             }
         }
 

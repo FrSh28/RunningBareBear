@@ -10,11 +10,12 @@
 class Wall :public Renderable
 {
 private:
-
+    SDL_Rect rec_on_map;
+    SDL_Point pos_on_map;
+    SDL_Point pos_on_screen;
 public:
     Wall();
     ~Wall();
-
 
 };
 
