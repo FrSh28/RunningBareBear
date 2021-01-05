@@ -30,6 +30,7 @@ void Map::loadMap(Maps index)
 	ss >> row >> c;
 	ss >> col >> c;
 
+	int n;
 	for(unsigned int i = 0; i < row; ++i)
 	{
 		if(!getline(*inMapFile, s))
@@ -41,6 +42,7 @@ void Map::loadMap(Maps index)
 		}
 		ss.str(s);
 		ss.clear();
+		vector<int> tmpV;
 		for(unsigned int j = 0; j < col; ++j)
 		{
 			if(!getline(ss, s, ','))
@@ -51,10 +53,12 @@ void Map::loadMap(Maps index)
 				return;
 			}
 			if(s.length())
-				map[i][j] = stoi(s);
+				n = stoi(s);
 			else
-				map[i][j] = 0;
+				n = 0;
+			tmpV.push_back(n);
 		}
+		map.push_back(tmpV);
 	}
 	(*inMapFile).close();
 	delete inMapFile;
