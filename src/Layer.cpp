@@ -1,6 +1,4 @@
-#include <string>
 #include <algorithm>
-#include "includeSDL.h"
 #include "Layer.h"
 #include "Game.h"
 #include "Files.h"
@@ -70,7 +68,8 @@ void Layer::render()
 	SDL_RenderClear(renderer);
 	for(auto it = elements.begin(); it != elements.end(); ++it)
 	{
-		SDL_RenderCopy(renderer, (*it)->getTexture(), (*it)->getPosOnTexture(), (*it)->getPosOnWindow());
+		if((*it)->getTexture() and (*it)->getPosOnTexture() and (*it)->getPosOnWindow())
+			SDL_RenderCopy(renderer, (*it)->getTexture(), (*it)->getPosOnTexture(), (*it)->getPosOnWindow());
 	}
 }
 

@@ -7,15 +7,20 @@
 #include"includeSDL.h"
 #include"Renderable.h"
 
+enum ItemList{
+	star,
+	gun,
+	invisible_cloap,
+};
 
-enum itemlist{star,gun,invisible_cloap};
 class Item :public Renderable{
 private:
     SDL_Point pos_on_map;
     SDL_Point pos_on_screen;
+    ItemList type;
 
 public:
-    void createitem(itemlist&);
+    void createitem(ItemList&);
     bool handleEvents(SDL_Event& e);
     void update();
     bool use();

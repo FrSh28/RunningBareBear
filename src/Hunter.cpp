@@ -12,7 +12,7 @@ Hunter::Hunter() :
 	game.pushLayer(new hunterLayer);
 }
 
-SDL_Point Hunter::Set()
+SDL_Point Hunter::Set()		// Map will handle this --by FrSh
 {
 	SetSuccess = false;
 	SDL_Point SetPos;

@@ -1,7 +1,6 @@
 #include <iostream>
-#include <string>
 #include <algorithm>
-#include "includeSDL.h"
+#include <random>
 #include "Game.h"
 #include "Layer.h"
 using namespace std;
@@ -12,6 +11,8 @@ Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned in
  : name(_name), width(_width), height(_height), frameRate(_frameRate), window(NULL), renderer(NULL)
 	, running(false), layerInsertIndex(0U), startTime(0U), frameCount(0U)
 {
+	random_device rd;
+	rdEngine.seed(rd());
 	s_gameInstance = this;
 }
 
@@ -93,16 +94,17 @@ void Game::HandleEvents()
 {
 	while(SDL_PollEvent(&event) or SDL_GetTicks() - startTime < frameCount * 1000 / frameRate)
 	{
-		if(event.type == SDL_QUIT)
+		switch(event.type)
 		{
-			running = false;
-			break;	// while
-		}
-
-		for(auto it = layers.rbegin(); it != layers.rend(); ++it)
-		{
-			if((*it)->handleEvents(event))	// if handled
-				break;	// for
+			case SDL_QUIT:
+				running = false;
+				return;
+			default:
+				for(auto it = layers.rbegin(); it != layers.rend(); ++it)
+				{
+					if((*it)->handleEvents(event))	// if handled
+						break;	// for
+				}
 		}
 	}
 }

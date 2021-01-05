@@ -1,6 +1,3 @@
-#include <string>
-#include <fstream>
-#include "includeSDL.h"
 #include "Files.h"
 #include "Game.h"
 using namespace std;

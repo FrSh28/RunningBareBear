@@ -13,7 +13,7 @@ Renderable("Runner"),Rstrength(100)
     //pos_on_map.x = rand() % Mapwidth;
     srand(time(0));
     //pos_on_map.y =rand() % Mapheight;
-    while(pos_on_map is wall)
+    while(pos_on_map is wall)   // Map will handle this --by FrSh
     {
         srand(time(0));
         //pos_on_map.x = rand() % Mapwidth;
@@ -23,7 +23,7 @@ Renderable("Runner"),Rstrength(100)
 
     if (mode==1)
     {
-        //texture = loadMedia(TEXTURE_XXX);
+        //texture = loadMedia(TEXTURE_XXX);     // ref Files.h --by FrSh
         /*posOnWindow->x = (int);
         posOnTexture->x = (int);
         posOnWindow->y = (int);
@@ -66,7 +66,7 @@ Runner::~Runner()
 
 }
 
-
+// may be handled by Map --by FrSh
 int Runner::R_get_Xpos_on_map() const{return pos_on_map.x;}
 int Runner::R_get_Ypos_on_map() const {return pos_on_map.y;}
 

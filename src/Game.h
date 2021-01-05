@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <random>
 #include "includeSDL.h"
 #include "Layer.h"
 
@@ -50,6 +51,8 @@ private:
 
 	unsigned int startTime;
 	unsigned int frameCount;
+
+	std::mt19937_64 rdEngine;
 
 	static Game *s_gameInstance;
 };

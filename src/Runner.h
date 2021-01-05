@@ -34,7 +34,7 @@ public:
     //change character?
     // runner* operator=(runner&);
 
-    Game &game = Game::GetGame();
+    //Game &game = Game::GetGame();
 };
 
 
