@@ -10,12 +10,13 @@ class Runner:public Renderable{
 private:
     SDL_Point pos_on_screen;
     SDL_Point pos_on_map;
+    SDL_Rect rec_on_map;
     int Rvelocity_x;
     int Rvelocity_y;
     int Rvelocity;
-    int Rstrength;
+    double Rstrength;
     int sprint_velocity;
-    std::string name;
+    std::string username;
 
 public:
     Runner(character_list  );
@@ -24,8 +25,9 @@ public:
     void update();
     int R_get_Xpos_on_map()const;
     int R_get_Ypos_on_map()const;
-    void move(Wall&);
-    void collision(Wall&);
+    void move();
+    bool collision(Wall*);
+    Wall* getwall();
 
 
     //change character?
