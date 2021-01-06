@@ -5,12 +5,15 @@
 using namespace std;
 
 const int Map::sc_pixelWidth = 50, Map::sc_pixelHeight = 40;
-Map *s_mapInstance = NULL;
+Map *Map::s_mapInstance = NULL;
 
 Map::Map(Maps index, string _name)
- : name(_name), rowNum(0), colNum(0), width(0), height(0), ground(new Layer("MapGround")), front(new Layer("MapFront"))
+ : BasicObject(_name), rowNum(0), colNum(0), width(0), height(0), ground(new Layer("MapGround")), front(new Layer("MapFront"))
 {
 	s_mapInstance = this;
+	eventEnable = true;
+	updateEnable = true;
+	renderEnable = false;
 	loadMap(index);
 	Game &game = Game::GetGame();
 	game.pushLayer(ground);

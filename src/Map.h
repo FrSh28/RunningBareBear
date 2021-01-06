@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include "includeSDL.h"
+#include "BasicObject.h"
 #include "Layer.h"
 #include "Files.h"
 #include "Item.h"
@@ -16,7 +17,7 @@ enum ObjOnMap
 	ITEM,
 };
 
-class Map
+class Map : public BasicObject
 {
 public:
 	Map(Maps index, std::string _name = "");
@@ -40,7 +41,6 @@ public:
 
 	inline static Map &getMap() { return *s_mapInstance;}
 private:
-	std::string name;
 	int rowNum, colNum;
 	std::vector<std::vector<int>> map;
 	int width, height;

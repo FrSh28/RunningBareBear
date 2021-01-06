@@ -75,8 +75,7 @@ bool Game::Init()
 	SDL_RenderPresent(renderer);
 
 	// for testing
-	Layer *l = new Layer("TestLayer");
-	pushLayer(l);
+	pushLayer(new Layer("TestLayer"));
 	//layers[0]->pushElement(someBasicObject);
 	// for testing
 

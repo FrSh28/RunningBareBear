@@ -46,7 +46,7 @@ bool Layer::handleEvents(SDL_Event &e)
 {
 	for(auto it = elements.rbegin(); it != elements.rend(); ++it)
 	{
-		if((*it)->handleEvents(e))	// if handled
+		if((*it)->isEventEnable() and (*it)->handleEvents(e))	// if handled
 			return true;
 	}
 	return false;
@@ -56,7 +56,8 @@ void Layer::update()
 {
 	for(auto it = elements.begin(); it != elements.end(); ++it)
 	{
-		(*it)->update();
+		if((*it)->isUpdateEnable())
+			(*it)->update();
 	}
 }
 
@@ -68,8 +69,8 @@ void Layer::render()
 	SDL_RenderClear(renderer);
 	for(auto it = elements.begin(); it != elements.end(); ++it)
 	{
-		if((*it)->getTexture() and (*it)->getPosOnTexture() and (*it)->getPosOnWindow())
-			SDL_RenderCopy(renderer, (*it)->getTexture(), (*it)->getPosOnTexture(), (*it)->getPosOnWindow());
+		if((*it)->isRenderEnable() and (*it)->getTexture() and (*it)->getRectOnTexture() and (*it)->getRectOnScreen())
+			SDL_RenderCopy(renderer, (*it)->getTexture(), (*it)->getRectOnTexture(), (*it)->getRectOnScreen());
 	}
 }
 
