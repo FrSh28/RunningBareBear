@@ -6,9 +6,9 @@
 #include "BasicObject.h"
 class Hunter : public BasicObject
 {
-	SDL_Point HunterPosOnMap;
-	SDL_Point HunterPosOnPixel;
-	SDL_Point CenterPixel;
+	SDL_Point HunterMapPos;
+	SDL_Point HunterPixelPos;
+	SDL_Point HunterCenterPixel;
 	SDL_Point directPos;
 	SDL_Point findpos;
 	SDL_Point NextPixel;
@@ -19,6 +19,8 @@ class Hunter : public BasicObject
 	bool visible;
 	int a;
 	int b;
+	int HunterWidth;
+	int HunterHeight;
 	double deltaX;
 	double deltaY;
 	double findX;
@@ -31,11 +33,11 @@ class Hunter : public BasicObject
 public:
 	Hunter();
 	~Hunter();
-	int getHunterPosX_OnMap() const {return HunterPosOnMap.x}
-	int getHunterPosY_OnMap() const {return HunterPosOnMap.y}
 	void handleEvents(SDL_Event &e);
 	void update();
 	SDL_Point Set();
+	SDL_Point getMapPos() {return HunterMapPos;}
+	SDL_Point getPixelPos() {return HunterCenterPixel;}
 	bool RunnerVisible();
 	bool Arrive();
 	void Stage1();

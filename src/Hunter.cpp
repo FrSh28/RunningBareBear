@@ -6,9 +6,9 @@
 
 Hunter::Hunter() :
 	HunterSpeed(0), gameover(false), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0), findX(0), findY(0)
-	map(&Map::getMap())
+	map(&Map::getMap()), HunterMapPos(/*map¶Ç¤Jªºpoint?*/ )
 {
-
+	HunterPixelPos = map->mapPosTopixelPos(HunterMapPos);
 }
 //need to set the initial directpos
 SDL_Point Hunter::Set()		
@@ -36,12 +36,12 @@ void Hunter::handleEvents(SDL_Event &e)
 {
 	
 }
-
+//HunterMapPos , HunterPixelPos , HunterRectOnScreen
 void Hunter::update()
 {
-	CenterPixel.x = HunterPosOnPixel.x + HunterWidth/2;////
-	CenterPixel.y = HunterPosOnPixel.y + HunterHeight/2;
-	HunterPosOnMap = map->pixelPosTomapPos(CenterPixel);
+	HunterCenterPixel.x = HunterPixelPos.x + HunterWidth/2;
+	HunterCenterPixel.y = HunterPixelPos.y + HunterHeight/2;
+	HunterMapPos = map->pixelPosTomapPos(HunterCenterPixel);
 	if(RunnerVisible())
 	{
 		Stage1();
@@ -57,20 +57,20 @@ void Hunter::update()
 			Stage3();
 		}
 	}
-	
+	rectOnTexture = SDL_Rect({HunterPixelPos.x, HunterPixelPos.y, HunterWidth, HunterHeight});
 }
 
 bool Hunter::RunnerVisible()
 {	
 	visible = true;
-	a = runner->R_get_Xpos_on_map() - HunterPosOnMap.x;
-	b = runner->R_get_Ypos_on_map() - HunterPosOnMap.y;
+	a = map->getRunnerMapPos().x - HunterMapPos.x;
+	b = map->getRunnerMapPos().y - HunterMapPos.y;
 	deltaX = a / (a+b);
 	deltaY = b / (a+b);	
-	findpos = HunterPosOnMap;
-	findX = HunterPosOnMap.x;
-	findY = HunterPosOnMap.y;
-	while(findpos.x != runner->R_get_Xpos_on_map() || findpos.y != runner->R_get_Ypos_on_map())
+	findpos = HunterMapPos;
+	findX = HunterMapPos.x;
+	findY = HunterMapPos.y;
+	while(findpos != map->getRunnerMapPos() )
 	{
 		findX += deltaX;
 		findY += deltaY;
@@ -94,23 +94,23 @@ void Hunter::Move()
 	}	
 	else
 	{
-		if(HunterPosOnPixel.x < NextPixel.x)
+		if(HunterPixelPos.x < NextPixel.x)
 		{
-			HunterPosOnPixel.x += Hvelocity;
+			HunterPixelPos.x += Hvelocity;
 		}
-		else if(HunterPosOnPixel.x > NextPixel.x)
+		else if(HunterPixelPos.x > NextPixel.x)
 		{
-			HunterPosOnPixel.x -= Hvelocity;
+			HunterPixelPos.x -= Hvelocity;
 		}
 		else
 		{
-			if(HunterPosOnPixel.y < NextPixel.y)
+			if(HunterPixelPos.y < NextPixel.y)
 			{
-				HunterPosOnPixel.y += Hvelocity;
+				HunterPixelPos.y += Hvelocity;
 			}
 			else
 			{
-				HunterPosOnPixel.y -= Hvelocity;
+				HunterPixelPos.y -= Hvelocity;
 			}
 		}
 	}
@@ -121,12 +121,11 @@ void Hunter::Stage1()
 	Hvelocity = Run;
 	Discovered = true; 
 	//every 60 frames
-	directPos.x = runner->R_get_Xpos_on_map();
-	directPos.y = runner->R_get_Ypos_on_map();
-	Chase(HunterPosOnMap, directPos);
-	NextPixel = map->mapPosTopixelPos(HunterPosOnMap);
+	directPos = map->getRunnerMapPos();
+	Chase(HunterMapPos, directPos);
+	NextPixel = map->mapPosTopixelPos(HunterMapPos);
 	//
-	//change HunterPosOnPixel
+	//change HunterPixelPos
 	Move();
 }
 
@@ -151,8 +150,8 @@ void Hunter::Stage3()
 	{
 		directPos = Set();
 		HaveFound = false;
-		Chase(HunterPosOnMap, directPos);
-		NextPixel = map->mapPosTopixelPos(HunterPosOnMap);
+		Chase(HunterMapPos, directPos);
+		NextPixel = map->mapPosTopixelPos(HunterMapPos);
 	}
 	else
 	{
@@ -163,14 +162,14 @@ void Hunter::Stage3()
 bool Hunter::Arrive(SDL_Point destination)
 {
 	arrive = false;
-	if(HunterPosOnPixel == destination)
+	if(HunterPixelPos == destination)
 	{
 		arrive = true;
 	}
 	return arrive;
 }
 
-void Hunter::Chase(SDL_Point HunterPosOnMap, SDL_Point directPos)
+void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 {
 	bool visited[row][col];
 	for(int i=0; i<row; i++)
@@ -190,8 +189,8 @@ void Hunter::Chase(SDL_Point HunterPosOnMap, SDL_Point directPos)
 	std::queue<Node> q; //
 	Node init; 
 	init.step = 0;
-	init.way.push_back(HunterPosOnMap);  
-	visited[HunterPosOnMap.x][HunterPosOnMap.y];
+	init.way.push_back(HunterMapPos);  
+	visited[HunterMapPos.x][HunterMapPos.y];
 	q.push(init);
 	
 	while(!q.empty())
