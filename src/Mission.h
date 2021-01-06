@@ -4,11 +4,11 @@
 #include <vector>
 #include <string>
 #include "includeSDL.h"
-#include "Renderable.h"
+#include "BasicObject.h"
 
 extern unsigned int MISSION;
 
-class Mission : public Renderable
+class Mission : public BasicObject
 {
 public:
 	Mission(std::string _name = "");

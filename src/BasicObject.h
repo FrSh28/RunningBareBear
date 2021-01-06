@@ -4,11 +4,11 @@
 #include <string>
 #include "includeSDL.h"
 
-class Renderable
+class BasicObject
 {
 public:
-	Renderable(std::string _name = "");
-	virtual ~Renderable();
+	BasicObject(std::string _name = "");
+	virtual ~BasicObject();
 
 	virtual bool handleEvents(SDL_Event &) = 0;	// return true if handled
 	virtual void update() = 0;

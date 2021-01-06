@@ -5,7 +5,7 @@
 #include<cstdlib>
 character_list character;
 Runner::Runner(character_list character ):
-Renderable("Runner"),Rstrength(100)
+BasicObject("Runner"),Rstrength(100)
 {
     pos_on_screen.x = 640;
     pos_on_screen.y = 360;

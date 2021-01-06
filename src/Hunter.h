@@ -3,8 +3,8 @@
 #include <vector>
 #include <string>
 #include "includeSDL.h"
-#include "Renderable.h"
-class Hunter : public Renderable
+#include "BasicObject.h"
+class Hunter : public BasicObject
 {
 	SDL_Point HunterPosOnMap;
 	SDL_Point directPos;

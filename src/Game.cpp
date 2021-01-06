@@ -77,7 +77,7 @@ bool Game::Init()
 	// for testing
 	Layer *l = new Layer("TestLayer");
 	pushLayer(l);
-	//layers[0]->pushElement(someRenderableObj);
+	//layers[0]->pushElement(someBasicObject);
 	// for testing
 
 	return true;

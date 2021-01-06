@@ -73,12 +73,12 @@ void Layer::render()
 	}
 }
 
-void Layer::pushElement(Renderable *_element)
+void Layer::pushElement(BasicObject *_element)
 {
 	elements.push_back(_element);
 }
 
-void Layer::popElement(Renderable *_element)
+void Layer::popElement(BasicObject *_element)
 {
 	auto iter = find(elements.begin(), elements.begin(), _element);
 	if (iter != elements.end())

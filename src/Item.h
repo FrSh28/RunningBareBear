@@ -5,7 +5,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 #include"includeSDL.h"
-#include"Renderable.h"
+#include"BasicObject.h"
 
 enum ItemList{
 	star,
@@ -13,7 +13,7 @@ enum ItemList{
 	invisible_cloap,
 };
 
-class Item :public Renderable{
+class Item :public BasicObject{
 private:
     SDL_Point pos_on_map;
     SDL_Point pos_on_screen;

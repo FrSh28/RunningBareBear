@@ -5,6 +5,7 @@
 using namespace std;
 
 const int Map::sc_pixelWidth = 50, Map::sc_pixelHeight = 40;
+Map *s_mapInstance = NULL;
 
 Map::Map(Maps index, string _name)
  : name(_name), rowNum(0), colNum(0), width(0), height(0), ground(new Layer("MapGround")), front(new Layer("MapFront"))
@@ -133,19 +134,10 @@ void Map::loadMap(Maps index)
 	height = colNum * sc_pixelHeight;
 }
 
-// for map
-bool comp(const SDL_Point &lhs, const SDL_Point &rhs)
+bool Map::SDL_PointComp::operator()(const SDL_Point &lhs, const SDL_Point &rhs)
 {
-	if(lhs.x < rhs.x)
-		return true;
-	else if(lhs.x > rhs.x)
-		return false;
-	else if(lhs.x == rhs.x)
-	{
-		if(lhs.y < rhs.y)
-			return true;
-		else
-			return false;
-	}
-	return false;
+	if(lhs.x != rhs.x)
+		return lhs.x < rhs.x;
+	else
+		return lhs.y < rhs.y;
 }

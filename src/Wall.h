@@ -4,10 +4,10 @@
 
 #ifndef WALL_H
 #define WALL_H
-#include"Renderable.h"
+#include"BasicObject.h"
 
 
-class Wall :public Renderable
+class Wall :public BasicObject
 {
 private:
     SDL_Rect rec_on_map;

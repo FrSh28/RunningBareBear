@@ -16,9 +16,6 @@ enum ObjOnMap
 	ITEM,
 };
 
-// for map
-bool comp(const SDL_Point &, const SDL_Point &);
-
 class Map
 {
 public:
@@ -47,7 +44,9 @@ private:
 	int rowNum, colNum;
 	std::vector<std::vector<int>> map;
 	int width, height;
-	std::map<SDL_Point, Item *, decltype(comp)*> items;
+	// for map
+	struct SDL_PointComp{ bool operator()(const SDL_Point &, const SDL_Point &); };
+	std::map<SDL_Point, Item *, SDL_PointComp> items;
 
 	Layer *ground;
 	Layer *front;	// overlayer

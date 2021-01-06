@@ -1,12 +1,12 @@
 extern int mode;
 #ifndef RUNNER_H
 #define RUNNER_H
-#include"Renderable.h"
+#include"BasicObject.h"
 #include"includeSDL.h"
 #include"Wall.h"
 
 enum character_list{professor_hsieh,bear,soldier};
-class Runner:public Renderable{
+class Runner:public BasicObject{
 private:
     SDL_Point pos_on_screen;
     SDL_Point pos_on_map;

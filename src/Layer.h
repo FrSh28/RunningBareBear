@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include "includeSDL.h"
-#include "Renderable.h"
+#include "BasicObject.h"
 
 class Layer
 {
@@ -17,8 +17,8 @@ public:
 	virtual void update();					// update changes on current layer
 	virtual void render();					// render elements to mainTexture
 
-	void pushElement(Renderable *);
-	void popElement(Renderable *);
+	void pushElement(BasicObject *);
+	void popElement(BasicObject *);
 
 	inline std::string getName() const { return name; }
 	inline SDL_Texture *getTexture() { return mainTexture; }
@@ -28,7 +28,7 @@ protected:
 	std::string name;
 
 	SDL_Texture* mainTexture;
-	std::vector<Renderable*> elements;
+	std::vector<BasicObject*> elements;
 };
 
 #endif	// LAYER_H

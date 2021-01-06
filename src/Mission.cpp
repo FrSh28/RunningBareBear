@@ -9,7 +9,7 @@ using namespace std;
 unsigned int MISSION = SDL_RegisterEvents(0);
 
 Mission :: Mission(string _name)
- : Renderable(_name)
+ : BasicObject(_name)
 {
 	//posOnWindow->x = ;
 	//posOnWindow->y = ;

@@ -1,26 +1,26 @@
-#include "Renderable.h"
+#include "BasicObject.h"
 using namespace std;
 
-Renderable::Renderable(string _name)
+BasicObject::BasicObject(string _name)
  : name(_name), texture(NULL), posOnWindow({0, 0, 0 ,0}), posOnTexture({0, 0, 0, 0})
 {}
 
-Renderable::~Renderable()
+BasicObject::~BasicObject()
 {
 	// may or may not need to destroy texture and posOnXXX
 }
 
-void Renderable::setTexture(SDL_Texture *tex)
+void BasicObject::setTexture(SDL_Texture *tex)
 {
 	texture = tex;
 }
 
-void Renderable::setPosOnWindow(SDL_Rect &pos)
+void BasicObject::setPosOnWindow(SDL_Rect &pos)
 {
 	posOnWindow = pos;
 }
 
-void Renderable::setPosOnTexture(SDL_Rect &pos)
+void BasicObject::setPosOnTexture(SDL_Rect &pos)
 {
 	posOnTexture = pos;
 }
