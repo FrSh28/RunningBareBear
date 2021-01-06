@@ -7,13 +7,16 @@
 class Hunter : public BasicObject
 {
 	SDL_Point HunterPosOnMap;
+	SDL_Point HunterPosOnPixel;
+	SDL_Point CenterPixel;
 	SDL_Point directPos;
+	SDL_Point findpos;
+	SDL_Point NextPixel;
 	int Hvelocity, Run, Walk;
 	bool SetSuccess;
 	bool Discovered;
 	bool arrive;
 	bool visible;
-	bool HaveFound;
 	int a;
 	int b;
 	double deltaX;
@@ -21,7 +24,9 @@ class Hunter : public BasicObject
 	double findX;
 	double findY;
 	std::queue<SDL_Point> go;
-	
+	Map *map;
+	Runner *runner;
+
 	
 public:
 	Hunter();
@@ -37,6 +42,7 @@ public:
 	void Stage2();
 	void Stage3();
 	void Chase(SDL_Point, SDL_Point);
+	void Move();
 };
 
 
