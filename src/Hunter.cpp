@@ -18,10 +18,10 @@ SDL_Point Hunter::Set()		// Map will handle this --by FrSh
 	SDL_Point SetPos;
 	while(!SetSuccess)
 	{
+		Game &game = Game::GetGame();
+		SetPos.x = game.rdEngine()%(getMapWidth()); 
 		srand(time(0));
-		SetPos.x = rand()%(getMapWidth()); 
-		srand(time(0));
-		SetPos.y = rand()%(getMapHeight());
+		SetPos.y = game.rdEngine()%(getMapHeight());
 		if(WhatsOnTheMap(SetPos.x,SetPos.y) == EMPTY) 
 		{
 			SetSuccess = true;
@@ -29,7 +29,6 @@ SDL_Point Hunter::Set()		// Map will handle this --by FrSh
 		} 
 	}
 }
-//somewhere set initial walk direction
 Hunter::~Hunter()
 {
 	
@@ -152,19 +151,20 @@ void Hunter::Chase(SDL_Point HunterPosOnMap, SDL_Point directPos)
 		std::vector<SDL_Point> way;
 		Node(){} 
 		~Node(){}
+		Node(const Node &x){}
 	};
 	
-	std::queue<Node*> q; 
-	Node* init = new Node; 
-	init->step = 0;
-	init->way.push_back(HunterPosOnMap);  
+	std::queue<Node> q; //
+	Node init; 
+	init.step = 0;
+	init.way.push_back(HunterPosOnMap);  
 	visited[HunterPosOnMap.x][HunterPosOnMap.y];
 	q.push(init);
 	while(!q.empty())
 	{
-		Node* curNode = q.front(); 
+		Node curNode = q.front(); //
 		q.pop();
-		SDL_Point curP = curNode->way.back();
+		SDL_Point curP = curNode.way.back();
 		//right
 		if(WhatsOnTheMap(curP.x + 1, curP.y) != WALL && !visited[curP.x + 1][curP.y])
 		{
@@ -176,23 +176,23 @@ void Hunter::Chase(SDL_Point HunterPosOnMap, SDL_Point directPos)
 				}
 				for(int i=0; i<step; i++)
 				{
-					go.push(curNode->way[i]);
+					go.push(curNode.way[i]);
 				}
 				break;
 			}
 			else
 			{
 				visited[curP.x + 1][curP.y] = true;
-				Node* tmp = new Node;
-				tmp->step = curNode->step + 1;
-				for(int i=0; i<tmp->step; i++)
+				Node tmp;
+				tmp.step = curNode.step + 1;
+				for(int i=0; i<tmp.step; i++)
 				{
-					tmp->way.push_back(curNode->way[i]);
+					tmp.way.push_back(curNode.way[i]);
 				}
 				SDL_Point add;
 				add.x = curP.x + 1;
 				add.y = curP.y;
-				tmp->way.push_back(add);
+				tmp.way.push_back(add);
 				q.push(tmp);
 			}
 		}
@@ -207,23 +207,23 @@ void Hunter::Chase(SDL_Point HunterPosOnMap, SDL_Point directPos)
 				}
 				for(int i=0; i<step; i++)
 				{
-					go.push(curNode->way[i]);
+					go.push(curNode.way[i]);
 				}
 				break;
 			}
 			else
 			{
 				visited[curP.x - 1][curP.y] = true;
-				Node* tmp = new Node;
-				tmp->step = curNode->step + 1;
+				Node tmp;
+				tmp.step = curNode.step + 1;
 				for(int i=0; i<step; i++)
 				{
-					tmp->way.push_back(curNode->way[i]);
+					tmp.way.push_back(curNode.way[i]);
 				}
 				SDL_Point add;
 				add.x = curP.x - 1;
 				add.y = curP.y;
-				tmp->way.push_back(add);
+				tmp.way.push_back(add);
 				q.push(tmp);
 			}
 		}
@@ -238,23 +238,23 @@ void Hunter::Chase(SDL_Point HunterPosOnMap, SDL_Point directPos)
 				}
 				for(int i=0; i<step; i++)
 				{
-					go.push(curNode->way[i]);
+					go.push(curNode.way[i]);
 				}
 				break;				
 			}
 			else
 			{
 				visited[curP.x][curP.y + 1] = true;
-				Node* tmp = new Node;
-				tmp->step = curNode->step + 1;
+				Node tmp;
+				tmp.step = curNode.step + 1;
 				for(int i=0; i<step; i++)
 				{
-					tmp->way.push_back(curNode->way[i]);
+					tmp.way.push_back(curNode.way[i]);
 				}
 				SDL_Point add;
 				add.x = curP.x;
 				add.y = curP.y + 1;
-				tmp->way.push_back(add);
+				tmp.way.push_back(add);
 				q.push(tmp);
 			}
 		}
@@ -269,27 +269,26 @@ void Hunter::Chase(SDL_Point HunterPosOnMap, SDL_Point directPos)
 				}
 				for(int i=0; i<step; i++)
 				{
-					go.push(curNode->way[i]);
+					go.push(curNode.way[i]);
 				}
 				break;				
 			}
 			else
 			{
 				visited[curP.x][curP.y - 1] = true;
-				Node* tmp = new Node;
-				tmp->step = curNode->step + 1;
+				Node tmp;
+				tmp.step = curNode.step + 1;
 				for(int i=0; i<step; i++)
 				{
-					tmp->way.push_back(curNode->way[i]);
+					tmp.way.push_back(curNode.way[i]);
 				}
 				SDL_Point add;
 				add.x = curP.x;
 				add.y = curP.y - 1;
-				tmp->way.push_back(add);
+				tmp.way.push_back(add);
 				q.push(tmp);
 			}
 		}
-		delete curNode;
 	}
 	while(!q.empty())
 	{

@@ -76,7 +76,7 @@ bool Mission1_1 :: handleEvents(SDL_Event &e)
         if(inside)
         {
         	Game &game = Game::GetGame();
-			game.pushLayer(new missionLayer);
+			game.pushOverlayer(new missionLayer);
 		}
 	}
 	else if(e.type == MISSION) //可能是按下E鍵之類的 
@@ -124,7 +124,7 @@ bool Mission1_2 :: handleEvents(SDL_Event &e)
         if(inside)
         {
         	Game &game = Game::GetGame();
-			game.pushLayer(new missionLayer);
+			game.pushOverlayer(new missionLayer);
 		}
 	}
 	else if(e.type == MISSION) //可能是按下E鍵之類的 
@@ -171,7 +171,7 @@ bool Mission1_3 :: handleEvents(SDL_Event &e)
         if(inside)
         {
         	Game &game = Game::GetGame();
-			game.pushLayer(new missionLayer);
+			game.pushOverlayer(new missionLayer);
 		}
 	}
 	else if(e.type == MISSION) //可能是按下E鍵之類的 
@@ -219,7 +219,7 @@ bool Mission2_1 :: handleEvents(SDL_Event &e)
         if(inside)
         {
         	Game &game = Game::GetGame();
-			game.pushLayer(new missionLayer);
+			game.pushOverlayer(new missionLayer);
 		}
 	}
 	else if(e.type == MISSION) //可能是按下E鍵之類的 
@@ -267,7 +267,7 @@ bool Mission2_2 :: handleEvents(SDL_Event &e)
         if(inside)
         {
         	Game &game = Game::GetGame();
-			game.pushLayer(new missionLayer);
+			game.pushOverlayer(new missionLayer);
 		}
 	}
 	else if(e.type == MISSION) //可能是按下E鍵之類的 
@@ -314,7 +314,7 @@ bool Mission2_3 :: handleEvents(SDL_Event &e)
         if(inside)
         {
         	Game &game = Game::GetGame();
-			game.pushLayer(new missionLayer);
+			game.pushOverlayer(new missionLayer);
 		}
 	}
 	else if(e.type == MISSION) //可能是按下E鍵之類的 
