@@ -7,8 +7,8 @@ extern int mode;
 #include"Map.h"
 #include"Game.h"
 
-enum character_list{professor_hsieh,bear,soldier};
-enum face {Down,Left,Right,Up};
+enum character_list{BEAR};
+enum face {DOWN,LEFT,RIGHT,UP};
 class Runner:public BasicObject{
 private:
     std::string username;

@@ -30,22 +30,10 @@ height(32), updateRate(6), direction(Down), CurrentClip(&Clip[0])
 
         switch(character)
         {
-            case professor_hsieh:
-                velocity = 00000;
-                sprint_velocity = 00000;
-                username="professor";
-                break;
-
-            case bear:
+            case BEAR:
                 velocity = 00000;
                 sprint_velocity = 00000;
                 username = "bear";
-                break;
-
-            case soldier:
-                velocity = 00000;
-                sprint_velocity = 00000;
-                username = "soldier";
                 break;
         }
     }
@@ -98,19 +86,19 @@ bool Runner::handleEvents(SDL_Event &e)
                     return true;
                 case SDLK_s:
                     velocity_y += velocity;
-                    direction = Down;
+                    direction = DOWN;
                     return  true;
                 case SDLK_w:
                     velocity -= velocity;
-                    direction = Up;
+                    direction = UP;
                     return true;
                 case SDLK_d:
                     velocity_x += velocity;
-                    direction = Right;
+                    direction = RIGHT;
                     return true;
                 case SDLK_a:
                     velocity_x -= velocity;
-                    direction = Left;
+                    direction = LEFT;
                     return true;
                 case SDLK_e:
                     pickup = true;
@@ -125,6 +113,7 @@ bool Runner::handleEvents(SDL_Event &e)
             {
                 case SDLK_SPACE:
                     velocity -= sprint_velocity;
+                    updateRate = 6;
                     return true;
                 case SDLK_UP:
                     velocity_y -= velocity;

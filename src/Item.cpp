@@ -1,23 +1,24 @@
 //
 // Created by 劉瑄穎 on 2021/1/2.
 //
-
 #include "Item.h"
-Item* createItem(ItemList&list)
+Item* createItem(ItemList& list)
 {
     //a random item
     switch (list)
     {
-        case Star:
+        case STAR:
             return  new Star;
-        case Gun:
+        case GUN:
             ;
-        case Invisible_Cloak:
+        case INVISIBLE_CLOAK:
             ;
-        case Water:
+        case WATER:
             ;
-        case Chicken_Leg:
+        case CHICKEN_LEG:
             ;
 
     }
 }
+
+ItemList Item::getItemType() const {return type;}
