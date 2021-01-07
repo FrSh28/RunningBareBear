@@ -1,28 +1,28 @@
 #include "includeSDL.h"
 #include "Game.h"
-#include "Buttom.h"
-#include<cmath>
+#include "Button.h"
+#include <cmath>
 /*
-Buttom::buttoms[START] = {x,y,w,h};
-Buttom::buttoms[PAUSE]
-Buttom::buttoms[LEAVE]
-Buttom::buttoms[RESUME]
-Buttom::buttoms[SETTING]
-Buttom::buttoms[OK]
+Button::buttons[START] = {x,y,w,h};
+Button::buttons[STOP]
+Button::buttons[LEAVE]
+Button::buttons[RESUME]
+Button::buttons[SETTING]
+Button::buttons[OK]
 */
-SDL_Rect Buttom::buttoms[TOTAL_BUTTOMS] = {SDL_Rect({x,y,w,h}), } 
+SDL_Rect Button::buttons[TOTAL_BUTTOMS] = {SDL_Rect({x,y,w,h}), } 
 
-Buttom::Buttom()
+Button::Button()
 {
 	
 }
 
-Buttom::~Buttom()
+Button::~Button()
 {
 	
 }
 
-void Buttom::handleEvents(SDL_Event &e)
+void Button::handleEvents(SDL_Event &e)
 {
 	if(e.type == SDL_MOUSEMOTION)
 	{
@@ -32,9 +32,9 @@ void Buttom::handleEvents(SDL_Event &e)
 		{
 			InsideStart = true;
 			SDL_Point StartCenter;
-			StartCenter.x = buttoms[START].x + buttoms[START].w/2;
-			StartCenter.y = buttoms[START].y + buttoms[START].h/2;
-			if(pow((X-StartCenter.x), 2) + pow((Y-StartCenter.y), 2) > pow(buttoms[START].w/2, 2) )
+			StartCenter.x = buttons[START].x + buttons[START].w/2;
+			StartCenter.y = buttons[START].y + buttons[START].h/2;
+			if(pow((X-StartCenter.x), 2) + pow((Y-StartCenter.y), 2) > pow(buttons[START].w/2, 2) )
 			{
 				InsideStart = false;
 			}
@@ -44,12 +44,12 @@ void Buttom::handleEvents(SDL_Event &e)
 		else if() //at playing page
 		{
 			InsidePause = true;
-			if(x < buttoms[PAUSE].x || x > (buttoms[PAUSE].x + buttoms[PAUSE].w) || 
-			   y < buttoms[PAUSE].y || y > (buttoms[PAUSE].y + buttoms[PAUSE].h))
+			if(x < buttons[PAUSE].x || x > (buttons[PAUSE].x + buttons[PAUSE].w) || 
+			   y < buttons[PAUSE].y || y > (buttons[PAUSE].y + buttons[PAUSE].h))
 			{
 				InsidePause = false;
 			}
-			//render pause buttom
+			//render pause button
 		}
 		else if() //at pause page 
 		{
@@ -127,7 +127,7 @@ void Buttom::handleEvents(SDL_Event &e)
 	}
 }
 
-void Buttom::update()
+void Button::update()
 {
 	if() //game ends
 	{

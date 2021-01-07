@@ -1,9 +1,9 @@
-#ifndef BUTTOM_H
-#define BUTTOM_H
+#ifndef BUTTON_H
+#define BUTTON_H
 #include "includeSDL.h"
 #include "BasicObject.h"
 
-class Buttom : public BasicObject
+class Button : public BasicObject
 {
 	bool InsideStart;
 	bool InsidePause;
@@ -13,17 +13,17 @@ class Buttom : public BasicObject
 	bool InsideLeaveSetting;
 	bool InsideOk;
 	public:
-	static SDL_Rect buttoms[TOTAL_BUTTOMS];
+	static SDL_Rect buttons[TOTAL_BUTTOMS];
 	void handleEvents(SDL_Event &e);
 	void update();
-	Buttom();
-	~Buttom();
+	Button();
+	~Button();
 	
 }
 
-enum buttom
+enum button
 {
 	START, PAUSE, LEAVE, RESUME, SETTING, LEAVESETTING, OK, TOTAL_BUTTOMS
 };
 
-#endif
+#endif // BUTTON_H
