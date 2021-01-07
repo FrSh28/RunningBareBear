@@ -5,6 +5,13 @@
 
 class Buttom : public BasicObject
 {
+	bool InsideStart;
+	bool InsidePause;
+	bool InsideLeave;
+	bool InsideResume;
+	bool InsideSetting;
+	bool InsideLeaveSetting;
+	bool InsideOk;
 	public:
 	static SDL_Rect buttoms[TOTAL_BUTTOMS];
 	void handleEvents(SDL_Event &e);
@@ -16,7 +23,7 @@ class Buttom : public BasicObject
 
 enum buttom
 {
-	START, STOP, LEAVE, RESUME, SETTING, OK, TOTAL_BUTTOMS
+	START, PAUSE, LEAVE, RESUME, SETTING, LEAVESETTING, OK, TOTAL_BUTTOMS
 };
 
 #endif

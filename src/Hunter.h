@@ -28,7 +28,6 @@ class Hunter : public BasicObject
 	std::queue<SDL_Point> go;
 	Map *map;
 	Runner *runner;
-
 	
 public:
 	Hunter();
