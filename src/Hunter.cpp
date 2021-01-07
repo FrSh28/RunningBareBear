@@ -32,7 +32,7 @@ Hunter::~Hunter()
 	
 }
 
-void Hunter::handleEvents(SDL_Event &e)
+bool Hunter::handleEvents(SDL_Event &e)
 {
 	
 }
@@ -222,7 +222,7 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 				}
 				for(int i=0; i<=tmp.step; i++)
 				{
-					go.push(curNode.way[i]);
+					go.push(tmp.way[i]);
 				}
 				break;
 			}
@@ -255,7 +255,7 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 				}
 				for(int i=0; i<=tmp.step; i++)
 				{
-					go.push(curNode.way[i]);
+					go.push(tmp.way[i]);
 				}
 				break;
 			}
@@ -288,7 +288,7 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 				}
 				for(int i=0; i<=tmp.step; i++)
 				{
-					go.push(curNode.way[i]);
+					go.push(tmp.way[i]);
 				}
 				break;
 			}
@@ -321,7 +321,7 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 				}
 				for(int i=0; i<=tmp.step; i++)
 				{
-					go.push(curNode.way[i]);
+					go.push(tmp.way[i]);
 				}
 				break;
 			}

@@ -32,7 +32,7 @@ class Hunter : public BasicObject
 public:
 	Hunter();
 	~Hunter();
-	void handleEvents(SDL_Event &e);
+	bool handleEvents(SDL_Event &e);
 	void update();
 	SDL_Point Set();
 	SDL_Point getMapPos() {return HunterMapPos;}

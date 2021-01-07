@@ -3,6 +3,7 @@
 #include "Button.h"
 #include <cmath>
 /*
+	START, PAUSE, LEAVE, RESUME, SETTING, LEAVESETTING, OK, TOTAL_BUTTOMS
 Button::buttons[START] = {x,y,w,h};
 Button::buttons[STOP]
 Button::buttons[LEAVE]
@@ -10,9 +11,10 @@ Button::buttons[RESUME]
 Button::buttons[SETTING]
 Button::buttons[OK]
 */
-SDL_Rect Button::buttons[TOTAL_BUTTOMS] = {SDL_Rect({x,y,w,h}), } 
+SDL_Rect Button::button_type[TOTAL_BUTTOMS] = {SDL_Rect({x,y,w,h}), } 
 
-Button::Button()
+Button::Button(button_type tmp) :
+	type(tmp)
 {
 	
 }
@@ -21,118 +23,105 @@ Button::~Button()
 {
 	
 }
-
-void Button::handleEvents(SDL_Event &e)
+bool Button::handleEvents(SDL_Event &e)
 {
-	if(e.type == SDL_MOUSEMOTION)
+	int X,Y;
+	SDL_GetMouseState( &X, &Y );
+	switch(type)
 	{
-		int X,Y;
-		SDL_GetMouseState( &X, &Y );
-		if() //at start page(initial)
-		{
-			InsideStart = true;
-			SDL_Point StartCenter;
-			StartCenter.x = buttons[START].x + buttons[START].w/2;
-			StartCenter.y = buttons[START].y + buttons[START].h/2;
-			if(pow((X-StartCenter.x), 2) + pow((Y-StartCenter.y), 2) > pow(buttons[START].w/2, 2) )
+		case START:
+			if(e.type == SDL_MOUSEMOTION)
 			{
-				InsideStart = false;
+				
+				InsideStart = true;
+				SDL_Point StartCenter;
+				StartCenter.x = buttons[START].x + buttons[START].w/2;
+				StartCenter.y = buttons[START].y + buttons[START].h/2;
+				if((pow( (X-StartCenter.x), 2) + pow((Y-StartCenter.y), 2) ) > pow(buttons[START].w/2, 2) )
+				{
+					InsideStart = false;
+				}
+				if(InsideStart) 
+					rectOnTexture = SDL_Rect( {button_type[START].x+button_type[START].w, button_type[START].y, button_type[START].w, button_type[START].h} );
+				else 
+					rectOnTexture = SDL_Rect( {button_type[START].x, button_type[START].y, button_type[START].w, button_type[START].h} );
 			}
-			if(InsideStart) //render start2
-			else //render start1
-		}
-		else if() //at playing page
-		{
-			InsidePause = true;
-			if(x < buttons[PAUSE].x || x > (buttons[PAUSE].x + buttons[PAUSE].w) || 
-			   y < buttons[PAUSE].y || y > (buttons[PAUSE].y + buttons[PAUSE].h))
+			else if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT && InsideStart)
 			{
-				InsidePause = false;
+				//some user event
 			}
-			//render pause button
-		}
-		else if() //at pause page 
-		{
-			InsideLeave = true;
-			InsideResume = true;
-			InsideSetting = true;
-			if()
+			break;
+		case PAUSE:
+			rectOnTexture = SDL_Rect( {button_type[PAUSE].x, button_type[PAUSE].y, button_type[PAUSE].w, button_type[PAUSE].h} );
+			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
-				InsideLeave = false;
+				//determine whether it is inside pause
+				if(InsidePause)
+				{
+					//some user event
+				}
 			}
-			if()
+			break;
+		case LEAVE:
+			rectOnTexture = SDL_Rect( {button_type[LEAVE].x, button_type[LEAVE].y, button_type[LEAVE].w, button_type[LEAVE].h} );
+			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
-				InsideResume = false;
+				//determine whether it is inside LEAVE
+				if(InsideLave)
+				{
+					//some user event
+				}
 			}
-			if()
+			break;
+		case RESUME:
+			rectOnTexture = SDL_Rect( {button_type[RESUME].x, button_type[RESUME].y, button_type[RESUME].w, button_type[RESUME].h} );
+			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
-				InsideSetting = false;
+				//determine whether it is inside RESUME
+				if(InsideResume)
+				{
+					//some user event
+				}
 			}
-		}
-		else if() //at setting page  
-		{
-			InsideLeaveSetting = true;
-			if()
+			break;
+		case SETTING:
+			rectOnTexture = SDL_Rect( {button_type[SETTING].x, button_type[SETTING].y, button_type[SETTING].w, button_type[SETTING].h} );
+			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
-				InsideLeaveSetting = false;
+				//determine whether it is inside SETTING
+				if(InsideSetting)
+				{
+					//some user event
+				}
 			}
-		}
-		else //at end page
-		{
-			InsideOk = true;
-			if()
+			break;
+		case LEAVESETTING:
+			rectOnTexture = SDL_Rect( {button_type[LEAVESETTING].x, button_type[LEAVESETTING].y, button_type[LEAVESETTING].w, button_type[LEAVESETTING].h} );
+			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
-				InsideOk - false;
+				//determine whether it is inside LEAVESETTING
+				if(InsideLeaveSetting)
+				{
+					//some user event
+				}
 			}
-		}
-		
-	}
-	if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
-	{
-		if() //at start page && InsideStart
-		{
-			//at start page = false
-			//at playing page = true
-		}
-		else if() //at playing page && InsidePause
-		{
-			//at playing page = false
-			//at puase page = true
-		}
-		else if() //at pause page && InsideLeave
-		{
-			//at pause page = false
-			//at start page = true
-		}
-		else if() //at pause page && InsideResume
-		{
-			//at pause page = false  
-			//at playing page = true
-		}
-		else if() //at pause page && InsideSetting
-		{
-			//at pause page = false
-			//at setting page = true
-		}
-		else if() //at setting page && InsideColseSetting
-		{
-			//at setting page = false
-			//at pause page = true
-		}
-		else if() //at end page && InsideOk
-		{
-			//at end page = false
-			//at start page = true
-		}
+			break;
+		case OK:
+			rectOnTexture = SDL_Rect( {button_type[OK].x, button_type[OK].y, button_type[OK].w, button_type[OK].h} );
+			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			{
+				//determine whether it is inside OK
+				if(InsideOk)
+				{
+					//some user event
+				}
+			}
+			break;
 	}
 }
 
 void Button::update()
 {
-	if() //game ends
-	{
-		//set every page into false
-		//set end page into true
-	}
+
 }
 

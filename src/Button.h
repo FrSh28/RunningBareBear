@@ -2,6 +2,10 @@
 #define BUTTON_H
 #include "includeSDL.h"
 #include "BasicObject.h"
+enum button_type
+{
+	START, PAUSE, LEAVE, RESUME, SETTING, LEAVESETTING, OK, TOTAL_BUTTOMS
+};
 
 class Button : public BasicObject
 {
@@ -12,18 +16,16 @@ class Button : public BasicObject
 	bool InsideSetting;
 	bool InsideLeaveSetting;
 	bool InsideOk;
+	button_type type;
 	public:
 	static SDL_Rect buttons[TOTAL_BUTTOMS];
-	void handleEvents(SDL_Event &e);
+	bool handleEvents(SDL_Event &e);
 	void update();
-	Button();
+	Button(button_type tmp);
 	~Button();
 	
 }
 
-enum button
-{
-	START, PAUSE, LEAVE, RESUME, SETTING, LEAVESETTING, OK, TOTAL_BUTTOMS
-};
+
 
 #endif // BUTTON_H
