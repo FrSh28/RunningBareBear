@@ -34,12 +34,20 @@ TTF_Font *loadFont(Fonts index, int ptSize);
 Mix_Music *loadMusic(Musics index);
 std::ifstream *openMapFile(Maps index);
 
+void freeImage(Images index);
+void freeFont(Fonts index);
+void freeMusic(Musics index);
+
 namespace Files
 {
 	extern std::string P_Images[IMAGE_COUNT];
 	extern std::string P_Fonts[FONT_COUNT];
 	extern std::string P_Musics[MUSIC_COUNT];
 	extern std::string P_Maps[MAP_COUNT];
-}
+
+	extern SDL_Texture *loadedImage[IMAGE_COUNT];
+	extern TTF_Font *loadedFont[FONT_COUNT];
+	extern Mix_Music *loadedMusic[MUSIC_COUNT];
+};
 
 #endif	// FILES_H
