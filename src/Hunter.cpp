@@ -57,7 +57,7 @@ void Hunter::update()
 			Stage3();
 		}
 	}
-	rectOnTexture = SDL_Rect({HunterPixelPos.x, HunterPixelPos.y, HunterWidth, HunterHeight});
+	rectOnTexture = SDL_Rect({ , , , });
 }
 
 bool Hunter::RunnerVisible()
