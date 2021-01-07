@@ -10,23 +10,23 @@ public:
 	BasicObject(std::string _name = "", bool _evEn = true, bool _upEn = true, bool _rdEn = true);
 	virtual ~BasicObject();
 
-	void setEventEnable(bool _evEn);
-	void setUpdateEnable(bool _upEn);
-	void setRenderEnable(bool _rdEn);
+	inline void setEventEnable(bool _evEn)  { eventEnable = _evEn; }
+	inline void setUpdateEnable(bool _upEn) { eventEnable = _upEn; }
+	inline void setRenderEnable(bool _rdEn) { eventEnable = _rdEn; }
 
 	virtual bool handleEvents(SDL_Event &);	// return true if handled
-	virtual void update();
+	virtual bool update();
 
-	void setTexture(SDL_Texture *);
-	void setRectOnScreen(SDL_Rect &);
-	void setRectOnTexture(SDL_Rect &);
+	inline void setTexture(SDL_Texture *tex) { texture = tex; }
+	inline void setRectOnScreen(SDL_Rect &rect)  { rectOnScreen  = rect; }
+	inline void setRectOnTexture(SDL_Rect &rect) { rectOnTexture = rect; }
 
-	inline std::string getName()  const { return name; }
+	inline std::string getName() const { return name; }
 	inline bool isEventEnable()  const { return eventEnable; }
 	inline bool isUpdateEnable() const { return updateEnable; }
 	inline bool isRenderEnable() const { return renderEnable; }
 	inline SDL_Texture *getTexture() const { return texture; }
-	inline const SDL_Rect *getRectOnScreen() const { return &rectOnScreen; }
+	inline const SDL_Rect *getRectOnScreen()  const { return &rectOnScreen; }
 	inline const SDL_Rect *getRectOnTexture() const { return &rectOnTexture; }
 
 protected:

@@ -9,26 +9,8 @@ BasicObject::BasicObject(string _name, bool _evEn, bool _upEn, bool _rdEn)
 BasicObject::~BasicObject()
 {}
 
-void BasicObject::setEventEnable(bool _evEn)
-{ eventEnable = _evEn; }
-
-void BasicObject::setUpdateEnable(bool _upEn)
-{ updateEnable = _upEn; }
-
-void BasicObject::setRenderEnable(bool _rdEn)
-{ renderEnable = _rdEn; }
-
-bool BasicObject::handleEvents(SDL_Event &)	// return true if handled
+bool BasicObject::handleEvents(SDL_Event &event)	// return true if handled
 { return false; }
 
-void BasicObject::update()
-{}
-
-void BasicObject::setTexture(SDL_Texture *tex)
-{ texture = tex; }
-
-void BasicObject::setRectOnScreen(SDL_Rect &rect)
-{ rectOnScreen = rect; }
-
-void BasicObject::setRectOnTexture(SDL_Rect &rect)
-{ rectOnTexture = rect; }
+bool BasicObject::update()
+{ return false; }
