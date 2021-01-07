@@ -1,4 +1,11 @@
 {
+	"type" : GAMESTATE_CHANGE,
+	"code" : 0,
+	"data1" : NULL,
+	"data2" : NULL,
+	"trigger" : Button|Map,
+},
+{
 	"type" : CHARACTER_INTERACT,
 	"code" : (SDL_Keycode)the key that user pressed,
 	"data1" : (SDL_Point *)where the event happened(in mapPos),
