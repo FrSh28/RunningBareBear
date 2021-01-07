@@ -2,25 +2,15 @@
 // Created by 劉瑄穎 on 2020/12/31.
 //
 #include "Runner.h"
-#include<cstdlib>
 character_list character;
-Runner::Runner(character_list character ):
-BasicObject("Runner"),Rstrength(100)
-{
-    pos_on_screen.x = 640;
-    pos_on_screen.y = 360;
-    srand(time(0));
-    //pos_on_map.x = rand() % Mapwidth;
-    srand(time(0));
-    //pos_on_map.y =rand() % Mapheight;
-    while(pos_on_map is wall)   // Map will handle this --by FrSh
-    {
-        srand(time(0));
-        //pos_on_map.x = rand() % Mapwidth;
-        srand(time(0));
-        //pos_on_map.y =rand() % Mapheight;
-    }
 
+const int WALKING_ANIMATION_FRAMES = 12;
+SDL_Rect Current_Clip [WALKING_ANIMATION_FRAMES];
+
+Runner::Runner(character_list character ):
+BasicObject("Runner"),Rstrength(100),map(&Map::getMap())
+{
+    initclips();
     if (mode==1)
     {
         //texture = loadMedia(TEXTURE_XXX);     // ref Files.h --by FrSh
@@ -54,21 +44,37 @@ BasicObject("Runner"),Rstrength(100)
                 break;
         }
     }
+    // set big grid on map
+    setMapPos(MapPos);
+    // set small grid on map (center)
+    setPixelPos(PixelPos);
+    // change PixelPos to top left
+    PixelPos.x -= runner width/2 ;
+    PixelPos.y -= runner height/2;
+    // set rect for collision
     rec_on_map.x = pos_on_map.x;
     rec_on_map.y = pos_on_map.y;
     rec_on_map.w = 40;
     rec_on_map.h = 32;
 }
 
-Runner::~Runner()
+Runner::~Runner(){/*show win or lose*/}
+SDL_Point Runner::getMapPos()const{return MapPos;}       // get big grid on map
+SDL_Point Runner::getPixelPos()const                     // get small grid on map (center)
 {
-    //show win or lose
-
+    SDL_Point center;
+    center.x = PixelPos.x + character width/2;
+    center.y = PixelPos.y + character height/2;
+    return center;
 }
 
-// may be handled by Map --by FrSh
-int Runner::R_get_Xpos_on_map() const{return pos_on_map.x;}
-int Runner::R_get_Ypos_on_map() const {return pos_on_map.y;}
+void Runner::updategrid(SDL_Point& currentpoint)
+{
+    SDL_Point tmp;
+    tmp.x = currentpoint.x + rec_on_map.w/2;
+    tmp.y = currentpoint.y + rec_on_map.h/2;
+    grid = Map::pixelposition
+}
 
 bool Runner::handleEvents(SDL_Event &e)
 {
@@ -126,10 +132,23 @@ void Runner::move()
 
 void Runner::update()
 {
+    static int frame = 0;
+
     move();
+    if(Rvelocity_x!=0||Rvelocity_y!=0)
+    {
+        Rstrength -= 0.05;
+        if(Rvelocity_x == abs(sprint_velocity+Rvelocity)||Rvelocity_y == abs(sprint_velocity+Rvelocity))
+        {Rstrength -= 0.05;}
+    }
     //posOnWindow = Map::convertPos(pos);
     rec_on_map.x = pos_on_map.x;
-    rec_on_map.y = pos_on_map.y+50;
+    rec_on_map.y = pos_on_map.y;
+    frame ++;
+    updategrid(pos_on_map);
+
+
+    if(frame>1200){frame=0;}
 
 }
 
@@ -138,10 +157,10 @@ bool Runner::collision(Wall* wall)
     bool collision = true;
     if(wall !=NULL)
     {
-        if (rec_on_map.x>=wall.rec_on_map.x+wall.rec_on_map.w){return false;}
-        if(rec_on_map.x+w=<wall.rec_on_map.x){return false;}
-        if(rec_on_map.y=<wall.rec_on_map.y+wall.rec_on_map.h){return false;}
-        if(rec_on_map.y+rec_on_map.h>=wall.rec_on_map.y){return false;}
+        if (rec_on_map.x > wall.rec_on_map.x+wall.rec_on_map.w){return false;}
+        if(rec_on_map.x+rec_on_map.w < wall.rec_on_map.x){return false;}
+        if(rec_on_map.y < wall.rec_on_map.y+wall.rec_on_map.h){return false;}
+        if(rec_on_map.y+rec_on_map.h > wall.rec_on_map.y){return false;}
     }
     return collision;
 
@@ -183,11 +202,74 @@ Wall* Runner::getwall()
     //check below grid
     if(Rvelocity_y>0)
     {
-        if(pos_on_map.x+1 is wall)
+        if(pos_on_map.y+1 is wall)
         {
             //wall = the wall below;
             return wall;
         }
     }
     return wall;
+}
+
+void Runner::initclips()                // init render clips
+{
+    Current_Clip[0].x = 0000;
+    Current_Clip[0].y = 0000;
+    Current_Clip[0].w = 0000;
+    Current_Clip[0].h = 0000;
+
+    Current_Clip[1].x = 0000;
+    Current_Clip[1].y = 0000;
+    Current_Clip[1].w = 0000;
+    Current_Clip[1].h = 0000;
+
+    Current_Clip[2].x = 0000;
+    Current_Clip[2].y = 0000;
+    Current_Clip[2].w = 0000;
+    Current_Clip[2].h = 0000;
+
+    Current_Clip[3].x = 0000;
+    Current_Clip[3].y = 0000;
+    Current_Clip[3].w = 0000;
+    Current_Clip[3].h = 0000;
+
+    Current_Clip[4].x = 0000;
+    Current_Clip[4].y = 0000;
+    Current_Clip[4].w = 0000;
+    Current_Clip[4].h = 0000;
+
+    Current_Clip[5].x = 0000;
+    Current_Clip[5].y = 0000;
+    Current_Clip[5].w = 0000;
+    Current_Clip[5].h = 0000;
+
+    Current_Clip[6].x = 0000;
+    Current_Clip[6].y = 0000;
+    Current_Clip[6].w = 0000;
+    Current_Clip[6].h = 0000;
+
+    Current_Clip[7].x = 0000;
+    Current_Clip[7].y = 0000;
+    Current_Clip[7].w = 0000;
+    Current_Clip[7].h = 0000;
+
+    Current_Clip[8].x = 0000;
+    Current_Clip[8].y = 0000;
+    Current_Clip[8].w = 0000;
+    Current_Clip[8].h = 0000;
+
+    Current_Clip[9].x = 0000;
+    Current_Clip[9].y = 0000;
+    Current_Clip[9].w = 0000;
+    Current_Clip[9].h = 0000;
+
+    Current_Clip[10].x = 0000;
+    Current_Clip[10].y = 0000;
+    Current_Clip[10].w = 0000;
+    Current_Clip[10].h = 0000;
+
+    Current_Clip[11].x = 0000;
+    Current_Clip[11].y = 0000;
+    Current_Clip[11].w = 0000;
+    Current_Clip[11].h = 0000;
 }

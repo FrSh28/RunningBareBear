@@ -7,24 +7,52 @@
 #include"includeSDL.h"
 #include"BasicObject.h"
 
-enum ItemList{
-	star,
-	gun,
-	invisible_cloap,
-};
+enum ItemList{Star,Gun,Invisible_Cloak,Water,Chicken_Leg,Total_Item};
 
 class Item :public BasicObject{
 private:
     SDL_Point pos_on_map;
     SDL_Point pos_on_screen;
-    ItemList type;
 
 public:
-    void createitem(ItemList&);
     bool handleEvents(SDL_Event& e);
     void update();
-    bool use();
 };
+
+Item* createItem(ItemList& list);
+
+class Star:public Item
+{
+
+public:
+    Star();
+
+
+};
+
+class Gun:public Item
+{
+public:
+    Gun();
+};
+
+class Invisible_Cloak:public Item
+{
+public:
+    Invisible_Cloak();
+};
+class Water:public Item
+{
+public:
+    Water();
+};
+class Chicken_Leg:public Item
+{
+public:
+    Chicken_Leg();
+};
+
+
 
 
 #endif //ITEM_H
