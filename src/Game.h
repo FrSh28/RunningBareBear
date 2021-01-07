@@ -6,6 +6,16 @@
 #include <random>
 #include "includeSDL.h"
 #include "Layer.h"
+#include "Map.h"
+
+enum GameState
+{
+	STARTMENU,
+	LOADING,
+	GAME,
+	PAUSE,
+	END,
+};
 
 class Game
 {
@@ -24,6 +34,7 @@ public:
 	void pushOverlayer(Layer *);	// push new overlayer to layers
 	void popLayer(Layer *);		// pop layer from layers
 	void popOverlayer(Layer *);	// pop overlayer from layers
+	inline void setGameMap(Map *_map) { gameMap = _map; }
 
 	inline bool isRunning() const { return running; }
 	inline std::string getName() const { return name; }
@@ -40,14 +51,16 @@ private:
 	unsigned int width;
 	unsigned int height;
 	unsigned int frameRate;
+	bool running;
+	GameState state;
 
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 	SDL_Event event;
-	bool running;
 
 	std::vector<Layer*> layers;
 	unsigned int layerInsertIndex;
+	Map *gameMap;
 
 	unsigned int startTime;
 	unsigned int frameCount;

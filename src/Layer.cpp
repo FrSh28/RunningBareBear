@@ -4,8 +4,8 @@
 #include "Files.h"
 using namespace std;
 
-Layer::Layer(string _name)
- : name(_name), mainTexture(NULL)
+Layer::Layer(string _name, bool _active)
+ : name(_name), active(_active), changed(true), mainTexture(NULL)
 {
 	Game &game = Game::GetGame();
 	mainTexture = SDL_CreateTexture(game.getRenderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET, game.getWidth(), game.getHeight());
@@ -28,11 +28,8 @@ void Layer::free()
 {
 	for(auto it = elements.begin(); it != elements.end(); ++it)
 	{
-		if(*it)
-		{
-			delete (*it);
-			*it = NULL;
-		}
+		delete *it;
+		*it = NULL;
 	}
 	elements.clear();
 	if(mainTexture)
@@ -46,8 +43,12 @@ bool Layer::handleEvents(SDL_Event &e)
 {
 	for(auto it = elements.rbegin(); it != elements.rend(); ++it)
 	{
-		if((*it)->isEventEnable() and (*it)->handleEvents(e))	// if handled
-			return true;
+		if((*it)->isEventEnable())
+			if((*it)->handleEvents(e))	// if handled
+			{
+				changed = true;
+				return true;
+			}
 	}
 	return false;
 }
@@ -57,21 +58,26 @@ void Layer::update()
 	for(auto it = elements.begin(); it != elements.end(); ++it)
 	{
 		if((*it)->isUpdateEnable())
-			(*it)->update();
+			if((*it)->update())
+				changed = true;
 	}
 }
 
 void Layer::render()
 {
-	SDL_Renderer *renderer = Game::GetGame().getRenderer();
-	SDL_SetRenderTarget(renderer, mainTexture);
-	SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0xFF, 0x00);
-	SDL_RenderClear(renderer);
-	for(auto it = elements.begin(); it != elements.end(); ++it)
+	if(changed)
 	{
-		if((*it)->isRenderEnable() and (*it)->getTexture() and (*it)->getRectOnTexture() and (*it)->getRectOnScreen())
-			SDL_RenderCopy(renderer, (*it)->getTexture(), (*it)->getRectOnTexture(), (*it)->getRectOnScreen());
+		SDL_Renderer *renderer = Game::GetGame().getRenderer();
+		SDL_SetRenderTarget(renderer, mainTexture);
+		SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0xFF, 0x00);
+		SDL_RenderClear(renderer);
+		for(auto it = elements.begin(); it != elements.end(); ++it)
+		{
+			if((*it)->isRenderEnable() and (*it)->getTexture() and (*it)->getRectOnTexture() and (*it)->getRectOnScreen())
+				SDL_RenderCopy(renderer, (*it)->getTexture(), (*it)->getRectOnTexture(), (*it)->getRectOnScreen());
+		}
 	}
+	changed = false;
 }
 
 void Layer::pushElement(BasicObject *_element)

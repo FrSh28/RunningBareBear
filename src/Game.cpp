@@ -3,13 +3,14 @@
 #include <random>
 #include "Game.h"
 #include "Layer.h"
+#include "Map.h"
 using namespace std;
 
 Game *Game::s_gameInstance = NULL;
 
 Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned int _frameRate)
- : name(_name), width(_width), height(_height), frameRate(_frameRate), window(NULL), renderer(NULL)
-	, running(false), layerInsertIndex(0U), startTime(0U), frameCount(0U)
+ : name(_name), width(_width), height(_height), frameRate(_frameRate), running(false), state(STARTMENU),
+	window(NULL), renderer(NULL), layerInsertIndex(0U), gameMap(NULL), startTime(0U), frameCount(0U)
 {
 	random_device rd;
 	rdEngine.seed(rd());
@@ -91,19 +92,30 @@ void Game::Start(unsigned int _startTime)
 
 void Game::HandleEvents()
 {
+	bool handled = false;
 	while(SDL_PollEvent(&event) or SDL_GetTicks() - startTime < frameCount * 1000 / frameRate)
 	{
 		switch(event.type)
 		{
 			case SDL_QUIT:
 				running = false;
-				return;
+				return;	// func
+			case GAMESTATE_CHANGE:
+				state = GameState(event.user.code);
+				break;	// switch
 			default:
 				for(auto it = layers.rbegin(); it != layers.rend(); ++it)
 				{
-					if((*it)->handleEvents(event))	// if handled
-						break;	// for
+					if((*it)->isActive())
+						if((*it)->handleEvents(event))	// if handled
+						{
+							handled = true;
+							break;	// for
+						}
 				}
+				if(!handled and gameMap)
+					gameMap->handleEvents(event);
+				break;	// switch
 		}
 	}
 }
@@ -112,8 +124,11 @@ void Game::Update()
 {
 	for(auto it = layers.begin(); it != layers.end(); ++it)
 	{
-		(*it)->update();
+		if((*it)->isActive())
+			(*it)->update();
 	}
+	if(gameMap)
+		gameMap->update();
 }
 
 void Game::Render()
@@ -127,7 +142,8 @@ void Game::Render()
 	SDL_RenderClear(renderer);
 	for(auto it = layers.begin(); it != layers.end(); ++it)
 	{
-		SDL_RenderCopy(renderer, (*it)->getTexture(), NULL, NULL);
+		if((*it)->isActive())
+			SDL_RenderCopy(renderer, (*it)->getTexture(), NULL, NULL);
 	}
 	SDL_RenderPresent(renderer);
 	++frameCount;
@@ -136,14 +152,13 @@ void Game::Render()
 
 void Game::Quit()
 {
+	delete gameMap;
+	gameMap = NULL;
+
 	for(auto it = layers.begin(); it != layers.end(); ++it)
 	{
-		if(*it)
-		{
-			(*it)->free();
-			delete *it;
-			*it = NULL;
-		}		
+		delete *it;
+		*it = NULL;
 	}
 	layers.clear();
 	if(renderer)
