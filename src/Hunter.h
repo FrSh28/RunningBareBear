@@ -7,6 +7,7 @@
 class Hunter : public BasicObject
 {
 	SDL_Point HunterMapPos;
+	SDL_Point RunnerMapPos; 
 	SDL_Point HunterPixelPos;
 	SDL_Point HunterCenterPixel;
 	SDL_Point directPos;
@@ -30,7 +31,7 @@ class Hunter : public BasicObject
 	Runner *runner;
 	
 public:
-	Hunter();
+	Hunter(SDL_Point, SDL_Point);
 	~Hunter();
 	bool handleEvents(SDL_Event &e);
 	void update();
@@ -39,6 +40,8 @@ public:
 	SDL_Point getPixelPos() {return HunterCenterPixel;}
 	bool RunnerVisible();
 	bool Arrive();
+	void setPixelPos(SDL_Point &);
+	void setMapPos(SDL_Point &);
 	void Stage1();
 	void Stage2();
 	void Stage3();

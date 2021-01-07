@@ -4,29 +4,28 @@
 #include <iostream>
 #include <cmath>
 
-Hunter::Hunter() :
+Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	HunterSpeed(0), gameover(false), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0), findX(0), findY(0)
-	map(&Map::getMap()), HunterMapPos(/*map¶Ç¤Jªºpoint?*/ )
+	map(&Map::getMap())
 {
-	HunterPixelPos = map->mapPosTopixelPos(HunterMapPos);
+	setMapPos(MapPos);
+	setPixelPos(PixelPos);
+	directPos = HunterPixelPos;
 }
-//need to set the initial directpos
-SDL_Point Hunter::Set()		
+
+void Hunter::setMapPos(SDL_Point &MapPos)
 {
-	SetSuccess = false;
-	SDL_Point SetPos;
-	while(!SetSuccess)
-	{
-		Game &game = Game::GetGame();
-		SetPos.x = game.rdEngine()%(map->getRowNum()); 
-		SetPos.y = game.rdEngine()%(map->getColNum());
-		if(map->isSpace(SetPos)) 
-		{
-			SetSuccess = true;
-			return SetPos;
-		} 
-	}
+	HunterMapPos = MapPos;
 }
+
+void Hunter::setPixelPos(SDL_Point &PixelPos)
+{
+	HunterCenterPixel = PixelPos;
+	HunterPixelPos.x = HunterCenterPixel.x  - HunterWidth/2;
+	HunterPixelPos.y = HunterCenterPixel.y - HunterHeight/2;
+}
+
+
 Hunter::~Hunter()
 {
 	
@@ -36,12 +35,13 @@ bool Hunter::handleEvents(SDL_Event &e)
 {
 	
 }
-//HunterMapPos , HunterPixelPos , HunterRectOnScreen
+
 void Hunter::update()
 {
 	HunterCenterPixel.x = HunterPixelPos.x + HunterWidth/2;
 	HunterCenterPixel.y = HunterPixelPos.y + HunterHeight/2;
 	HunterMapPos = map->pixelPosTomapPos(HunterCenterPixel);
+	RunnerMapPos = map->getRunnerMapPos();
 	if(RunnerVisible())
 	{
 		Stage1();
@@ -63,14 +63,14 @@ void Hunter::update()
 bool Hunter::RunnerVisible()
 {	
 	visible = true;
-	a = map->getRunnerMapPos().x - HunterMapPos.x;
-	b = map->getRunnerMapPos().y - HunterMapPos.y;
+	a = RunnerMapPos.x - HunterMapPos.x;
+	b = RunnerMapPos.y - HunterMapPos.y;
 	deltaX = a / (a+b);
 	deltaY = b / (a+b);	
 	findpos = HunterMapPos;
 	findX = HunterMapPos.x;
 	findY = HunterMapPos.y;
-	while(findpos != map->getRunnerMapPos() )
+	while(findpos != RunnerMapPos )
 	{
 		findX += deltaX;
 		findY += deltaY;
@@ -83,6 +83,48 @@ bool Hunter::RunnerVisible()
 		}
 	}
 	return visible;
+}
+
+
+
+void Hunter::Stage1()
+{
+	Hvelocity = Run;
+	Discovered = true; 
+	//every 60 frames
+	directPos = RunnerMapPos;
+	Chase(HunterMapPos, directPos);
+	NextPixel = map->mapPosTopixelPos(HunterMapPos);
+	//
+	//change HunterPixelPos
+	Move();
+}
+
+void Hunter::Stage2()
+{
+	Hvelocity = Run;
+	if(Arrive(directPos))
+	{
+		Discovered = false;
+		Stage3();	
+	}
+	else
+	{
+		Move();
+	}	
+}
+
+void Hunter::Stage3()
+{
+	Hvelocity = Walk;
+	if(Arrive(directPos))
+	{
+		directPos = Set();
+		HaveFound = false;
+		Chase(HunterMapPos, directPos);
+		NextPixel = map->mapPosTopixelPos(HunterMapPos);
+	}
+	Move();
 }
 
 void Hunter::Move()
@@ -116,49 +158,22 @@ void Hunter::Move()
 	}
 }
 
-void Hunter::Stage1()
+SDL_Point Hunter::Set()		
 {
-	Hvelocity = Run;
-	Discovered = true; 
-	//every 60 frames
-	directPos = map->getRunnerMapPos();
-	Chase(HunterMapPos, directPos);
-	NextPixel = map->mapPosTopixelPos(HunterMapPos);
-	//
-	//change HunterPixelPos
-	Move();
-}
-
-void Hunter::Stage2()
-{
-	Hvelocity = Run;
-	if(Arrive(directPos))
+	SetSuccess = false;
+	SDL_Point SetPos;
+	while(!SetSuccess)
 	{
-		Discovered = false;
-		Stage3();	
+		Game &game = Game::GetGame();
+		SetPos.x = game.rdEngine()%(map->getRowNum()); 
+		SetPos.y = game.rdEngine()%(map->getColNum());
+		if(map->isSpace(SetPos)) 
+		{
+			SetSuccess = true;
+			return SetPos;
+		} 
 	}
-	else
-	{
-		Move();
-	}	
 }
-
-void Hunter::Stage3()
-{
-	Hvelocity = Walk;
-	if(Arrive(directPos))
-	{
-		directPos = Set();
-		HaveFound = false;
-		Chase(HunterMapPos, directPos);
-		NextPixel = map->mapPosTopixelPos(HunterMapPos);
-	}
-	else
-	{
-		Move();
-	}	
-}
-
 bool Hunter::Arrive(SDL_Point destination)
 {
 	arrive = false;
