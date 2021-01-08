@@ -36,7 +36,7 @@ bool Hunter::handleEvents(SDL_Event &e)
 	
 }
 
-void Hunter::update()
+bool Hunter::update()
 {
 	HunterCenterPixel.x = HunterPixelPos.x + HunterWidth/2;
 	HunterCenterPixel.y = HunterPixelPos.y + HunterHeight/2;
@@ -58,6 +58,7 @@ void Hunter::update()
 		}
 	}
 	rectOnTexture = SDL_Rect({ , , , });
+	//if it change return true
 }
 
 bool Hunter::RunnerVisible()

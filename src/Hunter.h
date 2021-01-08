@@ -34,7 +34,7 @@ public:
 	Hunter(SDL_Point, SDL_Point);
 	~Hunter();
 	bool handleEvents(SDL_Event &e);
-	void update();
+	bool update();
 	SDL_Point Set();
 	SDL_Point getMapPos() {return HunterMapPos;}
 	SDL_Point getPixelPos() {return HunterCenterPixel;}

@@ -20,7 +20,7 @@ class Button : public BasicObject
 	public:
 	static SDL_Rect buttons[TOTAL_BUTTOMS];
 	bool handleEvents(SDL_Event &e);
-	void update();
+	bool update();
 	Button(button_type tmp);
 	~Button();
 	

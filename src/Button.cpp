@@ -33,13 +33,13 @@ bool Button::handleEvents(SDL_Event &e)
 			if(e.type == SDL_MOUSEMOTION)
 			{
 				
-				InsideStart = true;
+				InsideStart = false;
 				SDL_Point StartCenter;
 				StartCenter.x = buttons[START].x + buttons[START].w/2;
 				StartCenter.y = buttons[START].y + buttons[START].h/2;
-				if((pow( (X-StartCenter.x), 2) + pow((Y-StartCenter.y), 2) ) > pow(buttons[START].w/2, 2) )
+				if((pow( (X-StartCenter.x), 2) + pow((Y-StartCenter.y), 2) ) <= pow(buttons[START].w/2, 2) )
 				{
-					InsideStart = false;
+					InsideStart =true ;
 				}
 				if(InsideStart) 
 					rectOnTexture = SDL_Rect( {button_type[START].x+button_type[START].w, button_type[START].y, button_type[START].w, button_type[START].h} );
@@ -120,8 +120,35 @@ bool Button::handleEvents(SDL_Event &e)
 	}
 }
 
-void Button::update()
+bool Button::update()
 {
-
+	switch(type)
+	{
+		case START:
+			if(InsideStart) 
+				rectOnTexture = SDL_Rect( {button_type[START].x+button_type[START].w, button_type[START].y, button_type[START].w, button_type[START].h} );
+			else 
+				rectOnTexture = SDL_Rect( {button_type[START].x, button_type[START].y, button_type[START].w, button_type[START].h} );
+		}
+		break;
+		case PAUSE:
+			rectOnTexture = SDL_Rect( {button_type[PAUSE].x, button_type[PAUSE].y, button_type[PAUSE].w, button_type[PAUSE].h} );
+			break;
+		case LEAVE:
+			rectOnTexture = SDL_Rect( {button_type[LEAVE].x, button_type[LEAVE].y, button_type[LEAVE].w, button_type[LEAVE].h} );
+			break;
+		case RESUME:
+			rectOnTexture = SDL_Rect( {button_type[RESUME].x, button_type[RESUME].y, button_type[RESUME].w, button_type[RESUME].h} );
+			break;
+		case SETTING:
+			rectOnTexture = SDL_Rect( {button_type[SETTING].x, button_type[SETTING].y, button_type[SETTING].w, button_type[SETTING].h} );
+			break;
+		case LEAVESETTING:
+			rectOnTexture = SDL_Rect( {button_type[LEAVESETTING].x, button_type[LEAVESETTING].y, button_type[LEAVESETTING].w, button_type[LEAVESETTING].h} );
+			break;
+		case OK:
+			rectOnTexture = SDL_Rect( {button_type[OK].x, button_type[OK].y, button_type[OK].w, button_type[OK].h} );
+			break;
+	}
 }
 
