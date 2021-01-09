@@ -9,7 +9,7 @@
 enum MissionTypes
 {
 	Mission1Type1, Mission1Type2, Mission1Type3,
-	Mission2Type1, Mission2Type2, Mission2Type3,
+	Mission2Type1, Mission2Type3,
 	MissionTotal
 };
 
@@ -53,12 +53,14 @@ public:
 };
 class Mission2_1 : public Mission
 {
+	int total;
 public:
 	Mission2_1();
 	~Mission2_1();
 	bool handleEvents(SDL_Event &);
 	bool update();
 };
+/*
 class Mission2_2 : public Mission
 {
 public:
@@ -67,6 +69,7 @@ public:
 	bool handleEvents(SDL_Event &);
 	bool update();
 };
+*/ 
 class Mission2_3 : public Mission
 {
 public:
@@ -81,7 +84,7 @@ public:
 //CreateMission(rand()%MissionTotal);
 
 
-Mission *createMission(int choice);
+Mission *createMission(MissionTypes choice);
 
 
 #endif

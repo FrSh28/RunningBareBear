@@ -38,8 +38,10 @@ Mission *createMission(MissionTypes choice)
 			return new Mission1_2();
 		case Mission1Type3:
 			return new Mission1_3();
+		/*
 		case Mission2Type1:
 			return new Mission2_1();
+		*/
 		case Mission2Type2:
 			return new Mission2_2();
 		case Mission2Type3:
@@ -73,7 +75,10 @@ Mission1_1 :: Mission1_1 ()
 }
 Mission1_1 :: ~Mission1_1 ()
 {
-	
+	if(!success)
+	{
+		//timer + time
+	}
 }
 bool Mission1_1 :: handleEvents(SDL_Event &e)
 {
@@ -161,7 +166,10 @@ Mission1_3 :: Mission1_3 ()
 
 Mission1_3 :: ~Mission1_3 ()
 {
-	
+	if(!success)
+	{
+		// 
+	}
 }
 
 bool Mission1_3 :: handleEvents(SDL_Event &e)
@@ -183,6 +191,7 @@ bool Mission1_3 :: update()
 Mission2_1 :: Mission2_1 ()
  : Mission("Mission 2 ")
 {
+	total = 0;
 	curMission = Mission2Type1;
 	Map &map = Map::getMap();
 	
@@ -247,7 +256,7 @@ bool Mission2_1 :: handleEvents(SDL_Event &e)
 	if(e.type == ITEM_USED) 
 		{
 			if(e.user.code == TA)
-			success = true;
+			total++;
 		}
 }
 
@@ -306,6 +315,7 @@ void Mission2_2 :: update()
 Mission2_3 :: Mission2_3 ()
  : Mission("Mission 2 ")
 {
+	total = 0;
 	curMission = Mission2Type3;
 	Map &map = Map::getMap();
 	
@@ -370,7 +380,7 @@ bool Mission2_3 :: handleEvents(SDL_Event &e)
 	if(e.type == ITEM_USED) 
 		{
 			if(e.user.code == WEBWORK)
-			success = true;
+			total++;
 		}
 }
 
