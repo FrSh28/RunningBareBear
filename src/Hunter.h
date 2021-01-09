@@ -13,7 +13,9 @@ class Hunter : public BasicObject
 	SDL_Point directPos;
 	SDL_Point findpos;
 	SDL_Point NextPixel;
-	int Hvelocity, Run, Walk;
+	int Hvelocity
+	const int Run;
+	const int Walk;
 	bool SetSuccess;
 	bool Discovered;
 	bool arrive;
@@ -22,13 +24,17 @@ class Hunter : public BasicObject
 	int b;
 	int HunterWidth;
 	int HunterHeight;
+	int updateRate;
+	int Animation_Frames;
 	double deltaX;
 	double deltaY;
 	double findX;
 	double findY;
 	std::queue<SDL_Point> go;
+	frames direction;
 	Map *map;
 	Runner *runner;
+	
 	
 public:
 	Hunter(SDL_Point, SDL_Point);
@@ -47,7 +53,11 @@ public:
 	void Stage3();
 	void Chase(SDL_Point, SDL_Point);
 	void Move();
+	void initHunter_Clips();
 };
-
+enum frames
+{
+	UP_1, UP_2, UP_3, DOWN_1, DOWN_2, DOWN_3, RIGHT_1, RIGHT_2, RIGHT_3, LEFT_1, LEFT_2, LEFT_3, TOTAL
+}
 
 #endif

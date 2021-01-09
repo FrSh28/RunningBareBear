@@ -3,9 +3,10 @@
 #include "Hunter.h"
 #include <iostream>
 #include <cmath>
+SDL_Rect Hunter_Hunter_Clip[TOTAL];
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
-	HunterSpeed(0), gameover(false), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0), findX(0), findY(0)
+	Hvelocity(0), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0), findX(0), findY(0), Animation_Frames(3), Run(), Walk()
 	map(&Map::getMap())
 {
 	setMapPos(MapPos);
@@ -38,6 +39,7 @@ bool Hunter::handleEvents(SDL_Event &e)
 
 bool Hunter::update()
 {
+	static int frame = 0;
 	HunterCenterPixel.x = HunterPixelPos.x + HunterWidth/2;
 	HunterCenterPixel.y = HunterPixelPos.y + HunterHeight/2;
 	HunterMapPos = map->pixelPosTomapPos(HunterCenterPixel);
@@ -57,7 +59,9 @@ bool Hunter::update()
 			Stage3();
 		}
 	}
-	rectOnTexture = SDL_Rect({ , , , });
+	rectOnTexture = Hunter_Clip[direction+frame/updateRate];
+	frame ++;
+	if(frame/updateRate == Animation_Frames){frame=0;}
 	//if it change return true
 }
 
@@ -91,19 +95,23 @@ bool Hunter::RunnerVisible()
 void Hunter::Stage1()
 {
 	Hvelocity = Run;
+	updateRate = 3;
 	Discovered = true; 
 	//every 60 frames
-	directPos = RunnerMapPos;
-	Chase(HunterMapPos, directPos);
-	NextPixel = map->mapPosTopixelPos(HunterMapPos);
+	if(frame == 0)
+	{
+		directPos = RunnerMapPos;
+		Chase(HunterMapPos, directPos);
+		NextPixel = map->mapPosTopixelPos(HunterMapPos);
+	}
 	//
-	//change HunterPixelPos
 	Move();
 }
 
 void Hunter::Stage2()
 {
 	Hvelocity = Run;
+	updateRate = 3;
 	if(Arrive(directPos))
 	{
 		Discovered = false;
@@ -118,6 +126,7 @@ void Hunter::Stage2()
 void Hunter::Stage3()
 {
 	Hvelocity = Walk;
+	updateRate = 6;
 	if(Arrive(directPos))
 	{
 		directPos = Set();
@@ -140,20 +149,24 @@ void Hunter::Move()
 		if(HunterPixelPos.x < NextPixel.x)
 		{
 			HunterPixelPos.x += Hvelocity;
+			direction = RIGHT_1;
 		}
 		else if(HunterPixelPos.x > NextPixel.x)
 		{
 			HunterPixelPos.x -= Hvelocity;
+			direction = LEFT_1;
 		}
 		else
 		{
 			if(HunterPixelPos.y < NextPixel.y)
 			{
 				HunterPixelPos.y += Hvelocity;
+				direction = DOWN_1;
 			}
 			else
 			{
 				HunterPixelPos.y -= Hvelocity;
+				direction = UP_1;
 			}
 		}
 	}
@@ -382,4 +395,70 @@ if(!(map->isWall(nextP)) && !visited[nextP.x][nextP.y])
 			}
 		}
 */
+//UP_1, UP_2, UP_3, DOWN_1, DOWN_2, DOWN_3, RIGHT_1, RIGHT_2, RIGHT_3, LEFT_1, LEFT_2, LEFT_3, TOTAL
+void Runner::initHunter_Clips()                // init render Hunter_Clips
+{
+    //Up
+    Hunter_Clip[UP_1].x = 0000;
+    Hunter_Clip[UP_1].y = 0000;
+    Hunter_Clip[UP_1].w = 0000;
+    Hunter_Clip[UP_1].h = 0000;
 
+    Hunter_Clip[UP_2].x = 0000;
+    Hunter_Clip[UP_2].y = 0000;
+    Hunter_Clip[UP_2].w = 0000;
+    Hunter_Clip[UP_2].h = 0000;
+
+    Hunter_Clip[UP_3].x = 0000;
+    Hunter_Clip[UP_3].y = 0000;
+    Hunter_Clip[UP_3].w = 0000;
+    Hunter_Clip[UP_3].h = 0000;
+
+    // Down
+    Hunter_Clip[DOWN_1].x = 0000;
+    Hunter_Clip[DOWN_1].y = 0000;
+    Hunter_Clip[DOWN_1].w = 0000;
+    Hunter_Clip[DOWN_1].h = 0000;
+
+    Hunter_Clip[DOWN_2].x = 0000;
+    Hunter_Clip[DOWN_2].y = 0000;
+    Hunter_Clip[DOWN_2].w = 0000;
+    Hunter_Clip[DOWN_2].h = 0000;
+
+    Hunter_Clip[DOWN_3].x = 0000;
+    Hunter_Clip[DOWN_3].y = 0000;
+    Hunter_Clip[DOWN_3].w = 0000;
+    Hunter_Clip[DOWN_3].h = 0000;
+
+    //Right
+    Hunter_Clip[RIGHT_1].x = 0000;
+    Hunter_Clip[RIGHT_1].y = 0000;
+    Hunter_Clip[RIGHT_1].w = 0000;
+    Hunter_Clip[RIGHT_1].h = 0000;
+
+    Hunter_Clip[RIGHT_2].x = 0000;
+    Hunter_Clip[RIGHT_2].y = 0000;
+    Hunter_Clip[RIGHT_2].w = 0000;
+    Hunter_Clip[RIGHT_2].h = 0000;
+
+    Hunter_Clip[RIGHT_3].x = 0000;
+    Hunter_Clip[RIGHT_3].y = 0000;
+    Hunter_Clip[RIGHT_3].w = 0000;
+    Hunter_Clip[RIGHT_3].h = 0000;
+
+    //Left
+    Hunter_Clip[LEFT_1].x = 0000;
+    Hunter_Clip[LEFT_1].y = 0000;
+    Hunter_Clip[LEFT_1].w = 0000;
+    Hunter_Clip[LEFT_1].h = 0000;
+
+    Hunter_Clip[LEFT_2].x = 0000;
+    Hunter_Clip[LEFT_2].y = 0000;
+    Hunter_Clip[LEFT_2].w = 0000;
+    Hunter_Clip[LEFT_2].h = 0000;
+
+    Hunter_Clip[LEFT_3].x = 0000;
+    Hunter_Clip[LEFT_3].y = 0000;
+    Hunter_Clip[LEFT_3].w = 0000;
+    Hunter_Clip[LEFT_3].h = 0000;
+}
