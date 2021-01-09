@@ -6,6 +6,7 @@ extern int mode;
 #include"Wall.h"
 #include"Map.h"
 #include"Game.h"
+#include"Item.h"
 
 enum character_list{BEAR};
 enum face {DOWN,LEFT,RIGHT,UP};
@@ -23,8 +24,8 @@ private:
     int width;                  // rectangle width (for collision box)
     int height;                 // rectangle height (for collision box)
     int updateRate;             // different update rate according to running or walking
+    Item* backpack;             // item in hand
     Map* map;
-    Game &game;
 
 public:
     Runner(SDL_Point&, SDL_Point&,character_list = BEAR);
@@ -32,6 +33,7 @@ public:
     bool handleEvents(SDL_Event &e);
     bool update();
     void move();
+    bool checkbackpack();               //check whether the backpack is empty
     bool collisionBox(SDL_Rect&);
     void checkCollision();
     void initclips();

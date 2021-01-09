@@ -11,7 +11,7 @@ SDL_Rect Clip [TOTAL_FRAMES];
 const int Runner::gridWidth = Map::getPixelWidth();
 const int Runner::gridHeight = Map::getPixelHeight();
 Runner::Runner(SDL_Point& InitialMapPos,SDL_Point& InitialPixelPos, character_list character):
-BasicObject("Runner"), strength(100), map(&Map::getMap()), game(&Game::GetGame()), width(40),
+BasicObject("Runner"), strength(100), map(&Map::getMap()), width(40),
 height(32), updateRate(6), direction(DOWN) {
     initclips();
     if (mode == 1) {
@@ -99,8 +99,14 @@ bool Runner::handleEvents(SDL_Event &e)
                     direction = LEFT;
                     return true;
                 case SDLK_e:
-                    //pickup or throw
-                    pickup = true;
+                    //pickup throw switch
+                    Item* tmp;
+                    tmp = map->pickItem(MapPos);
+                    map->placeItem(MapPos,backpack);
+                    backpack = tmp;
+                    return true;
+                case SDLK_q:
+//undone
                     return true;
             }
         }
@@ -126,10 +132,6 @@ bool Runner::handleEvents(SDL_Event &e)
                 case SDLK_RIGHT:
                     velocity_x += velocity;
                     return true;
-                case SDLK_e:
-                    //pickup or throw
-                    pickup = false;
-                    return true;
             }
         }
     }
@@ -143,6 +145,12 @@ void Runner::move()
     //up and down
     PixelPos.y += velocity_y;
     checkCollision();
+}
+
+bool Runner::checkbackpack()    // if backpack is empty return true
+{
+    if(backpack == NULL){return true;}
+    else{return false;}
 }
 
 bool Runner::update()

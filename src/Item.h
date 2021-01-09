@@ -6,8 +6,9 @@
 #define ITEM_H
 #include"includeSDL.h"
 #include"BasicObject.h"
+#include"Map.h"
 
-enum ItemList{BAD_ITEM, STAR, INVISIBLE_CLOAK, WATER, CHICKEN_LEG, SHEET, LIBRARY, PE_TEACHER,
+enum ItemList{BAD_ITEM, STAR, INVISIBLE_CLOAK, POTION, MEAT, SHEET, LIBRARY, PE_TEACHER,
         TA, JOKE, CHEM_TEACHER, WEBWORK, TOTAL_ITEM };
 
 class Item :public BasicObject
@@ -41,20 +42,20 @@ public:
     bool update();
 };
 
-class Water:public Item
+class Potion:public Item
 {
 public:
-    Water();
-    ~Water();
+    Potion();
+    ~Potion();
     bool handleEvents(SDL_Event& e);
     bool update();
 };
 
-class Chicken_Leg:public Item
+class Meat:public Item
 {
 public:
-    Chicken_Leg();
-    ~Chicken_Leg();
+    Meat();
+    ~Meat();
     bool handleEvents(SDL_Event& e);
     bool update();
 };
@@ -94,6 +95,7 @@ public:
     bool update();
 };
 
+/*
 class Joke:public Item
 {
 public:
@@ -111,6 +113,7 @@ public:
     bool handleEvents(SDL_Event& e);
     bool update();
 };
+ */
 
 class WebWork:public Item
 {

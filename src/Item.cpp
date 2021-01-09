@@ -9,12 +9,12 @@ Item* createItem(ItemList& list)
     {
         case STAR:
             return  new Star;
-        case INVISIBLE_CLOAK:
-            return new Invisible_Cloak;
-        case WATER:
-            return new Water;
-        case CHICKEN_LEG:
-            return new Chicken_Leg;
+        //case INVISIBLE_CLOAK:
+        //    return new Invisible_Cloak;
+        case POTION:
+            return new Potion;
+        case MEAT:
+            return new Meat;
         case SHEET:
             return new Sheet;
         case LIBRARY:
@@ -23,15 +23,17 @@ Item* createItem(ItemList& list)
             return new PE_Teacher;
         case TA:
             return new TeacherAssistant;
-        case CHEM_TEACHER:
-            return new CHEM_Teacher;
+        //case JOKE:
+        //    return new Joke;
+        //case CHEM_TEACHER:
+        //    return new CHEM_Teacher;
         case WEBWORK:
             return new WebWork;
     }
 }
-Item::Item(std::string _name):BasicObject(_name){}
+Item::Item(std::string _name):BasicObject(_name)
+{}
 ItemList Item::getItemType() const {return type;}
-
 
 //Star
 Star::Star():Item("Star")
@@ -43,22 +45,23 @@ bool Star::update()
 {}
 
 //Invisible Cloak
-Invisible_Cloak::Invisible_Cloak():Item("Invisible Cloak"){}
+/*Invisible_Cloak::Invisible_Cloak():Item("Invisible Cloak"){}
 Invisible_Cloak::~Invisible_Cloak(){}
 bool Invisible_Cloak::handleEvents(SDL_Event &e) {}
 bool Invisible_Cloak::update() {}
+*/
 
-//Water
-Water::Water():Item("Water") {}
-Water::~Water(){}
-bool Water::handleEvents(SDL_Event &e) {}
-bool Water::update() {}
+//Potion
+Potion::Potion():Item("Water") {}
+Potion::~Potion(){}
+bool Potion::handleEvents(SDL_Event &e) {}
+bool Potion::update() {}
 
-//Chicken Leg
-Chicken_Leg::Chicken_Leg():Item("Chicken Leg") {}
-Chicken_Leg::~Chicken_Leg(){}
-bool Chicken_Leg::handleEvents(SDL_Event &e) {}
-bool Chicken_Leg::update() {}
+//Meat
+Meat::Meat():Item("Chicken Leg") {}
+Meat::~Meat(){}
+bool Meat::handleEvents(SDL_Event &e) {}
+bool Meat::update() {}
 
 //Sheet
 Sheet::Sheet():Item("Sheet") {}
@@ -84,6 +87,7 @@ TeacherAssistant::~TeacherAssistant(){}
 bool TeacherAssistant::handleEvents(SDL_Event &e) {}
 bool TeacherAssistant::update() {}
 
+/*
 //Joke
 Joke::Joke() {}
 Joke::~Joke(){}
@@ -95,6 +99,7 @@ CHEM_Teacher::CHEM_Teacher():Item("Chemistry Teacher") {}
 CHEM_Teacher::~CHEM_Teacher(){}
 bool CHEM_Teacher::handleEvents(SDL_Event &e) {}
 bool CHEM_Teacher::update() {}
+*/
 
 //WebWork
 WebWork::WebWork():Item("WebWork"){}
