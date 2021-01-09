@@ -258,6 +258,10 @@ bool Mission2_1 :: handleEvents(SDL_Event &e)
 			if(e.user.code == TA)
 			total++;
 		}
+	if(total == 3)
+	{
+		success = true;
+	}
 }
 
 bool Mission2_1 :: update()
@@ -382,6 +386,10 @@ bool Mission2_3 :: handleEvents(SDL_Event &e)
 			if(e.user.code == WEBWORK)
 			total++;
 		}
+	if(total == 3)
+	{
+		success = true;
+	}
 }
 
 bool Mission2_3 :: update()

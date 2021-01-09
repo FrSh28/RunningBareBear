@@ -246,6 +246,7 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 			}
 			break;
+			
 	}
 	return EventReturnType;
 }
@@ -258,15 +259,13 @@ bool Button::update()
 		rectOnTexture = SDL_Rect( {button_type[type].x, button_type[type].y, button_type[type].w, button_type[type].h} );
 	Last = Inside;
 	return UpdateReturnType;
+	
 /*
 	switch(type)
 	{
 		case START:
 			if(Inside) 
-				rectOnTexture = SDL_Rect( {button_type[START].x+button_type[START].w, button_type[START].y, button_type[START].w, button_type[START].h} );
-			else 
 				rectOnTexture = SDL_Rect( {button_type[START].x, button_type[START].y, button_type[START].w, button_type[START].h} );
-		}
 		break;
 		case PAUSE:
 			rectOnTexture = SDL_Rect( {button_type[PAUSE].x, button_type[PAUSE].y, button_type[PAUSE].w, button_type[PAUSE].h} );
