@@ -12,9 +12,8 @@ const int Runner::gridWidth = Map::getPixelWidth();
 const int Runner::gridHeight = Map::getPixelHeight();
 Runner::Runner(SDL_Point& InitialMapPos,SDL_Point& InitialPixelPos, character_list character):
 BasicObject("Runner"), strength(100), map(&Map::getMap()), game(Game::GetGame()), width(40),
-height(32), updateRate(6), direction(Down), CurrentClip(&Clip[0])
+height(32), updateRate(6), direction(DOWN)
 {
-
     initclips();
     if (mode==1)
     {
@@ -27,6 +26,8 @@ height(32), updateRate(6), direction(Down), CurrentClip(&Clip[0])
         posOnTexture->w = (int);
         posOnWindow->h = (int);
         posOnTexture->h = (int);*/
+
+        rectOnTexture = Clip[0];
 
         switch(character)
         {
@@ -145,7 +146,7 @@ void Runner::move()
     checkCollision();
 }
 
-void Runner::update()
+bool Runner::update()
 {
     static int frame = 0;
     // move(update PixelPos)
@@ -162,13 +163,15 @@ void Runner::update()
     MapPos = map->mapPosTopixelPos(SDL_Point({PixelPos.x+width/2,PixelPos.y+height/2}));
 
     //Render current frame
-    CurrentClip = &Clip[direction*3+frame/updateRate];
+    rectOnTexture = Clip[direction*3+frame/updateRate];
     //render??;
 
     // go to next frame
     frame ++;
     // cycle animation
-    if(frame/updateRate > ANIMATION_FRAMES){frame=0;}
+    if(frame/updateRate == ANIMATION_FRAMES){frame=0;}
+
+    return true;
 }
 
 bool Runner::collisionBox(SDL_Rect& square)

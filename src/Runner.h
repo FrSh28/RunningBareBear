@@ -13,7 +13,6 @@ class Runner:public BasicObject{
 private:
     std::string username;
     face direction;             // character direction(used for render different graphs)
-    SDL_Rect* CurrentClip;      // use for render
     SDL_Point PixelPos;         // small grid on map
     SDL_Point MapPos;           // big grid on map
     int velocity_x;             // runner x velocity
@@ -28,10 +27,10 @@ private:
     Game &game;
 
 public:
-    Runner(SDL_Point&, SDL_Point&,character_list=bear);
+    Runner(SDL_Point&, SDL_Point&,character_list = BEAR);
     ~Runner();
     bool handleEvents(SDL_Event &e);
-    void update();
+    bool update();
     void move();
     bool collisionBox(SDL_Rect&);
     void checkCollision();
