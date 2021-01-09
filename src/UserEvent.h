@@ -10,4 +10,6 @@ extern unsigned int ITEM_PICKED_UP;
 extern unsigned int ITEM_USED;
 extern unsigned int CAUGHT;
 
+void createUserEvent(unsigned int, unsigned int, void *, void *);
+
 #endif	// USER_EVENT
