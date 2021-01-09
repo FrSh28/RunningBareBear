@@ -8,6 +8,8 @@
 enum Images
 {
 	SAMPLE_IMAGE,
+	INTRO_IMAGE,
+	MISSION_1_1_IMAGE,
 	IMAGE_COUNT,
 };
 

@@ -6,15 +6,15 @@ namespace Files
 {
 	string P_Images[IMAGE_COUNT]	= { "../media/image/image.txt",
 										};
-	string P_Fonts[FONT_COUNT]		= { "../media/font/fonts.txt",
-										};
+	//string P_Fonts[FONT_COUNT]		= { "../media/font/fonts.txt",
+	//									};
 	string P_Musics[MUSIC_COUNT]	= { "../media/music/music.txt",
 										};
 	string P_Maps[MAP_COUNT]		= { "../media/map/map.txt",
 										};
 
 	SDL_Texture *Files::loadedImage[IMAGE_COUNT] = {NULL};
-	TTF_Font *Files::loadedFont[FONT_COUNT] = {NULL};
+	//TTF_Font *Files::loadedFont[FONT_COUNT] = {NULL};
 	Mix_Music *Files::loadedMusic[MUSIC_COUNT] = {NULL};
 }
 
@@ -30,24 +30,27 @@ SDL_Texture *loadImage(Images index)
 		texture = SDL_CreateTextureFromSurface(Game::GetGame().getRenderer(), surface);
 		SDL_FreeSurface(surface);
 	}
+	loadedImage[index] = texture;
 	return texture;
 }
-
+/*
 TTF_Font *loadFont(Fonts index, int ptSize)
 {
 	if(loadedFont[index])
 		return loadedFont[index];
 
 	TTF_Font *font = TTF_OpenFont(P_Fonts[index].c_str(), ptSize);
+	loadedFont[index] = font;
 	return font;
 }
-
+*/
 Mix_Music *loadMusic(Musics index)
 {
 	if(loadedMusic[index])
 		return loadedMusic[index];
 
 	Mix_Music *music = Mix_LoadMUS(P_Musics[index].c_str());
+	loadedMusic[index] = music;
 	return music;
 }
 

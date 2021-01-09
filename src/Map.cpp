@@ -8,83 +8,33 @@ const int Map::sc_pixelWidth = 50, Map::sc_pixelHeight = 40;
 Map *Map::s_mapInstance = NULL;
 
 Map::Map(Maps index, string _name)
- : BasicObject(_name), rowNum(0), colNum(0), width(0), height(0), ground(new Layer("MapGround")), front(new Layer("MapFront"))
+ : name(_name), rowNum(0), colNum(0), width(0), height(0), L_ground(NULL), L_character(NULL), L_front(NULL)
 {
 	s_mapInstance = this;
-	eventEnable = true;
-	updateEnable = true;
-	renderEnable = false;
 	loadMap(index);
 	Game &game = Game::GetGame();
-	game.pushLayer(ground);
-	game.pushOverlayer(front);
+	game.setGameMap(this);
+	
+	L_ground = new Layer("MapGround", false);
+	game.pushLayer(L_ground);
+	L_character = new Layer("Character", false);
+	game.pushLayer(L_character);
+	L_front = new Layer("MapFront", false);
+	game.pushOverlayer(L_front);
+	/*
+	for()
+	{
+		hunters.push_back(new Hunter(mapPos, pixelPos));
+		character.pushElement(hunters.back());
+	}
+	runner = new Runner(mapPos, pixelPos);
+	character.pushElement(runner);
+	*/
 }
 
 Map::~Map()
-{}
-
-bool Map::isSpace(SDL_Point pos)		// mapPos
 {
-	return map[pos.x][pos.y] == SPACE;
-}
-
-bool Map::isWall(SDL_Point pos)			// mapPos
-{
-	return map[pos.x][pos.y] == WALL;
-}
-
-bool Map::isItem(SDL_Point pos)			// mapPos
-{
-	return map[pos.x][pos.y] == ITEM;
-}
-
-bool Map::placeItem(SDL_Point pos, Item *item)	// mapPos
-{
-	if(!isSpace(pos))
-		return false;
-	else
-	{
-		map[pos.x][pos.y] = ITEM;
-		//item->setPosOnMap(pos);
-		items.insert({pos, item});
-		ground->pushElement(item);
-		return true;
-	}
-}
-
-Item *Map::pickItem(SDL_Point pos)		// mapPos
-{
-	if(!isItem(pos))
-		return NULL;
-	else
-	{
-		Item *tmp = items[pos];
-		items.erase(pos);
-		map[pos.x][pos.y] = SPACE;
-		ground->popElement(tmp);
-		return tmp;
-	}
-}
-
-ItemList Map::getItem(SDL_Point pos)	// mapPos
-{
-	if(!isItem(pos))
-		return ItemList(-1);
-	else
-	{
-		//return items[pos]->getType();
-		return ItemList(0);
-	}
-}
-
-SDL_Point Map::pixelPosTomapPos(SDL_Point pixelPos)
-{
-	return SDL_Point({pixelPos.x / sc_pixelWidth, pixelPos.y / sc_pixelHeight});
-}
-
-SDL_Point Map::mapPosTopixelPos(SDL_Point mapPos)
-{
-	return SDL_Point({mapPos.x * sc_pixelWidth, mapPos.y * sc_pixelHeight});
+	free();
 }
 
 void Map::loadMap(Maps index)
@@ -135,6 +85,87 @@ void Map::loadMap(Maps index)
 
 	width = rowNum * sc_pixelWidth;
 	height = colNum * sc_pixelHeight;
+}
+
+void Map::free()
+{
+	Game &game = Game::GetGame();
+	game.popOverlayer(L_front);
+	delete L_front;
+	L_front = NULL;
+	game.popLayer(L_character);
+	delete L_character;
+	L_character = NULL;
+	game.popLayer(L_ground);
+	delete L_ground;
+	L_ground = NULL;
+	/*
+	hunters.clear();	// already deleted by L_character
+	runner = NULL;		// already deleted by L_character
+	*/
+	// delete items
+	game.setGameMap(NULL);
+}
+
+bool Map::handleEvents(SDL_Event &event)
+{
+	return false;
+}
+
+void Map::update()
+{
+	for(int i = 0; i < hunters.size(); ++i)
+	{
+		huntersMapPos[i] = (hunters[i]->getPixelPos());
+	}
+	runnerMapPos = (runner->getPixelPos());
+}
+
+bool Map::placeItem(SDL_Point pos, Item *item)	// mapPos
+{
+	if(!isSpace(pos) or item == NULL)
+		return false;
+	else
+	{
+		map[pos.x][pos.y] = ITEM;
+		//item->setPosOnMap(pos);
+		items.insert({pos, item});
+		L_ground->pushElement(item);
+		return true;
+	}
+}
+
+Item *Map::pickItem(SDL_Point pos)		// mapPos
+{
+	if(!isItem(pos))
+		return NULL;
+	else
+	{
+		map[pos.x][pos.y] = SPACE;
+		L_ground->popElement(items[pos]);
+		items.erase(pos);
+		return tmp;
+	}
+}
+
+ItemList Map::peekItem(SDL_Point pos)	// mapPos
+{
+	if(!isItem(pos))
+		return BAD_ITEM;
+	else
+	{
+		return items[pos]->getItemType();
+	}
+}
+
+SDL_Point Map::pixelPosTomapPos(SDL_Point pixelPos)
+{
+	return SDL_Point({pixelPos.x / sc_pixelWidth, pixelPos.y / sc_pixelHeight});
+}
+
+SDL_Point Map::mapPosTopixelPos(SDL_Point mapPos)
+{
+	return SDL_Point({mapPos.x * sc_pixelWidth, mapPos.y * sc_pixelHeight});
 }
 
 bool Map::SDL_PointComp::operator()(const SDL_Point &lhs, const SDL_Point &rhs)

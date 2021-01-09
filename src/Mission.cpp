@@ -318,4 +318,3 @@ bool Mission2_3 :: update()
 {
 	 
 }
-

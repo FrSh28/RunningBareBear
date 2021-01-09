@@ -26,8 +26,8 @@ public:
 	inline bool isUpdateEnable() const { return updateEnable; }
 	inline bool isRenderEnable() const { return renderEnable; }
 	inline SDL_Texture *getTexture() const { return texture; }
-	inline const SDL_Rect *getRectOnScreen()  const { return &rectOnScreen; }
-	inline const SDL_Rect *getRectOnTexture() const { return &rectOnTexture; }
+	inline const SDL_Rect *getRectOnScreenPtr()  const { return &rectOnScreen; }
+	inline const SDL_Rect *getRectOnTexturePtr() const { return &rectOnTexture; }
 
 protected:
 	std::string name;

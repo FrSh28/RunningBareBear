@@ -73,8 +73,8 @@ void Layer::render()
 		SDL_RenderClear(renderer);
 		for(auto it = elements.begin(); it != elements.end(); ++it)
 		{
-			if((*it)->isRenderEnable() and (*it)->getTexture() and (*it)->getRectOnTexture() and (*it)->getRectOnScreen())
-				SDL_RenderCopy(renderer, (*it)->getTexture(), (*it)->getRectOnTexture(), (*it)->getRectOnScreen());
+			if((*it)->isRenderEnable() and (*it)->getTexture() and (*it)->getRectOnTexturePtr() and (*it)->getRectOnScreenPtr())
+				SDL_RenderCopy(renderer, (*it)->getTexture(), (*it)->getRectOnTexturePtr(), (*it)->getRectOnScreenPtr());
 		}
 	}
 	changed = false;
