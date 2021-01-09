@@ -14,6 +14,7 @@ MissionTypes curMission = MissionTotal;
 Mission :: Mission(string _name)
  : BasicObject(_name)
 {
+	total = 0;
 	success = false;
 	//posOnWindow->x = ;
 	//posOnWindow->y = ;
@@ -49,7 +50,17 @@ Mission *createMission(MissionTypes choice)
 
 	}
 }
-
+void Mission::timeup()
+{
+	if(!success)
+	{
+		Map &map = Map::getMap();
+		for (int i=total;i<3;i++)
+		{
+			map.addHunter(); 
+		}
+	}
+}
 Mission1_1 :: Mission1_1 ()
  : Mission("Mission 1 ")
 {

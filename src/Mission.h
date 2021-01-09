@@ -15,11 +15,13 @@ enum MissionTypes
 
 class Mission : public BasicObject
 {
+	int total;
 public:
 	Mission(std::string _name = "");
 	~Mission();
 	virtual bool handleEvents(SDL_Event &) = 0;
 	virtual bool update() = 0;
+	void timeup();
 	inline bool isSuccess() const { return success; }
 	inline static MissionTypes &getMission() { return curMission; }
 protected:
@@ -53,7 +55,6 @@ public:
 };
 class Mission2_1 : public Mission
 {
-	int total;
 public:
 	Mission2_1();
 	~Mission2_1();
@@ -72,7 +73,6 @@ public:
 */ 
 class Mission2_3 : public Mission
 {
-	int total;
 public:
 	Mission2_3();
 	~Mission2_3();
