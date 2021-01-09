@@ -36,6 +36,7 @@ public:
     bool update();
 };
 
+/*
 class Invisible_Cloak:public Item
 {
 public:
@@ -44,6 +45,7 @@ public:
     bool handleEvents(SDL_Event& e);
     bool update();
 };
+*/
 
 class Potion:public Item
 {

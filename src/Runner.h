@@ -27,6 +27,8 @@ private:
     Item* backpack;             // item in hand
     Map* map;
 
+    inline void operator++(int);// operator overloading to add strength (meat)
+
 public:
     Runner(SDL_Point&, SDL_Point&,character_list = BEAR);
     ~Runner();

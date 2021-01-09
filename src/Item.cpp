@@ -65,7 +65,6 @@ bool Potion::handleEvents(SDL_Event &e)
     {
         if(e.user.code == POTION)
         {
-            //+++strength
         }
     }
 }

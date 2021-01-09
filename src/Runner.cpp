@@ -134,6 +134,12 @@ bool Runner::handleEvents(SDL_Event &e)
                     return true;
             }
         }
+        else if(e.type == ITEM_USED)
+        {
+            if(e.user.code == POTION){strength = 100;}
+            if(e.user.code == MEAT){(*this)++;}
+            return true;
+        }
     }
     return success;
 }
@@ -358,6 +364,7 @@ void Runner::checkCollision()
     }
 }
 
+void Runner::operator++(int) {strength += 30;}
 void Runner::initclips()                // init render clips
 {
     // Down
@@ -424,3 +431,4 @@ void Runner::initclips()                // init render clips
     Clip[11].w = 0000;
     Clip[11].h = 0000;
 }
+
