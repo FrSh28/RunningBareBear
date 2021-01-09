@@ -42,6 +42,10 @@ enum Musics
 enum Maps
 {
 	SAMPLE_MAP,
+	MAP_01,
+	MAP_02,
+	MAP_03,
+	MAP_04,
 	MAP_COUNT,
 };
 
