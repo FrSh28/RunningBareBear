@@ -5,8 +5,9 @@
 #ifndef TIMER_H
 #define TIMER_H
 #include"BasicObject.h"
-#include <cstdio>
-#include <string>
+#include<cstdio>
+#include<string>
+#include"Files.h"
 
 
 class Timer:public BasicObject

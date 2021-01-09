@@ -8,7 +8,7 @@ SDL_Renderer* TimerRenderer = NULL;
 Timer::Timer():gametime(300000), backgroundwidth(), backgroundheight(),mPaused(false),mStarted(false)
 {
     loadTimerFont();
-
+    background = loadImage(TIMER_BACKGROUND);
     rectOnScreen.x = ;
     rectOnScreen.y = 0;
     rectOnScreen.w = ;

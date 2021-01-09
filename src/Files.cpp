@@ -21,6 +21,7 @@ namespace Files
 	P_Images[MISSION_1_3_IMAGE] = "../media/image/";//
 	P_Images[MISSION_2_1_IMAGE] = "../media/image/";//
 	P_Images[MISSION_2_2_IMAGE] = "../media/image/";//
+	P_Images[TIMER_BACKGROUND] = "../media/image/"
 	SDL_Texture *loadedImage[IMAGE_COUNT] = {NULL};
 
 	//string P_Fonts[FONT_COUNT];
