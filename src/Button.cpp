@@ -4,9 +4,22 @@
 #include "UserEvent.h"
 #include "Layer.h"
 #include <cmath>
+// , ,, , , , , , , , TOTAL_BUTTONS
 
-
-SDL_Rect Button::buttons[TOTAL_BUTTONS] = {SDL_Rect({x,y,w,h}), } 
+SDL_Rect Button::buttons[TOTAL_BUTTONS] = 
+{
+	SDL_Rect({ 495, 380, 290, 290}), //STARTS
+	SDL_Rect({1085,  50, 145, 145}), //INTRO1
+	SDL_Rect({1050,  40,  30,  30}), //LEAVEINTRO1
+	SDL_Rect({ 890,  50, 214, 215}), // MISSION
+	SDL_Rect({1050,  40,  30,  30}), //LEAVEMISSION
+	SDL_Rect({1085,  50, 145, 145}), //PAUSES
+	SDL_Rect({ 470, 290, 145, 145}), //LEAVE
+	SDL_Rect({ 570, 290, 145, 145}), //RESUMES
+	SDL_Rect({ 670, 290, 145, 145}), //INTRO2
+	SDL_Rect({1050,  40,  30,  30}), //LEAVEINTRO2
+	SDL_Rect({ 980, 420, 200, 200}) //OK
+} 
 
 double& operator^(SDL_Point center, SDL_Point mouse)
 {
@@ -16,12 +29,62 @@ double& operator^(SDL_Point center, SDL_Point mouse)
 	
 }
 
+/*
+	START_BUTTON_IMAGE,
+	INTRO_BUTTON_IMAGE,
+	PAUSE_BUTTON_IMAGE,
+	MISSION_BUTTON_IMAGE,
+	RESUME_BUTTON_IMAGE,
+	LEAVE_BUTTON_IMAGE,
+	RESTART_BUTTON_IMAGE,
+	OK_BUTTON_IMAGE,
+*/
 Button::Button(button_type tmp) :
 	type(tmp), UpdateReturnType(false)
 {
 	Center.x = buttons[tmp].x + buttons[tmp].w/2;
 	Center.y = buttons[tmp].y + buttons[tmp].h/2;
-	rectOnScreen = buttons[type];
+	rectOnScreen = buttons[tmp];
+	switch(tmp)
+	{
+		case STARTS:
+			texture = loadImage(START_BUTTON_IMAGE);
+			break;
+		case INTRO1:
+			texture = loadImage(INTRO_BUTTON_IMAGE);
+			break;
+		case LEAVEINTRO1:
+			texture = loadImage(LEAVE_BUTTON_IMAGE);
+			break;
+		case MISSION:
+			texture = loadImage(MISSION_BUTTON_IMAGE);
+			break;
+		case LEAVEMISSION:
+			texture = loadImage(LEAVE_BUTTON_IMAGE);
+			break;
+		case PAUSES:
+			texture = loadImage(PAUSE_BUTTON_IMAGE);
+			break;
+		case LEAVE:
+			texture = loadImage(RESTART_BUTTON_IMAGE);
+			break;
+		case RESUMES:
+			texture = loadImage(RESUME_BUTTON_IMAGE);
+			break;
+		case INTRO2:
+			texture = loadImage(INTRO_BUTTON_IMAGE);
+			break;
+		case LEAVEINTRO2;
+			texture = loadImage(LEAVE_BUTTON_IMAGE);
+			break;
+		case OK:
+			texture = loadImage(OK_BUTTON_IMAGE);
+			break;
+		default://
+			texture = loadImage(SAMPLE_IMAGE);//
+	}
+	texture = loadimage();
+	
 	Inside = false;
 }
 
@@ -147,7 +210,7 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 			}
 			break;
-		case PAUSES://
+		case PAUSES:////////////////////////////
 			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
 				EventReturnType = true;
@@ -158,9 +221,9 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 				if(Inside)
 				{
+					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 					Game &game = Game::GetGame();
-					game.pushOverlayer(new pauseLayer);
-					
+					game.pushOverlayer(new pauseLayer("Pause",));
 					//some user event
 				}
 			}
@@ -253,10 +316,12 @@ bool Button::handleEvents(SDL_Event &e)
 
 bool Button::update()
 {
-	if(type == START && Inside)
-		rectOnTexture = SDL_Rect( {button_type[STARTs].x+button_type[STARTS].w, button_type[STARTS].y, button_type[STARTS].w, button_type[STARTS].h} );
+	if(type == STARTS && Inside)
+		rectOnTexture = SDL_Rect( {512, 0, 512, 512} );
+	else if (type == STARTS && !Inside)
+		rectOnTexture = SDL_Rect( {0, 0, 512, 512} );
 	else
-		rectOnTexture = SDL_Rect( {button_type[type].x, button_type[type].y, button_type[type].w, button_type[type].h} );
+		rectOnTexture = SDL_Rect( {0, 0, 214, 215} );
 	Last = Inside;
 	return UpdateReturnType;
 	

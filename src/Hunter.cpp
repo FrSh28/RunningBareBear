@@ -10,8 +10,9 @@ SDL_Rect Hunter_Clip[TOTAL];
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	Hvelocity(0), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0),
-	findX(0), findY(0), Animation_Frames(3), Run(3), Walk(6), frame(0), map(&Map::getMap())
+	findX(0), findY(0), Animation_Frames(3), Run(3), Walk(6), frame(0), map(&Map::getMap())//SPEED
 {
+	initHunter_Clips();
 	setMapPos(MapPos);
 	setPixelPos(PixelPos);
 	directPos = HunterPixelPos;
@@ -403,66 +404,86 @@ if(!(map->isWall(nextP)) && !visited[nextP.x][nextP.y])
 void Hunter::initHunter_Clips()                // init render Hunter_Clips
 {
     //Up
-    Hunter_Clip[UP_1].x = 0000;
-    Hunter_Clip[UP_1].y = 0000;
-    Hunter_Clip[UP_1].w = 0000;
-    Hunter_Clip[UP_1].h = 0000;
+    Hunter_Clip[UP_1].x = 32;
+    Hunter_Clip[UP_1].y = 96;
+    Hunter_Clip[UP_1].w = 32;
+    Hunter_Clip[UP_1].h = 32;
 
-    Hunter_Clip[UP_2].x = 0000;
-    Hunter_Clip[UP_2].y = 0000;
-    Hunter_Clip[UP_2].w = 0000;
-    Hunter_Clip[UP_2].h = 0000;
+    Hunter_Clip[UP_2].x = 00;
+    Hunter_Clip[UP_2].y = 96;
+    Hunter_Clip[UP_2].w = 32;
+    Hunter_Clip[UP_2].h = 32;
 
-    Hunter_Clip[UP_3].x = 0000;
-    Hunter_Clip[UP_3].y = 0000;
-    Hunter_Clip[UP_3].w = 0000;
-    Hunter_Clip[UP_3].h = 0000;
+    Hunter_Clip[UP_3].x = 32;
+    Hunter_Clip[UP_3].y = 96;
+    Hunter_Clip[UP_3].w = 32;
+    Hunter_Clip[UP_3].h = 32;
+    
+    Hunter_Clip[UP_4].x = 64;
+    Hunter_Clip[UP_4].y = 96;
+    Hunter_Clip[UP_4].w = 32;
+    Hunter_Clip[UP_4].h = 32;
 
     // Down
-    Hunter_Clip[DOWN_1].x = 0000;
-    Hunter_Clip[DOWN_1].y = 0000;
-    Hunter_Clip[DOWN_1].w = 0000;
-    Hunter_Clip[DOWN_1].h = 0000;
+    Hunter_Clip[DOWN_1].x = 32;
+    Hunter_Clip[DOWN_1].y = 00;
+    Hunter_Clip[DOWN_1].w = 32;
+    Hunter_Clip[DOWN_1].h = 32;
 
-    Hunter_Clip[DOWN_2].x = 0000;
-    Hunter_Clip[DOWN_2].y = 0000;
-    Hunter_Clip[DOWN_2].w = 0000;
-    Hunter_Clip[DOWN_2].h = 0000;
+    Hunter_Clip[DOWN_2].x = 00;
+    Hunter_Clip[DOWN_2].y = 00;
+    Hunter_Clip[DOWN_2].w = 32;
+    Hunter_Clip[DOWN_2].h = 32;
 
-    Hunter_Clip[DOWN_3].x = 0000;
-    Hunter_Clip[DOWN_3].y = 0000;
-    Hunter_Clip[DOWN_3].w = 0000;
-    Hunter_Clip[DOWN_3].h = 0000;
+    Hunter_Clip[DOWN_3].x = 32;
+    Hunter_Clip[DOWN_3].y = 00;
+    Hunter_Clip[DOWN_3].w = 32;
+    Hunter_Clip[DOWN_3].h = 32;
+    
+    Hunter_Clip[DOWN_4].x = 64;
+    Hunter_Clip[DOWN_4].y = 00;
+    Hunter_Clip[DOWN_4].w = 32;
+    Hunter_Clip[DOWN_4].h = 32;
 
     //Right
-    Hunter_Clip[RIGHT_1].x = 0000;
-    Hunter_Clip[RIGHT_1].y = 0000;
-    Hunter_Clip[RIGHT_1].w = 0000;
-    Hunter_Clip[RIGHT_1].h = 0000;
+    Hunter_Clip[RIGHT_1].x = 32;
+    Hunter_Clip[RIGHT_1].y = 64;
+    Hunter_Clip[RIGHT_1].w = 32;
+    Hunter_Clip[RIGHT_1].h = 32;
 
-    Hunter_Clip[RIGHT_2].x = 0000;
-    Hunter_Clip[RIGHT_2].y = 0000;
-    Hunter_Clip[RIGHT_2].w = 0000;
-    Hunter_Clip[RIGHT_2].h = 0000;
+    Hunter_Clip[RIGHT_2].x = 00;
+    Hunter_Clip[RIGHT_2].y = 64;
+    Hunter_Clip[RIGHT_2].w = 32;
+    Hunter_Clip[RIGHT_2].h = 32;
 
-    Hunter_Clip[RIGHT_3].x = 0000;
-    Hunter_Clip[RIGHT_3].y = 0000;
-    Hunter_Clip[RIGHT_3].w = 0000;
-    Hunter_Clip[RIGHT_3].h = 0000;
+    Hunter_Clip[RIGHT_3].x = 32;
+    Hunter_Clip[RIGHT_3].y = 64;
+    Hunter_Clip[RIGHT_3].w = 32;
+    Hunter_Clip[RIGHT_3].h = 32;
+    
+    Hunter_Clip[RIGHT_4].x = 64;
+    Hunter_Clip[RIGHT_4].y = 64;
+    Hunter_Clip[RIGHT_4].w = 32;
+    Hunter_Clip[RIGHT_4].h = 32;
 
     //Left
-    Hunter_Clip[LEFT_1].x = 0000;
-    Hunter_Clip[LEFT_1].y = 0000;
-    Hunter_Clip[LEFT_1].w = 0000;
-    Hunter_Clip[LEFT_1].h = 0000;
+    Hunter_Clip[LEFT_1].x = 32;
+    Hunter_Clip[LEFT_1].y = 32;
+    Hunter_Clip[LEFT_1].w = 32;
+    Hunter_Clip[LEFT_1].h = 32;
 
-    Hunter_Clip[LEFT_2].x = 0000;
-    Hunter_Clip[LEFT_2].y = 0000;
-    Hunter_Clip[LEFT_2].w = 0000;
-    Hunter_Clip[LEFT_2].h = 0000;
+    Hunter_Clip[LEFT_2].x = 00;
+    Hunter_Clip[LEFT_2].y = 32;
+    Hunter_Clip[LEFT_2].w = 32;
+    Hunter_Clip[LEFT_2].h = 32;
 
-    Hunter_Clip[LEFT_3].x = 0000;
-    Hunter_Clip[LEFT_3].y = 0000;
-    Hunter_Clip[LEFT_3].w = 0000;
-    Hunter_Clip[LEFT_3].h = 0000;
+    Hunter_Clip[LEFT_3].x = 32;
+    Hunter_Clip[LEFT_3].y = 32;
+    Hunter_Clip[LEFT_3].w = 32;
+    Hunter_Clip[LEFT_3].h = 32;
+    
+    Hunter_Clip[LEFT_4].x = 64;
+    Hunter_Clip[LEFT_4].y = 32;
+    Hunter_Clip[LEFT_4].w = 32;
+    Hunter_Clip[LEFT_4].h = 32;
 }
