@@ -4,18 +4,22 @@ using namespace std;
 
 namespace Files
 {
-	string P_Images[IMAGE_COUNT]	= { "../media/image/image.txt",
-										};
-	//string P_Fonts[FONT_COUNT]		= { "../media/font/fonts.txt",
-	//									};
-	string P_Musics[MUSIC_COUNT]	= { "../media/music/music.txt",
-										};
-	string P_Maps[MAP_COUNT]		= { "../media/map/map.txt",
-										};
-
+	string P_Images[IMAGE_COUNT];
+	P_Images[SAMPLE_IMAGE] = "../media/image/image.txt";
+	P_Images[START_BUTTON_IMAGE] = "../media/image/StartButton_512_512.png";
+	P_Images[INTRO_IMAGE] = "../media/image/StartButton_512_512.png";
 	SDL_Texture *loadedImage[IMAGE_COUNT] = {NULL};
+
+	//string P_Fonts[FONT_COUNT];
+	//P_Fonts[SAMPLE_FONT] = "../media/font/fonts.txt";
 	//TTF_Font *loadedFont[FONT_COUNT] = {NULL};
+
+	string P_Musics[MUSIC_COUNT];
+	P_Musics[SAMPLE_MUSIC] = "../media/music/music.txt";
 	Mix_Music *loadedMusic[MUSIC_COUNT] = {NULL};
+
+	string P_Maps[MAP_COUNT];
+	P_Maps[SAMPLE_MAP] = "../media/map/map.txt";
 }
 
 SDL_Texture *loadImage(Images index)
