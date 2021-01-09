@@ -113,12 +113,12 @@ bool Map::handleEvents(SDL_Event &event)
 }
 
 void Map::update()
-{
-	for(int i = 0; i < hunters.size(); ++i)
+{/*
+	for(long long unsigned int i = 0; i < hunters.size(); ++i)
 	{
-		huntersMapPos[i] = (hunters[i]->getPixelPos());
+		huntersMapPos[i] = pixelPosTomapPos(hunters[i]->getPixelPos());
 	}
-	runnerMapPos = (runner->getPixelPos());
+	runnerMapPos = pixelPosTomapPos(runner->getPixelPos());*/
 }
 
 bool Map::placeItem(SDL_Point pos, Item *item)	// mapPos
@@ -141,9 +141,10 @@ Item *Map::pickItem(SDL_Point pos)		// mapPos
 		return NULL;
 	else
 	{
-		map[pos.x][pos.y] = SPACE;
-		L_ground->popElement(items[pos]);
+		Item *tmp = items[pos];
 		items.erase(pos);
+		map[pos.x][pos.y] = SPACE;
+		L_ground->popElement(tmp);
 		return tmp;
 	}
 }
@@ -154,7 +155,7 @@ ItemList Map::peekItem(SDL_Point pos)	// mapPos
 		return BAD_ITEM;
 	else
 	{
-		return items[pos]->getItemType();
+		return BAD_ITEM;//items[pos]->getItemType();
 	}
 }
 

@@ -38,7 +38,7 @@ public:
 	void popLayer(Layer *);			// pop layer from layers
 	void popOverlayer(Layer *);		// pop overlayer from layers
 	void popTopOverlayer();			// pop top pverlayer from layers
-	inline void setGameMap(Map *_map) { gameMap = _map; }
+	void setGameMap(Map *_map) { gameMap = _map; }
 
 	inline bool isRunning() const { return running; }
 	inline std::string getName() const { return name; }

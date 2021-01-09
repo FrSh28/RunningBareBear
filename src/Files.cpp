@@ -13,75 +13,75 @@ namespace Files
 	string P_Maps[MAP_COUNT]		= { "../media/map/map.txt",
 										};
 
-	SDL_Texture *Files::loadedImage[IMAGE_COUNT] = {NULL};
-	//TTF_Font *Files::loadedFont[FONT_COUNT] = {NULL};
-	Mix_Music *Files::loadedMusic[MUSIC_COUNT] = {NULL};
+	SDL_Texture *loadedImage[IMAGE_COUNT] = {NULL};
+	//TTF_Font *loadedFont[FONT_COUNT] = {NULL};
+	Mix_Music *loadedMusic[MUSIC_COUNT] = {NULL};
 }
 
 SDL_Texture *loadImage(Images index)
 {
-	if(loadedImage[index])
-		return loadedImage[index];
+	if(Files::loadedImage[index])
+		return Files::loadedImage[index];
 
 	SDL_Texture *texture = NULL;
-	SDL_Surface *surface = IMG_Load(P_Images[index].c_str());
+	SDL_Surface *surface = IMG_Load(Files::P_Images[index].c_str());
 	if(surface)
 	{
 		texture = SDL_CreateTextureFromSurface(Game::GetGame().getRenderer(), surface);
 		SDL_FreeSurface(surface);
 	}
-	loadedImage[index] = texture;
+	Files::loadedImage[index] = texture;
 	return texture;
 }
 /*
 TTF_Font *loadFont(Fonts index, int ptSize)
 {
-	if(loadedFont[index])
-		return loadedFont[index];
+	if(Files::loadedFont[index])
+		return Files::loadedFont[index];
 
-	TTF_Font *font = TTF_OpenFont(P_Fonts[index].c_str(), ptSize);
-	loadedFont[index] = font;
+	TTF_Font *font = TTF_OpenFont(Files::P_Fonts[index].c_str(), ptSize);
+	Files::Files::loadedFont[index] = font;
 	return font;
 }
 */
 Mix_Music *loadMusic(Musics index)
 {
-	if(loadedMusic[index])
-		return loadedMusic[index];
+	if(Files::loadedMusic[index])
+		return Files::loadedMusic[index];
 
-	Mix_Music *music = Mix_LoadMUS(P_Musics[index].c_str());
-	loadedMusic[index] = music;
+	Mix_Music *music = Mix_LoadMUS(Files::P_Musics[index].c_str());
+	Files::loadedMusic[index] = music;
 	return music;
 }
 
 ifstream *openMapFile(Maps index)
 {
-	return new ifstream(P_Maps[index], ios_base::in);
+	return new ifstream(Files::P_Maps[index], ios_base::in);
 }
 
 void freeImage(Images index)
 {
-	if(loadedImage[index])
+	if(Files::loadedImage[index])
 	{
-		SDL_DestroyTexture(loadedImage[index]);
-		loadedImage[index] = NULL;
+		SDL_DestroyTexture(Files::loadedImage[index]);
+		Files::loadedImage[index] = NULL;
 	}
 }
-
+/*
 void freeFont(Fonts index)
 {
-	if(loadedFont[index])
+	if(Files::loadedFont[index])
 	{
-		TTF_CloseFont(loadedFont[index]);
-		loadedFont[index] = NULL;
+		TTF_CloseFont(Files::loadedFont[index]);
+		Files::loadedFont[index] = NULL;
 	}
 }
-
+*/
 void freeMusic(Musics index)
 {
-	if(loadedMusic[index])
+	if(Files::loadedMusic[index])
 	{
-		Mix_FreeMusic(loadedMusic[index]);
-		loadedMusic[index] = NULL;
+		Mix_FreeMusic(Files::loadedMusic[index]);
+		Files::loadedMusic[index] = NULL;
 	}
 }

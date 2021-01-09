@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Layer.h"
 #include "Map.h"
+#include "UserEvent.h"
 using namespace std;
 
 Game *Game::s_gameInstance = NULL;
@@ -95,23 +96,26 @@ void Game::HandleEvents()
 	bool handled = false;
 	while(SDL_PollEvent(&event) or SDL_GetTicks() - startTime < frameCount * 1000 / frameRate)
 	{
+		if(event.type == GAMESTATE_CHANGE)
+		{
+			GameState tmp = GameState(event.user.code);
+			switch(tmp)
+			{
+				case START:
+					break;
+				case PAUSE:
+					break;
+				case RESUME:
+					break;
+				default:
+					break;
+			}
+		}
 		switch(event.type)
 		{
 			case SDL_QUIT:
 				running = false;
 				return;	// func
-			case GAMESTATE_CHANGE:
-				GameState tmp = GameState(event.user.code);
-				switch(tmp)
-				{
-					case START:
-						break;
-					case PAUSE:
-						break;
-					case RESUME:
-						break;
-				}
-				break;	// switch
 			default:
 				for(auto it = layers.rbegin(); it != layers.rend(); ++it)
 				{
@@ -220,9 +224,5 @@ void Game::popOverlayer(Layer *_overlayer)
 
 void Game::popTopOverlayer()
 {
-	auto iter = layers.rbegin();
-	if (iter != layers.rend())
-	{
-		layers.erase(iter);
-	}
+	layers.pop_back();
 }

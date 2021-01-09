@@ -25,9 +25,6 @@ public:
 	Map(Maps index, std::string _name = "");
 	~Map();
 
-	bool handleEvents(SDL_Event &);	// return true if handled
-	void update();
-
 	void loadMap(Maps index);
 	void free();
 	bool handleEvents(SDL_Event &);	// return true if handled
