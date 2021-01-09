@@ -6,7 +6,7 @@ namespace Files
 {
 	string P_Images[IMAGE_COUNT];
 	P_Images[SAMPLE_IMAGE] = "../media/image/image.txt";
-	P_Images[HUNTER_IMAGE] = "../media/image/";//
+	P_Images[HUNTER_IMAGE] = "../media/image/Hunter_32_32.png";
 	P_Images[START_BUTTON_IMAGE] = "../media/image/StartButton_512_512.png";
 	P_Images[INTRO_BUTTON_IMAGE] = "../media/image/Intro.png";
 	P_Images[PAUSE_BUTTON_IMAGE] = "../media/image/Pause.png";
