@@ -137,14 +137,14 @@ bool Timer::loadBackground()
     SDL_Surface* loadedSurface = IMG_Load( "../image/" );
     if( loadedSurface == NULL )
     {
-        printf( "Unable to load image %s! SDL_image Error: %s\n", IMG_GetError() );
+        printf( "Unable to load timer image ! SDL_image Error: %s\n", IMG_GetError() );
     }
     else
     {
         //Create texture from surface pixels
         background = SDL_CreateTextureFromSurface(TimerRenderer, loadedSurface);
         if (background == NULL) {
-            printf("Unable to create texture from %s! SDL Error: %s\n", SDL_GetError());
+            printf("Unable to create timer texture! SDL Error: %s\n", SDL_GetError());
         }
         //Get rid of old loaded surface
         SDL_FreeSurface(loadedSurface);

@@ -106,7 +106,7 @@ bool Runner::handleEvents(SDL_Event &e)
                     backpack = tmp;
                     return true;
                 case SDLK_q:
-//undone
+                    createUserEvent(ITEM_USED,backpack->getItemType(),NULL,NULL);
                     return true;
             }
         }
@@ -120,16 +120,16 @@ bool Runner::handleEvents(SDL_Event &e)
                     velocity -= sprint_velocity;
                     updateRate = 6;
                     return true;
-                case SDLK_UP:
+                case SDLK_w:
                     velocity_y -= velocity;
                     return true;
-                case SDLK_DOWN:
-                    velocity += velocity;
+                case SDLK_s:
+                    velocity_y += velocity;
                     return true;
-                case SDLK_LEFT:
+                case SDLK_a:
                     velocity_x -= velocity;
                     return true;
-                case SDLK_RIGHT:
+                case SDLK_d:
                     velocity_x += velocity;
                     return true;
             }

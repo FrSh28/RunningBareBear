@@ -3,10 +3,10 @@ extern int mode;
 #define RUNNER_H
 #include"BasicObject.h"
 #include"includeSDL.h"
-#include"Wall.h"
 #include"Map.h"
 #include"Game.h"
 #include"Item.h"
+#include"UserEvent.h"
 
 enum character_list{BEAR};
 enum face {DOWN,LEFT,RIGHT,UP};

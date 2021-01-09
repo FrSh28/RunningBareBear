@@ -52,13 +52,22 @@ bool Invisible_Cloak::update() {}
 */
 
 //Potion
-Potion::Potion():Item("Water") {}
+Potion::Potion():Item("Potion") {}
 Potion::~Potion(){}
-bool Potion::handleEvents(SDL_Event &e) {}
+bool Potion::handleEvents(SDL_Event &e)
+{
+    if(e.type == ITEM_USED)
+    {
+        if(e.user.code == POTION)
+        {
+            //+++strength
+        }
+    }
+}
 bool Potion::update() {}
 
 //Meat
-Meat::Meat():Item("Chicken Leg") {}
+Meat::Meat():Item("Meat") {}
 Meat::~Meat(){}
 bool Meat::handleEvents(SDL_Event &e) {}
 bool Meat::update() {}

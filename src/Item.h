@@ -7,6 +7,7 @@
 #include"includeSDL.h"
 #include"BasicObject.h"
 #include"Map.h"
+#include"UserEvent.h"
 
 enum ItemList{BAD_ITEM, STAR, INVISIBLE_CLOAK, POTION, MEAT, SHEET, LIBRARY, PE_TEACHER,
         TA, JOKE, CHEM_TEACHER, WEBWORK, TOTAL_ITEM };
