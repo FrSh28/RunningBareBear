@@ -1,37 +1,54 @@
 {
 	"type" : GAMESTATE_CHANGE,
-	"code" : 0,
-	"data1" : NULL,
-	"data2" : NULL,
-	"trigger" : Button|Map,
-},
-{
-	"type" : CHARACTER_INTERACT,
-	"code" : (SDL_Keycode)the key that user pressed,
-	"data1" : (SDL_Point *)where the event happened(in mapPos),
-	"data2" : (CHARACTER *)the character doing this,
-	"trigger" : CHARACTER,
-},
-{
-	"type" : ITEM_PICKED_UP,
-	"code" : (ItemList)the item being picked up,
-	"data1" : (SDL_Point *)where the event happened(in mapPos),
-	"data2" : (CHARACTER *)the character doing this,
-	"trigger" : Item,
+	"events" : [
+		{
+			"name" : "GameStart"
+			"code" : START,
+			"data1" : NULL,
+			"data2" : NULL,
+			"trigger" : Button,
+		},
+		{
+			"name" : "GamePause"
+			"code" : PAUSE,
+			"data1" : NULL,
+			"data2" : NULL,
+			"trigger" : Button|createMission(),
+		},
+		{
+			"name" : "GameResume"
+			"code" : RESUME,
+			"data1" : NULL,
+			"data2" : NULL,
+			"trigger" : Button,
+		},
+		{
+			"name" : "GameEnd"
+			"code" : END,
+			"data1" : NULL,
+			"data2" : NULL,
+			"trigger" : Map,
+		},
+		{
+			"name" : "GameRestart"
+			"code" : STARTMENU,
+			"data1" : NULL,
+			"data2" : NULL,
+			"trigger" : Button,
+		},
+	]	
 },
 {
 	"type" : ITEM_USED,
-	"code" : (ItemList)the item being used,
-	"data1" : (CHARACTER *)the character doing this,
-	"data2" : NULL,
-	"trigger" : CHARACTER,
-},
-{
-	"type" : CAUGHT,
-	"code" : 0,
-	"data1" : NULL,
-	"data2" : NULL,
-	"trigger" : Map,
+	"events" : [
+		{
+			"name" : "ItemUsed"
+			"code" : (ItemList)the item being used,
+			"data1" : (SDL_Point *)where the event happened(in mapPos),
+			"data2" : (CHARACTER *)the character doing this,
+			"trigger" : CHARACTER,
+		},
+	]
 },
 {
 	"type" : ,
