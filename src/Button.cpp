@@ -29,16 +29,6 @@ double& operator^(SDL_Point center, SDL_Point mouse)
 	
 }
 
-/*
-	START_BUTTON_IMAGE,
-	INTRO_BUTTON_IMAGE,
-	PAUSE_BUTTON_IMAGE,
-	MISSION_BUTTON_IMAGE,
-	RESUME_BUTTON_IMAGE,
-	LEAVE_BUTTON_IMAGE,
-	RESTART_BUTTON_IMAGE,
-	OK_BUTTON_IMAGE,
-*/
 Button::Button(button_type tmp) :
 	type(tmp), UpdateReturnType(false)
 {
