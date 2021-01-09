@@ -1,161 +1,48 @@
-獵人模板
-class Hunter : public Renderable
-{
-	...
-	SDL_Point pos;
-public:
-	~Hunter();
-	
-	void handleEvents();
-	void update();
-	....
-}
 
-Hunter::Hunter()
-{
-	posOnWindow = NULL;
-	pos
-}
+MISSION:(五張不同的圖)
 
-Hunter::~Hunter()
-{
-	
-}
+任務一 : 期末調分大作戰
+棕熊同學因為物理期中考睡過頭，沒能考到期中考。若不申請調比重，在期末考孤注一擲的話，及格的機會十分的渺茫。
+因此，棕熊同學需在倒數7分鐘前找到調分單(圖)並繳交
+若沒有完成任務，棕熊同學的普物將慘遭被當，並且增加1分鐘的逃亡時間
 
-void Hunter::handleEvents(SDL_Event &e)
-{
-	
-}
+任務一 : 讓multiplier運作吧
+平時不認真的棕熊同學在實作multiplier時碰到了問題，找不到正確的library include 
+因此，棕熊同學需在倒數7分鐘前找到library (圖)並include他
+若沒有完成任務，棕熊同學將無法獲得lab的分數，並且增加1分鐘的逃亡時間
 
-void Hunter::update()
-{
-	posOnWindow = Map::convertPos(pos);
-}
-
-任務模板
-class mission : public Randerable
-{
-public:
-	mission(int a=0);
-	~mission();
-	virtual void handleEvents();
-	virtual void update();
-};
-
-class Mission1_1 : public mission
-{
-public:
-	Mission1_1();
-	~Mission1_1();
-	void handleEvents();
-	void update();
-};
-class Mission1_2 : public mission
-{
-public:
-	Mission1_2();
-	~Mission1_2();
-	void handleEvents();
-	void update();
-};
-class Mission1_3 : public mission
-{
-public:
-	Mission1_3();
-	~Mission1_3();
-	void handleEvents();
-	void update();
-};
-class Mission2_1 : public mission
-{
-public:
-	Mission2_1();
-	~Mission2_1();
-	void handleEvents();
-	void update();
-};
-class Mission2_2 : public mission
-{
-public:
-	Mission2_2();
-	~Mission2_2();
-	void handleEvents();
-	void update();
-};
-class Mission2_3 : public mission
-{
-public:
-	Mission2_3();
-	~Mission2_3();
-	void handleEvents();
-	void update();
-};
-
-//某個地方 
-//srand(time(0));
-//CreateMission(rand()%MissionTotal);
-
-enum types
-{
-	Mission1Type1, Mission1Type2, Mission1Type3,
-	Mission2Type1, Mission2Type2, Mission2Type3,
-	MissionTotal
-};
-mission *CreateMission(int choice)
-{
-	switch (choice)
-	{
-		case Mission1Type1:
-			return new Mission1_1();
-		case Mission1Type2:
-			return new Mission1_2();
-		case Mission1Type3:
-			return new Mission1_3();
-		case Mission2Type1:
-			return new Mission2_1();
-		case Mission2Type2:
-			return new Mission2_2();
-		case Mission2Type3:
-			return new Mission2_3();			
-
-	}
-}
-
-Mission1_1: 期末調分大作戰
-     故事 : (人物名稱)因為物理期中考睡過頭，沒能考到期中考，需在(某個限定時間)前更改比重
-     內容 : 需在(某個限定時間)前找到調分單(一個物品)並繳交
-     後果 : 普物被當，逃亡時間倒退(可能一分鐘之類的?)
-
-Mission1_2: 讓multiplier運作吧
-     故事 : 平時不認真的(人物名稱)在實作multiplier時碰到了問題，不知道要從哪裡include library
-     內容 : 需在(某個限定時間)內找到library(一個物品)並include他
-     後果 : 交電被當，(任務失敗時)獎金歸零
-
-Mission1_3: 尋找詹俊成老師
-     故事 : 體育課鐘聲響起，(人物名稱)卻仍然找不到詹俊成老師的班在哪裡集合
-     內容 : 需在(某個限定時間)內找到詹老師
-     後果 : 被老師懲罰跑5000，體力下降
-
-Mission2_1: 協助debug
-     故事 : 週三晚上，(人物名稱)發現自己的程式仍然有許多的bug沒有解決，於是(人物名稱)決定尋找助教、同學幫助debug
-     內容 : 尋找地圖上的三名助教、同學，請他們協助debug  註:人物可以是初音之類的...?
-     後果 : 依據少找幾位同學放出相對應數量的獵人
-
-Mission2_2: 延後化學小考
-     故事 : (人物名稱)在努力寫了一晚的程式後發現隔天化學要小考熱學，眼看自己已沒有時間讀化學了，唯一的辦法就是請周必泰老師開心並且延後小考
-     內容 : (人物名稱)需要找到冷笑話大集，並把他給周必泰老師
-     後果 : 獵人知道逃亡者位置
-
-Mission2_3: 寫完webwork
-     故事 : (人物名稱)常常因為在輸入webwork的答案時出錯而浪費許多時間，幫助他找到哪裡出錯吧
-     內容 : 找到三個常見的輸出錯誤並解決他1.()  2.dt  3.+C
-     後果 : 依據少找幾個錯誤就放出相對應數量的獵人(數量可能要再調整)
+任務一 : 尋找詹俊成老師
+體育課鐘聲響起，棕熊同學卻因為上週沒有騎去大稻埕，沒聽到集合地點而遲遲找不到詹俊成老師的班老師的集合地點
+因此，棕熊同學需在倒數7分鐘前找到詹俊成老師(圖)
+若沒有完成任務，棕熊同學將被詹老師記上一次曠課，並且增加1分鐘的逃亡時間
 
 
+任務二 : 協助debug
+週三晚上，棕熊同學發現自己的程式仍然有許多的bug沒有解決，無法順利地通過online judge，於是棕熊同學決定尋找助教幫助debug
+因此，棕熊同學需在倒數3分鐘前找到三名助教(圖)請求他們的協助
+若沒有完成任務，每少找一名助教就會多加一名獵人
 
+任務二 : 寫完webwork
+棕熊同學常常因為在輸入webwork的答案時出錯而浪費許多時間，幫助他找到哪裡出錯吧
+需在倒數3分鐘前找到三樣錯誤(圖)並修正他們
+若沒有完成任務，每少找一樣錯誤就會多加一名獵人
 
+Intro:
 
-
-
-
-
+1.獲勝條件：在倒數時間歸零之前不被獵人抓到
+    移動會造成小幅體力的下降
+    衝刺會造成大幅體力的下降
+    而體力下降會造成跑速的變慢
+若沒有完成中途出現的任務，可能會導致獲勝的條件加難
+2.按鈕： 
+W:向上 
+A:向左 
+S:向右 
+D:向下 
+E:撿起物品/放下物品 
+Q:使用物品/完成任務 
+Space:衝刺 
+3.道具
+無敵星星:沒有功能 
+藥水:回大量體力 
+肉:回少量體力
