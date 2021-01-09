@@ -16,8 +16,15 @@ class Button : public BasicObject
 	bool InsideSetting;
 	bool InsideLeaveSetting;
 	bool InsideOk;
+	SDL_Point StartCenter;
+	SDL_Point PauseCenter;
+	SDL_Point LeaveCenter;
+	SDL_Point ResumeCenter;
+	SDL_Point SettingCenter;
+	SDL_Point LeaveSettingCenter;
+	SDL_Point OkCenter;
 	button_type type;
-	public:
+public:
 	static SDL_Rect buttons[TOTAL_BUTTOMS];
 	bool handleEvents(SDL_Event &e);
 	bool update();
@@ -26,6 +33,6 @@ class Button : public BasicObject
 	
 }
 
-
+SDL_Point& operator ^(SDL_Point, SDL_Point);
 
 #endif // BUTTON_H

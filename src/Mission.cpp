@@ -11,6 +11,7 @@ unsigned int MISSION = SDL_RegisterEvents(0);
 Mission :: Mission(string _name)
  : BasicObject(_name)
 {
+	success = false;
 	//posOnWindow->x = ;
 	//posOnWindow->y = ;
 	//posOnWindow->w = ;
