@@ -2,8 +2,7 @@
 #include <algorithm>
 #include <random>
 #include "Game.h"
-#include "Layer.h"
-#include "Map.h"
+#include "Files.h"
 #include "UserEvent.h"
 using namespace std;
 
@@ -102,6 +101,7 @@ void Game::HandleEvents()
 			switch(tmp)
 			{
 				case START:
+					gameMap = new Map();
 					break;
 				case PAUSE:
 					break;

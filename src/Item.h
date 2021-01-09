@@ -16,11 +16,13 @@ class Item :public BasicObject
 {
 protected:
     ItemList type;
+    SDL_Point PixelPos;         // small grid on map
 public:
     Item(std::string _name = "");
     virtual bool handleEvents(SDL_Event& e)=0;
     virtual bool update()=0;
     ItemList getItemType()const;
+    void setPixelPos(SDL_Point&);       // set small grid on map (center)
 };
 
 Item* createItem(ItemList& list);

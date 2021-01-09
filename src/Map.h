@@ -9,8 +9,8 @@
 #include "Layer.h"
 #include "Files.h"
 #include "Item.h"
-//#include "Hunter.h"
-//#include "Runner.h"
+#include "Hunter.h"
+#include "Runner.h"
 
 enum ObjOnMap
 {
@@ -26,6 +26,7 @@ public:
 	~Map();
 
 	void loadMap(Maps index);
+	void addHunter();
 	void free();
 	bool handleEvents(SDL_Event &);	// return true if handled
 	void update();
@@ -53,15 +54,15 @@ public:
 	inline static Map &getMap() { return *s_mapInstance;}
 private:
 	std::string name;
-	int rowNum, colNum;
+	int colNum, rowNum;
 	std::vector<std::vector<int>> map;
 	int width, height;
 	// for map
 	struct SDL_PointComp{ bool operator()(const SDL_Point &, const SDL_Point &); };
 	std::map<SDL_Point, Item *, SDL_PointComp> items;
 
-	//std::vector<Hunter *> hunters;
-	//Runner *runner;
+	std::vector<Hunter *> hunters;
+	Runner *runner;
 	std::vector<SDL_Point> huntersMapPos;
 	SDL_Point runnerMapPos;
 

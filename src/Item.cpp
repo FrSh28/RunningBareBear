@@ -33,6 +33,11 @@ Item* createItem(ItemList& list)
 }
 Item::Item(std::string _name):BasicObject(_name)
 {}
+void setPixelPos(SDL_Point& pixelPos)   // center
+{
+    rectOnScreen.x = pixelPos.x - rectOnScreen.w / 2;
+    rectOnScreen.y = pixelPos.y - rectOnScreen.h / 2;
+}
 ItemList Item::getItemType() const {return type;}
 
 //Star
