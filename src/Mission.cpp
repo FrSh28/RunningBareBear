@@ -74,7 +74,6 @@ Mission1_1 :: Mission1_1 ()
 Mission1_1 :: ~Mission1_1 ()
 {
 	
-	texture = NULL;
 }
 bool Mission1_1 :: handleEvents(SDL_Event &e)
 {
@@ -118,7 +117,6 @@ Mission1_2 :: Mission1_2 ()
 Mission1_2 :: ~Mission1_2 ()
 {
 	
-	texture = NULL;
 }
 
 bool Mission1_2 :: handleEvents(SDL_Event &e)
@@ -154,16 +152,16 @@ Mission1_3 :: Mission1_3 ()
 			SetSuccess = true;
 		} 
 	}
-	Library* lib;
-	lib = new Library;
-	Map.placeItem(SetPos, lib);
+	//PE_Teacher
+	PE_Teacher* pe;
+	pe = new PE_Teacher;
+	Map.placeItem(SetPos, pe);
 
 }
 
 Mission1_3 :: ~Mission1_3 ()
 {
 	
-	texture = NULL;
 }
 
 bool Mission1_3 :: handleEvents(SDL_Event &e)
@@ -171,7 +169,7 @@ bool Mission1_3 :: handleEvents(SDL_Event &e)
 	
 	if(e.type == ITEM_USED) 
 		{
-			if(e.user.code == LIBRARY)
+			if(e.user.code == PE_TEACHER)
 			success = true;
 		}
 }
@@ -185,31 +183,62 @@ bool Mission1_3 :: update()
 Mission2_1 :: Mission2_1 ()
  : Mission("Mission 2 ")
 {
-	curMission = Mission1Type2;
+	curMission = Mission2Type1;
 	Map &map = Map::getMap();
 	
-	bool SetSuccess = false;
-	SDL_Point SetPos;
-	while(!SetSuccess)
+	bool SetSuccess1 = false;
+	SDL_Point SetPos1;
+	while(!SetSuccess1)
 	{
 		Game &game = Game::GetGame();
-		SetPos.x = game.rdEngine()%(map->getRowNum()); 
-		SetPos.y = game.rdEngine()%(map->getColNum());
-		if(map->isSpace(SetPos)) 
+		SetPos1.x = game.rdEngine()%(map->getRowNum()); 
+		SetPos1.y = game.rdEngine()%(map->getColNum());
+		if(map->isSpace(SetPos1)) 
 		{
-			SetSuccess = true;
+			SetSuccess1 = true;
 		} 
 	}
-	Library* lib;
-	lib = new Library;
-	Map.placeItem(SetPos, lib);
+	TeacherAssistant* ta1;
+	ta1 = new TeacherAssistant;
+	Map.placeItem(SetPos1, ta1);
+	
+	bool SetSuccess2 = false;
+	SDL_Point SetPos2;
+	while(!SetSuccess2)
+	{
+		Game &game = Game::GetGame();
+		SetPos2.x = game.rdEngine()%(map->getRowNum()); 
+		SetPos2.y = game.rdEngine()%(map->getColNum());
+		if(map->isSpace(SetPos2)) 
+		{
+			SetSuccess2 = true;
+		} 
+	}
+	TeacherAssistant* ta2;
+	ta2 = new TeacherAssistant;
+	Map.placeItem(SetPos2, ta2);
+	
+	bool SetSuccess3 = false;
+	SDL_Point SetPos3;
+	while(!SetSuccess3)
+	{
+		Game &game = Game::GetGame();
+		SetPos3.x = game.rdEngine()%(map->getRowNum()); 
+		SetPos3.y = game.rdEngine()%(map->getColNum());
+		if(map->isSpace(SetPos3)) 
+		{
+			SetSuccess3 = true;
+		} 
+	}
+	TeacherAssistant* ta3;
+	ta3 = new TeacherAssistant;
+	Map.placeItem(SetPos3, ta3);
 
 }
 
 Mission2_1 :: ~Mission2_1 ()
 {
 	
-	texture = NULL;
 }
 
 bool Mission2_1 :: handleEvents(SDL_Event &e)
@@ -217,7 +246,7 @@ bool Mission2_1 :: handleEvents(SDL_Event &e)
 	
 	if(e.type == ITEM_USED) 
 		{
-			if(e.user.code == LIBRARY)
+			if(e.user.code == TA)
 			success = true;
 		}
 }
@@ -227,7 +256,7 @@ bool Mission2_1 :: update()
 	 
 }
 
-
+/*
 Mission2_2 :: Mission2_2 ()
  : Mission("Mission 2 ")
 {
@@ -255,7 +284,6 @@ Mission2_2 :: Mission2_2 ()
 Mission2_2 :: ~Mission2_2 ()
 {
 	
-	texture = NULL;
 }
 
 bool Mission2_2 :: handleEvents(SDL_Event &e)
@@ -264,6 +292,7 @@ bool Mission2_2 :: handleEvents(SDL_Event &e)
 	if(e.type == ITEM_USED) 
 		{
 			if(e.user.code == LIBRARY)
+			
 			success = true;
 		}
 }
@@ -272,7 +301,7 @@ void Mission2_2 :: update()
 {
 	 
 }
-
+*/
 
 Mission2_3 :: Mission2_3 ()
  : Mission("Mission 2 ")
@@ -280,28 +309,59 @@ Mission2_3 :: Mission2_3 ()
 	curMission = Mission2Type3;
 	Map &map = Map::getMap();
 	
-	bool SetSuccess = false;
-	SDL_Point SetPos;
-	while(!SetSuccess)
+	bool SetSuccess1 = false;
+	SDL_Point SetPos1;
+	while(!SetSuccess1)
 	{
 		Game &game = Game::GetGame();
-		SetPos.x = game.rdEngine()%(map->getRowNum()); 
-		SetPos.y = game.rdEngine()%(map->getColNum());
-		if(map->isSpace(SetPos)) 
+		SetPos1.x = game.rdEngine()%(map->getRowNum()); 
+		SetPos1.y = game.rdEngine()%(map->getColNum());
+		if(map->isSpace(SetPos1)) 
 		{
-			SetSuccess = true;
+			SetSuccess1 = true;
 		} 
 	}
-	Library* lib;
-	lib = new Library;
-	Map.placeItem(SetPos, lib);
+	WebWork* web;
+	web = new WebWork;
+	Map.placeItem(SetPos1, web);
+	
+	bool SetSuccess2 = false;
+	SDL_Point SetPos2;
+	while(!SetSuccess2)
+	{
+		Game &game = Game::GetGame();
+		SetPos2.x = game.rdEngine()%(map->getRowNum()); 
+		SetPos2.y = game.rdEngine()%(map->getColNum());
+		if(map->isSpace(SetPos2)) 
+		{
+			SetSuccess2 = true;
+		} 
+	}
+	WebWork* web;
+	web = new WebWork;
+	Map.placeItem(SetPos1, web);
+	
+	bool SetSuccess3 = false;
+	SDL_Point SetPos3;
+	while(!SetSuccess3)
+	{
+		Game &game = Game::GetGame();
+		SetPos3.x = game.rdEngine()%(map->getRowNum()); 
+		SetPos3.y = game.rdEngine()%(map->getColNum());
+		if(map->isSpace(SetPos3)) 
+		{
+			SetSuccess3 = true;
+		} 
+	}
+	WebWork* web;
+	web = new WebWork;
+	Map.placeItem(SetPos1, web);
 
 }
 
 Mission2_3 :: ~Mission2_3 ()
 {
 	
-	texture = NULL;
 }
 
 bool Mission2_3 :: handleEvents(SDL_Event &e)
@@ -309,7 +369,7 @@ bool Mission2_3 :: handleEvents(SDL_Event &e)
 	
 	if(e.type == ITEM_USED) 
 		{
-			if(e.user.code == LIBRARY)
+			if(e.user.code == WEBWORK)
 			success = true;
 		}
 }

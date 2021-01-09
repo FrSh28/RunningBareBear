@@ -10,7 +10,7 @@
 enum frames
 {
 	UP_1, UP_2, UP_3, DOWN_1, DOWN_2, DOWN_3, RIGHT_1, RIGHT_2, RIGHT_3, LEFT_1, LEFT_2, LEFT_3, TOTAL
-}
+};
 
 class Hunter : public BasicObject
 {
@@ -21,7 +21,7 @@ class Hunter : public BasicObject
 	SDL_Point directPos;
 	SDL_Point findpos;
 	SDL_Point NextPixel;
-	int Hvelocity
+	int Hvelocity;
 	const int Run;
 	const int Walk;
 	bool SetSuccess;
