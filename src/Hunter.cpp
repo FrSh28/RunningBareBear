@@ -10,8 +10,7 @@ SDL_Rect Hunter_Clip[TOTAL];
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	Hvelocity(0), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0),
-	findX(0), findY(0), Animation_Frames(3), Run(3), Walk(6), frame(0) //
-	map(&Map::getMap())
+	findX(0), findY(0), Animation_Frames(3), Run(3), Walk(6), frame(0), map(&Map::getMap())
 {
 	setMapPos(MapPos);
 	setPixelPos(PixelPos);
@@ -80,7 +79,7 @@ bool Hunter::RunnerVisible()
 	findpos = HunterMapPos;
 	findX = HunterMapPos.x;
 	findY = HunterMapPos.y;
-	while(findpos != RunnerMapPos )
+	while(findpos.x != RunnerMapPos.x || findpos.x != RunnerMapPos.x)
 	{
 		findX += deltaX;
 		findY += deltaY;
@@ -141,6 +140,16 @@ void Hunter::Stage3()
 	Move();
 }
 
+bool Hunter::Arrive(SDL_Point destination)
+{
+	arrive = false;
+	if(HunterPixelPos.x == destination.x && HunterPixelPos.y == destination.y)
+	{
+		arrive = true;
+	}
+	return arrive;
+}
+
 void Hunter::Move()
 {
 	if(Arrive(NextPixel))
@@ -192,17 +201,8 @@ SDL_Point Hunter::Set()
 		} 
 	}
 }
-bool Hunter::Arrive(SDL_Point destination)
-{
-	arrive = false;
-	if(HunterPixelPos == destination)
-	{
-		arrive = true;
-	}
-	return arrive;
-}
 
-void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
+void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directpos)
 {
 	bool visited[map->getRowNum()][map->getColNum()];
 	for(int i=0; i<map->getRowNum(); i++)
@@ -223,7 +223,7 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 	Node init; 
 	init.step = 0;
 	init.way.push_back(HunterMapPos);  
-	visited[HunterMapPos.x][HunterMapPos.y];
+	visited[HunterMapPos.x][HunterMapPos.y] = true;
 	q.push(init);
 	
 	while(!q.empty())
@@ -233,21 +233,21 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 		SDL_Point curP = curNode.way.back();
 		
 		//right
-		SDL_Point nextP;
-		nextP.x = curP.x + 1;
-		nextP.y = curP.y;
-		if(!(map->isWall(nextP)) && !(visited[nextP.x][nextP.y]))
+		SDL_Point nextP1;
+		nextP1.x = curP.x + 1;
+		nextP1.y = curP.y;
+		if(!(map->isWall(nextP1)) && !(visited[nextP1.x][nextP1.y]))
 		{
-			visited[nextP.x][nextP.y] = true;
+			visited[nextP1.x][nextP1.y] = true;
 			Node tmp;
 			tmp.step = curNode.step + 1;
 			for(int i=0; i<tmp.step; i++)
 			{
 				tmp.way.push_back(curNode.way[i]);
 			}
-			tmp.way.push_back(nextP);
+			tmp.way.push_back(nextP1);
 			
-			if(nextP.x == directPos.x && nextP.y == directPos.y)
+			if(nextP1.x == directpos.x && nextP1.y == directpos.y)
 			{
 				while(!go.empty())
 				{
@@ -266,21 +266,21 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 		}
 		
 		//left
-		SDL_Point nextP;
-		nextP.x = curP.x - 1;
-		nextP.y = curP.y;
-		if(!(map->isWall(nextP)) && !(visited[nextP.x][nextP.y]))
+		SDL_Point nextP2;
+		nextP2.x = curP.x - 1;
+		nextP2.y = curP.y;
+		if(!(map->isWall(nextP2)) && !(visited[nextP2.x][nextP2.y]))
 		{
-			visited[nextP.x][nextP.y] = true;
+			visited[nextP2.x][nextP2.y] = true;
 			Node tmp;
 			tmp.step = curNode.step + 1;
 			for(int i=0; i<tmp.step; i++)
 			{
 				tmp.way.push_back(curNode.way[i]);
 			}
-			tmp.way.push_back(nextP);
+			tmp.way.push_back(nextP2);
 			
-			if(nextP.x == directPos.x && nextP.y == directPos.y)
+			if(nextP2.x == directpos.x && nextP2.y == directpos.y)
 			{
 				while(!go.empty())
 				{
@@ -299,21 +299,21 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 		}
 		
 		//down
-		SDL_Point nextP;
-		nextP.x = curP.x;
-		nextP.y = curP.y + 1;
-		if(!(map->isWall(nextP)) && !(visited[nextP.x][nextP.y]))
+		SDL_Point nextP3;
+		nextP3.x = curP.x;
+		nextP3.y = curP.y + 1;
+		if(!(map->isWall(nextP3)) && !(visited[nextP3.x][nextP3.y]))
 		{
-			visited[nextP.x][nextP.y] = true;
+			visited[nextP3.x][nextP3.y] = true;
 			Node tmp;
 			tmp.step = curNode.step + 1;
 			for(int i=0; i<tmp.step; i++)
 			{
 				tmp.way.push_back(curNode.way[i]);
 			}
-			tmp.way.push_back(nextP);
+			tmp.way.push_back(nextP3);
 			
-			if(nextP.x == directPos.x && nextP.y == directPos.y)
+			if(nextP3.x == directpos.x && nextP3.y == directpos.y)
 			{
 				while(!go.empty())
 				{
@@ -332,21 +332,21 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 		}
 		
 		//up
-		SDL_Point nextP;
-		nextP.x = curP.x;
-		nextP.y = curP.y - 1;
-		if(!(map->isWall(nextP)) && !(visited[nextP.x][nextP.y]))
+		SDL_Point nextP4;
+		nextP4.x = curP.x;
+		nextP4.y = curP.y - 1;
+		if(!(map->isWall(nextP4)) && !(visited[nextP4.x][nextP4.y]))
 		{
-			visited[nextP.x][nextP.y] = true;
+			visited[nextP4.x][nextP4.y] = true;
 			Node tmp;
 			tmp.step = curNode.step + 1;
 			for(int i=0; i<tmp.step; i++)
 			{
 				tmp.way.push_back(curNode.way[i]);
 			}
-			tmp.way.push_back(nextP);
+			tmp.way.push_back(nextP4);
 			
-			if(nextP.x == directPos.x && nextP.y == directPos.y)
+			if(nextP4.x == directpos.x && nextP4.y == directpos.y)
 			{
 				while(!go.empty())
 				{

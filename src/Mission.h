@@ -72,6 +72,7 @@ public:
 */ 
 class Mission2_3 : public Mission
 {
+	int total;
 public:
 	Mission2_3();
 	~Mission2_3();

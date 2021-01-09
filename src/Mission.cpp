@@ -39,11 +39,11 @@ Mission *createMission(MissionTypes choice)
 		case Mission1Type3:
 			return new Mission1_3();
 		/*
-		case Mission2Type1:
-			return new Mission2_1();
-		*/
 		case Mission2Type2:
 			return new Mission2_2();
+		*/
+		case Mission2Type1:
+			return new Mission2_1();
 		case Mission2Type3:
 			return new Mission2_3();			
 
@@ -54,23 +54,23 @@ Mission1_1 :: Mission1_1 ()
  : Mission("Mission 1 ")
 {
 	curMission = Mission1Type1;
-	
+	Map &map = Map::getMap();	
 	bool SetSuccess = false;
 	SDL_Point SetPos;
 	while(!SetSuccess)
 	{
 		Game &game = Game::GetGame();
-		SetPos.x = game.rdEngine()%(map->getRowNum()); 
-		SetPos.y = game.rdEngine()%(map->getColNum());
-		if(map->isSpace(SetPos)) 
+		SetPos.x = game.rdEngine()%(map.getRowNum()); 
+		SetPos.y = game.rdEngine()%(map.getColNum());
+		if(map.isSpace(SetPos)) 
 		{
 			SetSuccess = true;
 		} 
 	}
 	Sheet* sheet;
 	sheet = new Sheet;
-	Map &map = Map::getMap();
-	Map.placeItem(SetPos, sheet);
+
+	map.placeItem(SetPos, sheet);
 
 }
 Mission1_1 :: ~Mission1_1 ()
@@ -106,9 +106,9 @@ Mission1_2 :: Mission1_2 ()
 	while(!SetSuccess)
 	{
 		Game &game = Game::GetGame();
-		SetPos.x = game.rdEngine()%(map->getRowNum()); 
-		SetPos.y = game.rdEngine()%(map->getColNum());
-		if(map->isSpace(SetPos)) 
+		SetPos.x = game.rdEngine()%(map.getRowNum()); 
+		SetPos.y = game.rdEngine()%(map.getColNum());
+		if(map.isSpace(SetPos)) 
 		{
 			SetSuccess = true;
 		} 
@@ -150,9 +150,9 @@ Mission1_3 :: Mission1_3 ()
 	while(!SetSuccess)
 	{
 		Game &game = Game::GetGame();
-		SetPos.x = game.rdEngine()%(map->getRowNum()); 
-		SetPos.y = game.rdEngine()%(map->getColNum());
-		if(map->isSpace(SetPos)) 
+		SetPos.x = game.rdEngine()%(map.getRowNum()); 
+		SetPos.y = game.rdEngine()%(map.getColNum());
+		if(map.isSpace(SetPos)) 
 		{
 			SetSuccess = true;
 		} 
@@ -200,9 +200,9 @@ Mission2_1 :: Mission2_1 ()
 	while(!SetSuccess1)
 	{
 		Game &game = Game::GetGame();
-		SetPos1.x = game.rdEngine()%(map->getRowNum()); 
-		SetPos1.y = game.rdEngine()%(map->getColNum());
-		if(map->isSpace(SetPos1)) 
+		SetPos1.x = game.rdEngine()%(map.getRowNum()); 
+		SetPos1.y = game.rdEngine()%(map.getColNum());
+		if(map.isSpace(SetPos1)) 
 		{
 			SetSuccess1 = true;
 		} 
@@ -216,9 +216,9 @@ Mission2_1 :: Mission2_1 ()
 	while(!SetSuccess2)
 	{
 		Game &game = Game::GetGame();
-		SetPos2.x = game.rdEngine()%(map->getRowNum()); 
-		SetPos2.y = game.rdEngine()%(map->getColNum());
-		if(map->isSpace(SetPos2)) 
+		SetPos2.x = game.rdEngine()%(map.getRowNum()); 
+		SetPos2.y = game.rdEngine()%(map.getColNum());
+		if(map.isSpace(SetPos2)) 
 		{
 			SetSuccess2 = true;
 		} 
@@ -232,9 +232,9 @@ Mission2_1 :: Mission2_1 ()
 	while(!SetSuccess3)
 	{
 		Game &game = Game::GetGame();
-		SetPos3.x = game.rdEngine()%(map->getRowNum()); 
-		SetPos3.y = game.rdEngine()%(map->getColNum());
-		if(map->isSpace(SetPos3)) 
+		SetPos3.x = game.rdEngine()%(map.getRowNum()); 
+		SetPos3.y = game.rdEngine()%(map.getColNum());
+		if(map.isSpace(SetPos3)) 
 		{
 			SetSuccess3 = true;
 		} 
@@ -324,48 +324,48 @@ Mission2_3 :: Mission2_3 ()
 	while(!SetSuccess1)
 	{
 		Game &game = Game::GetGame();
-		SetPos1.x = game.rdEngine()%(map->getRowNum()); 
-		SetPos1.y = game.rdEngine()%(map->getColNum());
-		if(map->isSpace(SetPos1)) 
+		SetPos1.x = game.rdEngine()%(map.getRowNum()); 
+		SetPos1.y = game.rdEngine()%(map.getColNum());
+		if(map.isSpace(SetPos1)) 
 		{
 			SetSuccess1 = true;
 		} 
 	}
-	WebWork* web;
-	web = new WebWork;
-	Map.placeItem(SetPos1, web);
+	WebWork* web1;
+	web1 = new WebWork;
+	Map.placeItem(SetPos1, web1);
 	
 	bool SetSuccess2 = false;
 	SDL_Point SetPos2;
 	while(!SetSuccess2)
 	{
 		Game &game = Game::GetGame();
-		SetPos2.x = game.rdEngine()%(map->getRowNum()); 
-		SetPos2.y = game.rdEngine()%(map->getColNum());
-		if(map->isSpace(SetPos2)) 
+		SetPos2.x = game.rdEngine()%(map.getRowNum()); 
+		SetPos2.y = game.rdEngine()%(map.getColNum());
+		if(map.isSpace(SetPos2)) 
 		{
 			SetSuccess2 = true;
 		} 
 	}
-	WebWork* web;
-	web = new WebWork;
-	Map.placeItem(SetPos1, web);
+	WebWork* web2;
+	web2 = new WebWork;
+	Map.placeItem(SetPos1, web2);
 	
 	bool SetSuccess3 = false;
 	SDL_Point SetPos3;
 	while(!SetSuccess3)
 	{
 		Game &game = Game::GetGame();
-		SetPos3.x = game.rdEngine()%(map->getRowNum()); 
-		SetPos3.y = game.rdEngine()%(map->getColNum());
-		if(map->isSpace(SetPos3)) 
+		SetPos3.x = game.rdEngine()%(map.getRowNum()); 
+		SetPos3.y = game.rdEngine()%(map.getColNum());
+		if(map.isSpace(SetPos3)) 
 		{
 			SetSuccess3 = true;
 		} 
 	}
-	WebWork* web;
-	web = new WebWork;
-	Map.placeItem(SetPos1, web);
+	WebWork* web3;
+	web3 = new WebWork;
+	Map.placeItem(SetPos1, web3);
 
 }
 

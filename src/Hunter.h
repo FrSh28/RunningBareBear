@@ -53,7 +53,7 @@ public:
 	SDL_Point getMapPos() {return HunterMapPos;}
 	SDL_Point getPixelPos() {return HunterCenterPixel;}
 	bool RunnerVisible();
-	bool Arrive();
+	bool Arrive(SDL_Point);
 	void setPixelPos(SDL_Point &);
 	void setMapPos(SDL_Point &);
 	void Stage1();

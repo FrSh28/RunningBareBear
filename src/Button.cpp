@@ -6,7 +6,7 @@
 #include <cmath>
 
 
-SDL_Rect Button::buttons[TOTAL_BUTTOMS] = {SDL_Rect({x,y,w,h}), } 
+SDL_Rect Button::buttons[TOTAL_BUTTONS] = {SDL_Rect({x,y,w,h}), } 
 
 double& operator^(SDL_Point center, SDL_Point mouse)
 {
@@ -19,8 +19,8 @@ double& operator^(SDL_Point center, SDL_Point mouse)
 Button::Button(button_type tmp) :
 	type(tmp), UpdateReturnType(false)
 {
-	Center.x = buttons[type].x + buttons[type].w/2;
-	Center.y = buttons[type].y + buttons[type].h/2;
+	Center.x = buttons[tmp].x + buttons[tmp].w/2;
+	Center.y = buttons[tmp].y + buttons[tmp].h/2;
 	rectOnScreen = buttons[type];
 	Inside = false;
 }
@@ -40,12 +40,12 @@ bool Button::handleEvents(SDL_Event &e)
 	mouse.y = Y;
 	switch(type)
 	{
-		case START://
+		case STARTS://
 			if(e.type == SDL_MOUSEMOTION)
 			{
 				EventReturnType = true;
 				Inside = false;
-				if((Center ^ mouse) <= buttons[START].w/2 )
+				if((Center ^ mouse) <= buttons[STARTS].w/2 )
 				{
 					Inside = true;
 				}
@@ -253,7 +253,7 @@ bool Button::handleEvents(SDL_Event &e)
 bool Button::update()
 {
 	if(type == START && Inside)
-		rectOnTexture = SDL_Rect( {button_type[START].x+button_type[START].w, button_type[START].y, button_type[START].w, button_type[START].h} );
+		rectOnTexture = SDL_Rect( {button_type[STARTs].x+button_type[STARTS].w, button_type[STARTS].y, button_type[STARTS].w, button_type[STARTS].h} );
 	else
 		rectOnTexture = SDL_Rect( {button_type[type].x, button_type[type].y, button_type[type].w, button_type[type].h} );
 	Last = Inside;

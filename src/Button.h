@@ -4,7 +4,7 @@
 #include "BasicObject.h"
 enum button_type
 {
-	START, INTRO1, LEAVEINTRO1, MISSION, LEAVEMISSION, PAUSES, LEAVE, RESUMES, INTRO2, LEAVEINTRO2, OK, TOTAL_BUTTONS
+	STARTS, INTRO1, LEAVEINTRO1, MISSION, LEAVEMISSION, PAUSES, LEAVE, RESUMES, INTRO2, LEAVEINTRO2, OK, TOTAL_BUTTONS
 };
 
 class Button : public BasicObject
@@ -26,6 +26,6 @@ public:
 	
 }
 
-SDL_Point& operator ^(SDL_Point, SDL_Point);
+double& operator ^(SDL_Point, SDL_Point);
 
 #endif // BUTTON_H
