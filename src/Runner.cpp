@@ -11,12 +11,10 @@ SDL_Rect Clip [TOTAL_FRAMES];
 const int Runner::gridWidth = Map::getPixelWidth();
 const int Runner::gridHeight = Map::getPixelHeight();
 Runner::Runner(SDL_Point& InitialMapPos,SDL_Point& InitialPixelPos, character_list character):
-BasicObject("Runner"), strength(100), map(&Map::getMap()), game(Game::GetGame()), width(40),
-height(32), updateRate(6), direction(DOWN)
-{
+BasicObject("Runner"), strength(100), map(&Map::getMap()), game(&Game::GetGame()), width(40),
+height(32), updateRate(6), direction(DOWN) {
     initclips();
-    if (mode==1)
-    {
+    if (mode == 1) {
         //texture = loadMedia(TEXTURE_XXX);     // ref Files.h --by FrSh
         /*posOnWindow->x = (int);
         posOnTexture->x = (int);
@@ -29,8 +27,7 @@ height(32), updateRate(6), direction(DOWN)
 
         rectOnTexture = Clip[0];
 
-        switch(character)
-        {
+        switch (character) {
             case BEAR:
                 velocity = 00000;
                 sprint_velocity = 00000;
@@ -42,8 +39,8 @@ height(32), updateRate(6), direction(DOWN)
     setPixelPos(InitialPixelPos);
     //set Initial MapPos
     setMapPos(InitialMapPos);
-}
 
+}
 void Runner::setMapPos(SDL_Point &Set)
 {
     MapPos.x = Set.x;
@@ -102,6 +99,7 @@ bool Runner::handleEvents(SDL_Event &e)
                     direction = LEFT;
                     return true;
                 case SDLK_e:
+                    //pickup or throw
                     pickup = true;
                     return true;
             }
@@ -129,6 +127,7 @@ bool Runner::handleEvents(SDL_Event &e)
                     velocity_x += velocity;
                     return true;
                 case SDLK_e:
+                    //pickup or throw
                     pickup = false;
                     return true;
             }
