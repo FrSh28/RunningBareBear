@@ -6,6 +6,7 @@
 #include "Mission.h"
 #include "UserEvent.h"
 #include "Item.h"
+#include "Map.h" 
 using namespace std;
 
 MissionTypes curMission = MissionTotal;
@@ -46,6 +47,7 @@ Mission *createMission(MissionTypes choice)
 
 	}
 }
+
 Mission1_1 :: Mission1_1 ()
  : Mission("Mission 1 ")
 {
@@ -63,31 +65,27 @@ Mission1_1 :: Mission1_1 ()
 			SetSuccess = true;
 		} 
 	}
-	//SHEET
 	Sheet* sheet;
 	sheet = new Sheet;
 	Map &map = Map::getMap();
 	Map.placeItem(SetPos, sheet);
 
 }
-
 Mission1_1 :: ~Mission1_1 ()
 {
 	
 	texture = NULL;
 }
-
 bool Mission1_1 :: handleEvents(SDL_Event &e)
 {
 	
 	if(e.type == ITEM_USED) 
 		{
-			if(e.user.code == LIBRARY)
+			if(e.user.code == SHEET)
 			success = true;
 		}
 }
-
-void Mission1_1 :: update()
+bool Mission1_1 :: update()
 {
 	 
 }
@@ -133,7 +131,7 @@ bool Mission1_2 :: handleEvents(SDL_Event &e)
 		}
 }
 
-void Mission1_2 :: update()
+bool Mission1_2 :: update()
 {
 	 
 }
@@ -178,7 +176,7 @@ bool Mission1_3 :: handleEvents(SDL_Event &e)
 		}
 }
 
-void Mission1_3 :: update()
+bool Mission1_3 :: update()
 {
 	 
 }
@@ -224,7 +222,7 @@ bool Mission2_1 :: handleEvents(SDL_Event &e)
 		}
 }
 
-void Mission2_1 :: update()
+bool Mission2_1 :: update()
 {
 	 
 }
@@ -316,7 +314,7 @@ bool Mission2_3 :: handleEvents(SDL_Event &e)
 		}
 }
 
-void Mission2_3 :: update()
+bool Mission2_3 :: update()
 {
 	 
 }

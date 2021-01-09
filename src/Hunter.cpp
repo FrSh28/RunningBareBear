@@ -6,7 +6,7 @@
 #include <queue>
 #include <iostream>
 #include <cmath>
-SDL_Rect Hunter_Hunter_Clip[TOTAL];
+SDL_Rect Hunter_Clip[TOTAL];
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	Hvelocity(0), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0), findX(0), findY(0), Animation_Frames(3), Run(), Walk()
@@ -400,7 +400,7 @@ if(!(map->isWall(nextP)) && !visited[nextP.x][nextP.y])
 		}
 */
 //UP_1, UP_2, UP_3, DOWN_1, DOWN_2, DOWN_3, RIGHT_1, RIGHT_2, RIGHT_3, LEFT_1, LEFT_2, LEFT_3, TOTAL
-void Runner::initHunter_Clips()                // init render Hunter_Clips
+void Hunter::initHunter_Clips()                // init render Hunter_Clips
 {
     //Up
     Hunter_Clip[UP_1].x = 0000;
