@@ -6,6 +6,12 @@
 #include "includeSDL.h"
 #include "BasicObject.h"
 
+enum MissionTypes
+{
+	Mission1Type1, Mission1Type2, Mission1Type3,
+	Mission2Type1, Mission2Type2, Mission2Type3,
+	MissionTotal
+};
 
 class Mission : public BasicObject
 {
@@ -74,12 +80,7 @@ public:
 //srand(time(0));
 //CreateMission(rand()%MissionTotal);
 
-enum MissionTypes
-{
-	Mission1Type1, Mission1Type2, Mission1Type3,
-	Mission2Type1, Mission2Type2, Mission2Type3,
-	MissionTotal
-};
+
 Mission *createMission(int choice);
 
 

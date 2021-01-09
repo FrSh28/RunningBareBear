@@ -5,6 +5,7 @@
 #include "Layer.h"
 #include "Mission.h"
 #include "UserEvent.h"
+#include "Item.h"
 using namespace std;
 
 MissionTypes curMission = MissionTotal;
@@ -45,54 +46,50 @@ Mission *createMission(MissionTypes choice)
 
 	}
 }
-
-
 Mission1_1 :: Mission1_1 ()
  : Mission("Mission 1 ")
 {
 	curMission = Mission1Type1;
-	Game &game = Game::GetGame();
-	//game.Map.addItem();                    
-	//texture = loadMedia(TEXTURE_MISSION);	
+	
+	bool SetSuccess = false;
+	SDL_Point SetPos;
+	while(!SetSuccess)
+	{
+		Game &game = Game::GetGame();
+		SetPos.x = game.rdEngine()%(map->getRowNum()); 
+		SetPos.y = game.rdEngine()%(map->getColNum());
+		if(map->isSpace(SetPos)) 
+		{
+			SetSuccess = true;
+		} 
+	}
+	//SHEET
+	Sheet* sheet;
+	sheet = new Sheet;
+	Map &map = Map::getMap();
+	Map.placeItem(SetPos, sheet);
+
 }
 
 Mission1_1 :: ~Mission1_1 ()
 {
-	//releaseMedia(TEXTURE_MISSION);
+	
 	texture = NULL;
 }
 
 bool Mission1_1 :: handleEvents(SDL_Event &e)
 {
-	if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
-	{
-		int X, Y;
-        SDL_GetMouseState( &X, &Y );
-
-        bool inside = true; 
-        if( X < posOnWindow->x || X > posOnWindow->x + posOnWindow->w){
-            inside = false;
-        }    
-        else if( Y < posOnWindow->y || Y > posOnWindow->y + posOnWindow->h ){
-            inside = false;
-        }
-        
-        if(inside)
-        {
-        	Game &game = Game::GetGame();
-			game.pushOverlayer(new missionLayer);
-		}
-	}
-	else if(e.type == USE) //可能是按下E鍵之類的 
+	
+	if(e.type == ITEM_USED) 
 		{
-			if(e.user.code == Mission1Type1)
+			if(e.user.code == LIBRARY)
 			success = true;
 		}
 }
 
 void Mission1_1 :: update()
 {
-	//什麼都沒有的樣子 
+	 
 }
 
 
@@ -100,145 +97,136 @@ Mission1_2 :: Mission1_2 ()
  : Mission("Mission 1 ")
 {
 	curMission = Mission1Type2;
-	Game &game = Game::GetGame();
-	//game.Map.addItem();                    
-	//texture = loadMedia(TEXTURE_MISSION);	
+	Map &map = Map::getMap();
+	
+	bool SetSuccess = false;
+	SDL_Point SetPos;
+	while(!SetSuccess)
+	{
+		Game &game = Game::GetGame();
+		SetPos.x = game.rdEngine()%(map->getRowNum()); 
+		SetPos.y = game.rdEngine()%(map->getColNum());
+		if(map->isSpace(SetPos)) 
+		{
+			SetSuccess = true;
+		} 
+	}
+	Library* lib;
+	lib = new Library;
+	Map.placeItem(SetPos, lib);
+
 }
 
 Mission1_2 :: ~Mission1_2 ()
 {
-	//releaseMedia(TEXTURE_MISSION);
+	
 	texture = NULL;
 }
 
 bool Mission1_2 :: handleEvents(SDL_Event &e)
 {
-	if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
-	{
-		int X, Y;
-        SDL_GetMouseState( &X, &Y );
-
-        bool inside = true; 
-        if( X < posOnWindow->x || X > posOnWindow->x + posOnWindow->w){
-            inside = false;
-        }    
-        else if( Y < posOnWindow->y || Y > posOnWindow->y + posOnWindow->h ){
-            inside = false;
-        }
-        
-        if(inside)
-        {
-        	Game &game = Game::GetGame();
-			game.pushOverlayer(new missionLayer);
-		}
-	}
-	else if(e.type == MISSION) //可能是按下E鍵之類的 
+	
+	if(e.type == ITEM_USED) 
 		{
-			if(e.user.code == Mission1Type1)
+			if(e.user.code == LIBRARY)
 			success = true;
 		}
 }
 
 void Mission1_2 :: update()
 {
-	//什麼都沒有的樣子 
+	 
 }
 
 Mission1_3 :: Mission1_3 ()
  : Mission("Mission 1 ")
 {
 	curMission = Mission1Type3;
-	Game &game = Game::GetGame();
-	//game.Map.addItem();                    
-	//texture = loadMedia(TEXTURE_MISSION);	
+	Map &map = Map::getMap();
+	
+	bool SetSuccess = false;
+	SDL_Point SetPos;
+	while(!SetSuccess)
+	{
+		Game &game = Game::GetGame();
+		SetPos.x = game.rdEngine()%(map->getRowNum()); 
+		SetPos.y = game.rdEngine()%(map->getColNum());
+		if(map->isSpace(SetPos)) 
+		{
+			SetSuccess = true;
+		} 
+	}
+	Library* lib;
+	lib = new Library;
+	Map.placeItem(SetPos, lib);
+
 }
 
 Mission1_3 :: ~Mission1_3 ()
 {
-	//releaseMedia(TEXTURE_MISSION);
+	
 	texture = NULL;
 }
 
 bool Mission1_3 :: handleEvents(SDL_Event &e)
 {
-	if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
-	{
-		int X, Y;
-        SDL_GetMouseState( &X, &Y );
-
-        bool inside = true; 
-        if( X < posOnWindow->x || X > posOnWindow->x + posOnWindow->w){
-            inside = false;
-        }    
-        else if( Y < posOnWindow->y || Y > posOnWindow->y + posOnWindow->h ){
-            inside = false;
-        }
-        
-        if(inside)
-        {
-        	Game &game = Game::GetGame();
-			game.pushOverlayer(new missionLayer);
-		}
-	}
-	else if(e.type == MISSION) //可能是按下E鍵之類的 
+	
+	if(e.type == ITEM_USED) 
 		{
-			if(e.user.code == Mission1Type1)
+			if(e.user.code == LIBRARY)
 			success = true;
 		}
 }
 
 void Mission1_3 :: update()
 {
-	//什麼都沒有的樣子 
+	 
 }
 
 
 Mission2_1 :: Mission2_1 ()
  : Mission("Mission 2 ")
 {
-	curMission = Mission2Type1;
-	Game &game = Game::GetGame();
-	//game.Map.addItem();                    
-	//texture = loadMedia(TEXTURE_MISSION);	
+	curMission = Mission1Type2;
+	Map &map = Map::getMap();
+	
+	bool SetSuccess = false;
+	SDL_Point SetPos;
+	while(!SetSuccess)
+	{
+		Game &game = Game::GetGame();
+		SetPos.x = game.rdEngine()%(map->getRowNum()); 
+		SetPos.y = game.rdEngine()%(map->getColNum());
+		if(map->isSpace(SetPos)) 
+		{
+			SetSuccess = true;
+		} 
+	}
+	Library* lib;
+	lib = new Library;
+	Map.placeItem(SetPos, lib);
+
 }
 
 Mission2_1 :: ~Mission2_1 ()
 {
-	//releaseMedia(TEXTURE_MISSION);
+	
 	texture = NULL;
 }
 
 bool Mission2_1 :: handleEvents(SDL_Event &e)
 {
-	if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
-	{
-		int X, Y;
-        SDL_GetMouseState( &X, &Y );
-
-        bool inside = true; 
-        if( X < posOnWindow->x || X > posOnWindow->x + posOnWindow->w){
-            inside = false;
-        }    
-        else if( Y < posOnWindow->y || Y > posOnWindow->y + posOnWindow->h ){
-            inside = false;
-        }
-        
-        if(inside)
-        {
-        	Game &game = Game::GetGame();
-			game.pushOverlayer(new missionLayer);
-		}
-	}
-	else if(e.type == MISSION) //可能是按下E鍵之類的 
+	
+	if(e.type == ITEM_USED) 
 		{
-			if(e.user.code == Mission1Type1)
+			if(e.user.code == LIBRARY)
 			success = true;
 		}
 }
 
-void Mission2_2 :: update()
+void Mission2_1 :: update()
 {
-	//什麼都沒有的樣子 
+	 
 }
 
 
@@ -246,108 +234,90 @@ Mission2_2 :: Mission2_2 ()
  : Mission("Mission 2 ")
 {
 	curMission = Mission2Type2;
-	Game &game = Game::GetGame();
-	//game.Map.addItem();                    
-	//texture = loadMedia(TEXTURE_MISSION);	
+	Map &map = Map::getMap();
+	
+	bool SetSuccess = false;
+	SDL_Point SetPos;
+	while(!SetSuccess)
+	{
+		Game &game = Game::GetGame();
+		SetPos.x = game.rdEngine()%(map->getRowNum()); 
+		SetPos.y = game.rdEngine()%(map->getColNum());
+		if(map->isSpace(SetPos)) 
+		{
+			SetSuccess = true;
+		} 
+	}
+	Library* lib;
+	lib = new Library;
+	Map.placeItem(SetPos, lib);
+
 }
 
-Mission2_1 :: ~Mission2_2 ()
+Mission2_2 :: ~Mission2_2 ()
 {
-	//releaseMedia(TEXTURE_MISSION);
+	
 	texture = NULL;
 }
 
 bool Mission2_2 :: handleEvents(SDL_Event &e)
 {
-	if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
-	{
-		int X, Y;
-        SDL_GetMouseState( &X, &Y );
-
-        bool inside = true; 
-        if( X < posOnWindow->x || X > posOnWindow->x + posOnWindow->w){
-            inside = false;
-        }    
-        else if( Y < posOnWindow->y || Y > posOnWindow->y + posOnWindow->h ){
-            inside = false;
-        }
-        
-        if(inside)
-        {
-        	Game &game = Game::GetGame();
-			game.pushOverlayer(new missionLayer);
-		}
-	}
-	else if(e.type == MISSION) //可能是按下E鍵之類的 
+	
+	if(e.type == ITEM_USED) 
 		{
-			if(e.user.code == Mission1Type1)
+			if(e.user.code == LIBRARY)
 			success = true;
 		}
 }
 
 void Mission2_2 :: update()
 {
-	//什麼都沒有的樣子 
+	 
 }
+
 
 Mission2_3 :: Mission2_3 ()
  : Mission("Mission 2 ")
 {
 	curMission = Mission2Type3;
-	Game &game = Game::GetGame();
-	//game.Map.addItem();                    
-	//texture = loadMedia(TEXTURE_MISSION);	
+	Map &map = Map::getMap();
+	
+	bool SetSuccess = false;
+	SDL_Point SetPos;
+	while(!SetSuccess)
+	{
+		Game &game = Game::GetGame();
+		SetPos.x = game.rdEngine()%(map->getRowNum()); 
+		SetPos.y = game.rdEngine()%(map->getColNum());
+		if(map->isSpace(SetPos)) 
+		{
+			SetSuccess = true;
+		} 
+	}
+	Library* lib;
+	lib = new Library;
+	Map.placeItem(SetPos, lib);
+
 }
 
 Mission2_3 :: ~Mission2_3 ()
 {
-	//releaseMedia(TEXTURE_MISSION);
+	
 	texture = NULL;
 }
 
 bool Mission2_3 :: handleEvents(SDL_Event &e)
 {
-	if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
-	{
-		int X, Y;
-        SDL_GetMouseState( &X, &Y );
-
-        bool inside = true; 
-        if( X < posOnWindow->x || X > posOnWindow->x + posOnWindow->w){
-            inside = false;
-        }    
-        else if( Y < posOnWindow->y || Y > posOnWindow->y + posOnWindow->h ){
-            inside = false;
-        }
-        
-        if(inside)
-        {
-        	Game &game = Game::GetGame();
-			game.pushOverlayer(new missionLayer);
-		}
-	}
-	else if(e.type == MISSION) //可能是按下E鍵之類的 
+	
+	if(e.type == ITEM_USED) 
 		{
-			if(e.user.code == Mission1Type1)
+			if(e.user.code == LIBRARY)
 			success = true;
 		}
 }
 
 void Mission2_3 :: update()
 {
-	//什麼都沒有的樣子 
+	 
 }
 
-
-/*
-
-if (MISSION != ((Uint32)-1)) {
-    SDL_Event event;
-    SDL_zero(event);
-	event.type = Pick_Up;
-    event.user.code = mission_code;
-    event.user.data1 = significant_data1;
-    event.user.data2 = 0;
-    SDL_PushEvent(&event);
-}
-*/
