@@ -6,7 +6,6 @@
 #include "includeSDL.h"
 #include "BasicObject.h"
 
-extern unsigned int MISSION;
 
 class Mission : public BasicObject
 {
@@ -16,9 +15,10 @@ public:
 	virtual bool handleEvents(SDL_Event &) = 0;
 	virtual bool update() = 0;
 	inline bool isSuccess() const { return success; }
-
+	inline static MissionTypes &getMission() { return curMission; }
 protected:
 	bool success;
+	static MissionTypes curMission;
 	
 };
 class Mission1_1 : public Mission
@@ -74,13 +74,13 @@ public:
 //srand(time(0));
 //CreateMission(rand()%MissionTotal);
 
-enum types
+enum MissionTypes
 {
 	Mission1Type1, Mission1Type2, Mission1Type3,
 	Mission2Type1, Mission2Type2, Mission2Type3,
 	MissionTotal
 };
-Mission *CreateMission(int choice);
+Mission *createMission(int choice);
 
 
 #endif

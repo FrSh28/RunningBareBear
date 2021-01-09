@@ -4,28 +4,21 @@
 #include "BasicObject.h"
 enum button_type
 {
-	START, PAUSE, LEAVE, RESUME, SETTING, LEAVESETTING, OK, TOTAL_BUTTOMS
+	START, INTRO1, LEAVEINTRO1, MISSION, LEAVEMISSION, PAUSES, LEAVE, RESUMES, INTRO2, LEAVEINTRO2, OK, TOTAL_BUTTONS
 };
 
 class Button : public BasicObject
 {
-	bool InsideStart;
-	bool InsidePause;
-	bool InsideLeave;
-	bool InsideResume;
-	bool InsideSetting;
-	bool InsideLeaveSetting;
-	bool InsideOk;
-	SDL_Point StartCenter;
-	SDL_Point PauseCenter;
-	SDL_Point LeaveCenter;
-	SDL_Point ResumeCenter;
-	SDL_Point SettingCenter;
-	SDL_Point LeaveSettingCenter;
-	SDL_Point OkCenter;
+	bool Inside;
+	bool EventReturnType;
+	bool UpdateReturnType;
+	bool Last;
+	bool changed;
+	SDL_Point Center;
+
 	button_type type;
 public:
-	static SDL_Rect buttons[TOTAL_BUTTOMS];
+	static SDL_Rect buttons[TOTAL_BUTTONS];
 	bool handleEvents(SDL_Event &e);
 	bool update();
 	Button(button_type tmp);

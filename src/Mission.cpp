@@ -7,7 +7,7 @@
 #include "UserEvent.h"
 using namespace std;
 
-unsigned int MISSION = SDL_RegisterEvents(0);
+MissionTypes curMission = MissionTotal;
 
 Mission :: Mission(string _name)
  : BasicObject(_name)
@@ -22,11 +22,12 @@ Mission :: Mission(string _name)
 	//posOnTexture->w = ;
 	//posOnTexture->h = ;
 }
-Mission :: ~Mission() //call when mission is complete or timeover 
+Mission :: ~Mission() //call when mission is complete or timeover ,Current_Mission = 0
 { }
 
-Mission *CreateMission(int choice)
+Mission *createMission(MissionTypes choice)
 {
+	
 	switch (choice) //somewhere : srand(time(0)); CreateMission(rand()%MissionTotal);
 	{
 		case Mission1Type1:
@@ -49,6 +50,7 @@ Mission *CreateMission(int choice)
 Mission1_1 :: Mission1_1 ()
  : Mission("Mission 1 ")
 {
+	curMission = Mission1Type1;
 	Game &game = Game::GetGame();
 	//game.Map.addItem();                    
 	//texture = loadMedia(TEXTURE_MISSION);	
@@ -81,7 +83,7 @@ bool Mission1_1 :: handleEvents(SDL_Event &e)
 			game.pushOverlayer(new missionLayer);
 		}
 	}
-	else if(e.type == MISSION) //可能是按下E鍵之類的 
+	else if(e.type == USE) //可能是按下E鍵之類的 
 		{
 			if(e.user.code == Mission1Type1)
 			success = true;
@@ -97,6 +99,7 @@ void Mission1_1 :: update()
 Mission1_2 :: Mission1_2 ()
  : Mission("Mission 1 ")
 {
+	curMission = Mission1Type2;
 	Game &game = Game::GetGame();
 	//game.Map.addItem();                    
 	//texture = loadMedia(TEXTURE_MISSION);	
@@ -144,6 +147,7 @@ void Mission1_2 :: update()
 Mission1_3 :: Mission1_3 ()
  : Mission("Mission 1 ")
 {
+	curMission = Mission1Type3;
 	Game &game = Game::GetGame();
 	//game.Map.addItem();                    
 	//texture = loadMedia(TEXTURE_MISSION);	
@@ -192,6 +196,7 @@ void Mission1_3 :: update()
 Mission2_1 :: Mission2_1 ()
  : Mission("Mission 2 ")
 {
+	curMission = Mission2Type1;
 	Game &game = Game::GetGame();
 	//game.Map.addItem();                    
 	//texture = loadMedia(TEXTURE_MISSION);	
@@ -240,6 +245,7 @@ void Mission2_2 :: update()
 Mission2_2 :: Mission2_2 ()
  : Mission("Mission 2 ")
 {
+	curMission = Mission2Type2;
 	Game &game = Game::GetGame();
 	//game.Map.addItem();                    
 	//texture = loadMedia(TEXTURE_MISSION);	
@@ -287,6 +293,7 @@ void Mission2_2 :: update()
 Mission2_3 :: Mission2_3 ()
  : Mission("Mission 2 ")
 {
+	curMission = Mission2Type3;
 	Game &game = Game::GetGame();
 	//game.Map.addItem();                    
 	//texture = loadMedia(TEXTURE_MISSION);	

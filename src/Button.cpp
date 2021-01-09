@@ -2,17 +2,11 @@
 #include "Game.h"
 #include "Button.h"
 #include "UserEvent.h"
+#include "Layer.h"
 #include <cmath>
-/*
-	START, PAUSE, LEAVE, RESUME, SETTING, LEAVESETTING, OK, TOTAL_BUTTOMS
-Button::buttons[START] = {x,y,w,h};
-Button::buttons[STOP]
-Button::buttons[LEAVE]
-Button::buttons[RESUME]
-Button::buttons[SETTING]
-Button::buttons[OK]
-*/
-SDL_Rect Button::button_type[TOTAL_BUTTOMS] = {SDL_Rect({x,y,w,h}), } 
+
+
+SDL_Rect Button::buttons[TOTAL_BUTTOMS] = {SDL_Rect({x,y,w,h}), } 
 
 SDL_Point& operator^(SDL_Point center, SDL_Point mouse)
 {
@@ -23,29 +17,12 @@ SDL_Point& operator^(SDL_Point center, SDL_Point mouse)
 }
 
 Button::Button(button_type tmp) :
-	type(tmp)
+	type(tmp), UpdateReturnType(false)
 {
-	StartCenter.x = buttons[START].x + buttons[START].w/2;
-	StartCenter.y = buttons[START].y + buttons[START].h/2;
-	
-	PauseCenter.x = buttons[PAUSE].x + buttons[PAUSE].w/2;
-	PauseCenter.y = buttons[PAUSE].y + buttons[PAUSE].h/2;
-	
-	LeaveCenter.x = buttons[LEAVE].x + buttons[LEAVE].w/2;
-	LeaveCenter.y = buttons[LEAVE].y + buttons[LEAVE].h/2;
-	
-	ResumeCenter.x = buttons[RESUME].x + buttons[RESUME].w/2;
-	ResumeCenter.y = buttons[RESUME].y + buttons[RESUME].h/2;
-	
-	SettingCenter.x = buttons[SETTING].x + buttons[SETTING].w/2;
-	SettingCenter.y = buttons[SETTING].y + buttons[SETTING].h/2;
-	
-	LeaveSettingCenter.x = buttons[LEAVESETTING].x + buttons[LEAVESETTING].w/2;
-	LeaveSettingCenter.y = buttons[LEAVESETTING].y + buttons[LEAVESETTING].h/2;
-	
-	OKCenter.x = buttons[OK].x + buttons[OK].w/2;
-	OKCenter.y = buttons[OK].y + buttons[OK].h/2;
-	
+	Center.x = buttons[type].x + buttons[type].w/2;
+	Center.y = buttons[type].y + buttons[type].h/2;
+	rectOnScreen = buttons[type];
+	Inside = false;
 }
 
 Button::~Button()
@@ -55,6 +32,7 @@ Button::~Button()
 
 bool Button::handleEvents(SDL_Event &e)
 {
+	EventReturnType = false;
 	int X,Y;
 	SDL_GetMouseState( &X, &Y );
 	SDL_Point mouse;
@@ -62,30 +40,123 @@ bool Button::handleEvents(SDL_Event &e)
 	mouse.y = Y;
 	switch(type)
 	{
-		case START:
+		case START://
 			if(e.type == SDL_MOUSEMOTION)
 			{
-				InsideStart = false;			
-				if((StartCenter ^ mouse) <= buttons[START].w/2 )
+				EventReturnType = true;
+				Inside = false;
+				if((Center ^ mouse) <= buttons[START].w/2 )
 				{
-					InsideStart = true ;
+					Inside = true;
 				}
+				if(Last != Inside)
+					UpdateReturnType = true;
+				else
+					UpdateReturnType = false;
 			}
-			else if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT && InsideStart)
+			else if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
-				//some user event
-				createUserEvent(GAMESTATE_CHANGE, START, NULL, NULL);
+				EventReturnType = true;
+				if(Inside)
+					createUserEvent(GAMESTATE_CHANGE, START, NULL, NULL); 
 			}
 			break;
-		case PAUSE:
+		case INTRO1://
 			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
-				InsidePause = false;
-				if((PauseCenter ^ mouse) <= buttons[PAUSE].w/2 )
+				EventReturnType = true;
+				Inside = false;
+				if((Center ^ mouse) <= buttons[INTRO1].w/2 )
 				{
-					InsidePause = true;
+					Inside = true;
 				}
-				if(InsidePause)
+				if(Inside)
+				{
+					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
+					Game &game = Game::GetGame();
+					game.pushOverlayer(new boardLayer("Intro", INTRO_IMAGE));
+					
+				}
+			}
+			break;
+		case LEAVEINTRO1://
+			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			{
+				EventReturnType = true;
+				Inside = false;
+				if((Center ^ mouse) <= buttons[LEAVEINTRO1].w/2 )
+				{
+					Inside = true;
+				}
+				if(Inside)
+				{
+					createUserEvent(GAMESTATE_CHANGE, RESUME, NULL, NULL);
+					Game &game = Game::GetGame();
+					game.popTopOverlayer();
+				}
+			}
+			break;
+		case MISSION://
+			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			{
+				EventReturnType = true;
+				Inside = false;
+				if((Center ^ mouse) <= buttons[INTRO1].w/2 )
+				{
+					Inside = true;
+				}
+				if(Inside)
+				{
+					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
+					Game &game = Game::GetGame();
+					if(curMission == Mission1Type1)
+						game.pushOverlayer(new boardLayer("M1-1", MISSION_1_1_IMAGE));
+						
+					else if(curMission == Mission1Type2)
+						game.pushOverlayer(new boardLayer("M1-2", MISSION_1_2_IMAGE));
+						
+					else if(curMission == Mission1Type3)
+						game.pushOverlayer(new boardLayer("M1-3", MISSION_1_3_IMAGE));
+						
+					else if(curMission == Mission2Type1)
+						game.pushOverlayer(new boardLayer("M2-1", MISSION_2_1_IMAGE));
+						
+					else if(curMission == Mission2Type2)
+						game.pushOverlayer(new boardLayer("M2-2", MISSION_2_2_IMAGE));
+						
+					else if(curMission == Mission2Type3)
+						game.pushOverlayer(new boardLayer("M2-3", MISSION_2_3_IMAGE));
+					//Layer
+				}
+			}
+			break;
+		case LEAVEMISSION://
+			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			{
+				EventReturnType = true;
+				Inside = false;
+				if((Center ^ mouse) <= buttons[LEAVEMISSION].w/2 )
+				{
+					Inside = true;
+				}
+				if(Inside)
+				{
+					createUserEvent(GAMESTATE_CHANGE, RESUME, NULL, NULL);
+					Game &game = Game::GetGame();
+					game.popTopOverlayer();
+				}
+			}
+			break;
+		case PAUSES://
+			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			{
+				EventReturnType = true;
+				Inside = false;
+				if((Center ^ mouse) <= buttons[PAUSE].w/2 )
+				{
+					Inside = true;
+				}
+				if(Inside)
 				{
 					Game &game = Game::GetGame();
 					game.pushOverlayer(new pauseLayer);
@@ -97,83 +168,101 @@ bool Button::handleEvents(SDL_Event &e)
 		case LEAVE:
 			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
-				InsideLeave = false;
-				if((LeaveCenter ^ mouse) <= buttons[LEASE].w/2 )
+				EventReturnType = true;
+				Inside = false;
+				if((Center ^ mouse) <= buttons[LEAVE].w/2 )
 				{
-					InsideLease = true;
+					Inside = true;
 				}
-				if(InsideLave)
+				if(Inside)
 				{
-					//some user event
-					createUserEvent(GAMESTATE_CHANGE, START, NULL, NULL);
-				}
-			}
-			break;
-		case RESUME:
-			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
-			{
-				InsideResume = false;
-				if((ResumeCenter ^ mouse) <= buttons[RESUME].w/2 )
-				{
-					InsideResume = true;
-				}
-				if(InsideResume)
-				{
-					//some user event
+					createUserEvent(GAMESTATE_CHANGE, STARTMENU, NULL, NULL);
 				}
 			}
 			break;
-		case SETTING:
+		case RESUMES://
 			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
-				InsideSetting = false;
-				if((SettingCenter ^ mouse) <= buttons[SETTING].w/2 )
+				EventReturnType = true;
+				Inside = false;
+				if((Center ^ mouse) <= buttons[RESUMES].w/2 )
 				{
-					InsideSetting = true;
+					Inside = true;
 				}
-				if(InsideSetting)
+				if(Inside)
 				{
-					//some user event
+					createUserEvent(GAMESTATE_CHANGE, RESUME, NULL, NULL);
+					Game &game = Game::GetGame();
+					game.popTopOverlayer();
 				}
 			}
 			break;
-		case LEAVESETTING:
+		case INTRO2://
 			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
-				InsideLeaveSetting = false;
-				if((LeaveSettingCenter ^ mouse) <= buttons[LEAVESETTING].w/2 )
+				EventReturnType = true;
+				Inside = false;
+				if((Center ^ mouse) <= buttons[INTRO2].w/2 )
 				{
-					InsideLeaveSetting = true;
+					Inside = true;
 				}
-				if(InsideLeaveSetting)
+				if(Inside)
 				{
-					//some user event
+					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
+					Game &game = Game::GetGame();
+					game.pushOverlayer(new boardLayer("Intro", INTRO_IMAGE));
+				}
+			}
+			break;
+		case LEAVEINTRO2://
+			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			{
+				EventReturnType = true;
+				Inside = false;
+				if((Center ^ mouse) <= buttons[LEAVEINTRO2].w/2 )
+				{
+					Inside = true;
+				}
+				if(Inside)
+				{
+					createUserEvent(GAMESTATE_CHANGE, RESUME, NULL, NULL);
+					Game &game = Game::GetGame();
+					game.popTopOverlayer();
 				}
 			}
 			break;
 		case OK:
 			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
-				InsideOk = false;
-				if((OkCenter ^ mouse) <= buttons[OK].w/2 )
+				EventReturnType = true;
+				Inside = false;
+				if((Center ^ mouse) <= buttons[OK].w/2 )
 				{
-					InsideOk = true;
+					Inside = true;
 				}
-				if(InsideOk)
+				if(Inside)
 				{
-					//some user event
+					createUserEvent(GAMESTATE_CHANGE, STARTMENU, NULL, NULL);
 				}
 			}
 			break;
 	}
+	return EventReturnType;
 }
 
 bool Button::update()
 {
+	if(type == START && Inside)
+		rectOnTexture = SDL_Rect( {button_type[START].x+button_type[START].w, button_type[START].y, button_type[START].w, button_type[START].h} );
+	else
+		rectOnTexture = SDL_Rect( {button_type[type].x, button_type[type].y, button_type[type].w, button_type[type].h} );
+	Last = Inside;
+	return UpdateReturnType;
+/*
 	switch(type)
 	{
 		case START:
-			if(InsideStart) 
+			if(Inside) 
 				rectOnTexture = SDL_Rect( {button_type[START].x+button_type[START].w, button_type[START].y, button_type[START].w, button_type[START].h} );
 			else 
 				rectOnTexture = SDL_Rect( {button_type[START].x, button_type[START].y, button_type[START].w, button_type[START].h} );
@@ -185,18 +274,25 @@ bool Button::update()
 		case LEAVE:
 			rectOnTexture = SDL_Rect( {button_type[LEAVE].x, button_type[LEAVE].y, button_type[LEAVE].w, button_type[LEAVE].h} );
 			break;
-		case RESUME:
-			rectOnTexture = SDL_Rect( {button_type[RESUME].x, button_type[RESUME].y, button_type[RESUME].w, button_type[RESUME].h} );
+		case INTRO1:
+			rectOnTexture = SDL_Rect( {button_type[INTRO1].x, button_type[INTRO1].y, button_type[INTRO1].w, button_type[INTRO1].h} );
 			break;
-		case SETTING:
-			rectOnTexture = SDL_Rect( {button_type[SETTING].x, button_type[SETTING].y, button_type[SETTING].w, button_type[SETTING].h} );
+		case LEAVEINTRO1:
+			rectOnTexture = SDL_Rect( {button_type[LEAVEINTRO1].x, button_type[LEAVEINTRO1].y, button_type[LEAVEINTRO1].w, button_type[LEAVEINTRO1].h} );
 			break;
-		case LEAVESETTING:
-			rectOnTexture = SDL_Rect( {button_type[LEAVESETTING].x, button_type[LEAVESETTING].y, button_type[LEAVESETTING].w, button_type[LEAVESETTING].h} );
+		case RESUMES:
+			rectOnTexture = SDL_Rect( {button_type[RESUMES].x, button_type[RESUMES].y, button_type[RESUMES].w, button_type[RESUMES].h} );
+			break;
+		case INTRO2:
+			rectOnTexture = SDL_Rect( {button_type[INTRO2].x, button_type[INTRO2].y, button_type[INTRO2].w, button_type[INTRO2].h} );
+			break;
+		case LEAVEINTRO2:
+			rectOnTexture = SDL_Rect( {button_type[LEAVEINTRO2].x, button_type[LEAVEINTRO2].y, button_type[LEAVEINTRO2].w, button_type[LEAVEINTRO2].h} );
 			break;
 		case OK:
 			rectOnTexture = SDL_Rect( {button_type[OK].x, button_type[OK].y, button_type[OK].w, button_type[OK].h} );
 			break;
 	}
+*/
 }
 
