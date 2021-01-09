@@ -19,7 +19,7 @@ SDL_Rect Button::buttons[TOTAL_BUTTONS] =
 	SDL_Rect({ 670, 290, 145, 145}), //INTRO2
 	SDL_Rect({1050,  40,  30,  30}), //LEAVEINTRO2
 	SDL_Rect({ 980, 420, 200, 200}) //OK
-} 
+} ;
 
 double& operator^(SDL_Point center, SDL_Point mouse)
 {
@@ -64,7 +64,7 @@ Button::Button(button_type tmp) :
 		case INTRO2:
 			texture = loadImage(INTRO_BUTTON_IMAGE);
 			break;
-		case LEAVEINTRO2;
+	    case LEAVEINTRO2:
 			texture = loadImage(LEAVE_BUTTON_IMAGE);
 			break;
 		case OK:

@@ -7,8 +7,11 @@
 #include"BasicObject.h"
 #include<cstdio>
 #include<string>
+#include<sstream>
 #include"Files.h"
-
+#include"Mission.h"
+#include"UserEvent.h"
+#include"Game.h"
 
 class Timer:public BasicObject
 {
@@ -23,19 +26,24 @@ private:
     //The ticks stored when the timer was paused
     Uint32 mPausedTicks;
 
+    //Temp time for converting to seconds
+    Uint32 restTime;
+
+    int minute;
+    int second;
+
     //The timer status
     bool mPaused;
     bool mStarted;
 
     //Timer Texture
     SDL_Texture* timerTexture;
-    int texturewidth;
-    int textureheight;
 
     //Background Texture
     SDL_Texture* background;
-    int backgroundwidth;
-    int backgroundheight;
+
+    //TimerColor
+    SDL_Color timercolor;
 
     //Font
     TTF_Font * timerFont;
@@ -43,13 +51,23 @@ private:
     //Load font
     bool loadTimerFont();
 
-    //Load background image
-    bool loadBackground();
+    //Free font
     void closetimer();
 
-    //Timer
-    Uint32 getticks();
+    //Gets the timer's time
+    Uint32 getTicks()const;
 
+    //TimeText
+    std::stringstream timerText;
+
+    //Mission
+    Mission* currentMission;
+
+    bool missionOngoing;
+    void convert(MissionTypes&,int&);
+
+    //Game
+    Game* game;
 public:
     //Initializes variables
     Timer();
@@ -61,13 +79,7 @@ public:
     void pause();
     void unpause();
 
-
-    //Gets the timer's time
-    Uint32 getTicks();
-
     bool handleEvents(SDL_Event& e);
     bool update();
 };
-
-
 #endif //SRC_TIMER_H

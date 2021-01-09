@@ -24,7 +24,7 @@ public:
 	Button(button_type tmp);
 	~Button();
 	
-}
+};
 
 double& operator ^(SDL_Point, SDL_Point);
 

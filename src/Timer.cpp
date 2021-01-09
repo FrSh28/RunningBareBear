@@ -5,19 +5,22 @@
 #include "Timer.h"
 TTF_Font* TimerFont = NULL;
 SDL_Renderer* TimerRenderer = NULL;
-Timer::Timer():gametime(300000), backgroundwidth(), backgroundheight(),mPaused(false),mStarted(false)
+Timer::Timer():gametime(600000), mPaused(false), mStarted(false), mStartTicks(0), mPausedTicks(0),
+timerText("0"), minute(10), second(0), missionOngoing(false), currentMission(NULL),game(&Game::GetGame())
 {
     loadTimerFont();
+    TTF_SetFontStyle(TimerFont, TTF_STYLE_BOLD);
     background = loadImage(TIMER_BACKGROUND);
-    rectOnScreen.x = ;
+    timercolor = {0,0,0,255};
+    rectOnScreen.x = 500;
     rectOnScreen.y = 0;
-    rectOnScreen.w = ;
-    rectOnScreen.h = ;
+    rectOnScreen.w = 500;
+    rectOnScreen.h = 100;
 
-    rectOnTexture.x = ;
-    rectOnTexture.y = ;
-    rectOnTexture.w = ;
-    rectOnTexture.h = ;
+    rectOnTexture.x = 00;
+    rectOnTexture.y = 00;
+    rectOnTexture.w = 00;
+    rectOnTexture.h = 00;
 }
 
 Timer::~Timer()
@@ -79,34 +82,109 @@ void Timer::unpause()
     }
 }
 
-Uint32 Timer::getticks()
-{
-    //The actual timer time
-    Uint32 time = 0;
-
-    //If the timer is running
-    if( mStarted )
-    {
-        //If the timer is paused
-        if( mPaused )
-        {
-            //Return the number of ticks when the timer was paused
-            time = mPausedTicks;
-        }
-        else
-        {
-            //Return the current time minus the start time
-            time = SDL_GetTicks() - mStartTicks;
-        }
-    }
-    return time;
-}
-
 bool Timer::handleEvents(SDL_Event& e)
-{}
+{
+    if(e.type == GAMESTATE_CHANGE)
+    {
+        //Start Timer
+        if(e.user.code == START){this->start();}
+        if(e.user.code == PAUSE){this->pause();}
+        if(e.user.code == RESUME){this->unpause();}
+        if(e.user.code == END){this->stop();}
+        return false;
+    }
+    return false;
+}
 bool Timer::update()
 {
-    this->timepassed = getticks();
+    //Deal time
+    this->timepassed = getTicks();
+    timerText.str( "" );
+    //To confirm text end at 00:00
+    restTime = (gametime-timepassed)/1000.0f;
+    if (mStarted && restTime > 1) restTime = (gametime-timepassed)/1000.0f;
+
+    //Set output string
+    minute = restTime/60;               //left minute
+    second = restTime - minute*60;      //left second
+    timerText << std::setw(2) << std::setfill('0') << minute << ":" ;
+    if(second > 1) timerText << std::setw(2) << std::setfill('0') << second << " left";
+    else timerText << "00 left";         //remain 00 at the end
+
+    //Deal Mission1
+    if(minute == 9 &&(!missionOngoing))
+    {
+        int tmp = game->rdEngine()%2;
+        MissionTypes choice;
+        convert(choice, tmp);
+        currentMission = createMission(choice);
+        missionOngoing = true;
+    }
+    //Mission1 Fail
+    if(minute == 7 && missionOngoing)
+    {
+        gametime += 60000;
+        if(currentMission!=NULL)
+        {
+            delete currentMission;
+            currentMission = NULL;
+        }
+        missionOngoing = false;
+    }
+
+    //Deal Mission2
+    if(minute == 6 &&(!missionOngoing))
+    {
+        int tmp = game->rdEngine()%2+3;
+        MissionTypes choice;
+        convert(choice, tmp);
+        currentMission = createMission(choice);
+        missionOngoing = true;
+    }
+
+    //Mission2 Fail
+    if(minute==3 && missionOngoing)
+    {
+        currentMission ->timeup();
+        if(currentMission!=NULL)
+        {
+            delete currentMission;
+            currentMission = NULL;
+        }
+
+        missionOngoing = false;
+    }
+    //Mission Success
+    if(missionOngoing && currentMission->isSuccess())
+    {
+        if(currentMission!=NULL)
+        {
+            delete currentMission;
+            currentMission = NULL;
+        }
+        missionOngoing = false;
+    }
+
+    //End Game
+    if(gametime-timepassed<10)
+    {
+        createUserEvent(GAMESTATE_CHANGE, END , NULL, NULL);
+    }
+
+    //Put Timertext to timertexture (uncertained due to renderer)
+    SDL_Surface *surface = TTF_RenderText_Solid(timerFont, timerText.str().c_str(), timercolor);
+    if (!surface) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create surface from timer: %s", SDL_GetError());
+        return 3;
+    }
+    timerTexture = SDL_CreateTextureFromSurface(renderer, surface);
+    if (!texture) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create texture from surface: %s", SDL_GetError());
+        return 3;
+    }
+    SDL_FreeSurface(surface);
+
+    //We have to combine timertexture and background texture
 
     return true;
 }
@@ -130,29 +208,8 @@ bool Timer::loadTimerFont()
     return success;
 }
 
-bool Timer::loadBackground()
-{
-    bool success = true;
-    //Load image at specified path
-    SDL_Surface* loadedSurface = IMG_Load( "../image/" );
-    if( loadedSurface == NULL )
-    {
-        printf( "Unable to load timer image ! SDL_image Error: %s\n", IMG_GetError() );
-    }
-    else
-    {
-        //Create texture from surface pixels
-        background = SDL_CreateTextureFromSurface(TimerRenderer, loadedSurface);
-        if (background == NULL) {
-            printf("Unable to create timer texture! SDL Error: %s\n", SDL_GetError());
-        }
-        //Get rid of old loaded surface
-        SDL_FreeSurface(loadedSurface);
-    }
-    return success;
-}
 
-Uint32 Timer::getTicks()
+Uint32 Timer::getTicks()const
 {
     //The actual timer time
     Uint32 time = 0;
@@ -193,4 +250,23 @@ void Timer::closetimer()
     }
 }
 
+void Timer::convert(MissionTypes& mission, int& tmp)
+{
+    switch(tmp)
+    {
+        case 0:
+            mission = Mission1Type1;
+            break;
+        case 1:
+            mission = Mission1Type2;
+            break;
+        case 2:
+            mission = Mission1Type3;
+            break;
+        case 3:
+            mission = Mission2Type1;
+        case 4:
+            mission = Mission2Type3;
+    }
+}
 

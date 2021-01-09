@@ -4,8 +4,8 @@ random 0~2 to create
 7min check mission complete
 Delete mission
 
-5min create mission
+6min create mission
 Random 3 or 4
 
-2min check mission complete
+3min check mission complete
 Delete mission
