@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Layer.h"
 #include "Mission.h"
+#include "UserEvent.h"
 using namespace std;
 
 unsigned int MISSION = SDL_RegisterEvents(0);

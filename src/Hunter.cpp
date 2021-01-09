@@ -1,6 +1,9 @@
 #include "includeSDL.h"
 #include "Game.h"
 #include "Hunter.h"
+#include "Map.h"
+#include "UserEvent.h"
+#include <queue>
 #include <iostream>
 #include <cmath>
 SDL_Rect Hunter_Hunter_Clip[TOTAL];
@@ -34,7 +37,7 @@ Hunter::~Hunter()
 
 bool Hunter::handleEvents(SDL_Event &e)
 {
-	
+	return false;
 }
 
 bool Hunter::update()
@@ -63,6 +66,7 @@ bool Hunter::update()
 	frame ++;
 	if(frame/updateRate == Animation_Frames){frame=0;}
 	//if it change return true
+	return true;
 }
 
 bool Hunter::RunnerVisible()

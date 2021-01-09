@@ -1,6 +1,7 @@
 #include "includeSDL.h"
 #include "Game.h"
 #include "Button.h"
+#include "UserEvent.h"
 #include <cmath>
 /*
 	START, PAUSE, LEAVE, RESUME, SETTING, LEAVESETTING, OK, TOTAL_BUTTOMS
@@ -73,6 +74,7 @@ bool Button::handleEvents(SDL_Event &e)
 			else if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT && InsideStart)
 			{
 				//some user event
+				createUserEvent(GAMESTATE_CHANGE, START, NULL, NULL);
 			}
 			break;
 		case PAUSE:
@@ -85,6 +87,9 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 				if(InsidePause)
 				{
+					Game &game = Game::GetGame();
+					game.pushOverlayer(new pauseLayer);
+					
 					//some user event
 				}
 			}
@@ -100,6 +105,7 @@ bool Button::handleEvents(SDL_Event &e)
 				if(InsideLave)
 				{
 					//some user event
+					createUserEvent(GAMESTATE_CHANGE, START, NULL, NULL);
 				}
 			}
 			break;
