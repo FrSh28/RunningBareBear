@@ -15,6 +15,9 @@ enum GameState
 	GAME,
 	PAUSE,
 	END,
+	// for UserEvent
+	START,
+	RESUME,
 };
 
 class Game
