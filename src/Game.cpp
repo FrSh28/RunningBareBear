@@ -65,7 +65,7 @@ bool Game::Init()
 		return false;
 	}
 
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_TARGETTEXTURE);
 	if(!renderer)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create renderer: %s", SDL_GetError());
@@ -101,7 +101,16 @@ void Game::HandleEvents()
 				running = false;
 				return;	// func
 			case GAMESTATE_CHANGE:
-				state = GameState(event.user.code);
+				GameState tmp = GameState(event.user.code);
+				switch(tmp)
+				{
+					case START:
+						break;
+					case PAUSE:
+						break;
+					case RESUME:
+						break;
+				}
 				break;	// switch
 			default:
 				for(auto it = layers.rbegin(); it != layers.rend(); ++it)
@@ -204,6 +213,15 @@ void Game::popOverlayer(Layer *_overlayer)
 {
 	auto iter = find(layers.begin() + layerInsertIndex, layers.end(), _overlayer);
 	if (iter != layers.end())
+	{
+		layers.erase(iter);
+	}
+}
+
+void Game::popTopOverlayer()
+{
+	auto iter = layers.rbegin();
+	if (iter != layers.rend())
 	{
 		layers.erase(iter);
 	}

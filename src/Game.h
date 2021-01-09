@@ -35,8 +35,9 @@ public:
 
 	void pushLayer(Layer *);		// push new layer to layers
 	void pushOverlayer(Layer *);	// push new overlayer to layers
-	void popLayer(Layer *);		// pop layer from layers
-	void popOverlayer(Layer *);	// pop overlayer from layers
+	void popLayer(Layer *);			// pop layer from layers
+	void popOverlayer(Layer *);		// pop overlayer from layers
+	void popTopOverlayer();			// pop top pverlayer from layers
 	inline void setGameMap(Map *_map) { gameMap = _map; }
 
 	inline bool isRunning() const { return running; }
@@ -46,6 +47,8 @@ public:
 	inline unsigned int getFrameRate() const { return frameRate; }
 	inline SDL_Renderer *getRenderer() { return renderer; }
 	inline unsigned int getLayersSize() const { return layers.size(); }
+
+	std::mt19937_64 rdEngine;
 
 	inline static Game &GetGame() { return *s_gameInstance; }
 
@@ -67,8 +70,6 @@ private:
 
 	unsigned int startTime;
 	unsigned int frameCount;
-
-	std::mt19937_64 rdEngine;
 
 	static Game *s_gameInstance;
 };
