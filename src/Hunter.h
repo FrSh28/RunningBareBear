@@ -2,8 +2,16 @@
 #define HUNTER_H
 #include <vector>
 #include <string>
+#include "Map.h"
 #include "includeSDL.h"
 #include "BasicObject.h"
+#include <queue>
+#include "Map.h"
+enum frames
+{
+	UP_1, UP_2, UP_3, DOWN_1, DOWN_2, DOWN_3, RIGHT_1, RIGHT_2, RIGHT_3, LEFT_1, LEFT_2, LEFT_3, TOTAL
+}
+
 class Hunter : public BasicObject
 {
 	SDL_Point HunterMapPos;
@@ -22,6 +30,7 @@ class Hunter : public BasicObject
 	bool visible;
 	int a;
 	int b;
+	int frame;
 	int HunterWidth;
 	int HunterHeight;
 	int updateRate;
@@ -33,7 +42,6 @@ class Hunter : public BasicObject
 	std::queue<SDL_Point> go;
 	frames direction;
 	Map *map;
-	Runner *runner;
 	
 	
 public:
@@ -55,9 +63,5 @@ public:
 	void Move();
 	void initHunter_Clips();
 };
-enum frames
-{
-	UP_1, UP_2, UP_3, DOWN_1, DOWN_2, DOWN_3, RIGHT_1, RIGHT_2, RIGHT_3, LEFT_1, LEFT_2, LEFT_3, TOTAL
-}
 
 #endif

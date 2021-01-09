@@ -9,7 +9,8 @@
 SDL_Rect Hunter_Clip[TOTAL];
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
-	Hvelocity(0), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0), findX(0), findY(0), Animation_Frames(3), Run(), Walk()
+	Hvelocity(0), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0),
+	findX(0), findY(0), Animation_Frames(3), Run(3), Walk(6), frame(0) //
 	map(&Map::getMap())
 {
 	setMapPos(MapPos);
@@ -134,7 +135,6 @@ void Hunter::Stage3()
 	if(Arrive(directPos))
 	{
 		directPos = Set();
-		HaveFound = false;
 		Chase(HunterMapPos, directPos);
 		NextPixel = map->mapPosTopixelPos(HunterMapPos);
 	}
@@ -204,9 +204,9 @@ bool Hunter::Arrive(SDL_Point destination)
 
 void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 {
-	bool visited[row][col];
-	for(int i=0; i<row; i++)
-	for(int j=0; j<col; J++)
+	bool visited[map->getRowNum()][map->getColNum()];
+	for(int i=0; i<map->getRowNum(); i++)
+	for(int j=0; j<map->getColNum(); j++)
 	visited[i][j] = false;
 	
 	class Node
@@ -247,7 +247,7 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 			}
 			tmp.way.push_back(nextP);
 			
-			if(nextP == directPos)
+			if(nextP.x == directPos.x && nextP.y == directPos.y)
 			{
 				while(!go.empty())
 				{
@@ -280,7 +280,7 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 			}
 			tmp.way.push_back(nextP);
 			
-			if(nextP == directPos)
+			if(nextP.x == directPos.x && nextP.y == directPos.y)
 			{
 				while(!go.empty())
 				{
@@ -313,7 +313,7 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 			}
 			tmp.way.push_back(nextP);
 			
-			if(nextP == directPos)
+			if(nextP.x == directPos.x && nextP.y == directPos.y)
 			{
 				while(!go.empty())
 				{
@@ -346,7 +346,7 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directPos)
 			}
 			tmp.way.push_back(nextP);
 			
-			if(nextP == directPos)
+			if(nextP.x == directPos.x && nextP.y == directPos.y)
 			{
 				while(!go.empty())
 				{
