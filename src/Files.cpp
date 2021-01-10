@@ -6,6 +6,7 @@ namespace Files
 {
 	string P_Images[IMAGE_COUNT]	= { "../media/image/image.txt",
 										"../media/image/Hunter_32_32.png",
+										"../media/image/Runner_56_56.png",
 										"../media/image/StartButton_512_512.png",
 										"../media/image/Intro.png",
 										"../media/image/Pause.png",
@@ -14,18 +15,32 @@ namespace Files
 										"../media/image/Leave.png",
 										"../media/image/Restart.png",
 										"../media/image/Ok.png",
+										"../media/image/Introduction.png",
+										"../media/image/SheetMission.png",
+										"../media/image/LibraryMission.png",
+										"../media/image/PEMission.png",
+										"../media/image/DebugMission.png",
+										"../media/image/WebworkMission.png",
 										"../media/image/",
-										"../media/image/",
-										"../media/image/",
-										"../media/image/",
-										"../media/image/",
-										"../media/image/",
-										"../media/image/",
+										"../media/image/", //STAR
+										"../media/image/", //POTION
+										"../media/image/", //MEAT
+										"../media/image/sheet.png", //SHEET
+										"../media/image/Library.png", //LIBRARY
+										"../media/image/PE_teacher.png", //PE_TEACHER
+										"../media/image/Miku.png", //TA1
+										"../media/image/TA2.png", //TA2
+										"../media/image/teacher.png", //TA3
+										"../media/image/dt.png", //WEBWORK1
+										"../media/image/parenthesis.png", //WEBWORK2
+										"../media/image/webwork.png", //WEBWORK3
 										};
 
 	//string P_Fonts[FONT_COUNT]	= { "../media/font/fonts.txt",};
 
 	string P_Musics[MUSIC_COUNT]	= { "../media/music/music.txt",
+										"../media/music/cozy_BGM.mp3",
+										"../media/music/runner_sprint.mp3"
 										};
 
 	string P_Maps[MAP_COUNT]		= { "../media/map/map.txt",

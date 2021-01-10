@@ -170,10 +170,10 @@ bool Button::handleEvents(SDL_Event &e)
 						
 					else if(current == Mission2Type1)
 						game.pushOverlayer(new boardLayer("M2-1", MISSION_2_1_IMAGE));
-						
+					/*	
 					else if(current == Mission2Type2)
 						game.pushOverlayer(new boardLayer("M2-2", MISSION_2_2_IMAGE));
-						
+					*/	
 					else if(current == Mission2Type3)
 						game.pushOverlayer(new boardLayer("M2-3", MISSION_2_3_IMAGE));
 					//Layer

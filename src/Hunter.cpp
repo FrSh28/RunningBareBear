@@ -69,6 +69,8 @@ bool Hunter::update()
 	frame ++;
 	if(frame/updateRate == Animation_Frames){frame=0;}
 	//if it change return true
+	rectOnScreen.x = HunterPixelPos.x;
+	rectOnScreen.y = HunterPixelPos.y;
 	return true;
 }
 
@@ -158,7 +160,7 @@ void Hunter::Move()
 	if(Arrive(NextPixel))
 	{
 		NextPixel = map->mapPosTopixelPos(go.front());
-		go.pop;
+		go.pop();
 	}	
 	else
 	{
