@@ -51,10 +51,10 @@ ItemList Item::getItemType() const {return type;}
 Star::Star():Item("Star")
 {
     texture = loadImage(STAR_IMAGE);
-    rectOnTexture.x = 0000;
-    rectOnTexture.y = 0000;
-    rectOnTexture.w = 0000;
-    rectOnTexture.h = 0000;
+    rectOnTexture.x = 0;
+    rectOnTexture.y = 0;
+    rectOnTexture.w = 512;
+    rectOnTexture.h = 512;
 }
 Star::~Star(){}
 bool Star::handleEvents(SDL_Event& e){return false;}
@@ -97,10 +97,10 @@ bool Meat::update() {return false;}
 Sheet::Sheet():Item("Sheet")
 {
     texture = loadImage(SHEET_IMAGE);
-    rectOnTexture.x = 0000;
-    rectOnTexture.y = 0000;
-    rectOnTexture.w = 0000;
-    rectOnTexture.h = 0000;
+    rectOnTexture.x = 0;
+    rectOnTexture.y = 0;
+    rectOnTexture.w = 512;
+    rectOnTexture.h = 512;
 }
 Sheet::~Sheet(){}
 bool Sheet::handleEvents(SDL_Event &e) {return false;}
@@ -110,10 +110,10 @@ bool Sheet::update() {return false;}
 Library::Library():Item("Library")
 {
     texture = loadImage(LIBRARY_IMAGE);
-    rectOnTexture.x = 0000;
-    rectOnTexture.y = 0000;
-    rectOnTexture.w = 0000;
-    rectOnTexture.h = 0000;
+    rectOnTexture.x = 0;
+    rectOnTexture.y = 0;
+    rectOnTexture.w = 199;
+    rectOnTexture.h = 250;
 }
 Library::~Library(){}
 bool Library::handleEvents(SDL_Event &e) {return false;}
@@ -123,10 +123,10 @@ bool Library::update() {return false;}
 PE_Teacher::PE_Teacher():Item("Physical Education Teacher")
 {
     texture = loadImage(PE_TEACHER_IMAGE);
-    rectOnTexture.x = 0000;
-    rectOnTexture.y = 0000;
-    rectOnTexture.w = 0000;
-    rectOnTexture.h = 0000;
+    rectOnTexture.x = 0;
+    rectOnTexture.y = 0;
+    rectOnTexture.w = 260;
+    rectOnTexture.h = 260;
 }
 PE_Teacher::~PE_Teacher(){}
 bool PE_Teacher::handleEvents(SDL_Event &e) {return false;}
@@ -136,10 +136,10 @@ bool PE_Teacher::update() {return false;}
 TeacherAssistant1::TeacherAssistant1():Item("Teacher Assistant")
 {
     texture = loadImage(TA1_IMAGE);
-    rectOnTexture.x = 0000;
-    rectOnTexture.y = 0000;
-    rectOnTexture.w = 0000;
-    rectOnTexture.h = 0000;
+    rectOnTexture.x = 0;
+    rectOnTexture.y = 0;
+    rectOnTexture.w = 796;
+    rectOnTexture.h = 888;
 }
 TeacherAssistant1::~TeacherAssistant1(){}
 bool TeacherAssistant1::handleEvents(SDL_Event &e) {return false;}
@@ -149,10 +149,10 @@ bool TeacherAssistant1::update() {return false;}
 TeacherAssistant2::TeacherAssistant2():Item("Teacher Assistant")
 {
     texture = loadImage(TA2_IMAGE);
-    rectOnTexture.x = 0000;
-    rectOnTexture.y = 0000;
-    rectOnTexture.w = 0000;
-    rectOnTexture.h = 0000;
+    rectOnTexture.x = 0;
+    rectOnTexture.y = 0;
+    rectOnTexture.w = 216;
+    rectOnTexture.h = 122;
 }
 TeacherAssistant2::~TeacherAssistant2(){}
 bool TeacherAssistant2::handleEvents(SDL_Event &e) {return false;}
@@ -162,10 +162,10 @@ bool TeacherAssistant2::update() {return false;}
 TeacherAssistant3::TeacherAssistant3():Item("Teacher Assistant")
 {
     texture = loadImage(TA3_IMAGE);
-    rectOnTexture.x = 0000;
-    rectOnTexture.y = 0000;
-    rectOnTexture.w = 0000;
-    rectOnTexture.h = 0000;
+    rectOnTexture.x = 0;
+    rectOnTexture.y = 0;
+    rectOnTexture.w = 200;
+    rectOnTexture.h = 250;
 }
 TeacherAssistant3::~TeacherAssistant3(){}
 bool TeacherAssistant3::handleEvents(SDL_Event &e) {return false;}
@@ -189,10 +189,10 @@ bool CHEM_Teacher::update() {}
 WebWork1::WebWork1():Item("WebWork")
 {
     texture = loadImage(WEBWORK1_IMAGE);
-    rectOnTexture.x = 0000;
-    rectOnTexture.y = 0000;
-    rectOnTexture.w = 0000;
-    rectOnTexture.h = 0000;
+    rectOnTexture.x = 0;
+    rectOnTexture.y = 0;
+    rectOnTexture.w = 900;
+    rectOnTexture.h = 577;
 }
 WebWork1::~WebWork1(){}
 bool WebWork1::handleEvents(SDL_Event &e) {return false;}
@@ -201,10 +201,10 @@ bool WebWork1::update() {return false;}
 WebWork2::WebWork2():Item("WebWork")
 {
     texture = loadImage(WEBWORK2_IMAGE);
-    rectOnTexture.x = 0000;
-    rectOnTexture.y = 0000;
-    rectOnTexture.w = 0000;
-    rectOnTexture.h = 0000;
+    rectOnTexture.x = 0;
+    rectOnTexture.y = 0;
+    rectOnTexture.w = 512;
+    rectOnTexture.h = 512;
 }
 WebWork2::~WebWork2(){}
 bool WebWork2::handleEvents(SDL_Event &e) {return false;}
@@ -213,10 +213,10 @@ bool WebWork2::update() {return false;}
 WebWork3::WebWork3():Item("WebWork")
 {
     texture = loadImage(WEBWORK3_IMAGE);
-    rectOnTexture.x = 0000;
-    rectOnTexture.y = 0000;
-    rectOnTexture.w = 0000;
-    rectOnTexture.h = 0000;
+    rectOnTexture.x = 0;
+    rectOnTexture.y = 0;
+    rectOnTexture.w = 368;
+    rectOnTexture.h = 86;
 }
 WebWork3::~WebWork3(){}
 bool WebWork3::handleEvents(SDL_Event &e) {return false;}
