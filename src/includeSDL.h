@@ -25,4 +25,5 @@
 extern SDL_Point& operator +(SDL_Point&a, SDL_Point&b );
 extern bool operator ==(SDL_Point&a, SDL_Point&b );
 
+extern bool operator <(SDL_Point&, SDL_Point&b);
 #endif
