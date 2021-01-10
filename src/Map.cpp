@@ -10,7 +10,7 @@ BasicObject *createMap(int index)
 	return new Map(Maps(index), "Map");
 }
 
-const int Map::sc_pixelWidth = 30, Map::sc_pixelHeight = 30;
+const int Map::sc_pixelWidth = 40, Map::sc_pixelHeight = 40;
 Map *Map::s_mapInstance = NULL;
 
 Map::Map(Maps index, string _name)

@@ -61,7 +61,7 @@ bool Hunter::update()
 	HunterCenterPixel.y = HunterPixelPos.y + rectOnScreen.h/2;
 	HunterMapPos = map->pixelPosTomapPos(HunterCenterPixel);
 	RunnerMapPos = map->getRunnerMapPos();
-	if(RunnerVisible())
+	if(false)//RunnerVisible())
 	{
 		Stage1();
 	}
