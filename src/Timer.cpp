@@ -78,13 +78,13 @@ void Timer::unpause()
 
 bool Timer::handleEvents(SDL_Event& e)
 {
-    if(e.type == GAMESTATE_CHANGE)
+    if(e.type == TIMERCHANGE)
     {
         //Start Timer
-        if(e.user.code == START){this->start();}
-        if(e.user.code == PAUSE){this->pause();}
-        if(e.user.code == RESUME){this->unpause();}
-        if(e.user.code == END){this->stop();}
+        if(e.user.code == TIMERSTART){this->start();}
+        if(e.user.code == TIMERPAUSE){this->pause();}
+        if(e.user.code == TIMERUNPAUSE){this->unpause();}
+        if(e.user.code == TIMERSTOP){this->stop();}
         return false;
     }
     return false;
@@ -162,7 +162,7 @@ bool Timer::update()
     //End Game
     if(gametime-timepassed<10)
     {
-        createUserEvent(GAMESTATE_CHANGE, END , NULL, NULL);
+        createUserEvent(TIMERCHANGE, TIMERSTOP , NULL, NULL);
     }
 
     //Put Timertext to timertexture (uncertained due to renderer)

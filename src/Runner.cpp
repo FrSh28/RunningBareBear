@@ -24,7 +24,7 @@ height(gridHeight), updateRate(6), direction(DOWN) {
         posOnTexture->w = (int);
         posOnWindow->h = (int);
         posOnTexture->h = (int);*/
-
+        runnerInstance = this;
         rectOnTexture = Clip[0];
         rectOnScreen.x = PixelPos.x;
         rectOnScreen.y = PixelPos.y;

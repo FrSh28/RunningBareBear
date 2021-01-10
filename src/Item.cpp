@@ -71,10 +71,10 @@ bool Invisible_Cloak::update() {}
 Potion::Potion():Item("Potion")
 {
     texture = loadImage(POTION_IMAGE);
-    rectOnTexture.x = 0000;
-    rectOnTexture.y = 0000;
-    rectOnTexture.w = 0000;
-    rectOnTexture.h = 0000;
+    rectOnTexture.x = 90;
+    rectOnTexture.y = 80;
+    rectOnTexture.w = 33;
+    rectOnTexture.h = 36;
 }
 Potion::~Potion(){}
 bool Potion::handleEvents(SDL_Event &e){return false;}
@@ -84,10 +84,10 @@ bool Potion::update() {return false;}
 Meat::Meat():Item("Meat")
 {
     texture = loadImage(MEAT_IMAGE);
-    rectOnTexture.x = 0000;
-    rectOnTexture.y = 0000;
-    rectOnTexture.w = 0000;
-    rectOnTexture.h = 0000;
+    rectOnTexture.x = 0;
+    rectOnTexture.y = 50;
+    rectOnTexture.w = 45;
+    rectOnTexture.h = 42;
 }
 Meat::~Meat(){}
 bool Meat::handleEvents(SDL_Event &e) {return false;}

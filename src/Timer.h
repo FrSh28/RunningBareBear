@@ -13,6 +13,7 @@
 #include"UserEvent.h"
 #include"Game.h"
 
+enum timerstate{TIMERSTART,TIMERPAUSE,TIMERUNPAUSE,TIMERSTOP};
 class Timer:public BasicObject
 {
 private:

@@ -26,6 +26,7 @@ private:
     int updateRate;             // different update rate according to running or walking
     Item* backpack;             // item in hand
     Map* map;
+    static Runner* runnerInstance;
 
     inline void operator++(int);// operator overloading to add strength (meat)
 
@@ -49,6 +50,7 @@ public:
     int getStrength()const;  // get strength
     static const int gridWidth; // the width of grid on map
     static const int gridHeight;// the height of grid on map
+    inline static Runner& GetRunner() { return *runnerInstance; }
 };
 
 
