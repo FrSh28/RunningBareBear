@@ -1,8 +1,6 @@
 #include "UserEvent.h"
 
 const unsigned int GAMESTATE_CHANGE = SDL_RegisterEvents(1);
-const unsigned int CHARACTER_INTERACT = SDL_RegisterEvents(1);
-const unsigned int ITEM_PICKED_UP = SDL_RegisterEvents(1);
 const unsigned int ITEM_USED = SDL_RegisterEvents(1);
 const unsigned int CAUGHT = SDL_RegisterEvents(1);
 const unsigned int TIMERCHANGE = SDL_RegisterEvents(1);

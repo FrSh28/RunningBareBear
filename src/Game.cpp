@@ -7,18 +7,30 @@
 #include "UserEvent.h"
 using namespace std;
 
+L_STARTMENU,
+L_STATUS,
+L_INTRO,
+L_MISSION,
+L_PAUSE,
+L_END,
+L_LOADING,
+
 Game *Game::s_gameInstance = NULL;
 
 Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned int _frameRate)
  : name(_name), width(_width), height(_height), frameRate(_frameRate), running(false), state(STARTMENU),
-	window(NULL), renderer(NULL), layerInsertIndex(0U), gameMap(NULL), bgm(NULL), startTime(0U), frameCount(0U)
+	window(NULL), renderer(NULL), layerInsertIndex(0U), gameMap(NULL), bgm(NULL), startTime(0U), frameCount(0U), eventStart(0U), duration(0U), puasedCount(0)
 {
 	random_device rd;
 	rdEngine.seed(rd());
 	s_gameInstance = this;
 	bgm = loadMusic(BGM_MUSIC);
 	Mix_PlayMusic(bgm, -1);
+<<<<<<< Updated upstream
 //	pushLayer(cr);
+=======
+	pushLayer(createLayer(L_STARTMENU, new BackGround(START_IMAGE)));
+>>>>>>> Stashed changes
 }
 
 Game::~Game()
@@ -99,17 +111,45 @@ void Game::HandleEvents()
 	bool handled = false;
 	while(SDL_PollEvent(&event) or SDL_GetTicks() - startTime < frameCount * 1000 / frameRate)
 	{
+		if(state == LOADING)
+		{
+			if(SDL_GetTicks() > eventStart + duration)
+			{
+				popTopOverlayer();
+				createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
+				state = GAME;
+			}
+			continue;
+		}
+		if(state == PAUSE)
+		{
+			Layer *topLayer = layers.back();
+			if(topLayer->isActive())
+				topLayer->handleEvents(event);
+			continue;
+		}
 		if(event.type == GAMESTATE_CHANGE)
 		{
 			GameState tmp = GameState(event.user.code);
 			switch(tmp)
 			{
 				case START:
-					gameMap = new Map();
+					pushOverlayer(createLayer(L_LOADING, new BackGround(DONATE_IMAGE)));
+					gameMap = new Map(MAP_01, "Map01");
+					eventStart = SDL_GetTicks();
+					duration = 2000;
+					state = LOADING;
 					break;
 				case PAUSE:
+					state = PAUSE;
+					if(puasedCount < 1)
+						createUserEvent(TIMERCHANGE, TIMERPAUSE, NULL, NULL);
+					++puasedCount;
 					break;
 				case RESUME:
+					--puasedCount;
+					if(puasedCount == 0)
+						createUserEvent(TIMERCHANGE, TIMERUNPAUSE, NULL, NULL);
 					break;
 				default:
 					break;
@@ -139,6 +179,16 @@ void Game::HandleEvents()
 
 void Game::Update()
 {
+	if(state == LOADING)
+		return;
+	if(state == PAUSE)
+	{
+		Layer *topLayer = layers.back();
+		if(topLayer->isActive())
+			topLayer->update();
+		return;
+	}
+
 	for(auto it = layers.begin(); it != layers.end(); ++it)
 	{
 		if((*it)->isActive())
@@ -228,5 +278,11 @@ void Game::popOverlayer(Layer *_overlayer)
 
 void Game::popTopOverlayer()
 {
-	layers.pop_back();
+	Layer *overlayer = layers.back();
+	auto iter = find(layers.begin() + layerInsertIndex, layers.end(), overlayer);
+	if (iter != layers.end())
+	{
+		layers.erase(iter);
+		delete layer;
+	}
 }

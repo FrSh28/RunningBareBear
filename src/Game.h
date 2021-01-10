@@ -71,6 +71,9 @@ private:
 
 	unsigned int startTime;
 	unsigned int frameCount;
+	unsigned int eventStart;
+	unsigned int duration;
+	int puasedCount;
 
 	static Game *s_gameInstance;
 };

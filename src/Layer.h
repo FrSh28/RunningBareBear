@@ -5,6 +5,7 @@
 #include <string>
 #include "includeSDL.h"
 #include "BasicObject.h"
+#include "Files.h"
 
 enum Layers
 {
@@ -53,5 +54,13 @@ protected:
 };
 
 Layer *createLayer(Layers index, BasicObject *background = NULL);
+
+class BackGround : public BasicObject
+{
+public:
+	BackGround(Images, SDL_Rect = SDL_Rect({0, 0, -1, -1}));
+	~BackGround();
+	
+};
 
 #endif	// LAYER_H

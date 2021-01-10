@@ -19,8 +19,8 @@ Layer::Layer(string _name, bool _active)
 	{
 		SDL_SetTextureBlendMode(mainTexture, SDL_BLENDMODE_BLEND);
 	}
-	rectViewPort.w = game.getWidth;
-	rectViewPort.h = game.getHeight;
+	rectViewPort.w = game.getWidth();
+	rectViewPort.h = game.getHeight();
 }
 
 Layer::~Layer()
@@ -98,51 +98,74 @@ void Layer::popElement(BasicObject *_element)
 	}
 }
 
-Layer *createLayer(Layers index, BasicObject *background)
+BackGround::BackGround(Images index, SDL_Rect _rectOnScreen)
+{
+	texture = loadImage(index);
+	SDL_QueryTexture(texture, NULL, NULL, &rectOnTexture.w, &rectOnTexture.h);
+	if(_rectOnScreen.w > 0 and _rectOnScreen.h > 0)
+		rectOnScreen = _rectOnScreen;
+	else
+	{
+		rectOnScreen.w = Game::GetGame().getWidth();
+		rectOnScreen.h = Game::GetGame().getHeight();
+	}
+}
+
+BackGround::~BackGround()
+{}
+
+Layer *createLayer(Layers index, BackGround *_bg)
 {
 	Layer *lay;
 	switch(index)
 	{
 		case L_STARTMENU:
 			lay = new Layer("StartMenu");
-			lay.pushElement(background);
-			lay.pushElement(new Button(STARTS));
-			lay.pushElement(new Button(INTRO1));
+			if(_bg)
+				lay->pushElement(_bg);
+			lay->pushElement(new Button(STARTS));
+			lay->pushElement(new Button(INTRO1));
 			break;
 		case L_STATUS:
 			lay = new Layer("Status", false);
-			lay.pushElement(background);
-			lay.pushElement(new Button(PAUSES));
-			lay.pushElement(new Button(MISSION));
-			lay.pushElement(new Timer());
-			//lay.pushElement(new backPack);
-			//lay.pushElement(new strengthBar);
+			if(_bg)
+				lay->pushElement(_bg);
+			lay->pushElement(new Button(PAUSES));
+			lay->pushElement(new Button(MISSION));
+			lay->pushElement(new Timer());
+			//lay->pushElement(new backPack);
+			//lay->pushElement(new strengthBar);
 			break;
 		case L_INTRO:
 			lay = new Layer("Intro", false);
-			lay.pushElement(background);
-			lay.pushElement(new Button(LEAVEINTRO));
+			if(_bg)
+				lay->pushElement(_bg);
+			lay->pushElement(new Button(LEAVEINTRO));
 			break;
 		case L_MISSION:
 			lay = new Layer("Mission", false);
-			lay.pushElement(background);
-			lay.pushElement(new Button(LEAVEMISSION));
+			if(_bg)
+				lay->pushElement(_bg);
+			lay->pushElement(new Button(LEAVEMISSION));
 			break;
 		case L_PAUSE:
 			lay = new Layer("Pause", false);
-			lay.pushElement(background);
-			lay.pushElement(new Button(RESUMES));
-			lay.pushElement(new Button(INTRO2));
-			lay.pushElement(new Button(LEAVE));
+			if(_bg)
+				lay->pushElement(_bg);
+			lay->pushElement(new Button(RESUMES));
+			lay->pushElement(new Button(INTRO2));
+			lay->pushElement(new Button(LEAVE));
 			break;
 		case L_END:
 			lay = new Layer("End", false);
-			lay.pushElement(background);
-			lay.pushElement(new Button(OK));
+			if(_bg)
+				lay->pushElement(_bg);
+			lay->pushElement(new Button(OK));
 			break;
 		case L_LOADING:
 			lay = new Layer("Loading");
-			lay.pushElement(background);
+			if(_bg)
+				lay->pushElement(_bg);
 			break;
 	}
 	return lay;
