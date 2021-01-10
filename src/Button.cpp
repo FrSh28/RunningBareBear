@@ -10,7 +10,7 @@ SDL_Rect Button::buttons[TOTAL_BUTTONS] =
 	SDL_Rect({ 495, 380, 290, 290}), //STARTS
 	SDL_Rect({1085,  50, 145, 145}), //INTRO1
 	SDL_Rect({ 615, 100,  30,  30}), //LEAVEINTRO
-	SDL_Rect({ 890,  50, 214, 215}), // MISSION
+	SDL_Rect({ 890,  50, 145, 145}), // MISSION
 	SDL_Rect({ 615, 100,  30,  30}), //LEAVEMISSION
 	SDL_Rect({1085,  50, 145, 145}), //PAUSES
 	SDL_Rect({ 370, 290, 145, 145}), //LEAVE

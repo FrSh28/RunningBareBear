@@ -46,8 +46,8 @@ height(gridHeight), updateRate(60), direction(DOWN)
 
         switch (character) {
             case BEAR:
-                velocity = 4;
-                sprint_velocity = 4;
+                velocity = 3;
+                sprint_velocity = 3;
                 username = "bear";
                 texture = loadImage(RUNNER_IMAGE);
                 break;

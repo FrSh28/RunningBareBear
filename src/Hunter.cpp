@@ -16,7 +16,7 @@ Character *createHunter(SDL_Point _mapPos, SDL_Point _pixelPos)
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	Hvelocity(0), arrive(false), SetSuccess(false), Discovered(false),
-	Animation_Frame(4), Run(6), Walk(3), updateRate(30), frame(0), map(&Map::getMap())//SPEED
+	Animation_Frame(4), Run(4), Walk(2), updateRate(30), frame(0), map(&Map::getMap())//SPEED
 {
 	direction = DOWN_1;
 	texture = loadImage(HUNTER_IMAGE);

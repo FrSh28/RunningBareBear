@@ -4,13 +4,13 @@
 
 #include <iomanip>
 #include "Timer.h"
-TTF_Font* TimerFont = NULL;
 SDL_Renderer* TimerRenderer = NULL;
-Timer::Timer():gametime(600000), mPaused(false), mStarted(false), mStartTicks(0), mPausedTicks(0),
+Timer::Timer():gametime(600000), mPaused(false), mStarted(false), mStartTicks(0), mPausedTicks(0), timerFont(NULL),
 timerText("0"), minute(10), second(0), missionOngoing(false), currentMission(NULL),game(&Game::GetGame())
 {
     loadTimerFont();
-    TTF_SetFontStyle(TimerFont, TTF_STYLE_BOLD);
+    TTF_SetFontStyle(timerFont, TTF_STYLE_BOLD);
+    printf("aaaaa\n");
     timercolor = {0,0,0,255};
     rectOnScreen.x = 500;
     rectOnScreen.y = 0;
@@ -189,7 +189,7 @@ bool Timer::update()
 bool Timer::loadTimerFont()
 {
     bool success = true;
-    timerFont = TTF_OpenFont( "../fonts/octin_college_rg.ttf", 28 );
+    timerFont = TTF_OpenFont( "../media/font/octin_college_rg.ttf", 28 );
     if( timerFont == NULL )
     {
         printf( "Failed to load timer font! SDL_ttf Error: %s\n", TTF_GetError() );
