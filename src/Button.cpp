@@ -100,23 +100,25 @@ bool Button::handleEvents(SDL_Event &e)
 					Inside = true;
 				}
 			}
-			//SDL_Point tmp;printf("%d\n", int(e.type));//SDL_MOUSEBUTTONDOWN
-			if(e.type == 1026 && e.button.button == SDL_BUTTON_LEFT)// && e.button.button == SDL_BUTTON_LEFT
+			//SDL_Point tmp;printf("%d\n", int(e.type));//
+			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)// && e.button.button == SDL_BUTTON_LEFT
 			{
-				EventReturnType = true;
+				
 				if(Inside)
 				{
+					EventReturnType = true;
 					createUserEvent(GAMESTATE_CHANGE, START, NULL, NULL); 
 				}
 			}
 			break;
 		case INTRO1:
-			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
-				EventReturnType = true;
+				
 				Inside = false;
 				if((Center ^ mouse) <= buttons[INTRO1].w/2 )
 				{
+					EventReturnType = true;
 					Inside = true;
 				}
 				if(Inside)
@@ -128,12 +130,13 @@ bool Button::handleEvents(SDL_Event &e)
 			}
 			break;
 		case LEAVEINTRO://
-			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
-				EventReturnType = true;
+				
 				Inside = false;
 				if((Center ^ mouse) <= buttons[LEAVEINTRO].w/2 )
 				{
+					EventReturnType = true;
 					Inside = true;
 				}
 				if(Inside)
@@ -145,12 +148,13 @@ bool Button::handleEvents(SDL_Event &e)
 			}
 			break;
 		case MISSION://
-			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
-				EventReturnType = true;
+				
 				Inside = false;
 				if((Center ^ mouse) <= buttons[INTRO1].w/2 )
 				{
+					EventReturnType = true;
 					Inside = true;
 				}
 				if(Inside)
@@ -183,12 +187,13 @@ bool Button::handleEvents(SDL_Event &e)
 			}
 			break;
 		case LEAVEMISSION://
-			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
-				EventReturnType = true;
+				
 				Inside = false;
 				if((Center ^ mouse) <= buttons[LEAVEMISSION].w/2 )
 				{
+					EventReturnType = true;
 					Inside = true;
 				}
 				if(Inside)
@@ -200,12 +205,13 @@ bool Button::handleEvents(SDL_Event &e)
 			}
 			break;
 		case PAUSES:////////////////////////////
-			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
-				EventReturnType = true;
+				
 				Inside = false;
 				if((Center ^ mouse) <= buttons[PAUSE].w/2 )
 				{
+					EventReturnType = true;
 					Inside = true;
 				}
 				if(Inside)
@@ -219,12 +225,13 @@ bool Button::handleEvents(SDL_Event &e)
 			}
 			break;
 		case LEAVE:
-			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
-				EventReturnType = true;
+				
 				Inside = false;
 				if((Center ^ mouse) <= buttons[LEAVE].w/2 )
 				{
+					EventReturnType = true;
 					Inside = true;
 				}
 				if(Inside)
@@ -234,16 +241,18 @@ bool Button::handleEvents(SDL_Event &e)
 			}
 			break;
 		case RESUMES://SDL_MOUSEBUTTONDOWN
-		printf("%d\n", e.type);
-			if(e.type == SDL_KEYDOWN)// && e.button.button == SDL_BUTTON_LEFT)
+			printf("%d\n", int(e.type));
+			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)// && e.button.button == SDL_BUTTON_LEFT)
 			{
-				EventReturnType = true;
+				
+				
 				Inside = false;
 				if((Center ^ mouse) <= buttons[RESUMES].w/2 )
 				{
+					EventReturnType = true;
 					Inside = true;
 				}
-				if(true)
+				if(Inside)
 				{
 					createUserEvent(GAMESTATE_CHANGE, RESUME, NULL, NULL);
 					Game &game = Game::GetGame();
@@ -252,12 +261,13 @@ bool Button::handleEvents(SDL_Event &e)
 			}
 			break;
 		case INTRO2://SDL_MOUSEBUTTONDOWN
-			if(e.type == 1026 && e.button.button == SDL_BUTTON_LEFT)
+			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
-				EventReturnType = true;
+				
 				Inside = false;
 				if((Center ^ mouse) <= buttons[INTRO2].w/2 )
 				{
+					EventReturnType = true;
 					Inside = true;
 				}
 				if(Inside)
@@ -269,12 +279,13 @@ bool Button::handleEvents(SDL_Event &e)
 			}
 			break;
 		case LEAVEINTRO2://
-			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
-				EventReturnType = true;
+				
 				Inside = false;
 				if((Center ^ mouse) <= buttons[LEAVEINTRO2].w/2 )
 				{
+					EventReturnType = true;
 					Inside = true;
 				}
 				if(Inside)
@@ -286,12 +297,13 @@ bool Button::handleEvents(SDL_Event &e)
 			}
 			break;
 		case OK:
-			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
-				EventReturnType = true;
+				
 				Inside = false;
 				if((Center ^ mouse) <= buttons[OK].w/2 )
 				{
+					EventReturnType = true;
 					Inside = true;
 				}
 				if(Inside)
