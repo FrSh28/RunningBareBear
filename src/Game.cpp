@@ -26,11 +26,7 @@ Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned in
 	s_gameInstance = this;
 	bgm = loadMusic(BGM_MUSIC);
 	Mix_PlayMusic(bgm, -1);
-<<<<<<< Updated upstream
-//	pushLayer(cr);
-=======
 	pushLayer(createLayer(L_STARTMENU, new BackGround(START_IMAGE)));
->>>>>>> Stashed changes
 }
 
 Game::~Game()
