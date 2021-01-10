@@ -22,7 +22,6 @@ class Hunter : public Character
 	SDL_Point HunterPixelPos;
 	SDL_Point HunterCenterPixel;
 	SDL_Point directPos;
-	SDL_Point findpos;
 	SDL_Point NextPixel;
 	int Hvelocity;
 	const int Run;
@@ -31,15 +30,9 @@ class Hunter : public Character
 	bool Discovered;
 	bool arrive;
 	bool visible;
-	int a;
-	int b;
 	int frame;
 	int updateRate;
 	int Animation_Frame;
-	double deltaX;
-	double deltaY;
-	double findX;
-	double findY;
 	std::queue<SDL_Point> go;
 	frames direction;
 	Map *map;

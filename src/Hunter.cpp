@@ -15,8 +15,8 @@ Character *createHunter(SDL_Point _mapPos, SDL_Point _pixelPos)
 }
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
-	Hvelocity(0), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0),
-	findX(0), findY(0), Animation_Frame(4), Run(6), Walk(3), updateRate(3), frame(0), map(&Map::getMap())//SPEED
+	Hvelocity(0), arrive(false), SetSuccess(false), Discovered(false),
+	Animation_Frame(4), Run(6), Walk(3), updateRate(30), frame(0), map(&Map::getMap())//SPEED
 {
 	direction = DOWN_1;
 	texture = loadImage(HUNTER_IMAGE);
@@ -86,16 +86,18 @@ bool Hunter::update()
 }
 
 bool Hunter::RunnerVisible()
-{	
+{
+	double a, b, deltaX, deltaY, findX, findY;
+	SDL_Point findpos;
 	visible = true;
 	a = RunnerMapPos.x - HunterMapPos.x;
 	b = RunnerMapPos.y - HunterMapPos.y;
-	deltaX = a / (a+b);
-	deltaY = b / (a+b);	
+	deltaX = a / sqrt(a*a+b*b);
+	deltaY = b / sqrt(a*a+b*b);
 	findpos = HunterMapPos;
 	findX = HunterMapPos.x;
 	findY = HunterMapPos.y;
-	while(findpos.x != RunnerMapPos.x || findpos.x != RunnerMapPos.x)
+	while(findpos.x != RunnerMapPos.x || findpos.y != RunnerMapPos.y)
 	{
 		findX += deltaX;
 		findY += deltaY;
@@ -115,7 +117,7 @@ bool Hunter::RunnerVisible()
 void Hunter::Stage1()
 {
 	Hvelocity = Run;
-	updateRate = 3;
+	updateRate = 30;
 	Discovered = true; 
 	//every 60 frames
 	if(frame == 0)
@@ -131,7 +133,7 @@ void Hunter::Stage1()
 void Hunter::Stage2()
 {
 	Hvelocity = Run;
-	updateRate = 3;
+	updateRate = 30;
 	if(Arrive(directPos))
 	{
 		Discovered = false;
@@ -146,7 +148,7 @@ void Hunter::Stage2()
 void Hunter::Stage3()
 {
 	Hvelocity = Walk;
-	updateRate = 6;
+	updateRate = 60;
 	if(Arrive(directPos))
 	{
 		directPos = Set();
@@ -208,8 +210,8 @@ SDL_Point Hunter::Set()
 	while(!SetSuccess)
 	{
 		Game &game = Game::GetGame();
-		SetPos.x = game.rdEngine()%(map->getRowNum()); 
-		SetPos.y = game.rdEngine()%(map->getColNum());
+		SetPos.x = (HunterMapPos.x + game.rdEngine()%20 - 5) % map->getColNum();
+		SetPos.y = (HunterMapPos.y + game.rdEngine()%20 - 5) % map->getRowNum();
 		if(map->isSpace(SetPos)) 
 		{
 			SetSuccess = true;
@@ -232,7 +234,13 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directpos)
 		std::vector<SDL_Point> way;
 		Node(){} 
 		~Node(){}
-		Node(const Node &x){}
+		Node(const Node &x){
+			step = x.step;
+			for(auto it = x.way.begin(); it != x.way.end(); ++it)
+			{
+				way.push_back(*it);
+			}
+		}
 	};
 	
 	std::queue<Node> q; //
@@ -241,13 +249,12 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directpos)
 	init.way.push_back(HunterMapPos);  
 	visited[HunterMapPos.x][HunterMapPos.y] = true;
 	q.push(init);
-	
 	while(!q.empty())
 	{
 		Node curNode = q.front(); //
 		q.pop();
 		SDL_Point curP = curNode.way.back();
-		
+
 		//right
 		SDL_Point nextP1;
 		nextP1.x = curP.x + 1;

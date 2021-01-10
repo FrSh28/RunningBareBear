@@ -189,7 +189,7 @@ bool Timer::update()
 bool Timer::loadTimerFont()
 {
     bool success = true;
-    timerFont = TTF_OpenFont( "fonts/octin college rg.ttf", 28 );
+    timerFont = TTF_OpenFont( "../fonts/octin_college_rg.ttf", 28 );
     if( timerFont == NULL )
     {
         printf( "Failed to load timer font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -253,8 +253,10 @@ void Timer::convert(MissionTypes& mission, int& tmp)
             break;
         case 3:
             mission = Mission2Type1;
+            break;
         case 4:
             mission = Mission2Type3;
+            break;
     }
 }
 

@@ -51,7 +51,7 @@ void Layer::free()
 
 bool Layer::handleEvents(SDL_Event &e)
 {
-	cout << name << "event";
+	//printf("%sEvent ", name.c_str());
 	for(auto it = elements.rbegin(); it != elements.rend(); ++it)
 	{
 		if((*it)->isEventEnable())
@@ -66,7 +66,7 @@ bool Layer::handleEvents(SDL_Event &e)
 
 void Layer::update()
 {
-	cout << name << "update";
+	printf("%sUpdate ", name.c_str());
 	for(auto it = elements.begin(); it != elements.end(); ++it)
 	{
 		if((*it)->isUpdateEnable())
@@ -79,7 +79,7 @@ void Layer::render()
 {
 	if(changed)
 	{
-		cout << name << "reander";
+		//printf("%sRender ", name.c_str());
 		SDL_Renderer *renderer = Game::GetGame().getRenderer();
 		SDL_SetRenderTarget(renderer, mainTexture);
 		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
@@ -113,7 +113,7 @@ BackGround::BackGround(Images index, SDL_Rect _rectOnScreen)
 {
 	texture = loadImage(index);
 	SDL_QueryTexture(texture, NULL, NULL, &rectOnTexture.w, &rectOnTexture.h);
-	printf("%d %d %d\n", index, rectOnTexture.w, rectOnTexture.h);
+	
 	if(_rectOnScreen.w > 0 and _rectOnScreen.h > 0)
 		rectOnScreen = _rectOnScreen;
 	else

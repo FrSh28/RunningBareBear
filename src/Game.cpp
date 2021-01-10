@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <random>
+#include <ctime>
 #include "Game.h"
 #include "Layer.h"
 #include "Files.h"
@@ -14,8 +15,7 @@ Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned in
  : name(_name), width(_width), height(_height), frameRate(_frameRate), running(false), state(STARTMENU),
 	window(NULL), renderer(NULL), layerInsertIndex(0U), gameMap(NULL), bgm(NULL), startTime(0U), frameCount(0U), eventStart(0U), duration(0U), puasedCount(0), started(false)
 {
-	random_device rd;
-	rdEngine.seed(rd());
+	rdEngine.seed(time(NULL));
 	s_gameInstance = this;
 }
 
@@ -88,7 +88,7 @@ void Game::Start(unsigned int _startTime)
 	bgm = loadMusic(BGM_MUSIC);
 	Mix_PlayMusic(bgm, -1);
 	pushLayer(createLayer(L_STARTMENU, new BackGround(START_IMAGE)));
-	//pushLayer(createLayer(L_STARTMENU, new BackGround(BACKGROUND_IMAGE)));
+	//pushLayer(createLayer(L_STARTMENU, new BackGround(RUNNER_IMAGE)));
 	//BackGround *background = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, 1280, 720}));
 	//BackGround *front = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, 1280, 720}));
 	//Layer *L_ground = createLayer(L_MAP_GROUND, background);
@@ -189,10 +189,9 @@ void Game::Update()
 			if( SDL_GetTicks() > eventStart + duration)
 			{
 				started = true;
-				printf("%d\n", getLayersSize());
 				popTopOverlayer();
-				printf("%d\n", getLayersSize());
-				//createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
+				createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
+				pushOverlayer(createLayer(L_STATUS, NULL));
 				state = GAME;
 			}
 		}
@@ -297,7 +296,6 @@ void Game::popOverlayer(Layer *_overlayer)
 
 void Game::popTopOverlayer()
 {
-	printf("pop\n");
 	Layer *overlayer = layers.back();
 	auto iter = find(layers.begin() + layerInsertIndex, layers.end(), overlayer);
 	if (iter != layers.end())

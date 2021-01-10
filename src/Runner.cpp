@@ -20,8 +20,14 @@ const int Runner::gridWidth = Map::getPixelWidth();
 const int Runner::gridHeight = Map::getPixelHeight();
 Runner::Runner(SDL_Point& InitialMapPos,SDL_Point& InitialPixelPos, character_list character):
 Character("Runner"), strength(100), map(&Map::getMap()), width(gridWidth),
-height(gridHeight), updateRate(6), direction(DOWN) {
+height(gridHeight), updateRate(60), direction(DOWN) 
+{
     initclips();
+
+    //set Initial PixelPos
+    setPixelPos(InitialPixelPos);
+    //set Initial MapPos
+    setMapPos(InitialMapPos);
     if (mode == 1) {
         /*posOnWindow->x = (int);
         posOnTexture->x = (int);
@@ -47,13 +53,9 @@ height(gridHeight), updateRate(6), direction(DOWN) {
                 break;
         }
     }
-    //set Initial PixelPos
-    setPixelPos(InitialPixelPos);
-    //set Initial MapPos
-    setMapPos(InitialMapPos);
 
     //randomly create Item
-    Item* items[20];
+    /*Item* items[20];
     for(int i=0;i<20;i++)
     {
         SDL_Point a;
@@ -65,7 +67,7 @@ height(gridHeight), updateRate(6), direction(DOWN) {
         else if(tmp == 1){create = POTION;}
         else if(tmp == 2){create = MEAT;}
         items[i]=createItem(create);
-    }
+    }*/
 }
 void Runner::setMapPos(SDL_Point &Set)
 {
@@ -133,7 +135,7 @@ bool Runner::handleEvents(SDL_Event &e)
             {
                 case SDLK_SPACE:
                     velocity += sprint_velocity;
-                    updateRate = 3;
+                    updateRate = 30;
                     return true;
                 case SDLK_s:
                     velocity_y += velocity;
@@ -171,7 +173,7 @@ bool Runner::handleEvents(SDL_Event &e)
             {
                 case SDLK_SPACE:
                     velocity -= sprint_velocity;
-                    updateRate = 6;
+                    updateRate = 60;
                     return true;
                 case SDLK_w:
                     velocity_y -= velocity;
