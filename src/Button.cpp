@@ -175,6 +175,10 @@ bool Button::handleEvents(SDL_Event &e)
 					*/	
 					else if(current == Mission2Type3)
 						game.pushOverlayer(new boardLayer("M2-3", MISSION_2_3_IMAGE));
+						
+					else if(current == MissionTotal)
+						game.pushOverlayer(new boardLayer("M2-3", DONATE_IMAGE));
+						
 					//Layer
 				}
 			}

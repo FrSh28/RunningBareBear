@@ -5,6 +5,8 @@ using namespace std;
 namespace Files
 {
 	string P_Images[IMAGE_COUNT]	= { "../media/image/image.txt",
+										"../media/image/donate.png",
+										"../media/image/startimage.png",
 										"../media/image/Hunter_32_32.png",
 										"../media/image/Runner_56_56.png",
 										"../media/image/StartButton_512_512.png",
@@ -22,7 +24,7 @@ namespace Files
 										"../media/image/DebugMission.png",
 										"../media/image/WebworkMission.png",
 										"../media/image/", //TIMER_BACKGROUND
-										"../media/image/", //STAR
+										"../media/image/star.png", //STAR
 										"../media/image/item.png", //POTION
 										"../media/image/item.png", //MEAT
 										"../media/image/sheet.png", //SHEET
