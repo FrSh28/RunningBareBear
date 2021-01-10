@@ -318,39 +318,6 @@ bool Button::update()
 		UpdateReturnType = false;
 	Last = Inside;
 	return UpdateReturnType;
-	
-/*
-	switch(type)
-	{
-		case START:
-			if(Inside) 
-				rectOnTexture = SDL_Rect( {button_type[START].x, button_type[START].y, button_type[START].w, button_type[START].h} );
-		break;
-		case PAUSE:
-			rectOnTexture = SDL_Rect( {button_type[PAUSE].x, button_type[PAUSE].y, button_type[PAUSE].w, button_type[PAUSE].h} );
-			break;
-		case LEAVE:
-			rectOnTexture = SDL_Rect( {button_type[LEAVE].x, button_type[LEAVE].y, button_type[LEAVE].w, button_type[LEAVE].h} );
-			break;
-		case INTRO1:
-			rectOnTexture = SDL_Rect( {button_type[INTRO1].x, button_type[INTRO1].y, button_type[INTRO1].w, button_type[INTRO1].h} );
-			break;
-		case LEAVEINTRO:
-			rectOnTexture = SDL_Rect( {button_type[LEAVEINTRO].x, button_type[LEAVEINTRO].y, button_type[LEAVEINTRO].w, button_type[LEAVEINTRO].h} );
-			break;
-		case RESUMES:
-			rectOnTexture = SDL_Rect( {button_type[RESUMES].x, button_type[RESUMES].y, button_type[RESUMES].w, button_type[RESUMES].h} );
-			break;
-		case INTRO2:
-			rectOnTexture = SDL_Rect( {button_type[INTRO2].x, button_type[INTRO2].y, button_type[INTRO2].w, button_type[INTRO2].h} );
-			break;
-		case LEAVEINTRO2:
-			rectOnTexture = SDL_Rect( {button_type[LEAVEINTRO2].x, button_type[LEAVEINTRO2].y, button_type[LEAVEINTRO2].w, button_type[LEAVEINTRO2].h} );
-			break;
-		case OK:
-			rectOnTexture = SDL_Rect( {button_type[OK].x, button_type[OK].y, button_type[OK].w, button_type[OK].h} );
-			break;
-	}
-*/
+
 }
 
