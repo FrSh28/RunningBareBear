@@ -18,7 +18,7 @@ Map::Map(Maps index, string _name)
 {
 	s_mapInstance = this;
 	loadMap(index);
-	
+
 	Game &game = Game::GetGame();
 	BackGround *background = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, width, height}));
 	BackGround *front = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, width, height}));
@@ -157,9 +157,19 @@ bool Map::update()
 		if(huntersMapPos[i] == runnerMapPos)
 			createUserEvent(GAMESTATE_CHANGE, END, new bool(false), NULL);
 	}
-	/*L_ground->setRectViewPos();
-	L_character->setRectViewPos();
-	L_front->setRectViewPos();*/
+	
+	if(mapPixelPos.x > 0)
+		mapPixelPos.x = 0;
+	else if(mapPixelPos.x < scrWidth - width)
+		mapPixelPos.x =scrWidth - width;
+	if(mapPixelPos.y > 0)
+		mapPixelPos.y = 0;
+	else if(mapPixelPos.y < scrHeight - height)
+		mapPixelPos.y = scrHeight - height;
+	SDL_Point tmp = {-mapPixelPos.x, -mapPixelPos.y};
+	L_ground->setRectViewPos(tmp);
+	L_character->setRectViewPos(tmp);
+	L_front->setRectViewPos(tmp);
 	return true;
 }
 

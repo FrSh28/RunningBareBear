@@ -32,7 +32,7 @@ public:
 	virtual void update();					// update changes on current layer
 	virtual void render();					// render elements to mainTexture
 	inline void setActive(bool _active) { active = _active; }
-	inline void setRectViewPs(SDL_Point &_pos) { rectViewPort.x = _pos.x; rectViewPort.y = _pos.y; }
+	inline void setRectViewPos(SDL_Point &_pos) { rectViewPort.x = _pos.x; rectViewPort.y = _pos.y; }
 
 	void pushElement(BasicObject *);
 	void popElement(BasicObject *);
