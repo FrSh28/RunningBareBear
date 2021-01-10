@@ -2,6 +2,7 @@
 #define BUTTON_H
 #include "includeSDL.h"
 #include "BasicObject.h"
+#include "Mission.h"
 enum button_type
 {
 	STARTS, INTRO1, LEAVEINTRO, MISSION, LEAVEMISSION, PAUSES, LEAVE, RESUMES, INTRO2, LEAVEINTRO2, OK, TOTAL_BUTTONS

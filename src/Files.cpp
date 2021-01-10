@@ -7,6 +7,7 @@ namespace Files
 	string P_Images[IMAGE_COUNT]	= { "../media/image/image.txt",
 										"../media/image/donate.png",
 										"../media/image/startimage.png",
+										"../media/image/fail.png",
 										"../media/image/Hunter_32_32.png",
 										"../media/image/Runner_56_56.png",
 										"../media/image/StartButton_512_512.png",
@@ -25,8 +26,8 @@ namespace Files
 										"../media/image/WebworkMission.png",
 										"../media/image/", //TIMER_BACKGROUND
 										"../media/image/star.png", //STAR
-										"../media/image/item.png", //POTION
-										"../media/image/item.png", //MEAT
+										"../media/image/Item.png", //POTION
+										"../media/image/Item.png", //MEAT
 										"../media/image/sheet.png", //SHEET
 										"../media/image/Library.png", //LIBRARY
 										"../media/image/PE_teacher.png", //PE_TEACHER

@@ -3,7 +3,6 @@
 #include "Button.h"
 #include "UserEvent.h"
 #include "Layer.h"
-#include "Mission.h"
 #include <cmath>
 
 SDL_Rect Button::buttons[TOTAL_BUTTONS] = 
