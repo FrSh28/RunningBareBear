@@ -11,8 +11,8 @@ SDL_Rect Clip [TOTAL_FRAMES];
 const int Runner::gridWidth = Map::getPixelWidth();
 const int Runner::gridHeight = Map::getPixelHeight();
 Runner::Runner(SDL_Point& InitialMapPos,SDL_Point& InitialPixelPos, character_list character):
-BasicObject("Runner"), strength(100), map(&Map::getMap()), width(40),
-height(32), updateRate(6), direction(DOWN) {
+BasicObject("Runner"), strength(100), map(&Map::getMap()), width(gridWidth),
+height(gridHeight), updateRate(6), direction(DOWN) {
     initclips();
     if (mode == 1) {
         //texture = loadMedia(TEXTURE_XXX);     // ref Files.h --by FrSh
@@ -26,6 +26,10 @@ height(32), updateRate(6), direction(DOWN) {
         posOnTexture->h = (int);*/
 
         rectOnTexture = Clip[0];
+        rectOnScreen.x = PixelPos.x;
+        rectOnScreen.y = PixelPos.y;
+        rectOnScreen.w = width;
+        rectOnScreen.h = height;
 
         switch (character) {
             case BEAR:
@@ -406,71 +410,73 @@ void Runner::checkCollision()
     }
 }
 
+int Runner::getStrength() const {return strength;}
+
 void Runner::operator++(int) {strength += 30;}
 void Runner::initclips()                // init render clips
 {
     // Down
-    Clip[0].x = 0000;
-    Clip[0].y = 0000;
-    Clip[0].w = 0000;
-    Clip[0].h = 0000;
+    Clip[0].x = 0;
+    Clip[0].y = 0;
+    Clip[0].w = 56;
+    Clip[0].h = 56;
 
-    Clip[1].x = 0000;
-    Clip[1].y = 0000;
-    Clip[1].w = 0000;
-    Clip[1].h = 0000;
+    Clip[1].x = 56;
+    Clip[1].y = 0;
+    Clip[1].w = 56;
+    Clip[1].h = 56;
 
-    Clip[2].x = 0000;
-    Clip[2].y = 0000;
-    Clip[2].w = 0000;
-    Clip[2].h = 0000;
-
-    //Right
-    Clip[3].x = 0000;
-    Clip[3].y = 0000;
-    Clip[3].w = 0000;
-    Clip[3].h = 0000;
-
-    Clip[4].x = 0000;
-    Clip[4].y = 0000;
-    Clip[4].w = 0000;
-    Clip[4].h = 0000;
-
-    Clip[5].x = 0000;
-    Clip[5].y = 0000;
-    Clip[5].w = 0000;
-    Clip[5].h = 0000;
+    Clip[2].x = 112;
+    Clip[2].y = 0;
+    Clip[2].w = 56;
+    Clip[2].h = 56;
 
     //Left
-    Clip[6].x = 0000;
-    Clip[6].y = 0000;
-    Clip[6].w = 0000;
-    Clip[6].h = 0000;
+    Clip[3].x = 0;
+    Clip[3].y = 56;
+    Clip[3].w = 56;
+    Clip[3].h = 56;
 
-    Clip[7].x = 0000;
-    Clip[7].y = 0000;
-    Clip[7].w = 0000;
-    Clip[7].h = 0000;
+    Clip[4].x = 56;
+    Clip[4].y = 56;
+    Clip[4].w = 56;
+    Clip[4].h = 56;
 
-    Clip[8].x = 0000;
-    Clip[8].y = 0000;
-    Clip[8].w = 0000;
-    Clip[8].h = 0000;
+    Clip[5].x = 112;
+    Clip[5].y = 56;
+    Clip[5].w = 56;
+    Clip[5].h = 56;
+
+    //Right
+    Clip[6].x = 0;
+    Clip[6].y = 112;
+    Clip[6].w = 56;
+    Clip[6].h = 56;
+
+    Clip[7].x = 56;
+    Clip[7].y = 112;
+    Clip[7].w = 56;
+    Clip[7].h = 56;
+
+    Clip[8].x = 112;
+    Clip[8].y = 112;
+    Clip[8].w = 56;
+    Clip[8].h = 56;
 
     //Up
-    Clip[9].x = 0000;
-    Clip[9].y = 0000;
-    Clip[9].w = 0000;
-    Clip[9].h = 0000;
+    Clip[9].x = 0;
+    Clip[9].y = 168;
+    Clip[9].w = 56;
+    Clip[9].h = 56;
 
-    Clip[10].x = 0000;
-    Clip[10].y = 0000;
-    Clip[10].w = 0000;
-    Clip[10].h = 0000;
+    Clip[10].x = 56;
+    Clip[10].y = 168;
+    Clip[10].w = 56;
+    Clip[10].h = 56;
 
-    Clip[11].x = 0000;
-    Clip[11].y = 0000;
-    Clip[11].w = 0000;
-    Clip[11].h = 0000;
+    Clip[11].x = 112;
+    Clip[11].y = 168;
+    Clip[11].w = 56;
+    Clip[11].h = 56;
 }
 

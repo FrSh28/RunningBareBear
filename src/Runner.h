@@ -46,7 +46,7 @@ public:
     void updateMapPos(SDL_Point&);      // ask map for big grid and update MapPos
     SDL_Point getMapPos() const;        // get big grid on map
     SDL_Point getPixelPos()const;       // get small grid on map (center)
-
+    int getStrength()const;  // get strength
     static const int gridWidth; // the width of grid on map
     static const int gridHeight;// the height of grid on map
 };

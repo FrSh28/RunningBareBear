@@ -10,17 +10,11 @@ timerText("0"), minute(10), second(0), missionOngoing(false), currentMission(NUL
 {
     loadTimerFont();
     TTF_SetFontStyle(TimerFont, TTF_STYLE_BOLD);
-    background = loadImage(TIMER_BACKGROUND_IMAGE);
     timercolor = {0,0,0,255};
     rectOnScreen.x = 500;
     rectOnScreen.y = 0;
     rectOnScreen.w = 500;
     rectOnScreen.h = 100;
-
-    rectOnTexture.x = 00;
-    rectOnTexture.y = 00;
-    rectOnTexture.w = 00;
-    rectOnTexture.h = 00;
 }
 
 Timer::~Timer()
@@ -177,14 +171,14 @@ bool Timer::update()
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create surface from timer: %s", SDL_GetError());
         return 3;
     }
-    timerTexture = SDL_CreateTextureFromSurface(renderer, surface);
+
+    texture = SDL_CreateTextureFromSurface(game->getRenderer(), surface);
     if (!texture) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create texture from surface: %s", SDL_GetError());
         return 3;
     }
+    SDL_QueryTexture(texture, NULL, NULL, &rectOnTexture.w, &rectOnTexture.h);
     SDL_FreeSurface(surface);
-
-    //We have to combine timertexture and background texture
 
     return true;
 }
@@ -235,13 +229,6 @@ Uint32 Timer::getTicks()const
 
 void Timer::closetimer()
 {
-    //Free loaded images
-    if( timerTexture != NULL )
-    {
-        SDL_DestroyTexture( timerTexture );
-        timerTexture = NULL;
-    }
-
     //Free global font
     if(timerFont!=NULL)
     {

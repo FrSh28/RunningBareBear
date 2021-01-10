@@ -37,10 +37,7 @@ private:
     bool mStarted;
 
     //Timer Texture
-    SDL_Texture* timerTexture;
-
-    //Background Texture
-    SDL_Texture* background;
+    //SDL_Texture* timerTexture;
 
     //TimerColor
     SDL_Color timercolor;
