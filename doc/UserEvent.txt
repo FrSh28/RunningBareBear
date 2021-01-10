@@ -25,7 +25,7 @@
 		{
 			"name" : "GameEnd"
 			"code" : END,
-			"data1" : NULL,
+			"data1" : &(true)|&(false),
 			"data2" : NULL,
 			"trigger" : Map,
 		},

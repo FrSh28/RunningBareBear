@@ -38,7 +38,8 @@ public:
 	void popLayer(Layer *);			// pop layer from layers
 	void popOverlayer(Layer *);		// pop overlayer from layers
 	void popTopOverlayer();			// pop top pverlayer from layers
-	void setGameMap(Map *_map) { gameMap = _map; }
+	void popAllLayers();
+	inline void setGameMap(Map *_map) { gameMap = _map; }
 
 	inline bool isRunning() const { return running; }
 	inline std::string getName() const { return name; }
@@ -74,6 +75,7 @@ private:
 	unsigned int eventStart;
 	unsigned int duration;
 	int puasedCount;
+	bool started;
 
 	static Game *s_gameInstance;
 };

@@ -7,19 +7,11 @@
 #include "UserEvent.h"
 using namespace std;
 
-L_STARTMENU,
-L_STATUS,
-L_INTRO,
-L_MISSION,
-L_PAUSE,
-L_END,
-L_LOADING,
-
 Game *Game::s_gameInstance = NULL;
 
 Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned int _frameRate)
  : name(_name), width(_width), height(_height), frameRate(_frameRate), running(false), state(STARTMENU),
-	window(NULL), renderer(NULL), layerInsertIndex(0U), gameMap(NULL), bgm(NULL), startTime(0U), frameCount(0U), eventStart(0U), duration(0U), puasedCount(0)
+	window(NULL), renderer(NULL), layerInsertIndex(0U), gameMap(NULL), bgm(NULL), startTime(0U), frameCount(0U), eventStart(0U), duration(0U), puasedCount(0), started(false)
 {
 	random_device rd;
 	rdEngine.seed(rd());
@@ -87,11 +79,6 @@ bool Game::Init()
 	SDL_RenderClear(renderer);
 	SDL_RenderPresent(renderer);
 
-	// for testing
-	pushLayer(new Layer("TestLayer"));
-	//layers[0]->pushElement(someBasicObject);
-	// for testing
-
 	return true;
 }
 
@@ -111,6 +98,7 @@ void Game::HandleEvents()
 		{
 			if(SDL_GetTicks() > eventStart + duration)
 			{
+				started = true;
 				popTopOverlayer();
 				createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
 				state = GAME;
@@ -130,6 +118,7 @@ void Game::HandleEvents()
 			switch(tmp)
 			{
 				case START:
+					popAllLayers();
 					pushOverlayer(createLayer(L_LOADING, new BackGround(DONATE_IMAGE)));
 					gameMap = new Map(MAP_01, "Map01");
 					eventStart = SDL_GetTicks();
@@ -145,8 +134,26 @@ void Game::HandleEvents()
 				case RESUME:
 					--puasedCount;
 					if(puasedCount == 0)
+					{
+						if(started)
+							state = GAME;
+						else
+							state = STARTMENU;
 						createUserEvent(TIMERCHANGE, TIMERUNPAUSE, NULL, NULL);
+					}
 					break;
+				case END:
+					state = END;
+					if(*((bool *)event.user.data1))
+						pushOverlayer(createLayer(L_END, new BackGround(END_WIN_IMAGE)));
+					else
+						pushOverlayer(createLayer(L_END, new BackGround(END_LOSE_IMAGE)));
+					break;
+				case STARTMENU:
+					state = STARTMENU;
+					popAllLayers();
+					Mix_PlayMusic(bgm, -1);
+					pushLayer(createLayer(L_STARTMENU, new BackGround(START_IMAGE)));
 				default:
 					break;
 			}
@@ -175,9 +182,7 @@ void Game::HandleEvents()
 
 void Game::Update()
 {
-	if(state == LOADING)
-		return;
-	if(state == PAUSE)
+	if(state == PAUSE or state == LOADING)
 	{
 		Layer *topLayer = layers.back();
 		if(topLayer->isActive())
@@ -196,9 +201,18 @@ void Game::Update()
 
 void Game::Render()
 {
-	for(auto it = layers.begin(); it != layers.end(); ++it)
+	if(state == PAUSE or state == LOADING)
 	{
-		(*it)->render();
+		Layer *topLayer = layers.back();
+		if(topLayer->isActive())
+			topLayer->render();
+	}
+	else
+	{
+		for(auto it = layers.begin(); it != layers.end(); ++it)
+		{
+			(*it)->render();
+		}
 	}
 	SDL_SetRenderTarget(renderer, NULL);
 	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x40, SDL_ALPHA_OPAQUE);
@@ -263,6 +277,18 @@ void Game::popLayer(Layer *_layer)
 	}
 }
 
+void Game::popAllLayer()
+{
+	Layer *layer = layers.front();
+	auto iter = find(layers.begin(), layers.begin() + layerInsertIndex, layer);
+	if (iter != layers.begin() + layerInsertIndex)
+	{
+		layers.erase(iter);
+		--layerInsertIndex;
+		delete *iter;
+	}
+}
+
 void Game::popOverlayer(Layer *_overlayer)
 {
 	auto iter = find(layers.begin() + layerInsertIndex, layers.end(), _overlayer);
@@ -279,6 +305,16 @@ void Game::popTopOverlayer()
 	if (iter != layers.end())
 	{
 		layers.erase(iter);
-		delete layer;
+		delete *iter;
 	}
+}
+
+void Game::popAllLayers()
+{
+	for(auto it = layers.begin(); it != layers.end(); ++it)
+	{
+		delete *it;
+		*it = NULL;
+	}
+	layers.clear();
 }
