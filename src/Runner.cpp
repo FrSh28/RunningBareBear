@@ -219,6 +219,8 @@ bool Runner::update()
     static int frame = 0;
     // move(update PixelPos)
     move();
+    rectOnScreen.x = PixelPos.x;
+    rectOnScreen.y = PixelPos.y;
     // deal strength
     if(velocity_x!=0||velocity_y!=0)
     {
