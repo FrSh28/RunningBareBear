@@ -18,12 +18,15 @@ Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	Hvelocity(0), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0),
 	findX(0), findY(0), Animation_Frame(4), Run(6), Walk(3), updateRate(3), frame(0), map(&Map::getMap())//SPEED
 {
+	direction = DOWN_1;
+	texture = loadImage(HUNTER_IMAGE);
+	rectOnTexture = Hunter_Clip[direction+frame/updateRate];
 	initHunter_Clips();
 	setMapPos(MapPos);
 	setPixelPos(PixelPos);
 	directPos = HunterPixelPos;
-	rectOnScreen.w = 100;
-	rectOnScreen.h = 80;
+	rectOnScreen.w = Map::getPixelWidth();
+	rectOnScreen.h = Map::getPixelHeight();
 }
 
 void Hunter::setMapPos(SDL_Point &MapPos)
@@ -36,6 +39,8 @@ void Hunter::setPixelPos(SDL_Point &PixelPos)
 	HunterCenterPixel = PixelPos;
 	HunterPixelPos.x = HunterCenterPixel.x - rectOnScreen.w/2;
 	HunterPixelPos.y = HunterCenterPixel.y - rectOnScreen.h/2;
+	rectOnScreen.x = HunterPixelPos.x;
+	rectOnScreen.y = HunterPixelPos.y;
 }
 
 

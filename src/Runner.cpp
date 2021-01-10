@@ -23,7 +23,6 @@ Character("Runner"), strength(100), map(&Map::getMap()), width(gridWidth),
 height(gridHeight), updateRate(6), direction(DOWN) {
     initclips();
     if (mode == 1) {
-        //texture = loadMedia(TEXTURE_XXX);     // ref Files.h --by FrSh
         /*posOnWindow->x = (int);
         posOnTexture->x = (int);
         posOnWindow->y = (int);
@@ -44,7 +43,7 @@ height(gridHeight), updateRate(6), direction(DOWN) {
                 velocity = 4;
                 sprint_velocity = 4;
                 username = "bear";
-                loadImage(RUNNER_IMAGE);
+                texture = loadImage(RUNNER_IMAGE);
                 break;
         }
     }

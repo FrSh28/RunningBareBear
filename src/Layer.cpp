@@ -51,6 +51,7 @@ void Layer::free()
 
 bool Layer::handleEvents(SDL_Event &e)
 {
+	cout << name << "event";
 	for(auto it = elements.rbegin(); it != elements.rend(); ++it)
 	{
 		if((*it)->isEventEnable())
@@ -65,6 +66,7 @@ bool Layer::handleEvents(SDL_Event &e)
 
 void Layer::update()
 {
+	cout << name << "update";
 	for(auto it = elements.begin(); it != elements.end(); ++it)
 	{
 		if((*it)->isUpdateEnable())
@@ -77,6 +79,7 @@ void Layer::render()
 {
 	if(changed)
 	{
+		cout << name << "reander";
 		SDL_Renderer *renderer = Game::GetGame().getRenderer();
 		SDL_SetRenderTarget(renderer, mainTexture);
 		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);

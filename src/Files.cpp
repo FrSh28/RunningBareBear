@@ -7,7 +7,7 @@ namespace Files
 	string P_Images[IMAGE_COUNT]	= { "../media/image/image.txt",
 										"../media/image/donate.png",
 										"../media/image/startimage.png",
-										"../media/image/background.png",
+										"../media/image/background.jpg",
 										"../media/image/fail.png",
 										"../media/image/success.png",
 										"../media/image/Board.png",
