@@ -5,22 +5,23 @@
 #include "UserEvent.h"
 using namespace std;
 
-const int Map::sc_pixelWidth = 50, Map::sc_pixelHeight = 40;
+const int Map::sc_pixelWidth = 100, Map::sc_pixelHeight = 80;
 Map *Map::s_mapInstance = NULL;
 
 Map::Map(Maps index, string _name)
- : name(_name), colNum(0), rowNum(0), width(0), height(0), L_ground(NULL), L_character(NULL), L_front(NULL)
+ : name(_name), colNum(0), rowNum(0), width(0), height(0), mapPixelPos({0, 0}), L_ground(NULL), L_interact(NULL), L_front(NULL)
 {
 	s_mapInstance = this;
 	loadMap(index);
+	////////////
 	L_ground = new Layer("MapGround", false);
 	game.pushLayer(L_ground);
-	L_character = new Layer("Character", false);
-	game.pushLayer(L_character);
+	L_interact = new Layer("Interact", false);
+	game.pushLayer(L_interact);
 	L_front = new Layer("MapFront", false);
 	game.pushOverlayer(L_front);
-
-	for(int i = 0; i < 15; ++i)
+	///////////
+	for(int i = 0; i < 10; ++i)
 		addHunter();
 
 	SDL_Point tmpMapPos, tmpPixelPos;
@@ -30,10 +31,12 @@ Map::Map(Maps index, string _name)
 		tmpMapPos.x = game.rdEngine() % rowNum;
 		tmpMapPos.y = game.rdEngine() % colNum;
 	}while(!isSpace(tmpMapPos) or huntersMapPos.end() != find(huntersMapPos.begin(), huntersMapPos.end(), tmpMapPos));
-	tmpPixelPos.x = tmpMapPos.x + sc_pixelWidth / 2;
-	tmpPixelPos.y = tmpMapPos.y + sc_pixelHeight / 2;
+	tmpPixelPos = mapPosTopixelPos(tmpMapPos);
+	tmpPixelPos.x += sc_pixelWidth / 2;
+	tmpPixelPos.y += sc_pixelHeight / 2;
 	runner = new Runner(tmpMapPos, tmpPixelPos);
-	character.pushElement(runner);
+	character->pushElement(runner);
+	update();
 }
 
 Map::~Map()
@@ -99,11 +102,12 @@ void Map::addHunter()
 	{
 		tmpMapPos.x = game.rdEngine() % rowNum;
 		tmpMapPos.y = game.rdEngine() % colNum;
-	}while(!isSpace(tmpMapPos) or huntersMapPos.end() != find(huntersMapPos.begin(), huntersMapPos.end(), tmpMapPos));
-	tmpPixelPos.x = tmpMapPos.x + sc_pixelWidth / 2;
-	tmpPixelPos.y = tmpMapPos.y + sc_pixelHeight / 2;
+	}while(!isSpace(tmpMapPos) or tmpMapPos == runnerMapPos or huntersMapPos.end() != find(huntersMapPos.begin(), huntersMapPos.end(), tmpMapPos));
+	tmpPixelPos = mapPosTopixelPos(tmpMapPos);
+	tmpPixelPos.x += sc_pixelWidth / 2;
+	tmpPixelPos.y += sc_pixelHeight / 2;
 	hunters.push_back(new Hunter(tmpMapPos, tmpPixelPos));
-	character.pushElement(hunters.back());
+	character->pushElement(hunters.back());
 	huntersMapPos.push_back(tmpMapPos);
 }
 
@@ -113,15 +117,15 @@ void Map::free()
 	game.popOverlayer(L_front);
 	delete L_front;
 	L_front = NULL;
-	game.popLayer(L_character);
-	delete L_character;
-	L_character = NULL;
+	game.popLayer(L_interact);
+	delete L_interact;
+	L_interact = NULL;
 	game.popLayer(L_ground);
 	delete L_ground;
 	L_ground = NULL;
-	items.clear();		// already deleted by L_ground
-	hunters.clear();	// already deleted by L_character
-	runner = NULL;		// already deleted by L_character
+	items.clear();		// already deleted by L_interact
+	hunters.clear();	// already deleted by L_interact
+	runner = NULL;		// already deleted by L_interact
 	game.setGameMap(NULL);
 }
 
@@ -133,15 +137,22 @@ bool Map::handleEvents(SDL_Event &event)
 void Map::update()
 {
 	SDL_Point tmpPixelPos, movePixelPos;
-	runnerMapPos = pixelPosTomapPos(runner->getPixelPos());
-	// set rectOnScreen
+	Game &game = Game::GetGame();
+	int scrWidth = game.getWidth(), scrHeight = game.getHeight();
+	tmpPixelPos = runner->getPixelPos();
+	runnerMapPos = pixelPosTomapPos(tmpPixelPos);
+	mapPixelPos = SDL_Point({scrWidth/2 - tmpPixelPos.x, scrHeight/2 - tmpPixelPos.y});
+	//runner->setScreenPos(SDL_Point({mapPixelPos.x + tmpPixelPos.x, mapPixelPos.y + tmpPixelPos.y}));
 	for(long long unsigned int i = 0; i < hunters.size(); ++i)
 	{
 		huntersMapPos[i] = pixelPosTomapPos(hunters[i]->getPixelPos());
-		// set rectOnScreen
 		if(huntersMapPos[i] == runnerMapPos)
 			createUserEvent(CAUGHT, 0);
+		//hunters[i]->setScreenPos(SDL_Point({mapPixelPos.x + tmpPixelPos.x, mapPixelPos.y + tmpPixelPos.y}));
 	}
+	L_ground->setRectViewPos();
+	L_interact->setRectViewPos();
+	L_front->setRectViewPos();
 }
 
 bool Map::placeItem(SDL_Point pos, Item *item)	// mapPos
@@ -152,11 +163,9 @@ bool Map::placeItem(SDL_Point pos, Item *item)	// mapPos
 	{
 		map[pos.x][pos.y] = ITEM;
 		SDL_Point tmp = mapPosTopixelPos(pos);
-		tmp.x += sc_pixelWidth / 2;
-		tmp.y += sc_pixelHeight / 2;
-		item->setPixelPos(tmp);
+		item->setRectOnScreen(SDL_Rect({tmp.x, tmp.y, sc_pixelWidth, sc_pixelHeight}));
 		items.insert({pos, item});
-		L_ground->pushElement(item);
+		L_interact->pushElement(item);
 		return true;
 	}
 }
@@ -170,7 +179,7 @@ Item *Map::pickItem(SDL_Point pos)		// mapPos
 		Item *tmp = items[pos];
 		items.erase(pos);
 		map[pos.x][pos.y] = SPACE;
-		L_ground->popElement(tmp);
+		L_interact->popElement(tmp);
 		return tmp;
 	}
 }
@@ -193,6 +202,11 @@ SDL_Point Map::pixelPosTomapPos(SDL_Point pixelPos)
 SDL_Point Map::mapPosTopixelPos(SDL_Point mapPos)
 {
 	return SDL_Point({mapPos.x * sc_pixelWidth, mapPos.y * sc_pixelHeight});
+}
+
+SDL_Point pixelPosToscreenPos(SDL_Point pixelPos)
+{
+
 }
 
 bool Map::SDL_PointComp::operator()(const SDL_Point &lhs, const SDL_Point &rhs)

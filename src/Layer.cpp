@@ -2,6 +2,8 @@
 #include "Layer.h"
 #include "Game.h"
 #include "Files.h"
+#include "Button.h"
+#include "Timer.h"
 using namespace std;
 
 Layer::Layer(string _name, bool _active)
@@ -103,18 +105,45 @@ Layer *createLayer(Layers index, BasicObject *background)
 	{
 		case L_STARTMENU:
 			lay = new Layer("StartMenu");
+			lay.pushElement(background);
+			lay.pushElement(new Button(STARTS));
+			lay.pushElement(new Button(INTRO1));
 			break;
 		case L_STATUS:
+			lay = new Layer("Status", false);
+			lay.pushElement(background);
+			lay.pushElement(new Button(PAUSES));
+			lay.pushElement(new Button(MISSION));
+			lay.pushElement(new Timer());
+			//lay.pushElement(new backPack);
+			//lay.pushElement(new strengthBar);
 			break;
 		case L_INTRO:
+			lay = new Layer("Intro", false);
+			lay.pushElement(background);
+			lay.pushElement(new Button(LEAVEINTRO));
 			break;
 		case L_MISSION:
+			lay = new Layer("Mission", false);
+			lay.pushElement(background);
+			lay.pushElement(new Button(LEAVEMISSION));
 			break;
 		case L_PAUSE:
+			lay = new Layer("Pause", false);
+			lay.pushElement(background);
+			lay.pushElement(new Button(RESUMES));
+			lay.pushElement(new Button(INTRO2));
+			lay.pushElement(new Button(LEAVE));
 			break;
 		case L_END:
+			lay = new Layer("End", false);
+			lay.pushElement(background);
+			lay.pushElement(new Button(OK));
 			break;
 		case L_LOADING:
+			lay = new Layer("Loading");
+			lay.pushElement(background);
 			break;
 	}
+	return lay;
 }

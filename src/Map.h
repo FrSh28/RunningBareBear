@@ -40,6 +40,7 @@ public:
 
 	SDL_Point pixelPosTomapPos(SDL_Point);
 	SDL_Point mapPosTopixelPos(SDL_Point);
+	SDL_Point pixelPosToscreenPos(SDL_Point);
 
 	inline std::vector<SDL_Point> getHuntersMapPos() const { return huntersMapPos; }
 	inline SDL_Point getRunnerMapPos() const { return runnerMapPos; }
@@ -57,6 +58,7 @@ private:
 	int colNum, rowNum;
 	std::vector<std::vector<int>> map;
 	int width, height;
+	SDL_Point mapPixelPos;
 	// for map
 	struct SDL_PointComp{ bool operator()(const SDL_Point &, const SDL_Point &); };
 	std::map<SDL_Point, Item *, SDL_PointComp> items;
