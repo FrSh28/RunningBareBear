@@ -14,26 +14,23 @@ const int Map::sc_pixelWidth = 100, Map::sc_pixelHeight = 80;
 Map *Map::s_mapInstance = NULL;
 
 Map::Map(Maps index, string _name)
- : BasicObject(_name, true, true, false), colNum(0), rowNum(0), width(0), height(0), mapPixelPos({0, 0}), L_ground(NULL), L_character(NULL), L_front(NULL)
+ : BasicObject(_name, true, true, false), colNum(0), rowNum(0), width(0), height(0), mapPixelPos({0, 0}), started(false), L_ground(NULL), L_character(NULL), L_front(NULL)
 {
 	s_mapInstance = this;
 	loadMap(index);
 
-	Game &game = Game::GetGame();
 	BackGround *background = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, width, height}));
 	BackGround *front = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, width, height}));
 	L_ground = createLayer(L_MAP_GROUND, background);
-	game.pushLayer(L_ground);
 	L_character = createLayer(L_CHARACTER, NULL);
-	game.pushLayer(L_character);
-	L_front = createLayer(L_MAP_FRONT, NULL);
-	game.pushOverlayer(L_front);
+	L_front = createLayer(L_MAP_FRONT, front);
 
 	buildMap(background, front);
 
 	for(int i = 0; i < 10; ++i)
 		addHunter();
 
+	Game &game = Game::GetGame();
 	SDL_Point tmpMapPos, tmpPixelPos;
 	do
 	{
@@ -138,6 +135,15 @@ void Map::free()
 	game.setGameMap(NULL);
 }
 
+void Map::start()
+{
+	Game &game = Game::GetGame();
+	game.pushLayer(L_ground);
+	game.pushLayer(L_character);
+	game.pushOverlayer(L_front);
+	started = true;
+}
+
 bool Map::handleEvents(SDL_Event &event)
 {
 	return false;
@@ -145,6 +151,10 @@ bool Map::handleEvents(SDL_Event &event)
 
 bool Map::update()
 {
+	if(!started)
+	{
+		start();
+	}
 	SDL_Point tmpPixelPos;
 	Game &game = Game::GetGame();
 	int scrWidth = game.getWidth(), scrHeight = game.getHeight();

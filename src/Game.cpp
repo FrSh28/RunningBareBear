@@ -87,14 +87,17 @@ void Game::Start(unsigned int _startTime)
 	running = true;
 	bgm = loadMusic(BGM_MUSIC);
 	Mix_PlayMusic(bgm, -1);
-	//pushLayer(createLayer(L_STARTMENU, new BackGround(START_IMAGE)));
-	pushOverlayer(createLayer(L_PAUSE, new BackGround(BOARD_IMAGE, SDL_Rect({300,200,680,320}))));
+	pushLayer(createLayer(L_STARTMENU, new BackGround(START_IMAGE)));
+	//pushLayer(createLayer(L_STARTMENU, new BackGround(BACKGROUND_IMAGE)));
+	//BackGround *background = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, 1280, 720}));
+	//BackGround *front = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, 1280, 720}));
+	//Layer *L_ground = createLayer(L_MAP_GROUND, background);
+	//pushLayer(L_ground);
 }
 
 void Game::HandleEvents()
 {
 	bool handled = false;
-	//printf("%d\n", state);
 	while(SDL_PollEvent(&event) or SDL_GetTicks() - startTime < frameCount * 1000 / frameRate)
 	{
 		if(event.type == GAMESTATE_CHANGE)
@@ -103,12 +106,13 @@ void Game::HandleEvents()
 			switch(tmp)
 			{
 				case START:
+					state = LOADING;
 					popAllLayers();
 					pushOverlayer(createLayer(L_LOADING, new BackGround(DONATE_IMAGE)));
+					Render();
 					gameMap = createMap(1);	// 1 or 2 or 3 or 4
 					eventStart = SDL_GetTicks();
 					duration = 2000;
-					state = LOADING;
 					break;
 				case PAUSE:
 					state = PAUSE;
@@ -149,17 +153,6 @@ void Game::HandleEvents()
 			running = false;
 			return;
 		}
-		if(state == LOADING)
-		{
-			if(SDL_GetTicks() > eventStart + duration)
-			{
-				started = true;
-				popTopOverlayer();
-				createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
-				state = GAME;
-			}
-			continue;
-		}
 		if(state == PAUSE or state == END)
 		{
 			Layer *topLayer = layers.back();
@@ -179,16 +172,28 @@ void Game::HandleEvents()
 		}
 		if(!handled and gameMap)
 			gameMap->handleEvents(event);
+	SDL_zero(event);
 	}
 }
 
 void Game::Update()
 {
+	printf("%d\n", state);
 	if(state == PAUSE or state == LOADING or state == END)
 	{
 		Layer *topLayer = layers.back();
 		if(topLayer->isActive())
 			topLayer->update();
+		if(state == LOADING)
+		{
+			if( SDL_GetTicks() > eventStart + duration)
+			{
+				started = true;
+				popTopOverlayer();
+				createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
+				state = GAME;
+			}
+		}
 		return;
 	}
 
@@ -307,4 +312,5 @@ void Game::popAllLayers()
 		*it = NULL;
 	}
 	layers.clear();
+	layerInsertIndex = 0;
 }

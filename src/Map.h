@@ -33,6 +33,7 @@ public:
 	void loadMap(Maps index);
 	void addHunter();
 	void free();
+	void start();
 	bool handleEvents(SDL_Event &);	// return true if handled
 	bool update();
 
@@ -65,6 +66,7 @@ private:
 	std::vector<std::vector<int>> map;
 	int width, height;
 	SDL_Point mapPixelPos;
+	bool started;
 	// for map
 	struct SDL_PointComp{ bool operator()(const SDL_Point &, const SDL_Point &); };
 	std::map<SDL_Point, Item *, SDL_PointComp> items;
