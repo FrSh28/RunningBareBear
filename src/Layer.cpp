@@ -6,11 +6,16 @@
 #include "Timer.h"
 using namespace std;
 
-Layer::Layer(string _name, bool _active)
+Layer::Layer(string _name, bool _active, int _texWidth, int _texHeight)
  : name(_name), active(_active), changed(true), mainTexture(NULL), rectViewPort({0, 0, 0, 0})
 {
 	Game &game = Game::GetGame();
-	mainTexture = SDL_CreateTexture(game.getRenderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET, game.getWidth(), game.getHeight());
+	if(_texWidth < 0 or _texHeight < 0)
+	{
+		_texWidth = game.getWidth();
+		_texHeight = game.getHeight();
+	}
+	mainTexture = SDL_CreateTexture(game.getRenderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET, _texWidth, _texHeight);
 	if(!mainTexture)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create texture for layer %s: %s", name.c_str(), SDL_GetError());
@@ -116,7 +121,7 @@ BackGround::~BackGround()
 
 Layer *createLayer(Layers index, BackGround *_bg)
 {
-	Layer *lay;
+	Layer *lay = NULL;
 	switch(index)
 	{
 		case L_STARTMENU:
@@ -166,6 +171,21 @@ Layer *createLayer(Layers index, BackGround *_bg)
 			lay = new Layer("Loading");
 			if(_bg)
 				lay->pushElement(_bg);
+			break;
+		case L_MAP_GROUND:
+			lay = new Layer("MapGroung");
+			if(_bg)
+				lay->pushElement(_bg);
+			break;
+		case L_MAP_FRONT:
+			lay = new Layer("MapFront");
+			if(_bg)
+				lay->pushElement(_bg);
+			break;
+		case L_CHARACTER:
+			lay = new Layer("Character");
+			break;
+		default:
 			break;
 	}
 	return lay;

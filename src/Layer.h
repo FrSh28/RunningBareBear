@@ -16,15 +16,15 @@ enum Layers
 	L_PAUSE,
 	L_END,
 	L_LOADING,
+	L_MAP_GROUND,
+	L_MAP_FRONT,
+	L_CHARACTER,
 };
-//L_MAP_GROUND,
-//L_MAP_FRONT,
-//L_CHARACTER,
 
 class Layer
 {
 public:
-	Layer(std::string _name = "", bool _active = true);
+	Layer(std::string _name = "", bool _active = true, int _texWidth = -1, int _texHeight = -1);
 	virtual ~Layer();
 
 	void free();							// destroy all textures and surfaces

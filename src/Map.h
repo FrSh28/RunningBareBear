@@ -40,7 +40,6 @@ public:
 
 	SDL_Point pixelPosTomapPos(SDL_Point);
 	SDL_Point mapPosTopixelPos(SDL_Point);
-	SDL_Point pixelPosToscreenPos(SDL_Point);
 
 	inline std::vector<SDL_Point> getHuntersMapPos() const { return huntersMapPos; }
 	inline SDL_Point getRunnerMapPos() const { return runnerMapPos; }
