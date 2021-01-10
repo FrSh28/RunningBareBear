@@ -67,6 +67,7 @@ private:
 	std::vector<Layer*> layers;
 	unsigned int layerInsertIndex;
 	Map *gameMap;
+	Mix_Music *bgm;
 
 	unsigned int startTime;
 	unsigned int frameCount;

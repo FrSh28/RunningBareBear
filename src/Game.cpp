@@ -10,11 +10,13 @@ Game *Game::s_gameInstance = NULL;
 
 Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned int _frameRate)
  : name(_name), width(_width), height(_height), frameRate(_frameRate), running(false), state(STARTMENU),
-	window(NULL), renderer(NULL), layerInsertIndex(0U), gameMap(NULL), startTime(0U), frameCount(0U)
+	window(NULL), renderer(NULL), layerInsertIndex(0U), gameMap(NULL), bgm(NULL), startTime(0U), frameCount(0U)
 {
 	random_device rd;
 	rdEngine.seed(rd());
 	s_gameInstance = this;
+	bgm = loadMusic(BGM_MUSIC);
+	Mix_PlayMusic(bgm, -1);
 }
 
 Game::~Game()
@@ -156,7 +158,7 @@ void Game::Render()
 	for(auto it = layers.begin(); it != layers.end(); ++it)
 	{
 		if((*it)->isActive())
-			SDL_RenderCopy(renderer, (*it)->getTexture(), NULL, NULL);
+			SDL_RenderCopy(renderer, (*it)->getTexture(), (*it)->getRectViewPort(), NULL);
 	}
 	SDL_RenderPresent(renderer);
 	++frameCount;

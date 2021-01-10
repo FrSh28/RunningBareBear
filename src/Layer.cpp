@@ -5,7 +5,7 @@
 using namespace std;
 
 Layer::Layer(string _name, bool _active)
- : name(_name), active(_active), changed(true), mainTexture(NULL)
+ : name(_name), active(_active), changed(true), mainTexture(NULL), rectViewPort({0, 0, 0, 0})
 {
 	Game &game = Game::GetGame();
 	mainTexture = SDL_CreateTexture(game.getRenderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET, game.getWidth(), game.getHeight());
@@ -17,6 +17,8 @@ Layer::Layer(string _name, bool _active)
 	{
 		SDL_SetTextureBlendMode(mainTexture, SDL_BLENDMODE_BLEND);
 	}
+	rectViewPort.w = game.getWidth;
+	rectViewPort.h = game.getHeight;
 }
 
 Layer::~Layer()
@@ -91,5 +93,28 @@ void Layer::popElement(BasicObject *_element)
 	if (iter != elements.end())
 	{
 		elements.erase(iter);
+	}
+}
+
+Layer *createLayer(Layers index, BasicObject *background)
+{
+	Layer *lay;
+	switch(index)
+	{
+		case L_STARTMENU:
+			lay = new Layer("StartMenu");
+			break;
+		case L_STATUS:
+			break;
+		case L_INTRO:
+			break;
+		case L_MISSION:
+			break;
+		case L_PAUSE:
+			break;
+		case L_END:
+			break;
+		case L_LOADING:
+			break;
 	}
 }
