@@ -270,40 +270,50 @@ bool Runner::collisionBox(SDL_Rect& square)
 
 void Runner::checkCollision()
 {
+    SDL_Point tmp;
     // right
     if(velocity_x>0)
     {
         // check right top
-        if(map->isWall(SDL_Point({MapPos.x+1,MapPos.y-1})))
+        tmp.x = MapPos.x+1;
+        tmp.y = MapPos.y-1;
+        if(map->isWall(tmp))
         {
-            SDL_Point wallPos;
-            wallPos.x = map->pixelPosTomapPos(SDL_Point({MapPos.x+1,MapPos.y-1})).x;
-            wallPos.y = map->pixelPosTomapPos(SDL_Point({MapPos.x+1,MapPos.y-1})).y;
-            SDL_Rect wall({wallPos.x,wallPos.y,gridWidth,gridHeight});
+            SDL_Rect wall;
+            wall.x = tmp.x;
+            wall.y = tmp.y;
+            wall.w = gridWidth;
+            wall.h = gridHeight;
             if(collisionBox(wall))
             {
                 PixelPos.x -= velocity_x;
             }
         }
         // chek right middle
-        if(map->isWall(SDL_Point({MapPos.x+1,MapPos.y})))
+        tmp.x = MapPos.x+1;
+        tmp.y = MapPos.y;
+        if(map->isWall(tmp))
         {
-            SDL_Point wallPos;
-            wallPos.x = map->pixelPosTomapPos(SDL_Point({MapPos.x+1,MapPos.y})).x;
-            wallPos.y = map->pixelPosTomapPos(SDL_Point({MapPos.x+1,MapPos.y})).y;
-            SDL_Rect wall({wallPos.x,wallPos.y,gridWidth,gridHeight});
+            SDL_Rect wall;
+            wall.x = tmp.x;
+            wall.y = tmp.y;
+            wall.w = gridWidth;
+            wall.h = gridHeight;
             if(collisionBox(wall))
             {
                 PixelPos.x -= velocity_x;
             }
         }
         // check right bottom
-        if(map->isWall(SDL_Point({MapPos.x+1,MapPos.y+1})))
+        tmp.x = MapPos.x+1;
+        tmp.y = MapPos.y+1;
+        if(map->isWall(tmp))
         {
-            SDL_Point wallPos;
-            wallPos.x = map->pixelPosTomapPos(SDL_Point({MapPos.x+1,MapPos.y+1})).x;
-            wallPos.y = map->pixelPosTomapPos(SDL_Point({MapPos.x+1,MapPos.y+1})).y;
-            SDL_Rect wall({wallPos.x,wallPos.y,gridWidth,gridHeight});
+            SDL_Rect wall;
+            wall.x = tmp.x;
+            wall.y = tmp.y;
+            wall.w = gridWidth;
+            wall.h = gridHeight;
             if(collisionBox(wall))
             {
                 PixelPos.x -= velocity_x;
@@ -315,36 +325,45 @@ void Runner::checkCollision()
     if(velocity_x<0)
     {
         // check left top
-        if(map->isWall(SDL_Point({MapPos.x-1,MapPos.y-1})))
+        tmp.x = MapPos.x-1;
+        tmp.y = MapPos.y-1;
+        if(map->isWall(tmp))
         {
-            SDL_Point wallPos;
-            wallPos.x = map->pixelPosTomapPos(SDL_Point({MapPos.x-1,MapPos.y-1})).x;
-            wallPos.y = map->pixelPosTomapPos(SDL_Point({MapPos.x-1,MapPos.y-1})).y;
-            SDL_Rect wall({wallPos.x,wallPos.y,gridWidth,gridHeight});
+            SDL_Rect wall;
+            wall.x = tmp.x;
+            wall.y = tmp.y;
+            wall.w = gridWidth;
+            wall.h = gridHeight;
             if(collisionBox(wall))
             {
                 PixelPos.x -= velocity_x;
             }
         }
         // chek left middle
-        if(map->isWall(SDL_Point({MapPos.x+1,MapPos.y})))
+        tmp.x = MapPos.x-1;
+        tmp.y = MapPos.y;
+        if(map->isWall(tmp))
         {
-            SDL_Point wallPos;
-            wallPos.x = map->pixelPosTomapPos(SDL_Point({MapPos.x-1,MapPos.y})).x;
-            wallPos.y = map->pixelPosTomapPos(SDL_Point({MapPos.x-1,MapPos.y})).y;
-            SDL_Rect wall({wallPos.x,wallPos.y,gridWidth,gridHeight});
+            SDL_Rect wall;
+            wall.x = tmp.x;
+            wall.y = tmp.y;
+            wall.w = gridWidth;
+            wall.h = gridHeight;
             if(collisionBox(wall))
             {
                 PixelPos.x -= velocity_x;
             }
         }
-        // check right bottom
-        if(map->isWall(SDL_Point({MapPos.x+1,MapPos.y+1})))
+        // check left bottom
+        tmp.x = MapPos.x-1;
+        tmp.y = MapPos.y+1;
+        if(map->isWall(tmp))
         {
-            SDL_Point wallPos;
-            wallPos.x = map->pixelPosTomapPos(SDL_Point({MapPos.x-1,MapPos.y+1})).x;
-            wallPos.y = map->pixelPosTomapPos(SDL_Point({MapPos.x-1,MapPos.y+1})).y;
-            SDL_Rect wall({wallPos.x,wallPos.y,gridWidth,gridHeight});
+            SDL_Rect wall;
+            wall.x = tmp.x;
+            wall.y = tmp.y;
+            wall.w = gridWidth;
+            wall.h = gridHeight;
             if(collisionBox(wall))
             {
                 PixelPos.x -= velocity_x;
@@ -356,36 +375,45 @@ void Runner::checkCollision()
     if(velocity_y<0)
     {
         // check top left
-        if(map->isWall(SDL_Point({MapPos.x-1,MapPos.y-1})))
+        tmp.x = MapPos.x-1;
+        tmp.y = MapPos.y-1;
+        if(map->isWall(tmp))
         {
-            SDL_Point wallPos;
-            wallPos.x = map->pixelPosTomapPos(SDL_Point({MapPos.x-1,MapPos.y-1})).x;
-            wallPos.y = map->pixelPosTomapPos(SDL_Point({MapPos.x-1,MapPos.y-1})).y;
-            SDL_Rect wall({wallPos.x,wallPos.y,gridWidth,gridHeight});
+            SDL_Rect wall;
+            wall.x = tmp.x;
+            wall.y = tmp.y;
+            wall.w = gridWidth;
+            wall.h = gridHeight;
             if(collisionBox(wall))
             {
                 PixelPos.y -= velocity_y;
             }
         }
         // chek top middle
-        if(map->isWall(SDL_Point({MapPos.x,MapPos.y-1})))
+        tmp.x = MapPos.x;
+        tmp.y = MapPos.y-1;
+        if(map->isWall(tmp))
         {
-            SDL_Point wallPos;
-            wallPos.x = map->pixelPosTomapPos(SDL_Point({MapPos.x,MapPos.y-1})).x;
-            wallPos.y = map->pixelPosTomapPos(SDL_Point({MapPos.x,MapPos.y-1})).y;
-            SDL_Rect wall({wallPos.x,wallPos.y,gridWidth,gridHeight});
+            SDL_Rect wall;
+            wall.x = tmp.x;
+            wall.y = tmp.y;
+            wall.w = gridWidth;
+            wall.h = gridHeight;
             if(collisionBox(wall))
             {
                 PixelPos.y -= velocity_y;
             }
         }
         // check top right
-        if(map->isWall(SDL_Point({MapPos.x+1,MapPos.y-1})))
+        tmp.x = MapPos.x+1;
+        tmp.y = MapPos.y-1;
+        if(map->isWall(tmp))
         {
-            SDL_Point wallPos;
-            wallPos.x = map->pixelPosTomapPos(SDL_Point({MapPos.x+1,MapPos.y-1})).x;
-            wallPos.y = map->pixelPosTomapPos(SDL_Point({MapPos.x+1,MapPos.y-1})).y;
-            SDL_Rect wall({wallPos.x,wallPos.y,gridWidth,gridHeight});
+            SDL_Rect wall;
+            wall.x = tmp.x;
+            wall.y = tmp.y;
+            wall.w = gridWidth;
+            wall.h = gridHeight;
             if(collisionBox(wall))
             {
                 PixelPos.y -= velocity_y;
@@ -397,36 +425,45 @@ void Runner::checkCollision()
     if(velocity_y>0)
     {
         // check below left
-        if(map->isWall(SDL_Point({MapPos.x-1,MapPos.y+1})))
+        tmp.x = MapPos.x-1;
+        tmp.y = MapPos.y+1;
+        if(map->isWall(tmp))
         {
-            SDL_Point wallPos;
-            wallPos.x = map->pixelPosTomapPos(SDL_Point({MapPos.x-1,MapPos.y+1})).x;
-            wallPos.y = map->pixelPosTomapPos(SDL_Point({MapPos.x-1,MapPos.y+1})).y;
-            SDL_Rect wall({wallPos.x,wallPos.y,gridWidth,gridHeight});
+            SDL_Rect wall;
+            wall.x = tmp.x;
+            wall.y = tmp.y;
+            wall.w = gridWidth;
+            wall.h = gridHeight;
             if(collisionBox(wall))
             {
                 PixelPos.y -= velocity_y;
             }
         }
         // chek below middle
-        if(map->isWall(SDL_Point({MapPos.x,MapPos.y+1})))
+        tmp.x = MapPos.x;
+        tmp.y = MapPos.y+1;
+        if(map->isWall(tmp))
         {
-            SDL_Point wallPos;
-            wallPos.x = map->pixelPosTomapPos(SDL_Point({MapPos.x,MapPos.y+1})).x;
-            wallPos.y = map->pixelPosTomapPos(SDL_Point({MapPos.x,MapPos.y+1})).y;
-            SDL_Rect wall({wallPos.x,wallPos.y,gridWidth,gridHeight});
+            SDL_Rect wall;
+            wall.x = tmp.x;
+            wall.y = tmp.y;
+            wall.w = gridWidth;
+            wall.h = gridHeight;
             if(collisionBox(wall))
             {
                 PixelPos.y -= velocity_y;
             }
         }
         // check below right
-        if(map->isWall(SDL_Point({MapPos.x+1,MapPos.y+1})))
+        tmp.x = MapPos.x+1;
+        tmp.y = MapPos.y+1;
+        if(map->isWall(tmp))
         {
-            SDL_Point wallPos;
-            wallPos.x = map->pixelPosTomapPos(SDL_Point({MapPos.x+1,MapPos.y+1})).x;
-            wallPos.y = map->pixelPosTomapPos(SDL_Point({MapPos.x+1,MapPos.y+1})).y;
-            SDL_Rect wall({wallPos.x,wallPos.y,gridWidth,gridHeight});
+            SDL_Rect wall;
+            wall.x = tmp.x;
+            wall.y = tmp.y;
+            wall.w = gridWidth;
+            wall.h = gridHeight;
             if(collisionBox(wall))
             {
                 PixelPos.y -= velocity_y;
