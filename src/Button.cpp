@@ -159,21 +159,21 @@ bool Button::handleEvents(SDL_Event &e)
 					Game &game = Game::GetGame();
 					current = Mission::getMission();
 					if(current == Mission1Type1)
-						game.pushOverlayer(createLayer(MISSION_1_1_IMAGE, new BackGround(MISSION_1_1_IMAGE )));
+						game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_1_1_IMAGE )));
 					else if(current == Mission1Type2)
-						game.pushOverlayer(createLayer(MISSION_1_2_IMAGE, new BackGround(MISSION_1_2_IMAGE )));
+						game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_1_2_IMAGE )));
 						
 					else if(current == Mission1Type3)
-						game.pushOverlayer(createLayer(MISSION_1_3_IMAGE, new BackGround(MISSION_1_3_IMAGE )));
+						game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_1_3_IMAGE )));
 						
 					else if(current == Mission2Type1)
-						game.pushOverlayer(createLayer(MISSION_2_1_IMAGE, new BackGround(MISSION_2_1_IMAGE )));
+						game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_2_1_IMAGE )));
 					/*	
 					else if(current == Mission2Type2)
 						game.pushOverlayer(new boardLayer("M2-2", MISSION_2_2_IMAGE));
 					*/	
 					else if(current == Mission2Type3)
-						game.pushOverlayer(createLayer(MISSION_2_2_IMAGE, new BackGround(MISSION_2_2_IMAGE )));
+						game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_2_2_IMAGE )));
 						
 					else if(current == MissionTotal)
 						game.pushOverlayer(createLayer(L_LOADING, new BackGround(DONATE_IMAGE )));
