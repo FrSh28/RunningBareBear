@@ -6,7 +6,9 @@
 #include "includeSDL.h"
 #include "BasicObject.h"
 #include <queue>
-#include "Map.h"
+
+class Map;
+
 enum frames
 {
 	UP_1, UP_2, UP_3, UP_4, DOWN_1, DOWN_2, DOWN_3, DOWN_4, RIGHT_1, RIGHT_2, RIGHT_3, RIGHT_4, LEFT_1, LEFT_2, LEFT_3, LEFT_4, TOTAL

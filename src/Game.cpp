@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Layer.h"
 #include "Files.h"
+#include "Timer.h"
 #include "UserEvent.h"
 using namespace std;
 
@@ -277,7 +278,7 @@ void Game::popLayer(Layer *_layer)
 	}
 }
 
-void Game::popAllLayer()
+void Game::popAllLayers()
 {
 	Layer *layer = layers.front();
 	auto iter = find(layers.begin(), layers.begin() + layerInsertIndex, layer);

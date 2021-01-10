@@ -20,7 +20,7 @@ SDL_Rect Button::buttons[TOTAL_BUTTONS] =
 	SDL_Rect({ 980, 420, 200, 200}) //OK
 } ;
 
-double& operator^(SDL_Point center, SDL_Point mouse)
+double operator^(SDL_Point center, SDL_Point mouse)
 {
 	double ans;
 	ans = pow((pow(center.x-mouse.x, 2) + pow(center.y-mouse.y, 2)), 0.5);

@@ -6,7 +6,8 @@
 #include <random>
 #include "includeSDL.h"
 #include "Layer.h"
-#include "Map.h"
+
+class Map;
 
 enum GameState
 {

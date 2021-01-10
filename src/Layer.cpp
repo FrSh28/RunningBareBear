@@ -4,10 +4,11 @@
 #include "Files.h"
 #include "Button.h"
 #include "Timer.h"
+#include "Map.h"
 using namespace std;
 
-Layer::Layer(string _name, bool _active, int _texWidth, int _texHeight)
- : name(_name), active(_active), changed(true), mainTexture(NULL), rectViewPort({0, 0, 0, 0})
+Layer::Layer(string _name, int _texWidth, int _texHeight)
+ : name(_name), active(true), changed(true), mainTexture(NULL), rectViewPort({0, 0, 0, 0})
 {
 	Game &game = Game::GetGame();
 	if(_texWidth < 0 or _texHeight < 0)
@@ -78,7 +79,7 @@ void Layer::render()
 	{
 		SDL_Renderer *renderer = Game::GetGame().getRenderer();
 		SDL_SetRenderTarget(renderer, mainTexture);
-		SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0xFF, 0x00);
+		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
 		SDL_RenderClear(renderer);
 		for(auto it = elements.begin(); it != elements.end(); ++it)
 		{
@@ -91,11 +92,13 @@ void Layer::render()
 
 void Layer::pushElement(BasicObject *_element)
 {
+	changed = true;
 	elements.push_back(_element);
 }
 
 void Layer::popElement(BasicObject *_element)
 {
+	changed = true;
 	auto iter = find(elements.begin(), elements.begin(), _element);
 	if (iter != elements.end())
 	{
@@ -132,7 +135,7 @@ Layer *createLayer(Layers index, BackGround *_bg)
 			lay->pushElement(new Button(INTRO1));
 			break;
 		case L_STATUS:
-			lay = new Layer("Status", false);
+			lay = new Layer("Status");
 			if(_bg)
 				lay->pushElement(_bg);
 			lay->pushElement(new Button(PAUSES));
@@ -142,19 +145,19 @@ Layer *createLayer(Layers index, BackGround *_bg)
 			//lay->pushElement(new strengthBar);
 			break;
 		case L_INTRO:
-			lay = new Layer("Intro", false);
+			lay = new Layer("Intro");
 			if(_bg)
 				lay->pushElement(_bg);
 			lay->pushElement(new Button(LEAVEINTRO));
 			break;
 		case L_MISSION:
-			lay = new Layer("Mission", false);
+			lay = new Layer("Mission");
 			if(_bg)
 				lay->pushElement(_bg);
 			lay->pushElement(new Button(LEAVEMISSION));
 			break;
 		case L_PAUSE:
-			lay = new Layer("Pause", false);
+			lay = new Layer("Pause");
 			if(_bg)
 				lay->pushElement(_bg);
 			lay->pushElement(new Button(RESUMES));
@@ -162,7 +165,7 @@ Layer *createLayer(Layers index, BackGround *_bg)
 			lay->pushElement(new Button(LEAVE));
 			break;
 		case L_END:
-			lay = new Layer("End", false);
+			lay = new Layer("End");
 			if(_bg)
 				lay->pushElement(_bg);
 			lay->pushElement(new Button(OK));
@@ -173,17 +176,17 @@ Layer *createLayer(Layers index, BackGround *_bg)
 				lay->pushElement(_bg);
 			break;
 		case L_MAP_GROUND:
-			lay = new Layer("MapGroung");
+			lay = new Layer("MapGroung", Map::getMap().getWidth(), Map::getMap().getHeight());
 			if(_bg)
 				lay->pushElement(_bg);
 			break;
 		case L_MAP_FRONT:
-			lay = new Layer("MapFront");
+			lay = new Layer("MapFront", Map::getMap().getWidth(), Map::getMap().getHeight());
 			if(_bg)
 				lay->pushElement(_bg);
 			break;
 		case L_CHARACTER:
-			lay = new Layer("Character");
+			lay = new Layer("Character", Map::getMap().getWidth(), Map::getMap().getHeight());
 			break;
 		default:
 			break;

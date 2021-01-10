@@ -53,6 +53,8 @@ public:
 
 	inline static Map &getMap() { return *s_mapInstance;}
 private:
+	void buildMap(BackGround *);
+
 	std::string name;
 	int colNum, rowNum;
 	std::vector<std::vector<int>> map;
