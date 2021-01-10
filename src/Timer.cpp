@@ -12,7 +12,7 @@ timerText("0"), minute(10), second(0), missionOngoing(false), currentMission(NUL
     TTF_SetFontStyle(timerFont, TTF_STYLE_BOLD);
     printf("aaaaa\n");
     timercolor = {0,0,0,255};
-    rectOnScreen.x = 500;
+    rectOnScreen.x = 400;
     rectOnScreen.y = 0;
     rectOnScreen.w = 500;
     rectOnScreen.h = 100;
@@ -107,7 +107,7 @@ bool Timer::update()
     else timerText << "00 left";         //remain 00 at the end
 
     //Deal Mission1
-    if(minute == 9 &&(!missionOngoing))
+    if(minute == 8 &&(!missionOngoing))
     {
         int tmp = game->rdEngine()%2;
         MissionTypes choice;
@@ -116,7 +116,7 @@ bool Timer::update()
         missionOngoing = true;
     }
     //Mission1 Fail
-    if(minute == 7 && missionOngoing)
+    if(minute == 6 && missionOngoing)
     {
         gametime += 60000;
         if(currentMission!=NULL)
@@ -128,7 +128,7 @@ bool Timer::update()
     }
 
     //Deal Mission2
-    if(minute == 6 &&(!missionOngoing))
+    if(minute == 5 &&(!missionOngoing))
     {
         int tmp = game->rdEngine()%2+3;
         MissionTypes choice;
@@ -138,7 +138,7 @@ bool Timer::update()
     }
 
     //Mission2 Fail
-    if(minute==3 && missionOngoing)
+    if(minute==2 && missionOngoing)
     {
         currentMission ->timeup();
         if(currentMission!=NULL)
