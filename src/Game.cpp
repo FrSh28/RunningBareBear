@@ -178,7 +178,7 @@ void Game::HandleEvents()
 
 void Game::Update()
 {
-	printf("%d\n", state);
+	//printf("%d\n", state);
 	if(state == PAUSE or state == LOADING or state == END)
 	{
 		Layer *topLayer = layers.back();
@@ -189,8 +189,10 @@ void Game::Update()
 			if( SDL_GetTicks() > eventStart + duration)
 			{
 				started = true;
+				printf("%d\n", getLayersSize());
 				popTopOverlayer();
-				createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
+				printf("%d\n", getLayersSize());
+				//createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
 				state = GAME;
 			}
 		}
@@ -231,7 +233,7 @@ void Game::Render()
 	}
 	SDL_RenderPresent(renderer);
 	++frameCount;
-	//cout << frameCount << endl;	// debug
+	cout << frameCount << endl;	// debug
 }
 
 void Game::Quit()
@@ -295,6 +297,7 @@ void Game::popOverlayer(Layer *_overlayer)
 
 void Game::popTopOverlayer()
 {
+	printf("pop\n");
 	Layer *overlayer = layers.back();
 	auto iter = find(layers.begin() + layerInsertIndex, layers.end(), overlayer);
 	if (iter != layers.end())

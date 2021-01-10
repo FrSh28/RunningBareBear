@@ -241,7 +241,6 @@ bool Button::handleEvents(SDL_Event &e)
 			}
 			break;
 		case RESUMES://SDL_MOUSEBUTTONDOWN
-			printf("%d\n", int(e.type));
 			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)// && e.button.button == SDL_BUTTON_LEFT)
 			{
 				

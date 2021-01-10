@@ -10,7 +10,7 @@ BasicObject *createMap(int index)
 	return new Map(Maps(index), "Map");
 }
 
-const int Map::sc_pixelWidth = 100, Map::sc_pixelHeight = 80;
+const int Map::sc_pixelWidth = 50, Map::sc_pixelHeight = 40;
 Map *Map::s_mapInstance = NULL;
 
 Map::Map(Maps index, string _name)
@@ -42,8 +42,6 @@ Map::Map(Maps index, string _name)
 	tmpPixelPos.y += sc_pixelHeight / 2;
 	runner = createRunner(tmpMapPos, tmpPixelPos);//new Runner(tmpMapPos, tmpPixelPos);
 	L_character->pushElement(runner);
-	update();
-	printf("%d %d\n", width, height);
 }
 
 Map::~Map()
@@ -154,6 +152,7 @@ bool Map::update()
 {
 	if(!started)
 	{
+		printf("START\n");
 		start();
 	}
 	SDL_Point tmpPixelPos;
