@@ -59,7 +59,7 @@ void Map::loadMap(Maps index)
 	char c;
 	string s;
 	stringstream ss;
-	
+
 	getline(*inMapFile, s);
 	ss.str(s);
 	ss.clear();

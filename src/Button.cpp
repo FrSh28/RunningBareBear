@@ -100,7 +100,7 @@ bool Button::handleEvents(SDL_Event &e)
 					Inside = true;
 				}
 			}
-			//printf("%d\n", int(e.type));//SDL_MOUSEBUTTONDOWN
+			//SDL_Point tmp;printf("%d\n", int(e.type));//SDL_MOUSEBUTTONDOWN
 			if(e.type == 1026 && e.button.button == SDL_BUTTON_LEFT)// && e.button.button == SDL_BUTTON_LEFT
 			{
 				EventReturnType = true;

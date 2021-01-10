@@ -93,31 +93,9 @@ void Game::Start(unsigned int _startTime)
 void Game::HandleEvents()
 {
 	bool handled = false;
+	printf("%d\n", state);
 	while(SDL_PollEvent(&event) or SDL_GetTicks() - startTime < frameCount * 1000 / frameRate)
 	{
-		if(event.type == SDL_QUIT)
-		{
-			running = false;
-			return;
-		}
-		if(state == LOADING)
-		{
-			if(SDL_GetTicks() > eventStart + duration)
-			{
-				started = true;
-				popTopOverlayer();
-				createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
-				state = GAME;
-			}
-			continue;
-		}
-		if(state == PAUSE or state == END)
-		{
-			Layer *topLayer = layers.back();
-			if(topLayer->isActive())
-				topLayer->handleEvents(event);
-			continue;
-		}
 		if(event.type == GAMESTATE_CHANGE)
 		{
 			GameState tmp = GameState(event.user.code);
@@ -126,7 +104,7 @@ void Game::HandleEvents()
 				case START:
 					popAllLayers();
 					pushOverlayer(createLayer(L_LOADING, new BackGround(DONATE_IMAGE)));
-					gameMap = createMap(0);	// 0 or 1 or 2 or 3
+					gameMap = createMap(1);	// 1 or 2 or 3 or 4
 					eventStart = SDL_GetTicks();
 					duration = 2000;
 					state = LOADING;
@@ -164,6 +142,31 @@ void Game::HandleEvents()
 					break;
 			}
 		}
+
+		if(event.type == SDL_QUIT)
+		{
+			running = false;
+			return;
+		}
+		if(state == LOADING)
+		{
+			if(SDL_GetTicks() > eventStart + duration)
+			{
+				started = true;
+				popTopOverlayer();
+				createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
+				state = GAME;
+			}
+			continue;
+		}
+		if(state == PAUSE or state == END)
+		{
+			Layer *topLayer = layers.back();
+			if(topLayer->isActive())
+				topLayer->handleEvents(event);
+			continue;
+		}
+
 		for(auto it = layers.rbegin(); it != layers.rend(); ++it)
 		{
 			if((*it)->isActive())
@@ -213,7 +216,7 @@ void Game::Render()
 		}
 	}
 	SDL_SetRenderTarget(renderer, NULL);
-	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x40, SDL_ALPHA_OPAQUE);
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(renderer);
 	for(auto it = layers.begin(); it != layers.end(); ++it)
 	{
