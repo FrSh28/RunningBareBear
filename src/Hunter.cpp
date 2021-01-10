@@ -7,6 +7,8 @@
 #include <queue>
 #include <iostream>
 #include <cmath>
+using namespace std;
+
 SDL_Rect Hunter_Clip[TOTAL];
 
 Character *createHunter(SDL_Point _mapPos, SDL_Point _pixelPos)
@@ -56,6 +58,8 @@ bool Hunter::handleEvents(SDL_Event &e)
 
 bool Hunter::update()
 {
+	if(go.empty())
+		Set();
 	static int frame = 0;
 	HunterCenterPixel.x = HunterPixelPos.x + rectOnScreen.w/2;
 	HunterCenterPixel.y = HunterPixelPos.y + rectOnScreen.h/2;
@@ -67,7 +71,7 @@ bool Hunter::update()
 	}
 	else
 	{
-		if(Discovered)
+		if(false)//Discovered)
 		{
 			Stage2();
 		}
@@ -153,6 +157,15 @@ void Hunter::Stage3()
 	{
 		directPos = Set();
 		Chase(HunterMapPos, directPos);
+		/*{
+			queue<SDL_Point> tmp_q = go;
+			while (!tmp_q.empty())
+			{
+			    SDL_Point q_element = tmp_q.front();
+			    printf("%d %d\n", q_element.x, q_element.y);
+			    tmp_q.pop();
+			} 
+		}*/
 		NextPixel = map->mapPosTopixelPos(HunterMapPos);
 	}
 	Move();
@@ -161,8 +174,9 @@ void Hunter::Stage3()
 bool Hunter::Arrive(SDL_Point destination)
 {
 	arrive = false;
-	if(HunterPixelPos.x == destination.x && HunterPixelPos.y == destination.y)
+	if(abs(HunterPixelPos.x - destination.x) < Hvelocity && abs(HunterPixelPos.y - destination.y) < Hvelocity)
 	{
+		HunterPixelPos = destination;
 		arrive = true;
 	}
 	return arrive;
@@ -174,6 +188,9 @@ void Hunter::Move()
 	{
 		NextPixel = map->mapPosTopixelPos(go.front());
 		go.pop();
+		printf("%d %d\n", NextPixel.x, NextPixel.y);
+		if(!NextPixel.x or !NextPixel.y)
+			return;
 	}	
 	else
 	{
@@ -207,11 +224,15 @@ SDL_Point Hunter::Set()
 {
 	SetSuccess = false;
 	SDL_Point SetPos;
+	Game &game = Game::GetGame();
+	int width = map->getColNum(), height = map->getRowNum();
 	while(!SetSuccess)
 	{
-		Game &game = Game::GetGame();
-		SetPos.x = (HunterMapPos.x + game.rdEngine()%20 - 5) % map->getColNum();
-		SetPos.y = (HunterMapPos.y + game.rdEngine()%20 - 5) % map->getRowNum();
+		SetPos.x = HunterMapPos.x + game.rdEngine()%10 - 5;
+		SetPos.y = HunterMapPos.y + game.rdEngine()%10 - 5;
+		if(SetPos.x > width or SetPos.x < 0 or SetPos.y > height or SetPos.y < 0)
+			continue;
+		printf("%d %d %d %d\n", HunterMapPos.x, HunterMapPos.y, SetPos.x, SetPos.y);
 		if(map->isSpace(SetPos)) 
 		{
 			SetSuccess = true;

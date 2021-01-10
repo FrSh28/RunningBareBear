@@ -27,7 +27,7 @@ Map::Map(Maps index, string _name)
 
 	buildMap(background, front);
 
-	for(int i = 0; i < 10; ++i)
+	for(int i = 0; i < 1; ++i)
 		addHunter();
 
 	Game &game = Game::GetGame();
@@ -42,7 +42,7 @@ Map::Map(Maps index, string _name)
 	tmpPixelPos.y += sc_pixelHeight / 2;
 	runnerMapPos = tmpMapPos;
 	runner = createRunner(tmpMapPos, tmpPixelPos);//new Runner(tmpMapPos, tmpPixelPos);
-	L_character->pushElement(runner);
+	//L_character->pushElement(runner);
 }
 
 Map::~Map()
@@ -140,7 +140,7 @@ void Map::start()
 	Game &game = Game::GetGame();
 	game.pushLayer(L_ground);
 	game.pushLayer(L_character);
-	game.pushOverlayer(L_front);
+	//game.pushOverlayer(L_front);
 	started = true;
 }
 

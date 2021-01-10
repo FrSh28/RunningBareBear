@@ -66,7 +66,7 @@ bool Layer::handleEvents(SDL_Event &e)
 
 void Layer::update()
 {
-	printf("%sUpdate ", name.c_str());
+	//printf("%sUpdate ", name.c_str());
 	for(auto it = elements.begin(); it != elements.end(); ++it)
 	{
 		if((*it)->isUpdateEnable())

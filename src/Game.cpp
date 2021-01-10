@@ -232,7 +232,7 @@ void Game::Render()
 	}
 	SDL_RenderPresent(renderer);
 	++frameCount;
-	cout << frameCount << endl;	// debug
+	//cout << frameCount << endl;	// debug
 }
 
 void Game::Quit()
