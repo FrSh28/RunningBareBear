@@ -32,7 +32,7 @@ class Hunter : public BasicObject
 	int b;
 	int frame;
 	int updateRate;
-	int Animation_Frames;
+	int Animation_Frame;
 	double deltaX;
 	double deltaY;
 	double findX;

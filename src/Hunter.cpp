@@ -10,7 +10,7 @@ SDL_Rect Hunter_Clip[TOTAL];
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	Hvelocity(0), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0),
-	findX(0), findY(0), Animation_Frames(3), Run(6), Walk(3), updateRate(3), frame(0), map(&Map::getMap())//SPEED
+	findX(0), findY(0), Animation_Frame(4), Run(6), Walk(3), updateRate(3), frame(0), map(&Map::getMap())//SPEED
 {
 	initHunter_Clips();
 	setMapPos(MapPos);
@@ -67,7 +67,7 @@ bool Hunter::update()
 	}
 	rectOnTexture = Hunter_Clip[direction+frame/updateRate];
 	frame ++;
-	if(frame/updateRate == Animation_Frames){frame=0;}
+	if(frame/updateRate == Animation_Frame){frame=0;}
 	//if it change return true
 	rectOnScreen.x = HunterPixelPos.x;
 	rectOnScreen.y = HunterPixelPos.y;
