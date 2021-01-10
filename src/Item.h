@@ -165,5 +165,4 @@ public:
     bool update();
 };
 
-int Item::itemNumber = 0;
 #endif //ITEM_H

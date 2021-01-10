@@ -1,8 +1,10 @@
 //
 // Created by 劉瑄穎 on 2021/1/2.
 //
+
 #include "Item.h"
 #include "Files.h"
+int Item::itemNumber = 0;
 Item* createItem(ItemList& list)
 {
     //a random Item

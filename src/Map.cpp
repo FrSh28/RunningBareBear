@@ -43,6 +43,7 @@ Map::Map(Maps index, string _name)
 	runner = createRunner(tmpMapPos, tmpPixelPos);//new Runner(tmpMapPos, tmpPixelPos);
 	L_character->pushElement(runner);
 	update();
+	printf("%d %d\n", width, height);
 }
 
 Map::~Map()
