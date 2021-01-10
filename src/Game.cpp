@@ -87,13 +87,14 @@ void Game::Start(unsigned int _startTime)
 	running = true;
 	bgm = loadMusic(BGM_MUSIC);
 	Mix_PlayMusic(bgm, -1);
-	pushLayer(createLayer(L_STARTMENU, new BackGround(START_IMAGE)));
+	//pushLayer(createLayer(L_STARTMENU, new BackGround(START_IMAGE)));
+	pushOverlayer(createLayer(L_PAUSE, new BackGround(BOARD_IMAGE, SDL_Rect({300,200,680,320}))));
 }
 
 void Game::HandleEvents()
 {
 	bool handled = false;
-	printf("%d\n", state);
+	//printf("%d\n", state);
 	while(SDL_PollEvent(&event) or SDL_GetTicks() - startTime < frameCount * 1000 / frameRate)
 	{
 		if(event.type == GAMESTATE_CHANGE)

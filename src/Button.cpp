@@ -233,8 +233,9 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 			}
 			break;
-		case RESUMES://
-			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+		case RESUMES://SDL_MOUSEBUTTONDOWN
+		printf("%d\n", e.type);
+			if(e.type == SDL_KEYDOWN)// && e.button.button == SDL_BUTTON_LEFT)
 			{
 				EventReturnType = true;
 				Inside = false;
@@ -242,7 +243,7 @@ bool Button::handleEvents(SDL_Event &e)
 				{
 					Inside = true;
 				}
-				if(Inside)
+				if(true)
 				{
 					createUserEvent(GAMESTATE_CHANGE, RESUME, NULL, NULL);
 					Game &game = Game::GetGame();
@@ -250,8 +251,8 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 			}
 			break;
-		case INTRO2://
-			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+		case INTRO2://SDL_MOUSEBUTTONDOWN
+			if(e.type == 1026 && e.button.button == SDL_BUTTON_LEFT)
 			{
 				EventReturnType = true;
 				Inside = false;
