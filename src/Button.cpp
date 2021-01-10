@@ -5,13 +5,12 @@
 #include "Layer.h"
 #include "Mission.h"
 #include <cmath>
-// , ,, , , , , , , , TOTAL_BUTTONS
 
 SDL_Rect Button::buttons[TOTAL_BUTTONS] = 
 {
 	SDL_Rect({ 495, 380, 290, 290}), //STARTS
 	SDL_Rect({1085,  50, 145, 145}), //INTRO1
-	SDL_Rect({1050,  40,  30,  30}), //LEAVEINTRO1
+	SDL_Rect({1050,  40,  30,  30}), //LEAVEINTRO
 	SDL_Rect({ 890,  50, 214, 215}), // MISSION
 	SDL_Rect({1050,  40,  30,  30}), //LEAVEMISSION
 	SDL_Rect({1085,  50, 145, 145}), //PAUSES
@@ -44,7 +43,7 @@ Button::Button(button_type tmp) :
 		case INTRO1:
 			texture = loadImage(INTRO_BUTTON_IMAGE);
 			break;
-		case LEAVEINTRO1:
+		case LEAVEINTRO:
 			texture = loadImage(LEAVE_BUTTON_IMAGE);
 			break;
 		case MISSION:
@@ -128,12 +127,12 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 			}
 			break;
-		case LEAVEINTRO1://
+		case LEAVEINTRO://
 			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
 				EventReturnType = true;
 				Inside = false;
-				if((Center ^ mouse) <= buttons[LEAVEINTRO1].w/2 )
+				if((Center ^ mouse) <= buttons[LEAVEINTRO].w/2 )
 				{
 					Inside = true;
 				}
@@ -332,8 +331,8 @@ bool Button::update()
 		case INTRO1:
 			rectOnTexture = SDL_Rect( {button_type[INTRO1].x, button_type[INTRO1].y, button_type[INTRO1].w, button_type[INTRO1].h} );
 			break;
-		case LEAVEINTRO1:
-			rectOnTexture = SDL_Rect( {button_type[LEAVEINTRO1].x, button_type[LEAVEINTRO1].y, button_type[LEAVEINTRO1].w, button_type[LEAVEINTRO1].h} );
+		case LEAVEINTRO:
+			rectOnTexture = SDL_Rect( {button_type[LEAVEINTRO].x, button_type[LEAVEINTRO].y, button_type[LEAVEINTRO].w, button_type[LEAVEINTRO].h} );
 			break;
 		case RESUMES:
 			rectOnTexture = SDL_Rect( {button_type[RESUMES].x, button_type[RESUMES].y, button_type[RESUMES].w, button_type[RESUMES].h} );

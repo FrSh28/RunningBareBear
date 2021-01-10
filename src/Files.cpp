@@ -21,10 +21,10 @@ namespace Files
 										"../media/image/PEMission.png",
 										"../media/image/DebugMission.png",
 										"../media/image/WebworkMission.png",
-										"../media/image/",
+										"../media/image/", //TIMER_BACKGROUND
 										"../media/image/", //STAR
-										"../media/image/", //POTION
-										"../media/image/", //MEAT
+										"../media/image/item.png", //POTION
+										"../media/image/item.png", //MEAT
 										"../media/image/sheet.png", //SHEET
 										"../media/image/Library.png", //LIBRARY
 										"../media/image/PE_teacher.png", //PE_TEACHER
