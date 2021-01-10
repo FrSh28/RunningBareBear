@@ -212,7 +212,7 @@ bool Button::handleEvents(SDL_Event &e)
 				{
 					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 					Game &game = Game::GetGame();
-					game.pushOverlayer(new pauseLayer("Pause",));
+					game.pushOverlayer(new pauseLayer("Pause",BOARD_IMAGE));
 					//some user event
 				}
 			}
