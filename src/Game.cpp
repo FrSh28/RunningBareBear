@@ -17,9 +17,6 @@ Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned in
 	random_device rd;
 	rdEngine.seed(rd());
 	s_gameInstance = this;
-	bgm = loadMusic(BGM_MUSIC);
-	Mix_PlayMusic(bgm, -1);
-	pushLayer(createLayer(L_STARTMENU, new BackGround(START_IMAGE)));
 }
 
 Game::~Game()
@@ -76,7 +73,7 @@ bool Game::Init()
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create renderer: %s", SDL_GetError());
 		return false;
 	}
-	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x40, SDL_ALPHA_OPAQUE);
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(renderer);
 	SDL_RenderPresent(renderer);
 
@@ -88,6 +85,9 @@ void Game::Start(unsigned int _startTime)
 	startTime = _startTime;
 	frameCount = 1;
 	running = true;
+	bgm = loadMusic(BGM_MUSIC);
+	Mix_PlayMusic(bgm, -1);
+	pushLayer(createLayer(L_STARTMENU, new BackGround(START_IMAGE)));
 }
 
 void Game::HandleEvents()
@@ -95,6 +95,11 @@ void Game::HandleEvents()
 	bool handled = false;
 	while(SDL_PollEvent(&event) or SDL_GetTicks() - startTime < frameCount * 1000 / frameRate)
 	{
+		if(event.type == SDL_QUIT)
+		{
+			running = false;
+			return;
+		}
 		if(state == LOADING)
 		{
 			if(SDL_GetTicks() > eventStart + duration)
@@ -159,25 +164,17 @@ void Game::HandleEvents()
 					break;
 			}
 		}
-		switch(event.type)
+		for(auto it = layers.rbegin(); it != layers.rend(); ++it)
 		{
-			case SDL_QUIT:
-				running = false;
-				return;	// func
-			default:
-				for(auto it = layers.rbegin(); it != layers.rend(); ++it)
+			if((*it)->isActive())
+				if((*it)->handleEvents(event))	// if handled
 				{
-					if((*it)->isActive())
-						if((*it)->handleEvents(event))	// if handled
-						{
-							handled = true;
-							break;	// for
-						}
+					handled = true;
+					break;	// for
 				}
-				if(!handled and gameMap)
-					gameMap->handleEvents(event);
-				break;	// switch
 		}
+		if(!handled and gameMap)
+			gameMap->handleEvents(event);
 	}
 }
 

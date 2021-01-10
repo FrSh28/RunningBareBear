@@ -18,7 +18,7 @@ Map::Map(Maps index, string _name)
 {
 	s_mapInstance = this;
 	loadMap(index);
-
+	
 	Game &game = Game::GetGame();
 	BackGround *background = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, width, height}));
 	BackGround *front = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, width, height}));

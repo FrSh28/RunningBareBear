@@ -99,16 +99,18 @@ bool Button::handleEvents(SDL_Event &e)
 				{
 					Inside = true;
 				}
-				
 			}
-			else if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+			//printf("%d\n", int(e.type));//SDL_MOUSEBUTTONDOWN
+			if(e.type == 1026 && e.button.button == SDL_BUTTON_LEFT)// && e.button.button == SDL_BUTTON_LEFT
 			{
 				EventReturnType = true;
 				if(Inside)
+				{
 					createUserEvent(GAMESTATE_CHANGE, START, NULL, NULL); 
+				}
 			}
 			break;
-		case INTRO1://
+		case INTRO1:
 			if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
 				EventReturnType = true;
@@ -122,8 +124,6 @@ bool Button::handleEvents(SDL_Event &e)
 					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 					Game &game = Game::GetGame();
 					game.pushOverlayer(createLayer(L_INTRO, new BackGround(INTRO_IMAGE )));
-					
-					
 				}
 			}
 			break;
