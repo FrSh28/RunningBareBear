@@ -50,7 +50,7 @@ ItemList Item::getItemType() const {return type;}
 //Star
 Star::Star():Item("Star")
 {
-    texture = loadImage(STAR);
+    texture = loadImage(STAR_IMAGE);
     rectOnTexture.x = 0000;
     rectOnTexture.y = 0000;
     rectOnTexture.w = 0000;
@@ -122,7 +122,7 @@ bool Library::update() {return false;}
 //Physical education Teacher
 PE_Teacher::PE_Teacher():Item("Physical Education Teacher")
 {
-    texture = loadImage(PE_Teacher_IMAGE);
+    texture = loadImage(PE_TEACHER_IMAGE);
     rectOnTexture.x = 0000;
     rectOnTexture.y = 0000;
     rectOnTexture.w = 0000;
@@ -188,7 +188,7 @@ bool CHEM_Teacher::update() {}
 //WebWork
 WebWork1::WebWork1():Item("WebWork")
 {
-    texture = loadImage(WebWork1_IMAGE);
+    texture = loadImage(WEBWORK1_IMAGE);
     rectOnTexture.x = 0000;
     rectOnTexture.y = 0000;
     rectOnTexture.w = 0000;
@@ -200,7 +200,7 @@ bool WebWork1::update() {return false;}
 
 WebWork2::WebWork2():Item("WebWork")
 {
-    texture = loadImage(WebWork2_IMAGE);
+    texture = loadImage(WEBWORK2_IMAGE);
     rectOnTexture.x = 0000;
     rectOnTexture.y = 0000;
     rectOnTexture.w = 0000;
@@ -212,7 +212,7 @@ bool WebWork2::update() {return false;}
 
 WebWork3::WebWork3():Item("WebWork")
 {
-    texture = loadImage(WebWork3_IMAGE);
+    texture = loadImage(WEBWORK3_IMAGE);
     rectOnTexture.x = 0000;
     rectOnTexture.y = 0000;
     rectOnTexture.w = 0000;
