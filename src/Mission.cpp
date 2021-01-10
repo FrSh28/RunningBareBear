@@ -130,7 +130,7 @@ Mission1_2 :: Mission1_2 ()
 	}
 	Library* lib;
 	lib = new Library;
-	Map.placeItem(SetPos, lib);
+	map.placeItem(SetPos, lib);
 
 }
 
@@ -179,7 +179,7 @@ Mission1_3 :: Mission1_3 ()
 	//PE_Teacher
 	PE_Teacher* pe;
 	pe = new PE_Teacher;
-	Map.placeItem(SetPos, pe);
+	map.placeItem(SetPos, pe);
 
 }
 
@@ -232,7 +232,7 @@ Mission2_1 :: Mission2_1 ()
 	}
 	TeacherAssistant1* ta1;
 	ta1 = new TeacherAssistant1;
-	Map.placeItem(SetPos1, ta1);
+	map.placeItem(SetPos1, ta1);
 	
 	bool SetSuccess2 = false;
 	SDL_Point SetPos2;
@@ -248,7 +248,7 @@ Mission2_1 :: Mission2_1 ()
 	}
 	TeacherAssistant2* ta2;
 	ta2 = new TeacherAssistant2;
-	Map.placeItem(SetPos2, ta2);
+	map.placeItem(SetPos2, ta2);
 	
 	bool SetSuccess3 = false;
 	SDL_Point SetPos3;
@@ -264,7 +264,7 @@ Mission2_1 :: Mission2_1 ()
 	}
 	TeacherAssistant3* ta3;
 	ta3 = new TeacherAssistant3;
-	Map.placeItem(SetPos3, ta3);
+	map.placeItem(SetPos3, ta3);
 
 }
 
@@ -324,7 +324,7 @@ Mission2_2 :: Mission2_2 ()
 	}
 	Library* lib;
 	lib = new Library;
-	Map.placeItem(SetPos, lib);
+	map.placeItem(SetPos, lib);
 
 }
 
@@ -371,7 +371,7 @@ Mission2_3 :: Mission2_3 ()
 	}
 	WebWork1* web1;
 	web1 = new WebWork1;
-	Map.placeItem(SetPos1, web1);
+	map.placeItem(SetPos1, web1);
 	
 	bool SetSuccess2 = false;
 	SDL_Point SetPos2;
@@ -387,7 +387,7 @@ Mission2_3 :: Mission2_3 ()
 	}
 	WebWork2* web2;
 	web2 = new WebWork2;
-	Map.placeItem(SetPos1, web2);
+	map.placeItem(SetPos1, web2);
 	
 	bool SetSuccess3 = false;
 	SDL_Point SetPos3;
@@ -403,7 +403,7 @@ Mission2_3 :: Mission2_3 ()
 	}
 	WebWork3* web3;
 	web3 = new WebWork3;
-	Map.placeItem(SetPos1, web3);
+	map.placeItem(SetPos1, web3);
 
 }
 
