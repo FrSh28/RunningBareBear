@@ -13,9 +13,9 @@ SDL_Rect Button::buttons[TOTAL_BUTTONS] =
 	SDL_Rect({ 890,  50, 214, 215}), // MISSION
 	SDL_Rect({ 615, 100,  30,  30}), //LEAVEMISSION
 	SDL_Rect({1085,  50, 145, 145}), //PAUSES
-	SDL_Rect({ 470, 290, 145, 145}), //LEAVE
+	SDL_Rect({ 370, 290, 145, 145}), //LEAVE
 	SDL_Rect({ 570, 290, 145, 145}), //RESUMES
-	SDL_Rect({ 670, 290, 145, 145}), //INTRO2
+	SDL_Rect({ 770, 290, 145, 145}), //INTRO2
 	SDL_Rect({ 615, 100,  30,  30}), //LEAVEINTRO2
 	SDL_Rect({ 980, 420, 200, 200}) //OK
 } ;
@@ -121,7 +121,8 @@ bool Button::handleEvents(SDL_Event &e)
 				{
 					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 					Game &game = Game::GetGame();
-					game.pushOverlayer(new boardLayer("Intro", INTRO_IMAGE));
+					game.pushOverlayer(createLayer(L_INTRO, new BackGround(INTRO_IMAGE )));
+					
 					
 				}
 			}
@@ -158,25 +159,24 @@ bool Button::handleEvents(SDL_Event &e)
 					Game &game = Game::GetGame();
 					current = Mission::getMission();
 					if(current == Mission1Type1)
-						game.pushOverlayer(new boardLayer("M1-1", MISSION_1_1_IMAGE));
-						
+						game.pushOverlayer(createLayer(MISSION_1_1_IMAGE, new BackGround(MISSION_1_1_IMAGE )));
 					else if(current == Mission1Type2)
-						game.pushOverlayer(new boardLayer("M1-2", MISSION_1_2_IMAGE));
+						game.pushOverlayer(createLayer(MISSION_1_2_IMAGE, new BackGround(MISSION_1_2_IMAGE )));
 						
 					else if(current == Mission1Type3)
-						game.pushOverlayer(new boardLayer("M1-3", MISSION_1_3_IMAGE));
+						game.pushOverlayer(createLayer(MISSION_1_3_IMAGE, new BackGround(MISSION_1_3_IMAGE )));
 						
 					else if(current == Mission2Type1)
-						game.pushOverlayer(new boardLayer("M2-1", MISSION_2_1_IMAGE));
+						game.pushOverlayer(createLayer(MISSION_2_1_IMAGE, new BackGround(MISSION_2_1_IMAGE )));
 					/*	
 					else if(current == Mission2Type2)
 						game.pushOverlayer(new boardLayer("M2-2", MISSION_2_2_IMAGE));
 					*/	
 					else if(current == Mission2Type3)
-						game.pushOverlayer(new boardLayer("M2-3", MISSION_2_3_IMAGE));
+						game.pushOverlayer(createLayer(MISSION_2_2_IMAGE, new BackGround(MISSION_2_2_IMAGE )));
 						
 					else if(current == MissionTotal)
-						game.pushOverlayer(new boardLayer("M2-3", DONATE_IMAGE));
+						game.pushOverlayer(createLayer(L_LOADING, new BackGround(DONATE_IMAGE )));
 						
 					//Layer
 				}
@@ -212,7 +212,8 @@ bool Button::handleEvents(SDL_Event &e)
 				{
 					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 					Game &game = Game::GetGame();
-					game.pushOverlayer(new pauseLayer("Pause",BOARD_IMAGE));
+					game.pushOverlayer(createLayer(L_PAUSE, new BackGround(BOARD_IMAGE, SDL_Rect({300,200,680,320}))));
+					
 					//some user event
 				}
 			}
@@ -262,7 +263,7 @@ bool Button::handleEvents(SDL_Event &e)
 				{
 					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 					Game &game = Game::GetGame();
-					game.pushOverlayer(new boardLayer("Intro", INTRO_IMAGE));
+					game.pushOverlayer(createLayer(L_INTRO, new BackGround(INTRO_IMAGE )));
 				}
 			}
 			break;
