@@ -97,12 +97,16 @@ bool Mission1_1 :: handleEvents(SDL_Event &e)
 	if(e.type == ITEM_USED) 
 		{
 			if(e.user.code == SHEET)
-			success = true;
+			{
+				success = true;
+				return true;
+			}
 		}
+	else return false;
 }
 bool Mission1_1 :: update()
 {
-	 
+	 return false;
 }
 
 
@@ -141,13 +145,17 @@ bool Mission1_2 :: handleEvents(SDL_Event &e)
 	if(e.type == ITEM_USED) 
 		{
 			if(e.user.code == LIBRARY)
-			success = true;
+			{
+				success = true;
+				return true;
+			}
 		}
+	return false;
 }
 
 bool Mission1_2 :: update()
 {
-	 
+	 return false;
 }
 
 Mission1_3 :: Mission1_3 ()
@@ -189,13 +197,17 @@ bool Mission1_3 :: handleEvents(SDL_Event &e)
 	if(e.type == ITEM_USED) 
 		{
 			if(e.user.code == PE_TEACHER)
-			success = true;
+			{
+				success = true;
+				return true;
+			}
 		}
+	else return false;
 }
 
 bool Mission1_3 :: update()
 {
-	 
+	 return false;
 }
 
 
@@ -261,23 +273,27 @@ Mission2_1 :: ~Mission2_1 ()
 	
 }
 
-bool Mission2_1 :: handleEvents(SDL_Event &e)
+bool Mission2_1 :: handleEvents(SDL_Event &e)//
 {
 	
 	if(e.type == ITEM_USED) 
 		{
 			if(e.user.code == TA)
-			total++;
+			{
+				total++;
+
+			}
 		}
 	if(total == 3)
 	{
 		success = true;
 	}
+	return true;
 }
 
 bool Mission2_1 :: update()
 {
-	 
+	 return false;
 }
 
 /*
@@ -401,9 +417,10 @@ bool Mission2_3 :: handleEvents(SDL_Event &e)
 	{
 		success = true;
 	}
+	return true;
 }
 
 bool Mission2_3 :: update()
 {
-	 
+	 return false;
 }

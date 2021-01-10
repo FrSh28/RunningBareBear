@@ -31,8 +31,6 @@ class Hunter : public BasicObject
 	int a;
 	int b;
 	int frame;
-	int HunterWidth;
-	int HunterHeight;
 	int updateRate;
 	int Animation_Frames;
 	double deltaX;

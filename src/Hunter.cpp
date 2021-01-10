@@ -10,12 +10,14 @@ SDL_Rect Hunter_Clip[TOTAL];
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	Hvelocity(0), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0),
-	findX(0), findY(0), Animation_Frames(3), Run(3), Walk(6), frame(0), map(&Map::getMap())//SPEED
+	findX(0), findY(0), Animation_Frames(3), Run(6), Walk(3), updateRate(3), frame(0), map(&Map::getMap())//SPEED
 {
 	initHunter_Clips();
 	setMapPos(MapPos);
 	setPixelPos(PixelPos);
 	directPos = HunterPixelPos;
+	rectOnScreen.w = 100;
+	rectOnScreen.h = 80;
 }
 
 void Hunter::setMapPos(SDL_Point &MapPos)
@@ -26,8 +28,8 @@ void Hunter::setMapPos(SDL_Point &MapPos)
 void Hunter::setPixelPos(SDL_Point &PixelPos)
 {
 	HunterCenterPixel = PixelPos;
-	HunterPixelPos.x = HunterCenterPixel.x  - HunterWidth/2;
-	HunterPixelPos.y = HunterCenterPixel.y - HunterHeight/2;
+	HunterPixelPos.x = HunterCenterPixel.x - rectOnScreen.w/2;
+	HunterPixelPos.y = HunterCenterPixel.y - rectOnScreen.h/2;
 }
 
 
@@ -44,8 +46,8 @@ bool Hunter::handleEvents(SDL_Event &e)
 bool Hunter::update()
 {
 	static int frame = 0;
-	HunterCenterPixel.x = HunterPixelPos.x + HunterWidth/2;
-	HunterCenterPixel.y = HunterPixelPos.y + HunterHeight/2;
+	HunterCenterPixel.x = HunterPixelPos.x + rectOnScreen.w/2;
+	HunterCenterPixel.y = HunterPixelPos.y + rectOnScreen.h/2;
 	HunterMapPos = map->pixelPosTomapPos(HunterCenterPixel);
 	RunnerMapPos = map->getRunnerMapPos();
 	if(RunnerVisible())
@@ -364,11 +366,6 @@ void Hunter::Chase(SDL_Point HunterMapPos, SDL_Point directpos)
 				q.push(tmp);
 			}
 		}
-	}
-	while(!q.empty())
-	{
-		delete q.front();
-		q.pop();
 	}
 }
 /*

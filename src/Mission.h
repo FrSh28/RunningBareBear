@@ -15,6 +15,7 @@ enum MissionTypes
 
 class Mission : public BasicObject
 {
+protected:
 	int total;
 public:
 	Mission(std::string _name = "");

@@ -15,7 +15,7 @@ class Button : public BasicObject
 	bool Last;
 	bool changed;
 	SDL_Point Center;
-
+	MissionTypes current;
 	button_type type;
 public:
 	static SDL_Rect buttons[TOTAL_BUTTONS];

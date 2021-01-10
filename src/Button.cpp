@@ -3,6 +3,7 @@
 #include "Button.h"
 #include "UserEvent.h"
 #include "Layer.h"
+#include "Mission.h"
 #include <cmath>
 // , ,, , , , , , , , TOTAL_BUTTONS
 
@@ -30,7 +31,7 @@ double& operator^(SDL_Point center, SDL_Point mouse)
 }
 
 Button::Button(button_type tmp) :
-	type(tmp), UpdateReturnType(false)
+	type(tmp), UpdateReturnType(false), EventReturnType(false), Last(false)
 {
 	Center.x = buttons[tmp].x + buttons[tmp].w/2;
 	Center.y = buttons[tmp].y + buttons[tmp].h/2;
@@ -73,8 +74,6 @@ Button::Button(button_type tmp) :
 		default://
 			texture = loadImage(SAMPLE_IMAGE);//
 	}
-	texture = loadimage();
-	
 	Inside = false;
 }
 
@@ -102,10 +101,7 @@ bool Button::handleEvents(SDL_Event &e)
 				{
 					Inside = true;
 				}
-				if(Last != Inside)
-					UpdateReturnType = true;
-				else
-					UpdateReturnType = false;
+				
 			}
 			else if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
 			{
@@ -162,22 +158,23 @@ bool Button::handleEvents(SDL_Event &e)
 				{
 					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 					Game &game = Game::GetGame();
-					if(curMission == Mission1Type1)
+					current = Mission::getMission();
+					if(current == Mission1Type1)
 						game.pushOverlayer(new boardLayer("M1-1", MISSION_1_1_IMAGE));
 						
-					else if(curMission == Mission1Type2)
+					else if(current == Mission1Type2)
 						game.pushOverlayer(new boardLayer("M1-2", MISSION_1_2_IMAGE));
 						
-					else if(curMission == Mission1Type3)
+					else if(current == Mission1Type3)
 						game.pushOverlayer(new boardLayer("M1-3", MISSION_1_3_IMAGE));
 						
-					else if(curMission == Mission2Type1)
+					else if(current == Mission2Type1)
 						game.pushOverlayer(new boardLayer("M2-1", MISSION_2_1_IMAGE));
 						
-					else if(curMission == Mission2Type2)
+					else if(current == Mission2Type2)
 						game.pushOverlayer(new boardLayer("M2-2", MISSION_2_2_IMAGE));
 						
-					else if(curMission == Mission2Type3)
+					else if(current == Mission2Type3)
 						game.pushOverlayer(new boardLayer("M2-3", MISSION_2_3_IMAGE));
 					//Layer
 				}
@@ -312,6 +309,10 @@ bool Button::update()
 		rectOnTexture = SDL_Rect( {0, 0, 512, 512} );
 	else
 		rectOnTexture = SDL_Rect( {0, 0, 214, 215} );
+	if(Last != Inside)
+		UpdateReturnType = true;
+	else
+		UpdateReturnType = false;
 	Last = Inside;
 	return UpdateReturnType;
 	
