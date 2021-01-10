@@ -9,8 +9,13 @@
 #include "Layer.h"
 #include "Files.h"
 #include "Item.h"
-#include "Hunter.h"
-#include "Runner.h"
+#include "Character.h"
+//#include "Hunter.h"
+//#include "Runner.h"
+
+extern Character *createHunter(SDL_Point, SDL_Point);
+extern Character *createRunner(SDL_Point, SDL_Point);
+
 
 enum ObjOnMap
 {
@@ -19,7 +24,7 @@ enum ObjOnMap
 	ITEM,
 };
 
-class Map
+class Map : public BasicObject
 {
 public:
 	Map(Maps index, std::string _name = "");
@@ -29,7 +34,7 @@ public:
 	void addHunter();
 	void free();
 	bool handleEvents(SDL_Event &);	// return true if handled
-	void update();
+	bool update();
 
 	inline bool isSpace(SDL_Point mapPos) const { return map[mapPos.x][mapPos.y] == SPACE; }
 	inline bool isWall(SDL_Point mapPos)  const { return map[mapPos.x][mapPos.y] == WALL; }
@@ -53,9 +58,9 @@ public:
 
 	inline static Map &getMap() { return *s_mapInstance;}
 private:
-	void buildMap(BackGround *);
+	void buildMap(BackGround *, BackGround *);
 
-	std::string name;
+	//std::string name;
 	int colNum, rowNum;
 	std::vector<std::vector<int>> map;
 	int width, height;
@@ -64,8 +69,8 @@ private:
 	struct SDL_PointComp{ bool operator()(const SDL_Point &, const SDL_Point &); };
 	std::map<SDL_Point, Item *, SDL_PointComp> items;
 
-	std::vector<Hunter *> hunters;
-	Runner *runner;
+	std::vector<Character *> hunters;
+	Character *runner;
 	std::vector<SDL_Point> huntersMapPos;
 	SDL_Point runnerMapPos;
 

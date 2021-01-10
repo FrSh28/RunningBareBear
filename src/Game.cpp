@@ -121,7 +121,7 @@ void Game::HandleEvents()
 				case START:
 					popAllLayers();
 					pushOverlayer(createLayer(L_LOADING, new BackGround(DONATE_IMAGE)));
-					gameMap = new Map(MAP_01, "Map01");
+					gameMap = createMap(0);	// 0 or 1 or 2 or 3
 					eventStart = SDL_GetTicks();
 					duration = 2000;
 					state = LOADING;
@@ -275,18 +275,6 @@ void Game::popLayer(Layer *_layer)
 	{
 		layers.erase(iter);
 		--layerInsertIndex;
-	}
-}
-
-void Game::popAllLayers()
-{
-	Layer *layer = layers.front();
-	auto iter = find(layers.begin(), layers.begin() + layerInsertIndex, layer);
-	if (iter != layers.begin() + layerInsertIndex)
-	{
-		layers.erase(iter);
-		--layerInsertIndex;
-		delete *iter;
 	}
 }
 

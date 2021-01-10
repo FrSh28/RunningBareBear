@@ -9,7 +9,7 @@
 #include "Map.h" 
 using namespace std;
 
-MissionTypes curMission = MissionTotal;
+MissionTypes Mission::curMission = MissionTotal;
 
 Mission :: Mission(string _name)
  : BasicObject(_name)

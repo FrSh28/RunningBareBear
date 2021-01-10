@@ -3,10 +3,16 @@
 #include "Hunter.h"
 #include "Map.h"
 #include "UserEvent.h"
+#include "Character.h"
 #include <queue>
 #include <iostream>
 #include <cmath>
 SDL_Rect Hunter_Clip[TOTAL];
+
+Character *createHunter(SDL_Point _mapPos, SDL_Point _pixelPos)
+{
+	return new Hunter(_mapPos, _pixelPos);
+}
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	Hvelocity(0), arrive(false), SetSuccess(false), a(0), b(0), deltaX(0), deltaY(0),

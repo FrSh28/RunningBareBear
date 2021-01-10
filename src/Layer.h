@@ -24,7 +24,7 @@ enum Layers
 class Layer
 {
 public:
-	Layer(std::string _name = "", bool _active = true, int _texWidth = -1, int _texHeight = -1);
+	Layer(std::string _name = "", int _texWidth = -1, int _texHeight = -1);
 	virtual ~Layer();
 
 	void free();							// destroy all textures and surfaces
@@ -53,8 +53,6 @@ protected:
 	std::vector<BasicObject*> elements;
 };
 
-Layer *createLayer(Layers index, BasicObject *background = NULL);
-
 class BackGround : public BasicObject
 {
 public:
@@ -62,5 +60,7 @@ public:
 	~BackGround();
 	
 };
+
+Layer *createLayer(Layers index, BackGround *background = NULL);
 
 #endif	// LAYER_H

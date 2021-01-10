@@ -6,7 +6,6 @@
 #define ITEM_H
 #include"includeSDL.h"
 #include"BasicObject.h"
-#include"Map.h"
 #include"UserEvent.h"
 
 enum ItemList{BAD_ITEM, STAR, INVISIBLE_CLOAK, POTION, MEAT, SHEET, LIBRARY, PE_TEACHER,

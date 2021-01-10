@@ -5,17 +5,23 @@
 #include "UserEvent.h"
 using namespace std;
 
+BasicObject *createMap(int index)
+{
+	return new Map(Maps(index), "Map");
+}
+
 const int Map::sc_pixelWidth = 100, Map::sc_pixelHeight = 80;
 Map *Map::s_mapInstance = NULL;
 
 Map::Map(Maps index, string _name)
- : name(_name), colNum(0), rowNum(0), width(0), height(0), mapPixelPos({0, 0}), L_ground(NULL), L_character(NULL), L_front(NULL)
+ : BasicObject(_name, true, true, false), colNum(0), rowNum(0), width(0), height(0), mapPixelPos({0, 0}), L_ground(NULL), L_character(NULL), L_front(NULL)
 {
 	s_mapInstance = this;
 	loadMap(index);
 
 	Game &game = Game::GetGame();
 	BackGround *background = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, width, height}));
+	BackGround *front = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, width, height}));
 	L_ground = createLayer(L_MAP_GROUND, background);
 	game.pushLayer(L_ground);
 	L_character = createLayer(L_CHARACTER, NULL);
@@ -23,7 +29,7 @@ Map::Map(Maps index, string _name)
 	L_front = createLayer(L_MAP_FRONT, NULL);
 	game.pushOverlayer(L_front);
 
-	buildMap(background);
+	buildMap(background, front);
 
 	for(int i = 0; i < 10; ++i)
 		addHunter();
@@ -37,7 +43,7 @@ Map::Map(Maps index, string _name)
 	tmpPixelPos = mapPosTopixelPos(tmpMapPos);
 	tmpPixelPos.x += sc_pixelWidth / 2;
 	tmpPixelPos.y += sc_pixelHeight / 2;
-	runner = new Runner(tmpMapPos, tmpPixelPos);
+	runner = createRunner(tmpMapPos, tmpPixelPos);//new Runner(tmpMapPos, tmpPixelPos);
 	L_character->pushElement(runner);
 	update();
 }
@@ -109,7 +115,7 @@ void Map::addHunter()
 	tmpPixelPos = mapPosTopixelPos(tmpMapPos);
 	tmpPixelPos.x += sc_pixelWidth / 2;
 	tmpPixelPos.y += sc_pixelHeight / 2;
-	hunters.push_back(new Hunter(tmpMapPos, tmpPixelPos));
+	hunters.push_back(createHunter(tmpMapPos, tmpPixelPos));
 	L_character->pushElement(hunters.back());
 	huntersMapPos.push_back(tmpMapPos);
 }
@@ -137,7 +143,7 @@ bool Map::handleEvents(SDL_Event &event)
 	return false;
 }
 
-void Map::update()
+bool Map::update()
 {
 	SDL_Point tmpPixelPos;
 	Game &game = Game::GetGame();
@@ -154,6 +160,7 @@ void Map::update()
 	/*L_ground->setRectViewPos();
 	L_character->setRectViewPos();
 	L_front->setRectViewPos();*/
+	return true;
 }
 
 bool Map::placeItem(SDL_Point pos, Item *item)	// mapPos
@@ -162,7 +169,7 @@ bool Map::placeItem(SDL_Point pos, Item *item)	// mapPos
 		return false;
 	else
 	{
-		map[pos.x][pos.y] = ITEM;
+		map[pos.y][pos.x] = ITEM;
 		SDL_Point tmp = mapPosTopixelPos(pos);
 		SDL_Rect rect = {tmp.x, tmp.y, sc_pixelWidth, sc_pixelHeight};
 		item->setRectOnScreen(rect);
@@ -180,7 +187,7 @@ Item *Map::pickItem(SDL_Point pos)		// mapPos
 	{
 		Item *tmp = items[pos];
 		items.erase(pos);
-		map[pos.x][pos.y] = SPACE;
+		map[pos.y][pos.x] = SPACE;
 		L_ground->popElement(tmp);
 		return tmp;
 	}
@@ -206,19 +213,8 @@ SDL_Point Map::mapPosTopixelPos(SDL_Point mapPos)
 	return SDL_Point({mapPos.x * sc_pixelWidth, mapPos.y * sc_pixelHeight});
 }
 
-void Map::buildMap(BackGround *background)
+void Map::buildMap(BackGround *background, BackGround *front)
 {
-texture = loadImage(index);
-	SDL_QueryTexture(texture, NULL, NULL, &rectOnTexture.w, &rectOnTexture.h);
-	if(_rectOnScreen.w > 0 and _rectOnScreen.h > 0)
-		rectOnScreen = _rectOnScreen;
-	else
-	{
-		rectOnScreen.w = Game::GetGame().getWidth();
-		rectOnScreen.h = Game::GetGame().getHeight();
-	}
-
-	
 	Game &game = Game::GetGame();
 	SDL_Renderer *renderer = game.getRenderer();
 	SDL_Texture *groundTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET, width, height);
@@ -233,27 +229,37 @@ texture = loadImage(index);
 	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
 	SDL_RenderClear(renderer);
 
+	SDL_SetRenderTarget(renderer, groundTexture);
+	SDL_RenderCopy(renderer, loadImage(BACKGROUND_IMAGE), NULL, NULL);
+
 	SDL_Texture *wallTexture = loadImage(WALL_IMAGE);
-	SDL_Rect top = {0, 0, 560, 300};
-	SDL_Rect base = {0, 300, 560, 560}
+	SDL_Rect top = {0, 0, 550, 300};
+	SDL_Rect base = {0, 300, 550, 550};
+	SDL_Rect target;
+	SDL_Point tmpPixelPos;
 	for(int i = 0; i < rowNum; ++i)
 	{
 		for(int j = 0; j < colNum; ++j)
 		{
-			if(isWall(SDL_Point(i, j)))
+			if(isWall(SDL_Point({j, i})))
 			{
+				tmpPixelPos = mapPosTopixelPos(SDL_Point({j, i}));
+				target = {tmpPixelPos.x, tmpPixelPos.y, sc_pixelWidth, sc_pixelHeight};
 				SDL_SetRenderTarget(renderer, groundTexture);
-				SDL_RenderCopy(renderer, wallTexture, &base, );
+				SDL_RenderCopy(renderer, wallTexture, &base, &target);
 				if(i > 0)
 				{
+					tmpPixelPos = mapPosTopixelPos(SDL_Point({j, i-1}));
+					target = {tmpPixelPos.x, tmpPixelPos.y + sc_pixelHeight/2, sc_pixelWidth, sc_pixelHeight/2};
+					SDL_SetRenderTarget(renderer, groundTexture);
 					SDL_SetRenderTarget(renderer, frontTexture);
-					SDL_RenderCopy(renderer, wallTexture, &top, );
+					SDL_RenderCopy(renderer, wallTexture, &top, &target);
 				}
 			}
 		}
 	}
 	background->setTexture(groundTexture);
-	front->setTexture()
+	front->setTexture(frontTexture);
 }
 
 bool Map::SDL_PointComp::operator()(const SDL_Point &lhs, const SDL_Point &rhs)
