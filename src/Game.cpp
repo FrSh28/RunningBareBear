@@ -105,7 +105,7 @@ void Game::HandleEvents()
 			}
 			continue;
 		}
-		if(state == PAUSE)
+		if(state == PAUSE or state == END)
 		{
 			Layer *topLayer = layers.back();
 			if(topLayer->isActive())
@@ -182,7 +182,7 @@ void Game::HandleEvents()
 
 void Game::Update()
 {
-	if(state == PAUSE or state == LOADING)
+	if(state == PAUSE or state == LOADING or state == END)
 	{
 		Layer *topLayer = layers.back();
 		if(topLayer->isActive())
@@ -201,7 +201,7 @@ void Game::Update()
 
 void Game::Render()
 {
-	if(state == PAUSE or state == LOADING)
+	if(state == PAUSE or state == LOADING  or state == END)
 	{
 		Layer *topLayer = layers.back();
 		if(topLayer->isActive())
