@@ -16,6 +16,7 @@ class Item :public BasicObject
 protected:
     ItemList type;
     SDL_Point PixelPos;         // small grid on map
+    static int itemNumber;
 public:
     Item(std::string _name = "");
     virtual bool handleEvents(SDL_Event& e)=0;
@@ -164,4 +165,5 @@ public:
     bool update();
 };
 
+int Item::itemNumber = 0;
 #endif //ITEM_H

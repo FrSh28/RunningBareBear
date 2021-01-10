@@ -53,6 +53,20 @@ height(gridHeight), updateRate(6), direction(DOWN) {
     //set Initial MapPos
     setMapPos(InitialMapPos);
 
+    //randomly create Item
+    Item* items[20];
+    for(int i=0;i<20;i++)
+    {
+        SDL_Point a;
+        a.x = Game::GetGame().rdEngine()%1280+1;
+        a.y = Game::GetGame().rdEngine()%720+1;
+        ItemList create;
+        int tmp =Game::GetGame().rdEngine()%3;
+        if(tmp==0){create = STAR;}
+        else if(tmp == 1){create = POTION;}
+        else if(tmp == 2){create = MEAT;}
+        items[i]=createItem(create);
+    }
 }
 void Runner::setMapPos(SDL_Point &Set)
 {

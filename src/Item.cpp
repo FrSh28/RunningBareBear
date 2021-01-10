@@ -51,6 +51,7 @@ ItemList Item::getItemType() const {return type;}
 //Star
 Star::Star():Item("Star")
 {
+    itemNumber++;
     texture = loadImage(STAR_IMAGE);
     rectOnTexture.x = 0;
     rectOnTexture.y = 0;
@@ -71,104 +72,112 @@ bool Invisible_Cloak::update() {}
 //Potion
 Potion::Potion():Item("Potion")
 {
+    itemNumber++;
     texture = loadImage(POTION_IMAGE);
     rectOnTexture.x = 90;
     rectOnTexture.y = 80;
     rectOnTexture.w = 33;
     rectOnTexture.h = 36;
 }
-Potion::~Potion(){}
+Potion::~Potion(){itemNumber--;}
 bool Potion::handleEvents(SDL_Event &e){return false;}
 bool Potion::update() {return false;}
 
 //Meat
 Meat::Meat():Item("Meat")
 {
+    itemNumber++;
     texture = loadImage(MEAT_IMAGE);
     rectOnTexture.x = 0;
     rectOnTexture.y = 50;
     rectOnTexture.w = 45;
     rectOnTexture.h = 42;
 }
-Meat::~Meat(){}
+Meat::~Meat(){itemNumber--;}
 bool Meat::handleEvents(SDL_Event &e) {return false;}
 bool Meat::update() {return false;}
 
 //Sheet
 Sheet::Sheet():Item("Sheet")
 {
+    itemNumber++;
     texture = loadImage(SHEET_IMAGE);
     rectOnTexture.x = 0;
     rectOnTexture.y = 0;
     rectOnTexture.w = 512;
     rectOnTexture.h = 512;
 }
-Sheet::~Sheet(){}
+Sheet::~Sheet(){itemNumber--;}
 bool Sheet::handleEvents(SDL_Event &e) {return false;}
 bool Sheet::update() {return false;}
 
 //Library
 Library::Library():Item("Library")
 {
+    itemNumber++;
     texture = loadImage(LIBRARY_IMAGE);
     rectOnTexture.x = 0;
     rectOnTexture.y = 0;
     rectOnTexture.w = 199;
     rectOnTexture.h = 250;
 }
-Library::~Library(){}
+Library::~Library(){itemNumber--;}
 bool Library::handleEvents(SDL_Event &e) {return false;}
 bool Library::update() {return false;}
 
 //Physical education Teacher
 PE_Teacher::PE_Teacher():Item("Physical Education Teacher")
 {
+    itemNumber++;
     texture = loadImage(PE_TEACHER_IMAGE);
     rectOnTexture.x = 0;
     rectOnTexture.y = 0;
     rectOnTexture.w = 260;
     rectOnTexture.h = 260;
 }
-PE_Teacher::~PE_Teacher(){}
+PE_Teacher::~PE_Teacher(){itemNumber--;}
 bool PE_Teacher::handleEvents(SDL_Event &e) {return false;}
 bool PE_Teacher::update() {return false;}
 
 //TA1
 TeacherAssistant1::TeacherAssistant1():Item("Teacher Assistant")
 {
+    itemNumber++;
     texture = loadImage(TA1_IMAGE);
     rectOnTexture.x = 0;
     rectOnTexture.y = 0;
     rectOnTexture.w = 796;
     rectOnTexture.h = 888;
 }
-TeacherAssistant1::~TeacherAssistant1(){}
+TeacherAssistant1::~TeacherAssistant1(){itemNumber--;}
 bool TeacherAssistant1::handleEvents(SDL_Event &e) {return false;}
 bool TeacherAssistant1::update() {return false;}
 
 //TA2
 TeacherAssistant2::TeacherAssistant2():Item("Teacher Assistant")
 {
+    itemNumber++;
     texture = loadImage(TA2_IMAGE);
     rectOnTexture.x = 0;
     rectOnTexture.y = 0;
     rectOnTexture.w = 216;
     rectOnTexture.h = 122;
 }
-TeacherAssistant2::~TeacherAssistant2(){}
+TeacherAssistant2::~TeacherAssistant2(){itemNumber--;}
 bool TeacherAssistant2::handleEvents(SDL_Event &e) {return false;}
 bool TeacherAssistant2::update() {return false;}
 
 //TA3
 TeacherAssistant3::TeacherAssistant3():Item("Teacher Assistant")
 {
+    itemNumber++;
     texture = loadImage(TA3_IMAGE);
     rectOnTexture.x = 0;
     rectOnTexture.y = 0;
     rectOnTexture.w = 200;
     rectOnTexture.h = 250;
 }
-TeacherAssistant3::~TeacherAssistant3(){}
+TeacherAssistant3::~TeacherAssistant3(){itemNumber--;}
 bool TeacherAssistant3::handleEvents(SDL_Event &e) {return false;}
 bool TeacherAssistant3::update() {return false;}
 
