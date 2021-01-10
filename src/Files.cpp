@@ -7,7 +7,10 @@ namespace Files
 	string P_Images[IMAGE_COUNT]	= { "../media/image/image.txt",
 										"../media/image/donate.png",
 										"../media/image/startimage.png",
+										"../media/image/background.png",
 										"../media/image/fail.png",
+										"../media/image/success.png",
+										"../media/image/Board.png",
 										"../media/image/Hunter_32_32.png",
 										"../media/image/Runner_56_56.png",
 										"../media/image/StartButton_512_512.png",
@@ -37,13 +40,14 @@ namespace Files
 										"../media/image/dt.png", //WEBWORK1
 										"../media/image/parenthesis.png", //WEBWORK2
 										"../media/image/webwork.png", //WEBWORK3
+										"../media/image/wall.png",
 										};
 
 	//string P_Fonts[FONT_COUNT]	= { "../media/font/fonts.txt",};
 
 	string P_Musics[MUSIC_COUNT]	= { "../media/music/music.txt",
 										"../media/music/cozy_BGM.mp3",
-										"../media/music/runner_sprint.mp3"
+										"../media/music/runner_sprint.mp3",
 										};
 
 	string P_Maps[MAP_COUNT]		= { "../media/map/map.txt",
