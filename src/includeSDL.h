@@ -18,3 +18,10 @@
 #endif
 
 #endif	// INCLUDE_SDL_H
+
+SDL_Point& operator +(SDL_Point&a, SDL_Point&b )
+{
+    a.x += b.x;
+    a.y += b.y;
+    return a;
+}

@@ -29,9 +29,10 @@ height(32), updateRate(6), direction(DOWN) {
 
         switch (character) {
             case BEAR:
-                velocity = 00000;
-                sprint_velocity = 00000;
+                velocity = 4;
+                sprint_velocity = 4;
                 username = "bear";
+                loadImage(RUNNER_IMAGE);
                 break;
         }
     }
@@ -54,6 +55,14 @@ void Runner::setPixelPos(SDL_Point &Set)
     PixelPos.x -=  width/2 ;
     PixelPos.y -=  height/2;
 }
+
+/*
+void Runner::setScreenPos(SDL_Point& center)
+{
+    rectOnScreen.x = center.x - rectOnScreen.w/2;
+    rectOnScreen.y = center.y - rectOnScreen.h/2;
+}
+ */
 Runner::~Runner(){/*show win or lose*/}
 SDL_Point Runner::getMapPos()const{return MapPos;}       // get big grid on map
 SDL_Point Runner::getPixelPos()const                     // get small grid on map (center)
@@ -64,6 +73,25 @@ SDL_Point Runner::getPixelPos()const                     // get small grid on ma
     return center;
 }
 
+Runner::Runner(Runner &runner)
+{
+    this->username = runner.username;
+    this->direction = runner.direction;
+    PixelPos.x = runner.PixelPos.x;
+    PixelPos.y = runner.PixelPos.y;
+    MapPos.x = runner.PixelPos.x;
+    MapPos.y = runner.MapPos.y;
+    velocity_x = runner.velocity_x;
+    velocity_y = runner.velocity;
+    velocity = runner.velocity;
+    strength = runner.strength;
+    sprint_velocity = sprint_velocity;
+    width = runner.width;
+    height = runner.height;
+    updateRate = runner.updateRate;
+    backpack = runner.backpack;
+    map = runner.map;
+}
 void Runner::updateMapPos(SDL_Point& currentMappos)       // ask map for big grid and update MapPos
 {currentMappos = map->getRunnerMapPos();}
 
@@ -170,6 +198,20 @@ bool Runner::update()
         strength -= 0.05;
         if(abs(velocity_x) == sprint_velocity+velocity || abs(velocity_y) == sprint_velocity+velocity)
         {strength -= 0.05;}
+    }
+    if(strength > 100)
+    {
+        strength = 100;
+        velocity =4;
+    }
+    else if(strength > 75){velocity = 4;}
+    else if(strength > 50 && strength<75){velocity = 3;}
+    else if(strength > 25 && strength<50){velocity = 2;}
+    else if(strength <25 && strength>0){velocity =1;}
+    else if(strength <0)
+    {
+        strength = 0;
+        velocity = 1;
     }
 
     // use map function to calculate MapPos and update

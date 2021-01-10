@@ -10,7 +10,7 @@
 #include"UserEvent.h"
 
 enum ItemList{BAD_ITEM, STAR, INVISIBLE_CLOAK, POTION, MEAT, SHEET, LIBRARY, PE_TEACHER,
-        TA, JOKE, CHEM_TEACHER, WEBWORK, TOTAL_ITEM };
+        TA1, TA2, TA3 , JOKE, CHEM_TEACHER, WEBWORK1, WEBWORK2, WEBWORK3, TOTAL_ITEM };
 
 class Item :public BasicObject
 {
@@ -91,11 +91,29 @@ public:
     bool update();
 };
 
-class TeacherAssistant:public Item
+class TeacherAssistant1:public Item
 {
 public:
-    TeacherAssistant();
-    ~TeacherAssistant();
+    TeacherAssistant1();
+    ~TeacherAssistant1();
+    bool handleEvents(SDL_Event& e);
+    bool update();
+};
+
+class TeacherAssistant2:public Item
+{
+public:
+    TeacherAssistant2();
+    ~TeacherAssistant2();
+    bool handleEvents(SDL_Event& e);
+    bool update();
+};
+
+class TeacherAssistant3:public Item
+{
+public:
+    TeacherAssistant3();
+    ~TeacherAssistant3();
     bool handleEvents(SDL_Event& e);
     bool update();
 };
@@ -120,11 +138,29 @@ public:
 };
  */
 
-class WebWork:public Item
+class WebWork1:public Item
 {
 public:
-    WebWork();
-    ~WebWork();
+    WebWork1();
+    ~WebWork1();
+    bool handleEvents(SDL_Event& e);
+    bool update();
+};
+
+class WebWork2:public Item
+{
+public:
+    WebWork2();
+    ~WebWork2();
+    bool handleEvents(SDL_Event& e);
+    bool update();
+};
+
+class WebWork3:public Item
+{
+public:
+    WebWork3();
+    ~WebWork3();
     bool handleEvents(SDL_Event& e);
     bool update();
 };

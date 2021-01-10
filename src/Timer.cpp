@@ -10,7 +10,7 @@ timerText("0"), minute(10), second(0), missionOngoing(false), currentMission(NUL
 {
     loadTimerFont();
     TTF_SetFontStyle(TimerFont, TTF_STYLE_BOLD);
-    background = loadImage(TIMER_BACKGROUND);
+    background = loadImage(TIMER_BACKGROUND_IMAGE);
     timercolor = {0,0,0,255};
     rectOnScreen.x = 500;
     rectOnScreen.y = 0;

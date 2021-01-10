@@ -31,6 +31,7 @@ private:
 
 public:
     Runner(SDL_Point&, SDL_Point&,character_list = BEAR);
+    Runner(Runner&);
     ~Runner();
     bool handleEvents(SDL_Event &e);
     bool update();
@@ -41,6 +42,7 @@ public:
     void initclips();
     void setMapPos(SDL_Point&);         // set big grid on map
     void setPixelPos(SDL_Point&);       // set small grid on map (center)
+    //void setScreenPos(SDL_Point&);      // set rectOnScreen
     void updateMapPos(SDL_Point&);      // ask map for big grid and update MapPos
     SDL_Point getMapPos() const;        // get big grid on map
     SDL_Point getPixelPos()const;       // get small grid on map (center)
