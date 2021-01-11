@@ -28,7 +28,7 @@ Map::Map(Maps index, string _name)
 
 	buildMap(background, front);
 
-	for(int i = 0; i < 2; ++i)
+	for(int i = 0; i < 1; ++i)
 		addHunter();
 
 	Game &game = Game::GetGame();

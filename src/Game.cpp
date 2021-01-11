@@ -9,14 +9,6 @@
 #include "UserEvent.h"
 using namespace std;
 
-L_STARTMENU,
-L_STATUS,
-L_INTRO,
-L_MISSION,
-L_PAUSE,
-L_END,
-L_LOADING,
-
 Game *Game::s_gameInstance = NULL;
 
 Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned int _frameRate)
