@@ -190,8 +190,6 @@ void Game::Update()
 			{
 				started = true;
 				popTopOverlayer();
-				createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
-				//pushOverlayer(createLayer(L_STATUS, NULL));
 				state = GAME;
 			}
 		}
