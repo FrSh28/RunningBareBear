@@ -7,6 +7,8 @@
 #include <queue>
 #include <iostream>
 #include <cmath>
+using namespace std;
+
 SDL_Rect Hunter_Clip[TOTAL];
 
 Character *createHunter(SDL_Point _mapPos, SDL_Point _pixelPos)
@@ -150,9 +152,9 @@ void Hunter::Stage3()
 	{
 		SDL_Point SetPos;
 		Game &game = Game::GetGame();
-		SetPos.x = abs((HunterMapPos.x + game.rdEngine()%20 - 10) % 30);
+		SetPos.x = abs((HunterMapPos.x + int(game.rdEngine()%20) - 10) % 30);
 		directPos.x = SetPos.x;
-		SetPos.y = abs((HunterMapPos.y + game.rdEngine()%20 - 10) % 30);
+		SetPos.y = abs((HunterMapPos.y + int(game.rdEngine()%20) - 10) % 30);
 		directPos.y = SetPos.y;
 		Chase(HunterMapPos, directPos);
 		NextPixel = map->mapPosTopixelPos(HunterMapPos);
