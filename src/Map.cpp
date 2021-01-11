@@ -10,6 +10,13 @@ BasicObject *createMap(int index)
 	return new Map(Maps(index), "Map");
 }
 
+#ifdef __APPLE__
+int operator~(SDL_Point &pos)
+{
+	return pos.y * Map::getPixelWidth() + pos.x;
+}
+#endif
+
 const int Map::sc_pixelWidth = 40, Map::sc_pixelHeight = 40;
 Map *Map::s_mapInstance = NULL;
 
@@ -28,7 +35,7 @@ Map::Map(Maps index, string _name)
 	buildMap(background, front);
 
 	for(int i = 0; i < 1; ++i)
-		addHunter();
+		;//addHunter();
 
 	Game &game = Game::GetGame();
 	SDL_Point tmpMapPos, tmpPixelPos;
@@ -42,7 +49,7 @@ Map::Map(Maps index, string _name)
 	tmpPixelPos.y += sc_pixelHeight / 2;
 	runnerMapPos = tmpMapPos;
 	runner = createRunner(tmpMapPos, tmpPixelPos);//new Runner(tmpMapPos, tmpPixelPos);
-	//L_character->pushElement(runner);
+	L_character->pushElement(runner);
 }
 
 Map::~Map()
@@ -193,7 +200,12 @@ bool Map::placeItem(SDL_Point pos, Item *item)	// mapPos
 		SDL_Point tmp = mapPosTopixelPos(pos);
 		SDL_Rect rect = {tmp.x, tmp.y, sc_pixelWidth, sc_pixelHeight};
 		item->setRectOnScreen(rect);
+		#ifdef _WIN32
 		items.insert({pos, item});
+		#endif
+		#ifdef __APPLE__
+		items.insert({~pos, item});
+		#endif
 		L_ground->pushElement(item);
 		return true;
 	}
@@ -205,8 +217,14 @@ Item *Map::pickItem(SDL_Point pos)		// mapPos
 		return NULL;
 	else
 	{
+		#ifdef _WIN32
 		Item *tmp = items[pos];
 		items.erase(pos);
+		#endif
+		#ifdef __APPLE__
+		Item *tmp = items[~pos];
+		items.erase(~pos);
+		#endif
 		map[pos.y][pos.x] = SPACE;
 		L_ground->popElement(tmp);
 		return tmp;
@@ -219,7 +237,12 @@ ItemList Map::peekItem(SDL_Point pos)	// mapPos
 		return BAD_ITEM;
 	else
 	{
+		#ifdef _WIN32
 		return items[pos]->getItemType();
+		#endif
+		#ifdef __APPLE__
+		return items[~pos]->getItemType();
+		#endif
 	}
 }
 
@@ -282,6 +305,7 @@ void Map::buildMap(BackGround *background, BackGround *front)
 	front->setTexture(frontTexture);
 }
 
+#ifdef _WIN32
 bool Map::SDL_PointComp::operator()(const SDL_Point &lhs, const SDL_Point &rhs)
 {
 	if(lhs.x != rhs.x)
@@ -289,3 +313,4 @@ bool Map::SDL_PointComp::operator()(const SDL_Point &lhs, const SDL_Point &rhs)
 	else
 		return lhs.y < rhs.y;
 }
+#endif

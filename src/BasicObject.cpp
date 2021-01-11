@@ -6,6 +6,11 @@ BasicObject::BasicObject(string _name, bool _evEn, bool _upEn, bool _rdEn)
    texture(NULL), rectOnScreen({0, 0, 0 ,0}), rectOnTexture({0, 0, 0, 0})
 {}
 
+BasicObject::BasicObject(BasicObject &_from)
+ : name(_from.name), eventEnable(_from.eventEnable), updateEnable(_from.updateEnable), renderEnable(_from.renderEnable),
+   texture(_from.texture), rectOnScreen(_from.rectOnScreen), rectOnTexture(_from.rectOnTexture)
+{}
+
 BasicObject::~BasicObject()
 {}
 

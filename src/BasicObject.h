@@ -8,6 +8,7 @@ class BasicObject
 {
 public:
 	BasicObject(std::string _name = "", bool _evEn = true, bool _upEn = true, bool _rdEn = true);
+	BasicObject(BasicObject &);
 	virtual ~BasicObject();
 
 	inline void setEventEnable(bool _evEn)  { eventEnable = _evEn; }
