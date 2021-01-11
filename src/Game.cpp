@@ -9,6 +9,14 @@
 #include "UserEvent.h"
 using namespace std;
 
+L_STARTMENU,
+L_STATUS,
+L_INTRO,
+L_MISSION,
+L_PAUSE,
+L_END,
+L_LOADING,
+
 Game *Game::s_gameInstance = NULL;
 
 Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned int _frameRate)
@@ -100,6 +108,23 @@ void Game::HandleEvents()
 	bool handled = false;
 	while(SDL_PollEvent(&event) or SDL_GetTicks() - startTime < frameCount * 1000 / frameRate)
 	{
+		if(state == LOADING)
+		{
+			if(SDL_GetTicks() > eventStart + duration)
+			{
+				popTopOverlayer();
+				createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
+				state = GAME;
+			}
+			continue;
+		}
+		if(state == PAUSE)
+		{
+			Layer *topLayer = layers.back();
+			if(topLayer->isActive())
+				topLayer->handleEvents(event);
+			continue;
+		}
 		if(event.type == GAMESTATE_CHANGE)
 		{
 			GameState tmp = GameState(event.user.code);

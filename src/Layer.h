@@ -63,4 +63,11 @@ public:
 
 Layer *createLayer(Layers index, BackGround *background = NULL);
 
+class BackGround : public BasicObject
+{
+public:
+	BackGround(Images, SDL_Rect = SDL_Rect({0, 0, -1, -1}));
+	~BackGround();
+};
+
 #endif	// LAYER_H
