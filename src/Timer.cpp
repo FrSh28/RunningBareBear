@@ -5,12 +5,12 @@
 #include <iomanip>
 #include "Timer.h"
 SDL_Renderer* TimerRenderer = NULL;
-Timer::Timer():gametime(600000), mPaused(false), mStarted(false), mStartTicks(0), mPausedTicks(0), timerFont(NULL),
+Timer::Timer():gametime(60000), mPaused(false), mStarted(false), mStartTicks(0), mPausedTicks(0), timerFont(NULL),
 timerText("0"), minute(10), second(0), missionOngoing(false), currentMission(NULL),game(&Game::GetGame())
 {
     loadTimerFont();
     TTF_SetFontStyle(timerFont, TTF_STYLE_BOLD);
-    printf("aaaaa\n");
+    //printf("aaaaa\n");
     timercolor = {0,0,0,255};
     rectOnScreen.x = 400;
     rectOnScreen.y = 0;
@@ -107,7 +107,7 @@ bool Timer::update()
     else timerText << "00 left";         //remain 00 at the end
 
     //Deal Mission1
-    if(minute == 8 &&(!missionOngoing))
+    if(false)//minute == 9 &&(!missionOngoing)
     {
         int tmp = game->rdEngine()%2;
         MissionTypes choice;
@@ -116,7 +116,7 @@ bool Timer::update()
         missionOngoing = true;
     }
     //Mission1 Fail
-    if(minute == 6 && missionOngoing)
+    if(false)//minute == 7 && missionOngoing
     {
         gametime += 60000;
         if(currentMission!=NULL)
@@ -128,7 +128,7 @@ bool Timer::update()
     }
 
     //Deal Mission2
-    if(minute == 5 &&(!missionOngoing))
+    if(false)//
     {
         int tmp = game->rdEngine()%2+3;
         MissionTypes choice;
@@ -138,7 +138,7 @@ bool Timer::update()
     }
 
     //Mission2 Fail
-    if(minute==2 && missionOngoing)
+    if(false)//minute==3 && missionOngoing
     {
         currentMission ->timeup();
         if(currentMission!=NULL)
@@ -163,7 +163,7 @@ bool Timer::update()
     //End Game
     if(gametime-timepassed<10)
     {
-        createUserEvent(TIMERCHANGE, TIMERSTOP , new bool(true), NULL);
+        createUserEvent(GAMESTATE_CHANGE, END , new bool(true), NULL);
     }
 
     //Put Timertext to timertexture (uncertained due to renderer)

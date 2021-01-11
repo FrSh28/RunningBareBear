@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "Game.h"
 #include "UserEvent.h"
+#include"Timer.h"
 using namespace std;
 
 BasicObject *createMap(int index)
@@ -10,7 +11,7 @@ BasicObject *createMap(int index)
 	return new Map(Maps(index), "Map");
 }
 
-const int Map::sc_pixelWidth = 40, Map::sc_pixelHeight = 40;
+const int Map::sc_pixelWidth = 50, Map::sc_pixelHeight = 50;
 Map *Map::s_mapInstance = NULL;
 
 Map::Map(Maps index, string _name)
@@ -27,7 +28,7 @@ Map::Map(Maps index, string _name)
 
 	buildMap(background, front);
 
-	for(int i = 0; i < 1; ++i)
+	for(int i = 0; i < 2; ++i)
 		addHunter();
 
 	Game &game = Game::GetGame();
@@ -42,7 +43,7 @@ Map::Map(Maps index, string _name)
 	tmpPixelPos.y += sc_pixelHeight / 2;
 	runnerMapPos = tmpMapPos;
 	runner = createRunner(tmpMapPos, tmpPixelPos);//new Runner(tmpMapPos, tmpPixelPos);
-	//L_character->pushElement(runner);
+	L_character->pushElement(runner);
 }
 
 Map::~Map()
@@ -140,7 +141,9 @@ void Map::start()
 	Game &game = Game::GetGame();
 	game.pushLayer(L_ground);
 	game.pushLayer(L_character);
-	//game.pushOverlayer(L_front);
+	game.pushOverlayer(L_front);
+	game.pushOverlayer(createLayer(L_STATUS, NULL));
+	createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
 	started = true;
 }
 

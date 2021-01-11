@@ -20,13 +20,19 @@ const int Runner::gridWidth = Map::getPixelWidth();
 const int Runner::gridHeight = Map::getPixelHeight();
 Runner::Runner(SDL_Point& InitialMapPos,SDL_Point& InitialPixelPos, character_list character):
 Character("Runner"), strength(100), map(&Map::getMap()), width(gridWidth),
-height(gridHeight), updateRate(60), direction(DOWN) 
+height(gridHeight), updateRate(10), direction(DOWN) 
 {
     initclips();
 
     //set Initial PixelPos
+    InitialPixelPos.x = 100;
+    InitialPixelPos.y = 500;
     setPixelPos(InitialPixelPos);
     //set Initial MapPos
+    SDL_Point tmp;
+    tmp.x = InitialPixelPos.x + gridWidth/2;
+    tmp.y = InitialPixelPos.y + gridHeight/2;
+    InitialMapPos = map->pixelPosTomapPos(tmp);
     setMapPos(InitialMapPos);
     if (mode == 1) {
         /*posOnWindow->x = (int);
@@ -46,8 +52,8 @@ height(gridHeight), updateRate(60), direction(DOWN)
 
         switch (character) {
             case BEAR:
-                velocity = 3;
-                sprint_velocity = 3;
+                velocity = 1;
+                sprint_velocity = 2;
                 username = "bear";
                 texture = loadImage(RUNNER_IMAGE);
                 break;
@@ -128,64 +134,58 @@ bool Runner::handleEvents(SDL_Event &e)
     if(mode==1)
     {
         //if a key is pressed
-        if(e.type==SDL_KEYDOWN && e.key.repeat == 0 )
+        if(e.type==SDL_KEYDOWN )
         {
             //adjust velocity
             switch(e.key.keysym.sym)
             {
-                case SDLK_SPACE:
-                    velocity += sprint_velocity;
-                    updateRate = 30;
-                    return true;
                 case SDLK_s:
-                    velocity_y += velocity;
+                    velocity_y = velocity;
+                    velocity_x = 0;
                     direction = DOWN;
                     return  true;
                 case SDLK_w:
-                    velocity -= velocity;
-                    direction = UP;
+                    velocity_y = -velocity;
+                    velocity_x = 0;
+					direction = UP;
                     return true;
                 case SDLK_d:
-                    velocity_x += velocity;
+                    velocity_x = velocity;
+                    velocity_y = 0;
                     direction = RIGHT;
                     return true;
                 case SDLK_a:
-                    velocity_x -= velocity;
+                    velocity_x = -velocity;
+                    velocity_y = 0;
                     direction = LEFT;
                     return true;
-                case SDLK_e:
-                    //pickup throw switch
-                    Item* tmp;
-                    tmp = map->pickItem(MapPos);
-                    map->placeItem(MapPos,backpack);
-                    backpack = tmp;
-                    return true;
-                case SDLK_q:
-                    createUserEvent(ITEM_USED,backpack->getItemType(),NULL,NULL);
-                    return true;
+                default:
+                	return false;
             }
         }
+       
         //if a key is released
-        else if(e.type==SDL_KEYUP && e.key.repeat == 0)
+        
+        else if(e.type==SDL_KEYUP )
         {
             //Adjust the velocity
             switch( e.key.keysym.sym )
             {
                 case SDLK_SPACE:
                     velocity -= sprint_velocity;
-                    updateRate = 60;
+                    updateRate = 10;
                     return true;
                 case SDLK_w:
-                    velocity_y -= velocity;
+                    velocity_y = 0;
                     return true;
                 case SDLK_s:
-                    velocity_y += velocity;
+                    velocity_y = 0;
                     return true;
                 case SDLK_a:
-                    velocity_x -= velocity;
+                    velocity_x = 0;
                     return true;
                 case SDLK_d:
-                    velocity_x += velocity;
+                    velocity_x = 0;
                     return true;
             }
         }
@@ -195,6 +195,7 @@ bool Runner::handleEvents(SDL_Event &e)
             if(e.user.code == MEAT){(*this)++;}
             return true;
         }
+        
     }
     return success;
 }
@@ -205,57 +206,13 @@ void Runner::move()
     PixelPos.x += velocity_x;
     //up and down
     PixelPos.y += velocity_y;
-    checkCollision();
+    //checkCollision();
 }
 
 bool Runner::checkbackpack()    // if backpack is empty return true
 {
     if(backpack == NULL){return true;}
     else{return false;}
-}
-
-bool Runner::update()
-{
-    static int frame = 0;
-    // move(update PixelPos)
-    move();
-    rectOnScreen.x = PixelPos.x;
-    rectOnScreen.y = PixelPos.y;
-    // deal strength
-    if(velocity_x!=0||velocity_y!=0)
-    {
-        strength -= 0.05;
-        if(abs(velocity_x) == sprint_velocity+velocity || abs(velocity_y) == sprint_velocity+velocity)
-        {strength -= 0.05;}
-    }
-    if(strength > 100)
-    {
-        strength = 100;
-        velocity =4;
-    }
-    else if(strength > 75){velocity = 4;}
-    else if(strength > 50 && strength<75){velocity = 3;}
-    else if(strength > 25 && strength<50){velocity = 2;}
-    else if(strength <25 && strength>0){velocity =1;}
-    else if(strength <0)
-    {
-        strength = 0;
-        velocity = 1;
-    }
-
-    // use map function to calculate MapPos and update
-    MapPos = map->mapPosTopixelPos(SDL_Point({PixelPos.x+width/2,PixelPos.y+height/2}));
-
-    //Render current frame
-    rectOnTexture = Clip[direction*3+frame/updateRate];
-    //render??;
-
-    // go to next frame
-    frame ++;
-    // cycle animation
-    if(frame/updateRate == ANIMATION_FRAMES){frame=0;}
-
-    return true;
 }
 
 bool Runner::collisionBox(SDL_Rect& square)
@@ -471,6 +428,57 @@ void Runner::checkCollision()
         }
     }
 }
+
+bool Runner::update()
+{
+	if(PixelPos.x < 50) PixelPos.x = 50;
+	if(PixelPos.y < 50) PixelPos.y = 50;
+	if(PixelPos.x > 1400) PixelPos.x = 1400;
+	if(PixelPos.y > 1400) PixelPos.y = 1400;
+	
+	rectOnScreen.x = PixelPos.x ;
+    rectOnScreen.y = PixelPos.y ;
+    static int frame = 0;
+    // move(update PixelPos)
+    move();
+    // deal strength
+    if(velocity_x!=0||velocity_y!=0)
+    {
+        strength -= 0.0005;
+        if(abs(velocity_x) == sprint_velocity+velocity || abs(velocity_y) == sprint_velocity+velocity)
+        {strength -= 0.05;}
+    }
+    if(strength > 100)
+    {
+        strength = 100;
+        velocity =4;
+    }
+    else if(strength > 75){velocity = 4;}
+    else if(strength > 50 && strength<75){velocity = 3;}
+    else if(strength > 25 && strength<50){velocity = 2;}
+    else if(strength <25 && strength>0){velocity =1;}
+    else if(strength <0)
+    {
+        strength = 0;
+        velocity = 1;
+    }
+	//if(map->isWall(MapPos))
+	//	printf("aaaaaaa");
+    // use map function to calculate MapPos and update
+    MapPos = map->mapPosTopixelPos(SDL_Point({PixelPos.x+width/2,PixelPos.y+height/2}));
+
+    //Render current frame
+    rectOnTexture = Clip[direction*3+frame/updateRate];
+    //render??;
+
+    // go to next frame
+    frame ++;
+    // cycle animation
+    if(frame/updateRate == ANIMATION_FRAMES){frame=0;}
+
+    return true;
+}
+
 
 int Runner::getStrength() const {return strength;}
 
