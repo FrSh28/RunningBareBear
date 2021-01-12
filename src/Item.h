@@ -22,7 +22,8 @@ public:
     virtual bool handleEvents(SDL_Event& e)=0;
     virtual bool update()=0;
     ItemList getItemType()const;
-    void setPixelPos(SDL_Point&);       // set small grid on map (center)
+    //void setPixelPos(SDL_Point);       // set small grid on map (center)
+    void setPixelPos(int, int);
 };
 
 Item* createItem(ItemList& list);

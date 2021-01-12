@@ -30,7 +30,7 @@ private:
     inline void operator++(int);// operator overloading to add strength (meat)
 
 public:
-    Runner(SDL_Point&, SDL_Point&,character_list = BEAR);
+    Runner(SDL_Point&, SDL_Point&, character_list = BEAR);
     Runner(Runner&);
     ~Runner();
     bool handleEvents(SDL_Event &e);

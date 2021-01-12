@@ -4,6 +4,7 @@
 
 #include "Item.h"
 #include "Files.h"
+#include "Map.h"
 using namespace std;
 
 int Item::itemNumber = 0;
@@ -44,12 +45,26 @@ Item* createItem(ItemList& list)
             return new WebWork3;
     }
 }
-Item::Item(std::string _name):BasicObject(_name){}
-void Item::setPixelPos(SDL_Point& pixelPos)   // center
+Item::Item(std::string _name):BasicObject(_name)
 {
+    rectOnScreen.w = Map::getPixelWidth();
+    rectOnScreen.h = Map::getPixelHeight();
+}
+/*
+void Item::setPixelPos(SDL_Point pixelPos)   // center
+{
+    printf("%d %d\n", PixelPos.x, PixelPos.y);
     rectOnScreen.x = pixelPos.x - rectOnScreen.w / 2;
     rectOnScreen.y = pixelPos.y - rectOnScreen.h / 2;
+}*/
+
+void Item::setPixelPos(int x, int y)   // center
+{
+    rectOnScreen.x = x - rectOnScreen.w / 2;
+    rectOnScreen.y = y - rectOnScreen.h / 2;
+    printf("%d %d %d %d\n", rectOnScreen.x, rectOnScreen.y, rectOnScreen.h, rectOnScreen.h);
 }
+
 ItemList Item::getItemType() const {return type;}
 
 //Star
@@ -80,8 +95,12 @@ Potion::Potion():Item("Potion")
     texture = loadImage(POTION_IMAGE);
     rectOnTexture.x = 90;
     rectOnTexture.y = 80;
-    rectOnTexture.w = 33;
-    rectOnTexture.h = 36;
+    rectOnTexture.w = 45;
+    rectOnTexture.h = 45;
+    //rectOnTexture.x = 110;
+    //rectOnTexture.y = 100;
+    //rectOnTexture.w = 2;
+    //rectOnTexture.h = 2;
 }
 Potion::~Potion(){itemNumber--;}
 bool Potion::handleEvents(SDL_Event &e){return false;}

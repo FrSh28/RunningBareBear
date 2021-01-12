@@ -17,15 +17,21 @@ SDL_Rect Clip [TOTAL_FRAMES];
 
 const int Runner::gridWidth = Map::getPixelWidth();
 const int Runner::gridHeight = Map::getPixelHeight();
-Runner::Runner(SDL_Point& InitialMapPos,SDL_Point& InitialPixelPos, character_list character):
+Runner::Runner(SDL_Point& InitialMapPos, SDL_Point& InitialPixelPos, character_list character):
 BasicObject("Runner"), strength(100), map(&Map::getMap()), width(gridWidth),
-height(gridHeight), updateRate(60), direction(DOWN) 
+height(gridHeight), updateRate(20), direction(DOWN), velocity_x(0),velocity_y(0)
 {
     initclips();
 
     //set Initial PixelPos
+    InitialPixelPos.x = 700;
+    InitialPixelPos.y = 700;
     setPixelPos(InitialPixelPos);
     //set Initial MapPos
+    SDL_Point tmp;
+    tmp.x = InitialPixelPos.x + gridWidth/2;
+    tmp.y = InitialPixelPos.y + gridHeight/2;
+    InitialMapPos = map->pixelPosTomapPos(tmp);
     setMapPos(InitialMapPos);
     if (mode == 1) {
         /*posOnWindow->x = (int);
@@ -45,40 +51,25 @@ height(gridHeight), updateRate(60), direction(DOWN)
 
         switch (character) {
             case BEAR:
-                velocity = 3;
-                sprint_velocity = 3;
+                velocity = 1;
+                sprint_velocity = 2;
                 username = "bear";
                 texture = loadImage(RUNNER_IMAGE);
                 break;
         }
     }
-
-    //randomly create Item
-    /*Item* items[20];
-    for(int i=0;i<20;i++)
-    {
-        SDL_Point a;
-        a.x = Game::GetGame().rdEngine()%1280+1;
-        a.y = Game::GetGame().rdEngine()%720+1;
-        ItemList create;
-        int tmp =Game::GetGame().rdEngine()%3;
-        if(tmp==0){create = STAR;}
-        else if(tmp == 1){create = POTION;}
-        else if(tmp == 2){create = MEAT;}
-        items[i]=createItem(create);
-    }*/
 }
-void Runner::setMapPos(SDL_Point &Set)
+void Runner::setMapPos(SDL_Point& Set)
 {
     MapPos.x = Set.x;
     MapPos.y = Set.y;
 }
-void Runner::setPixelPos(SDL_Point &Set)
+void Runner::setPixelPos(SDL_Point& Set)
 {
     PixelPos.x = Set.x;
     PixelPos.y = Set.y;
     // change PixelPos to top left
-    PixelPos.x -=  width/2 ;
+    PixelPos.x -=  width/2;
     PixelPos.y -=  height/2;
 }
 
@@ -111,7 +102,7 @@ Runner::Runner(Runner &runner)
     velocity_y = runner.velocity;
     velocity = runner.velocity;
     strength = runner.strength;
-    sprint_velocity = sprint_velocity;
+    sprint_velocity = runner.sprint_velocity;
     width = runner.width;
     height = runner.height;
     updateRate = runner.updateRate;
@@ -127,64 +118,63 @@ bool Runner::handleEvents(SDL_Event &e)
     if(mode==1)
     {
         //if a key is pressed
-        if(e.type==SDL_KEYDOWN && e.key.repeat == 0 )
+        if(e.type==SDL_KEYDOWN)
         {
             //adjust velocity
             switch(e.key.keysym.sym)
             {
-                case SDLK_SPACE:
-                    velocity += sprint_velocity;
-                    updateRate = 30;
-                    return true;
                 case SDLK_s:
-                    velocity_y += velocity;
+                    velocity_y = velocity;
+                    velocity_x = 0;
                     direction = DOWN;
                     return  true;
                 case SDLK_w:
-                    velocity -= velocity;
+                    velocity_y = -velocity;
+                    velocity_x = 0;
                     direction = UP;
                     return true;
                 case SDLK_d:
-                    velocity_x += velocity;
+                    velocity_x = velocity;
+                    velocity_y = 0;
                     direction = RIGHT;
                     return true;
                 case SDLK_a:
-                    velocity_x -= velocity;
+                    velocity_x = -velocity;
+                    velocity_y = 0;
                     direction = LEFT;
                     return true;
                 case SDLK_e:
                     //pickup throw switch
                     Item* tmp;
                     tmp = map->pickItem(MapPos);
-                    map->placeItem(MapPos,backpack);
+                    map->placeItem(MapPos, backpack);
                     backpack = tmp;
                     return true;
                 case SDLK_q:
-                    createUserEvent(ITEM_USED,backpack->getItemType(),NULL,NULL);
+                    createUserEvent(ITEM_USED, backpack->getItemType(), NULL, NULL);
                     return true;
             }
         }
-        //if a key is released
-        else if(e.type==SDL_KEYUP && e.key.repeat == 0)
+        else if(e.type==SDL_KEYUP)  //if a key is released
         {
             //Adjust the velocity
-            switch( e.key.keysym.sym )
+            switch(e.key.keysym.sym)
             {
                 case SDLK_SPACE:
                     velocity -= sprint_velocity;
-                    updateRate = 60;
+                    updateRate = 10;
                     return true;
                 case SDLK_w:
-                    velocity_y -= velocity;
+                    velocity_y = 0;
                     return true;
                 case SDLK_s:
-                    velocity_y += velocity;
+                    velocity_y = 0;
                     return true;
                 case SDLK_a:
-                    velocity_x -= velocity;
+                    velocity_x = 0;
                     return true;
                 case SDLK_d:
-                    velocity_x += velocity;
+                    velocity_x = 0;
                     return true;
             }
         }
@@ -194,6 +184,7 @@ bool Runner::handleEvents(SDL_Event &e)
             if(e.user.code == MEAT){(*this)++;}
             return true;
         }
+        
     }
     return success;
 }
@@ -204,57 +195,13 @@ void Runner::move()
     PixelPos.x += velocity_x;
     //up and down
     PixelPos.y += velocity_y;
-    checkCollision();
+    //checkCollision();
 }
 
 bool Runner::checkbackpack()    // if backpack is empty return true
 {
     if(backpack == NULL){return true;}
     else{return false;}
-}
-
-bool Runner::update()
-{
-    static int frame = 0;
-    // move(update PixelPos)
-    move();
-    rectOnScreen.x = PixelPos.x;
-    rectOnScreen.y = PixelPos.y;
-    // deal strength
-    if(velocity_x!=0||velocity_y!=0)
-    {
-        strength -= 0.05;
-        if(abs(velocity_x) == sprint_velocity+velocity || abs(velocity_y) == sprint_velocity+velocity)
-        {strength -= 0.05;}
-    }
-    if(strength > 100)
-    {
-        strength = 100;
-        velocity =4;
-    }
-    else if(strength > 75){velocity = 4;}
-    else if(strength > 50 && strength<75){velocity = 3;}
-    else if(strength > 25 && strength<50){velocity = 2;}
-    else if(strength <25 && strength>0){velocity =1;}
-    else if(strength <0)
-    {
-        strength = 0;
-        velocity = 1;
-    }
-
-    // use map function to calculate MapPos and update
-    MapPos = map->mapPosTopixelPos(SDL_Point({PixelPos.x+width/2,PixelPos.y+height/2}));
-
-    //Render current frame
-    rectOnTexture = Clip[direction*3+frame/updateRate];
-    //render??;
-
-    // go to next frame
-    frame ++;
-    // cycle animation
-    if(frame/updateRate == ANIMATION_FRAMES){frame=0;}
-
-    return true;
 }
 
 bool Runner::collisionBox(SDL_Rect& square)
@@ -276,8 +223,10 @@ void Runner::checkCollision()
         // check right top
         tmp.x = MapPos.x+1;
         tmp.y = MapPos.y-1;
+
         if(map->isWall(tmp))
         {
+            tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
             wall.y = tmp.y;
@@ -293,6 +242,7 @@ void Runner::checkCollision()
         tmp.y = MapPos.y;
         if(map->isWall(tmp))
         {
+            tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
             wall.y = tmp.y;
@@ -308,6 +258,7 @@ void Runner::checkCollision()
         tmp.y = MapPos.y+1;
         if(map->isWall(tmp))
         {
+            tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
             wall.y = tmp.y;
@@ -328,6 +279,7 @@ void Runner::checkCollision()
         tmp.y = MapPos.y-1;
         if(map->isWall(tmp))
         {
+            tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
             wall.y = tmp.y;
@@ -343,6 +295,7 @@ void Runner::checkCollision()
         tmp.y = MapPos.y;
         if(map->isWall(tmp))
         {
+            tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
             wall.y = tmp.y;
@@ -358,6 +311,7 @@ void Runner::checkCollision()
         tmp.y = MapPos.y+1;
         if(map->isWall(tmp))
         {
+            tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
             wall.y = tmp.y;
@@ -378,6 +332,7 @@ void Runner::checkCollision()
         tmp.y = MapPos.y-1;
         if(map->isWall(tmp))
         {
+            tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
             wall.y = tmp.y;
@@ -393,6 +348,7 @@ void Runner::checkCollision()
         tmp.y = MapPos.y-1;
         if(map->isWall(tmp))
         {
+            tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
             wall.y = tmp.y;
@@ -408,6 +364,7 @@ void Runner::checkCollision()
         tmp.y = MapPos.y-1;
         if(map->isWall(tmp))
         {
+            tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
             wall.y = tmp.y;
@@ -428,6 +385,7 @@ void Runner::checkCollision()
         tmp.y = MapPos.y+1;
         if(map->isWall(tmp))
         {
+            tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
             wall.y = tmp.y;
@@ -443,6 +401,7 @@ void Runner::checkCollision()
         tmp.y = MapPos.y+1;
         if(map->isWall(tmp))
         {
+            tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
             wall.y = tmp.y;
@@ -458,6 +417,7 @@ void Runner::checkCollision()
         tmp.y = MapPos.y+1;
         if(map->isWall(tmp))
         {
+            tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
             wall.y = tmp.y;
@@ -469,6 +429,51 @@ void Runner::checkCollision()
             }
         }
     }
+}
+
+bool Runner::update()
+{
+    rectOnScreen.x = PixelPos.x ;
+    rectOnScreen.y = PixelPos.y ;
+    static int frame = 0;
+    // move(update PixelPos)
+    move();
+    // deal strength
+    if(velocity_x!=0||velocity_y!=0)
+    {
+        strength -= 0.0005;
+        if(abs(velocity_x) == sprint_velocity+velocity || abs(velocity_y) == sprint_velocity+velocity)
+        {strength -= 0.05;}
+    }
+    if(strength > 100)
+    {
+        strength = 100;
+        velocity =4;
+    }
+    else if(strength > 75){velocity = 4;}
+    else if(strength > 50 && strength < 75){velocity = 3;}
+    else if(strength > 25 && strength < 50){velocity = 2;}
+    else if(strength < 25 && strength > 0) {velocity = 1;}
+    else if(strength <0)
+    {
+        strength = 0;
+        velocity = 1;
+    }
+    //if(map->isWall(MapPos))
+    //  printf("aaaaaaa");
+    // use map function to calculate MapPos and update
+    MapPos = map->mapPosTopixelPos(SDL_Point({PixelPos.x+width/2,PixelPos.y+height/2}));
+
+    //Render current frame
+    rectOnTexture = Clip[direction*3+frame/updateRate];
+    //render??;
+
+    // go to next frame
+    frame ++;
+    // cycle animation
+    if(frame/updateRate == ANIMATION_FRAMES){frame=0;}
+
+    return true;
 }
 
 int Runner::getStrength() const {return strength;}
@@ -540,4 +545,3 @@ void Runner::initclips()                // init render clips
     Clip[11].w = 56;
     Clip[11].h = 56;
 }
-

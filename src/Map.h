@@ -65,7 +65,7 @@ private:
 	bool started;
 	// for map on Window
 	#ifdef _WIN32
-	struct SDL_PointComp{ bool operator()(const SDL_Point &, const SDL_Point &); };
+	struct SDL_PointComp{ bool operator()(const SDL_Point , const SDL_Point ); };
 	std::map<SDL_Point, Item *, SDL_PointComp> items;
 	#endif
 	// for map on Mac

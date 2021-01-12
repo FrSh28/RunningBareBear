@@ -7,7 +7,7 @@
 using namespace std;
 
 #ifdef __APPLE__
-int operator~(SDL_Point &pos)
+int operator~(SDL_Point pos)
 {
 	return pos.y * Map::getPixelWidth() + pos.x;
 }
@@ -46,6 +46,21 @@ Map::Map(Maps index, string _name)
 	runnerMapPos = tmpMapPos;
 	runner = new Runner(tmpMapPos, tmpPixelPos);
 	L_character->pushElement(runner);
+
+	for(int i = 0; i < 50; ++i)
+	{
+		do
+		{
+			tmpMapPos.x = 1;//game.rdEngine() % rowNum;
+			tmpMapPos.y = game.rdEngine() % colNum;
+		}while(false);//!isSpace(tmpMapPos));
+		int tmp = game.rdEngine()%3;
+		ItemList create;
+		if(tmp==0){create = STAR;}
+		else if(tmp == 1){create = POTION;}
+		else if(tmp == 2){create = MEAT;}
+		placeItem(tmpMapPos, createItem(create));
+	}
 }
 
 Map::~Map()
@@ -143,7 +158,7 @@ void Map::start()
 	Game &game = Game::GetGame();
 	game.pushLayer(L_ground);
 	game.pushLayer(L_character);
-	game.pushOverlayer(L_front);
+	//game.pushOverlayer(L_front);
 	game.pushOverlayer(createLayer(L_STATUS, NULL));
 	createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
 	started = true;
@@ -195,9 +210,11 @@ bool Map::placeItem(SDL_Point pos, Item *item)	// mapPos
 	else
 	{
 		map[pos.y][pos.x] = ITEM;
-		SDL_Point tmp = mapPosTopixelPos(pos);
-		SDL_Rect rect = {tmp.x, tmp.y, sc_pixelWidth, sc_pixelHeight};
-		item->setRectOnScreen(rect);
+		SDL_Point tmpPixelPos = mapPosTopixelPos(pos);
+		tmpPixelPos.x += sc_pixelWidth / 2;
+		tmpPixelPos.y += sc_pixelHeight / 2;
+		printf("%d %d\n", tmpPixelPos.x, tmpPixelPos.y);
+		item->setPixelPos(tmpPixelPos.x, tmpPixelPos.y);
 		#ifdef _WIN32
 		items.insert({pos, item});
 		#endif
@@ -304,7 +321,7 @@ void Map::buildMap(BackGround *background, BackGround *front)
 }
 
 #ifdef _WIN32
-bool Map::SDL_PointComp::operator()(const SDL_Point &lhs, const SDL_Point &rhs)
+bool Map::SDL_PointComp::operator()(const SDL_Point lhs, const SDL_Point rhs)
 {
 	if(lhs.x != rhs.x)
 		return lhs.x < rhs.x;
