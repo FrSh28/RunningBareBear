@@ -24,8 +24,8 @@ height(gridHeight), updateRate(20), direction(DOWN), velocity_x(0),velocity_y(0)
     initclips();
 
     //set Initial PixelPos
-    InitialPixelPos.x = 700;
-    InitialPixelPos.y = 700;
+    InitialPixelPos.x = 50;
+    InitialPixelPos.y = 50;
     setPixelPos(InitialPixelPos);
     //set Initial MapPos
     SDL_Point tmp;
@@ -195,7 +195,7 @@ void Runner::move()
     PixelPos.x += velocity_x;
     //up and down
     PixelPos.y += velocity_y;
-    //checkCollision();
+    checkCollision();
 }
 
 bool Runner::checkbackpack()    // if backpack is empty return true
@@ -206,11 +206,15 @@ bool Runner::checkbackpack()    // if backpack is empty return true
 
 bool Runner::collisionBox(SDL_Rect& square)
 {
+    printf("enter collision box\n");
+    printf("%d %d %d %d\n", square.x, square.y, square.w, square.h);
+    printf("%d %d %d %d\n", PixelPos.x, PixelPos.y, width, height);
     bool collision = true;
-    if(PixelPos.x        > square.x+square.w){return false;}
-    if(PixelPos.x+width  < square.x){return false;}
-    if(PixelPos.y        < square.y+square.h){return false;}
-    if(PixelPos.y+height > square.y){return false;}
+    if(PixelPos.x        > square.x+square.w){printf("9\n");return false;}
+    if(PixelPos.x+width  < square.x){printf("8\n");return false;}
+    if(PixelPos.y        > square.y+square.h){printf("7\n");return false;}
+    if(PixelPos.y+height < square.y){printf("6\n");return false;}
+    printf("trur\n");
     return collision;
 }
 
@@ -226,6 +230,7 @@ void Runner::checkCollision()
 
         if(map->isWall(tmp))
         {
+            printf("r1\n");
             tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
@@ -242,6 +247,7 @@ void Runner::checkCollision()
         tmp.y = MapPos.y;
         if(map->isWall(tmp))
         {
+            printf("r2\n");
             tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
@@ -250,6 +256,7 @@ void Runner::checkCollision()
             wall.h = gridHeight;
             if(collisionBox(wall))
             {
+                printf("123");
                 PixelPos.x -= velocity_x;
             }
         }
@@ -258,6 +265,7 @@ void Runner::checkCollision()
         tmp.y = MapPos.y+1;
         if(map->isWall(tmp))
         {
+            printf("r3\n");
             tmp = map->mapPosTopixelPos(tmp);
             SDL_Rect wall;
             wall.x = tmp.x;
@@ -433,6 +441,7 @@ void Runner::checkCollision()
 
 bool Runner::update()
 {
+    printf("%d %d\n", MapPos.x, MapPos.y);
     rectOnScreen.x = PixelPos.x ;
     rectOnScreen.y = PixelPos.y ;
     static int frame = 0;
@@ -462,7 +471,7 @@ bool Runner::update()
     //if(map->isWall(MapPos))
     //  printf("aaaaaaa");
     // use map function to calculate MapPos and update
-    MapPos = map->mapPosTopixelPos(SDL_Point({PixelPos.x+width/2,PixelPos.y+height/2}));
+    MapPos = map->pixelPosTomapPos(SDL_Point({PixelPos.x+width/2,PixelPos.y+height/2}));
 
     //Render current frame
     rectOnTexture = Clip[direction*3+frame/updateRate];
