@@ -11,15 +11,15 @@ SDL_Rect Button::buttons[TOTAL_BUTTONS] =
 	SDL_Rect({ 495, 380, 290, 290}), //STARTS
 	SDL_Rect({1085,  50, 145, 145}), //INTRO1
 	SDL_Rect({ 615, 100,  30,  30}), //LEAVEINTRO
-	SDL_Rect({ 890,  50, 145, 145}), // MISSION
+	SDL_Rect({ 980,  40, 100, 100}), //MISSION
 	SDL_Rect({ 615, 100,  30,  30}), //LEAVEMISSION
-	SDL_Rect({1085,  50, 145, 145}), //PAUSES
+	SDL_Rect({1130,  40, 100, 100}), //PAUSES
 	SDL_Rect({ 370, 290, 145, 145}), //LEAVE
 	SDL_Rect({ 570, 290, 145, 145}), //RESUMES
 	SDL_Rect({ 770, 290, 145, 145}), //INTRO2
 	SDL_Rect({ 615, 100,  30,  30}), //LEAVEINTRO2
-	SDL_Rect({ 980, 420, 200, 200}) //OK
-} ;
+	SDL_Rect({ 980, 420, 200, 200})  //OK
+};
 
 double operator^(SDL_Point center, SDL_Point mouse)
 {
@@ -180,8 +180,8 @@ bool Button::handleEvents(SDL_Event &e)
 					else if(current == Mission2Type3)
 						game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_2_2_IMAGE )));
 						
-					else if(current == MissionTotal)
-						game.pushOverlayer(createLayer(L_LOADING, new BackGround(DONATE_IMAGE )));
+					//else if(current == MissionTotal)
+					//	game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_DEFAULT_IMAGE)));
 						
 					//Layer
 				}

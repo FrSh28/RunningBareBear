@@ -27,6 +27,7 @@ namespace Files
 										"../media/image/PEMission.png",
 										"../media/image/DebugMission.png",
 										"../media/image/WebworkMission.png",
+										"../media/image/table.png",
 										"../media/image/timerboard.png", //TIMER_BACKGROUND
 										"../media/image/star.png", //STAR
 										"../media/image/Item.png", //POTION
