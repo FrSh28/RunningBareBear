@@ -30,9 +30,8 @@ Map::Map(Maps index, string _name)
 
 	buildMap(background, front);
 
-	for(int i = 0; i < 10; ++i)
-		addHunter();
 	addRunner();
+	addHunter(10);
 	addItems(30);
 }
 
@@ -91,21 +90,24 @@ void Map::loadMap(Maps index)
 	height = rowNum * sc_pixelHeight;
 }
 
-void Map::addHunter()
+void Map::addHunter(int num)
 {
 	SDL_Point tmpMapPos, tmpPixelPos;
 	Game &game = Game::GetGame();
-	do
+	for(int i = 0; i < num; ++i)
 	{
-		tmpMapPos.x = game.rdEngine() % rowNum;
-		tmpMapPos.y = game.rdEngine() % colNum;
-	}while(!isSpace(tmpMapPos) or tmpMapPos == runnerMapPos);
-	tmpPixelPos = mapPosTopixelPos(tmpMapPos);
-	tmpPixelPos.x += sc_pixelWidth / 2;
-	tmpPixelPos.y += sc_pixelHeight / 2;
-	hunters.push_back(new Hunter(tmpMapPos, tmpPixelPos));
-	L_character->pushElement(hunters.back());
-	huntersMapPos.push_back(tmpMapPos);
+		do
+		{
+			tmpMapPos.x = game.rdEngine() % rowNum;
+			tmpMapPos.y = game.rdEngine() % colNum;
+		}while(!isSpace(tmpMapPos) or tmpMapPos == runnerMapPos);
+		tmpPixelPos = mapPosTopixelPos(tmpMapPos);
+		tmpPixelPos.x += sc_pixelWidth / 2;
+		tmpPixelPos.y += sc_pixelHeight / 2;
+		hunters.push_back(new Hunter(tmpMapPos, tmpPixelPos));
+		L_character->pushElement(hunters.back());
+		huntersMapPos.push_back(tmpMapPos);
+	}
 }
 
 void Map::addRunner()

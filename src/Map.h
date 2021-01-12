@@ -27,7 +27,7 @@ public:
 	~Map();
 
 	void loadMap(Maps index);
-	void addHunter();
+	void addHunter(int);
 	void addRunner();
 	void addItems(int);
 	void free();

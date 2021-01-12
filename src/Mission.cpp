@@ -55,10 +55,7 @@ void Mission::timeup()
 	if(!success)
 	{
 		Map &map = Map::getMap();
-		for (int i=total;i<3;i++)
-		{
-			map.addHunter(); 
-		}
+		map.addHunter(3-total); 
 	}
 }
 Mission1_1 :: Mission1_1 ()
