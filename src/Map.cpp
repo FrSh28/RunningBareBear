@@ -6,11 +6,6 @@
 #include "UserEvent.h"
 using namespace std;
 
-BasicObject *createMap(int index)
-{
-	return new Map(Maps(index), "Map");
-}
-
 #ifdef __APPLE__
 int operator~(SDL_Point &pos)
 {

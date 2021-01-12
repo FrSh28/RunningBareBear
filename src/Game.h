@@ -9,8 +9,6 @@
 
 class Map;
 
-extern BasicObject *createMap(int);
-
 enum GameState
 {
 	STARTMENU,

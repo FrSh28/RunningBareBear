@@ -4,6 +4,7 @@
 #include <ctime>
 #include "Game.h"
 #include "Layer.h"
+#include "Map.h"
 #include "Files.h"
 #include "Timer.h"
 #include "UserEvent.h"
@@ -110,7 +111,7 @@ void Game::HandleEvents()
 					popAllLayers();
 					pushOverlayer(createLayer(L_LOADING, new BackGround(DONATE_IMAGE)));
 					Render();
-					gameMap = createMap(1);	// 1 or 2 or 3 or 4
+					gameMap = new Map(MAP_01, "Map01");
 					eventStart = SDL_GetTicks();
 					duration = 2000;
 					break;
