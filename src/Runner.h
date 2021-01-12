@@ -1,19 +1,15 @@
-extern int mode;
 #ifndef RUNNER_H
 #define RUNNER_H
-#include "BasicObject.h"
 #include "includeSDL.h"
-#include "Character.h"
-#include "Game.h"
-#include "UserEvent.h"
-#include "Map.h"
+#include "BasicObject.h"
+extern int mode;
 
 class Item;
 class Map;
 
 enum character_list{BEAR};
 enum face {DOWN,LEFT,RIGHT,UP};
-class Runner:public Character{
+class Runner:public BasicObject{
 private:
     std::string username;
     face direction;             // character direction(used for render different graphs)

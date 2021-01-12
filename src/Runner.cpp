@@ -2,13 +2,12 @@
 // Created by 劉瑄穎 on 2020/12/31.
 //
 #include "Runner.h"
+#include "Game.h"
+#include "Map.h"
+#include "UserEvent.h"
+using namespace std;
 
 Runner *Runner::runnerInstance = NULL;
-
-Character *createRunner(SDL_Point _mapPos, SDL_Point _pixelPos)
-{
-    return new Runner(_mapPos, _pixelPos);
-}
 
 character_list character;
 
@@ -19,7 +18,7 @@ SDL_Rect Clip [TOTAL_FRAMES];
 const int Runner::gridWidth = Map::getPixelWidth();
 const int Runner::gridHeight = Map::getPixelHeight();
 Runner::Runner(SDL_Point& InitialMapPos,SDL_Point& InitialPixelPos, character_list character):
-Character("Runner"), strength(100), map(&Map::getMap()), width(gridWidth),
+BasicObject("Runner"), strength(100), map(&Map::getMap()), width(gridWidth),
 height(gridHeight), updateRate(60), direction(DOWN) 
 {
     initclips();

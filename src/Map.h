@@ -9,12 +9,8 @@
 #include "Layer.h"
 #include "Files.h"
 #include "Item.h"
-#include "Character.h"
-//#include "Hunter.h"
-//#include "Runner.h"
-
-extern Character *createHunter(SDL_Point, SDL_Point);
-extern Character *createRunner(SDL_Point, SDL_Point);
+#include "Hunter.h"
+#include "Runner.h"
 
 
 enum ObjOnMap
@@ -77,8 +73,8 @@ private:
 	std::map<int, Item *> items;
 	#endif
 
-	std::vector<Character *> hunters;
-	Character *runner;
+	std::vector<Hunter *> hunters;
+	Runner *runner;
 	std::vector<SDL_Point> huntersMapPos;
 	SDL_Point runnerMapPos;
 

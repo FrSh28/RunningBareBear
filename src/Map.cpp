@@ -2,6 +2,7 @@
 #include <sstream>
 #include "Map.h"
 #include "Game.h"
+#include "Timer.h"
 #include "UserEvent.h"
 using namespace std;
 
@@ -48,7 +49,7 @@ Map::Map(Maps index, string _name)
 	tmpPixelPos.x += sc_pixelWidth / 2;
 	tmpPixelPos.y += sc_pixelHeight / 2;
 	runnerMapPos = tmpMapPos;
-	runner = createRunner(tmpMapPos, tmpPixelPos);//new Runner(tmpMapPos, tmpPixelPos);
+	runner = new Runner(tmpMapPos, tmpPixelPos);
 	L_character->pushElement(runner);
 }
 
@@ -119,7 +120,7 @@ void Map::addHunter()
 	tmpPixelPos = mapPosTopixelPos(tmpMapPos);
 	tmpPixelPos.x += sc_pixelWidth / 2;
 	tmpPixelPos.y += sc_pixelHeight / 2;
-	hunters.push_back(createHunter(tmpMapPos, tmpPixelPos));
+	hunters.push_back(new Hunter(tmpMapPos, tmpPixelPos));
 	L_character->pushElement(hunters.back());
 	huntersMapPos.push_back(tmpMapPos);
 }
@@ -148,7 +149,7 @@ void Map::start()
 	game.pushLayer(L_ground);
 	game.pushLayer(L_character);
 	game.pushOverlayer(L_front);
-	pushOverlayer(createLayer(L_STATUS, NULL));
+	game.pushOverlayer(createLayer(L_STATUS, NULL));
 	createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
 	started = true;
 }

@@ -4,6 +4,8 @@
 
 #include "Item.h"
 #include "Files.h"
+using namespace std;
+
 int Item::itemNumber = 0;
 Item* createItem(ItemList& list)
 {

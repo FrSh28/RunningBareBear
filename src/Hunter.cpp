@@ -1,20 +1,14 @@
-#include "includeSDL.h"
-#include "Game.h"
-#include "Hunter.h"
-#include "Map.h"
-#include "UserEvent.h"
-#include "Character.h"
 #include <queue>
 #include <iostream>
 #include <cmath>
+#include "includeSDL.h"
+#include "Hunter.h"
+#include "Game.h"
+#include "Map.h"
+#include "UserEvent.h"
 using namespace std;
 
 SDL_Rect Hunter_Clip[TOTAL];
-
-Character *createHunter(SDL_Point _mapPos, SDL_Point _pixelPos)
-{
-	return new Hunter(_mapPos, _pixelPos);
-}
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	Hvelocity(0), arrive(false), SetSuccess(false), Discovered(false),

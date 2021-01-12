@@ -4,6 +4,7 @@
 #include "UserEvent.h"
 #include "Layer.h"
 #include <cmath>
+using namespace std;
 
 SDL_Rect Button::buttons[TOTAL_BUTTONS] = 
 {
