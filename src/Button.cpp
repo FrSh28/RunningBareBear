@@ -101,8 +101,7 @@ bool Button::handleEvents(SDL_Event &e)
 					Inside = true;
 				}
 			}
-			//SDL_Point tmp;printf("%d\n", int(e.type));//
-			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)// && e.button.button == SDL_BUTTON_LEFT
+			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
 				
 				if(Inside)
@@ -160,9 +159,12 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 				if(Inside)
 				{
-					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 					Game &game = Game::GetGame();
 					current = Mission::getMission();
+					if(current == MissionTotal)
+						break;
+					
+					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 					if(current == Mission1Type1)
 						game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_1_1_IMAGE )));
 					else if(current == Mission1Type2)
@@ -179,11 +181,6 @@ bool Button::handleEvents(SDL_Event &e)
 					*/	
 					else if(current == Mission2Type3)
 						game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_2_2_IMAGE )));
-						
-					//else if(current == MissionTotal)
-					//	game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_DEFAULT_IMAGE)));
-						
-					//Layer
 				}
 			}
 			break;

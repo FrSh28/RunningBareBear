@@ -119,6 +119,7 @@ void Game::HandleEvents()
 					state = PAUSE;
 					if(puasedCount < 1)
 						createUserEvent(TIMERCHANGE, TIMERPAUSE, NULL, NULL);
+					////Timer be frozen
 					++puasedCount;
 					break;
 				case RESUME:

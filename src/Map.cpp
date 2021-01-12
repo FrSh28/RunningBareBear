@@ -13,7 +13,7 @@ int operator~(SDL_Point pos)
 }
 #endif
 
-const int Map::sc_pixelWidth = 40, Map::sc_pixelHeight = 40;
+const int Map::sc_pixelWidth = 30, Map::sc_pixelHeight = 30;
 Map *Map::s_mapInstance = NULL;
 
 Map::Map(Maps index, string _name)
@@ -30,37 +30,10 @@ Map::Map(Maps index, string _name)
 
 	buildMap(background, front);
 
-	for(int i = 0; i < 1; ++i)
-		;//addHunter();
-
-	Game &game = Game::GetGame();
-	SDL_Point tmpMapPos, tmpPixelPos;
-	do
-	{
-		tmpMapPos.x = game.rdEngine() % rowNum;
-		tmpMapPos.y = game.rdEngine() % colNum;
-	}while(!isSpace(tmpMapPos));
-	tmpPixelPos = mapPosTopixelPos(tmpMapPos);
-	tmpPixelPos.x += sc_pixelWidth / 2;
-	tmpPixelPos.y += sc_pixelHeight / 2;
-	runnerMapPos = tmpMapPos;
-	runner = new Runner(tmpMapPos, tmpPixelPos);
-	L_character->pushElement(runner);
-
-	for(int i = 0; i < 50; ++i)
-	{
-		do
-		{
-			tmpMapPos.x = 1;//game.rdEngine() % rowNum;
-			tmpMapPos.y = game.rdEngine() % colNum;
-		}while(false);//!isSpace(tmpMapPos));
-		int tmp = game.rdEngine()%3;
-		ItemList create;
-		if(tmp==0){create = STAR;}
-		else if(tmp == 1){create = POTION;}
-		else if(tmp == 2){create = MEAT;}
-		placeItem(tmpMapPos, createItem(create));
-	}
+	for(int i = 0; i < 10; ++i)
+		addHunter();
+	addRunner();
+	addItems(30);
 }
 
 Map::~Map()
@@ -135,6 +108,52 @@ void Map::addHunter()
 	huntersMapPos.push_back(tmpMapPos);
 }
 
+void Map::addRunner()
+{
+	Game &game = Game::GetGame();
+	SDL_Point tmpMapPos, tmpPixelPos;
+	do
+	{
+		tmpMapPos.x = game.rdEngine() % rowNum;
+		tmpMapPos.y = game.rdEngine() % colNum;
+	}while(!isSpace(tmpMapPos));
+	tmpPixelPos = mapPosTopixelPos(tmpMapPos);
+	tmpPixelPos.x += sc_pixelWidth / 2;
+	tmpPixelPos.y += sc_pixelHeight / 2;
+	runnerMapPos = tmpMapPos;
+	runner = new Runner(tmpMapPos, tmpPixelPos);
+	L_character->pushElement(runner);
+}
+
+void Map::addItems(int num)
+{
+	SDL_Point tmpMapPos;
+	ItemList tmpItemList;
+	Game &game = Game::GetGame();
+	for(int i = 0; i < num; ++i)
+	{
+		do
+		{
+			tmpMapPos.x = game.rdEngine() % (rowNum-2) + 1;
+			tmpMapPos.y = game.rdEngine() % (colNum-2) + 1;
+		}while(!isSpace(tmpMapPos));
+
+		switch(game.rdEngine()%3)
+		{
+			case 0:
+				tmpItemList = STAR;
+				break;
+			case 1:
+				tmpItemList = POTION;
+				break;
+			case 2:
+				tmpItemList = MEAT;
+				break;
+		}
+		placeItem(tmpMapPos, createItem(tmpItemList));
+	}
+}
+
 void Map::free()
 {
 	Game &game = Game::GetGame();
@@ -203,7 +222,7 @@ bool Map::update()
 	return true;
 }
 
-bool Map::placeItem(SDL_Point pos, Item *item)	// mapPos
+bool Map::placeItem(SDL_Point &pos, Item *item)	// mapPos
 {
 	if(!isSpace(pos) or item == NULL)
 		return false;
@@ -213,8 +232,7 @@ bool Map::placeItem(SDL_Point pos, Item *item)	// mapPos
 		SDL_Point tmpPixelPos = mapPosTopixelPos(pos);
 		tmpPixelPos.x += sc_pixelWidth / 2;
 		tmpPixelPos.y += sc_pixelHeight / 2;
-		printf("%d %d\n", tmpPixelPos.x, tmpPixelPos.y);
-		item->setPixelPos(tmpPixelPos.x, tmpPixelPos.y);
+		item->setPixelPos(tmpPixelPos);
 		#ifdef _WIN32
 		items.insert({pos, item});
 		#endif
@@ -226,7 +244,7 @@ bool Map::placeItem(SDL_Point pos, Item *item)	// mapPos
 	}
 }
 
-Item *Map::pickItem(SDL_Point pos)		// mapPos
+Item *Map::pickItem(SDL_Point &pos)		// mapPos
 {
 	if(!isItem(pos))
 		return NULL;
@@ -246,7 +264,7 @@ Item *Map::pickItem(SDL_Point pos)		// mapPos
 	}
 }
 
-ItemList Map::peekItem(SDL_Point pos)	// mapPos
+ItemList Map::peekItem(SDL_Point &pos)	// mapPos
 {
 	if(!isItem(pos))
 		return BAD_ITEM;

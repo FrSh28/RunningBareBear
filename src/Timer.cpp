@@ -11,7 +11,7 @@ timerText("0"), minute(10), second(0), missionOngoing(false), currentMission(NUL
 {
     loadTimerFont();
     TTF_SetFontStyle(timerFont, TTF_STYLE_BOLD);
-    printf("aaaaa\n");
+
     timercolor = {0,0,0,255};
     rectOnScreen.x = 400;
     rectOnScreen.y = 0;

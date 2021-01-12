@@ -52,7 +52,9 @@ bool Hunter::handleEvents(SDL_Event &e)
 
 bool Hunter::update()
 {
-	static int frame = 0;
+	frame++;
+	if(frame % 2)
+		return false;
 	HunterCenterPixel.x = HunterPixelPos.x + rectOnScreen.w/2;
 	HunterCenterPixel.y = HunterPixelPos.y + rectOnScreen.h/2;
 	HunterMapPos = map->pixelPosTomapPos(HunterCenterPixel);
@@ -79,7 +81,6 @@ bool Hunter::update()
 			{
 				Discovered = false;
 			}
-			Game &game = Game::GetGame();
 			directPos = Set();
 			SDL_Point tmp;
 			tmp = map->pixelPosTomapPos(directPos);
@@ -95,7 +96,6 @@ bool Hunter::update()
 		if(Arrive(directPos))
 		{
 			SDL_Point SetPos;
-			Game &game = Game::GetGame();
 			directPos = Set();
 			SDL_Point tmp;
 			tmp = map->pixelPosTomapPos(directPos);
@@ -106,7 +106,6 @@ bool Hunter::update()
 	}
 	Move();
 	rectOnTexture = Hunter_Clip[direction+frame/updateRate];
-	frame ++;
 	if(frame/updateRate == Animation_Frame){frame=0;}
 	//if it change return true
 	rectOnScreen.x = HunterPixelPos.x;

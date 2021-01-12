@@ -28,6 +28,8 @@ public:
 
 	void loadMap(Maps index);
 	void addHunter();
+	void addRunner();
+	void addItems(int);
 	void free();
 	void start();
 	bool handleEvents(SDL_Event &);	// return true if handled
@@ -36,9 +38,9 @@ public:
 	inline bool isSpace(SDL_Point mapPos) const { return map[mapPos.y][mapPos.x] == SPACE; }
 	inline bool isWall(SDL_Point mapPos)  const { return map[mapPos.y][mapPos.x] == WALL; }
 	inline bool isItem(SDL_Point mapPos)  const { return map[mapPos.y][mapPos.x] == ITEM; }
-	bool placeItem(SDL_Point, Item *);	// mapPos
-	Item *pickItem(SDL_Point);			// mapPos
-	ItemList peekItem(SDL_Point);		// mapPos
+	bool placeItem(SDL_Point &, Item *);	// mapPos
+	Item *pickItem(SDL_Point &);			// mapPos
+	ItemList peekItem(SDL_Point &);		// mapPos
 
 	SDL_Point pixelPosTomapPos(SDL_Point);
 	SDL_Point mapPosTopixelPos(SDL_Point);

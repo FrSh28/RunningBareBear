@@ -5,6 +5,7 @@
 #include "Item.h"
 #include "Files.h"
 #include "Map.h"
+#include <iostream>
 using namespace std;
 
 int Item::itemNumber = 0;
@@ -50,19 +51,11 @@ Item::Item(std::string _name):BasicObject(_name)
     rectOnScreen.w = Map::getPixelWidth();
     rectOnScreen.h = Map::getPixelHeight();
 }
-/*
-void Item::setPixelPos(SDL_Point pixelPos)   // center
+
+void Item::setPixelPos(SDL_Point& pixelPos)   // center
 {
-    printf("%d %d\n", PixelPos.x, PixelPos.y);
     rectOnScreen.x = pixelPos.x - rectOnScreen.w / 2;
     rectOnScreen.y = pixelPos.y - rectOnScreen.h / 2;
-}*/
-
-void Item::setPixelPos(int x, int y)   // center
-{
-    rectOnScreen.x = x - rectOnScreen.w / 2;
-    rectOnScreen.y = y - rectOnScreen.h / 2;
-    printf("%d %d %d %d\n", rectOnScreen.x, rectOnScreen.y, rectOnScreen.h, rectOnScreen.h);
 }
 
 ItemList Item::getItemType() const {return type;}

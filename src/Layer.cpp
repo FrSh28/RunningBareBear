@@ -113,7 +113,7 @@ BackGround::BackGround(Images index, SDL_Rect _rectOnScreen)
 {
 	texture = loadImage(index);
 	SDL_QueryTexture(texture, NULL, NULL, &rectOnTexture.w, &rectOnTexture.h);
-	
+printf("%d %d\n", rectOnTexture.w, rectOnTexture.h);
 	if(_rectOnScreen.w > 0 and _rectOnScreen.h > 0)
 		rectOnScreen = _rectOnScreen;
 	else
@@ -121,6 +121,7 @@ BackGround::BackGround(Images index, SDL_Rect _rectOnScreen)
 		rectOnScreen.w = Game::GetGame().getWidth();
 		rectOnScreen.h = Game::GetGame().getHeight();
 	}
+printf("%d %d\n", rectOnScreen.w, rectOnScreen.h);
 }
 
 BackGround::~BackGround()
