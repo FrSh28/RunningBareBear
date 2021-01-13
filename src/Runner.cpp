@@ -19,7 +19,7 @@ const int Runner::gridWidth = Map::getPixelWidth();
 const int Runner::gridHeight = Map::getPixelHeight();
 Runner::Runner(SDL_Point& InitialMapPos, SDL_Point& InitialPixelPos, character_list character):
 BasicObject("Runner"), strength(100), map(&Map::getMap()), width(gridWidth*0.9),
-height(gridHeight*0.9), updateRate(20), direction(DOWN), velocity_x(0),velocity_y(0)
+height(gridHeight*0.9), updateRate(20), direction(DOWN), velocity_x(0),velocity_y(0),sprint(false)
 {
     initclips();
 
@@ -46,7 +46,7 @@ height(gridHeight*0.9), updateRate(20), direction(DOWN), velocity_x(0),velocity_
         switch (character) {
             case BEAR:
                 velocity = 1;
-                sprint_velocity = 2;
+                //sprint_velocity = 2;
                 username = "bear";
                 texture = loadImage(RUNNER_IMAGE);
                 break;
@@ -94,7 +94,8 @@ Runner::Runner(Runner &runner)
     velocity_y = runner.velocity;
     velocity = runner.velocity;
     strength = runner.strength;
-    sprint_velocity = runner.sprint_velocity;
+    // sprint_velocity = runner.sprint_velocity;
+    sprint = false;
     width = runner.width;
     height = runner.height;
     updateRate = runner.updateRate;
@@ -106,33 +107,47 @@ void Runner::updateMapPos(SDL_Point& currentMappos)       // ask map for big gri
 
 bool Runner::handleEvents(SDL_Event &e)
 {
-    bool success=false;
     if(mode==1)
     {
         //if a key is pressed
-        if(e.type==SDL_KEYDOWN)
+        if(e.type==SDL_KEYDOWN && e.key.repeat == 0)
         {
             //adjust velocity
             switch(e.key.keysym.sym)
             {
+                case SDLK_SPACE:
+                    printf("start sprint\n");
+                    printf("velocity%d\n",velocity);
+                    printf("velocity y%d\n",velocity_y);
+                    velocity *= 2;
+                    velocity_x *= 2;
+                    velocity_y *= 2;
+                    sprint = true;
+                    printf("velocity%d\n",velocity);
+                    printf("velocity y%d\n",velocity_y);
+                    return true;
                 case SDLK_s:
-                    velocity_y = velocity;
-                    velocity_x = 0;
+                    printf("start down\n");
+                    velocity_y += velocity;
+                    velocity_x += 0;
                     direction = DOWN;
                     return  true;
                 case SDLK_w:
-                    velocity_y = -velocity;
-                    velocity_x = 0;
+                    printf("start up\n");
+                    velocity_y -= velocity;
+                    velocity_x += 0;
                     direction = UP;
                     return true;
                 case SDLK_d:
-                    velocity_x = velocity;
-                    velocity_y = 0;
+                    printf("start right\n");
+                    velocity_x += velocity;
+                    velocity_y += 0;
                     direction = RIGHT;
                     return true;
                 case SDLK_a:
-                    velocity_x = -velocity;
-                    velocity_y = 0;
+                    printf("start left\n");
+                    velocity_x -= velocity;
+                    velocity_y += 0;
                     direction = LEFT;
                     return true;
                 case SDLK_e:
@@ -153,20 +168,28 @@ bool Runner::handleEvents(SDL_Event &e)
             switch(e.key.keysym.sym)
             {
                 case SDLK_SPACE:
-                    velocity -= sprint_velocity;
-                    updateRate = 10;
+                    printf("sprint end\n");
+                    velocity /= 2;
+                    velocity_x /= 2;
+                    velocity_y /= 2;
+                    sprint = false;
+                    //updateRate = 10;
                     return true;
                 case SDLK_w:
-                    velocity_y = 0;
+                    printf("stop going up\n");
+                    velocity_y += velocity;
                     return true;
                 case SDLK_s:
-                    velocity_y = 0;
+                    printf("stop going down\n");
+                    velocity_y -= velocity;
                     return true;
                 case SDLK_a:
-                    velocity_x = 0;
+                    printf("stop going left\n");
+                    velocity_x += velocity;
                     return true;
                 case SDLK_d:
-                    velocity_x = 0;
+                    printf("stop going right\n");
+                    velocity_x -= velocity;
                     return true;
             }
         }
@@ -176,9 +199,8 @@ bool Runner::handleEvents(SDL_Event &e)
             if(e.user.code == MEAT){(*this)++;}
             return true;
         }
-        
     }
-    return success;
+    return true;
 }
 
 void Runner::move()
@@ -434,7 +456,7 @@ bool Runner::update()
     if(velocity_x!=0||velocity_y!=0)
     {
         strength -= 0.0005;
-        if(abs(velocity_x) == sprint_velocity+velocity || abs(velocity_y) == sprint_velocity+velocity)
+        if((abs(velocity_x) != 0 || abs(velocity_y) != 0) && sprint)
         {strength -= 0.05;}
     }
     if(strength > 100)
@@ -442,10 +464,38 @@ bool Runner::update()
         strength = 100;
         velocity =4;
     }
-    else if(strength > 75){velocity = 4;}
-    else if(strength > 50 && strength < 75){velocity = 3;}
-    else if(strength > 25 && strength < 50){velocity = 2;}
-    else if(strength < 25 && strength > 0) {velocity = 1;}
+    else if(strength > 75)
+    {
+        velocity = 4;
+        if(velocity_x > 0){velocity_x = velocity;}
+        else if(velocity_x < 0){velocity_x = -velocity;}
+        if(velocity_y > 0){velocity_y = velocity;}
+        else if (velocity_y < 0){velocity_y = -velocity;}
+    }
+    else if(strength > 50 && strength < 75)
+    {
+        velocity = 3;
+        if(velocity_x > 0){velocity_x = velocity;}
+        else if(velocity_x < 0){velocity_x = -velocity;}
+        if(velocity_y > 0){velocity_y = velocity;}
+        else if (velocity_y < 0){velocity_y = -velocity;}
+    }
+    else if(strength > 25 && strength < 50)
+    {
+        velocity = 2;
+        if(velocity_x > 0){velocity_x = velocity;}
+        else if(velocity_x < 0){velocity_x = -velocity;}
+        if(velocity_y > 0){velocity_y = velocity;}
+        else if (velocity_y < 0){velocity_y = -velocity;}
+    }
+    else if(strength < 25 && strength > 0)
+    {
+        velocity = 1;
+        if(velocity_x > 0){velocity_x = velocity;}
+        else if(velocity_x < 0){velocity_x = -velocity;}
+        if(velocity_y > 0){velocity_y = velocity;}
+        else if (velocity_y < 0){velocity_y = -velocity;}
+    }
     else if(strength <0)
     {
         strength = 0;
