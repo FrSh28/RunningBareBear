@@ -12,9 +12,11 @@ SDL_Rect Hunter_Clip[TOTAL];
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	BasicObject("Hunter"), Hvelocity(0), arrive(false), SetSuccess(false), Discovered(false),
-	Animation_Frame(4), Run(8), Walk(4), updateRate(30), frame(0), map(&Map::getMap())//SPEED
+	Animation_Frame(4), Run(4), Walk(3), updateRate(30), frame(0), map(&Map::getMap())
 {
 	direction = DOWN_1;
+	Place.x = -1;
+	Place.y = -1;
 	initHunter_Clips();
 	texture = loadImage(HUNTER_IMAGE);
 	rectOnTexture = Hunter_Clip[direction+frame/updateRate];
@@ -60,30 +62,14 @@ bool Hunter::update()
 	RunnerMapPos = map->getRunnerMapPos();
 	if(RunnerVisible())
 	{
-		//Stage1();
-		Hvelocity = Walk;
+		Hvelocity = Run;
 		updateRate = 20;
-
-		if(!Discovered)
+		Place = RunnerMapPos;
+		if(!Discovered || Arrive(directPos))
 		{
-			Discovered = true;
-			SDL_Point tmp;
-			tmp = RunnerMapPos;
-			directPos = map->mapPosTopixelPos(tmp);
-			Chase(HunterMapPos, tmp);
-			NextPixel = map->mapPosTopixelPos(HunterMapPos);
-		}
-		if(Arrive(directPos))
-		{
-			SDL_Point SetPos;
-			if(frame < 10)
-			{
-				Discovered = false;
-			}
-			directPos = Set();
-			SDL_Point tmp;
-			tmp = map->pixelPosTomapPos(directPos);
-			Chase(HunterMapPos, tmp);
+			if(!Discovered)  Discovered = true;
+			directPos = map->mapPosTopixelPos(Place);
+			Chase(HunterMapPos, Place);
 			NextPixel = map->mapPosTopixelPos(HunterMapPos);
 		}
 	}
@@ -94,19 +80,30 @@ bool Hunter::update()
 		updateRate = 20;
 		if(Arrive(directPos))
 		{
-			SDL_Point SetPos;
-			directPos = Set();
-			SDL_Point tmp;
-			tmp = map->pixelPosTomapPos(directPos);
-			Chase(HunterMapPos, tmp);
+			if(Place.x != -1 && Place.y != -1)
+			{
+				Chase(HunterMapPos, Place);
+				directPos = map->mapPosTopixelPos(Place);
+				Place.x = -1;
+				Place.y = -1;
+			}
+			else
+			{
+				directPos = Set();
+				SDL_Point tmp,tmp1;
+				tmp1.x = directPos.x + rectOnScreen.w/2;
+				tmp1.y = directPos.y + rectOnScreen.h/2;
+				tmp = map->pixelPosTomapPos(tmp1);
+				Chase(HunterMapPos, tmp);
+			}
 			NextPixel = map->mapPosTopixelPos(HunterMapPos);
 		}
 
 	}
+
 	Move();
 	rectOnTexture = Hunter_Clip[direction+frame/updateRate];
 	if(frame/updateRate == Animation_Frame){frame=0;}
-	//if it change return true
 	rectOnScreen.x = HunterPixelPos.x;
 	rectOnScreen.y = HunterPixelPos.y;
 	return true;
@@ -159,19 +156,30 @@ void Hunter::Move()
 	}	
 	else
 	{
-		if(HunterPixelPos.x < NextPixel.x)
+		if(HunterPixelPos.x != NextPixel.x)
 		{
-			HunterPixelPos.x += Hvelocity;
-			direction = RIGHT_1;
-		}
-		else if(HunterPixelPos.x > NextPixel.x)
-		{
-			HunterPixelPos.x -= Hvelocity;
-			direction = LEFT_1;
+			if(abs(HunterPixelPos.x - NextPixel.x) < Hvelocity)
+			{
+				HunterPixelPos.x = NextPixel.x;
+			}
+			else if(HunterPixelPos.x < NextPixel.x)
+			{
+				HunterPixelPos.x += Hvelocity;
+				direction = RIGHT_1;
+			}
+			else 
+			{
+				HunterPixelPos.x -= Hvelocity;
+				direction = LEFT_1;
+			}
 		}
 		else
 		{
-			if(HunterPixelPos.y < NextPixel.y)
+			if(abs(HunterPixelPos.y - NextPixel.y) < Hvelocity)
+			{
+				HunterPixelPos.y = NextPixel.y;
+			}
+			else if(HunterPixelPos.y < NextPixel.y)
 			{
 				HunterPixelPos.y += Hvelocity;
 				direction = DOWN_1;

@@ -21,6 +21,7 @@ class Hunter : public BasicObject
 	SDL_Point HunterCenterPixel;
 	SDL_Point directPos;
 	SDL_Point NextPixel;
+	SDL_Point Place;
 	double Hvelocity;
 	const int Run;
 	const int Walk;
