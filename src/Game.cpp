@@ -1,4 +1,3 @@
-#include <iostream>
 #include <algorithm>
 #include <random>
 #include <ctime>
@@ -45,10 +44,15 @@ bool Game::Init()
 	}
 
 	// SDL_mixer
-	int Mix_flags = MIX_INIT_FLAC|MIX_INIT_MOD|MIX_INIT_MP3|MIX_INIT_OGG;
+	int Mix_flags = MIX_INIT_MP3;//MIX_INIT_FLAC|MIX_INIT_MOD|MIX_INIT_MP3|MIX_INIT_OGG;
 	if(Mix_Init(Mix_flags) ^ Mix_flags)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Mix_Init: Failed to init required audio support: %s", Mix_GetError());
+		return false;
+	}
+	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Mix_OpenAudio: Failed to init required audio support: %s", Mix_GetError());
 		return false;
 	}
 
@@ -89,20 +93,23 @@ void Game::Start(unsigned int _startTime)
 	bgm = loadMusic(BGM_MUSIC);
 	Mix_PlayMusic(bgm, -1);
 	pushLayer(createLayer(L_STARTMENU, new BackGround(START_IMAGE)));
-	//pushLayer(createLayer(L_STARTMENU, new BackGround(RUNNER_IMAGE)));
-	//BackGround *background = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, 1280, 720}));
-	//BackGround *front = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, 1280, 720}));
-	//Layer *L_ground = createLayer(L_MAP_GROUND, background);
-	//pushLayer(L_ground);
 }
 
 void Game::HandleEvents()
 {
-	bool handled = false;
+	static bool handled = false;
 	while(SDL_PollEvent(&event) or SDL_GetTicks() - startTime < frameCount * 1000 / frameRate)
 	{
+		if(event.type == SDL_QUIT)
+		{
+			handled = true;
+			running = false;
+			return;
+		}
+
 		if(event.type == GAMESTATE_CHANGE)
 		{
+			handled = true;
 			GameState tmp = GameState(event.user.code);
 			switch(tmp)
 			{
@@ -119,7 +126,6 @@ void Game::HandleEvents()
 					state = PAUSE;
 					if(puasedCount < 1)
 						createUserEvent(TIMERCHANGE, TIMERPAUSE, NULL, NULL);
-					////Timer be frozen
 					++puasedCount;
 					break;
 				case RESUME:
@@ -139,31 +145,30 @@ void Game::HandleEvents()
 						pushOverlayer(createLayer(L_END, new BackGround(END_WIN_IMAGE)));
 					else
 						pushOverlayer(createLayer(L_END, new BackGround(END_LOSE_IMAGE)));
+					Render();
 					break;
 				case STARTMENU:
+				printf("aaaaa\n");
 					state = STARTMENU;
 					popAllLayers();
 					Mix_PlayMusic(bgm, -1);
 					pushLayer(createLayer(L_STARTMENU, new BackGround(START_IMAGE)));
+					Render();
 				default:
 					break;
 			}
 		}
 
-		if(event.type == SDL_QUIT)
+		if((state == PAUSE and event.type != TIMERCHANGE) or state == END)
 		{
-			running = false;
-			return;
-		}
-		if(state == PAUSE or state == END)
-		{
+			handled = true;
 			Layer *topLayer = layers.back();
 			if(topLayer->isActive())
 				topLayer->handleEvents(event);
 			continue;
 		}
 
-		for(auto it = layers.rbegin(); it != layers.rend(); ++it)
+		for(auto it = layers.rbegin(); !handled and it != layers.rend(); ++it)
 		{
 			if((*it)->isActive())
 				if((*it)->handleEvents(event))	// if handled
@@ -174,7 +179,8 @@ void Game::HandleEvents()
 		}
 		if(!handled and gameMap)
 			gameMap->handleEvents(event);
-	SDL_zero(event);
+		SDL_zero(event);
+		handled = false;
 	}
 }
 
@@ -232,7 +238,7 @@ void Game::Render()
 	}
 	SDL_RenderPresent(renderer);
 	++frameCount;
-	//cout << frameCount << endl;	// debug
+	//printf("%d\n", frameCount);	// debug
 }
 
 void Game::Quit()
@@ -258,6 +264,8 @@ void Game::Quit()
 	}
 	freeAllFiles();
 	IMG_Quit();
+	for(int i = Mix_QuerySpec(NULL, NULL, NULL); i > 0; --i)
+		Mix_CloseAudio();
 	while(Mix_Init(0))
 		Mix_Quit();
 	if(TTF_WasInit())

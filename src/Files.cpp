@@ -92,6 +92,11 @@ TTF_Font *loadFont(Fonts index, int ptSize)
 		return Files::loadedFont[index];
 
 	TTF_Font *font = TTF_OpenFont(Files::P_Fonts[index].c_str(), ptSize);
+	if(!font)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "TTF_OpenFont: Failed to load font %s: %s", Files::P_Fonts[index].c_str(), TTF_GetError());
+		return NULL;
+	}
 	Files::Files::loadedFont[index] = font;
 	return font;
 }
@@ -102,6 +107,11 @@ Mix_Music *loadMusic(Musics index)
 		return Files::loadedMusic[index];
 
 	Mix_Music *music = Mix_LoadMUS(Files::P_Musics[index].c_str());
+	if(!music)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Mix_loadMus: Failed to load music %s: %s", Files::P_Musics[index].c_str(), Mix_GetError());
+		return NULL;
+	}
 	Files::loadedMusic[index] = music;
 	return music;
 }
@@ -141,13 +151,16 @@ void freeMusic(Musics index)
 void freeAllFiles()
 {
 	for(SDL_Texture *image : Files::loadedImage)
-	{
-		SDL_DestroyTexture(image);
-		image = NULL;
-	}
+		if(image)
+		{
+			SDL_DestroyTexture(image);
+			image = NULL;
+		}
+
 	for(Mix_Music *music : Files::loadedMusic)
-	{
-		Mix_FreeMusic(music);
-		music = NULL;
-	}
+		if(music)
+		{
+			Mix_FreeMusic(music);
+			music = NULL;
+		}
 }

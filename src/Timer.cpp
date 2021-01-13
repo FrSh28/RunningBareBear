@@ -87,7 +87,7 @@ bool Timer::handleEvents(SDL_Event& e)
         if(e.user.code == TIMERPAUSE){this->pause();}
         if(e.user.code == TIMERUNPAUSE){this->unpause();}
         if(e.user.code == TIMERSTOP){this->stop();}
-        return false;
+        return true;
     }
     return false;
 }
@@ -170,13 +170,13 @@ bool Timer::update()
     //Put Timertext to timertexture (uncertained due to renderer)
     SDL_Surface *surface = TTF_RenderText_Solid(timerFont, timerText.str().c_str(), timercolor);
     if (!surface) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create surface from timer: %s", SDL_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create surface for timer: %s", SDL_GetError());
         return 3;
     }
 
     texture = SDL_CreateTextureFromSurface(game->getRenderer(), surface);
     if (!texture) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create texture from surface: %s", SDL_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create texture for timer: %s", SDL_GetError());
         return 3;
     }
     SDL_QueryTexture(texture, NULL, NULL, &rectOnTexture.w, &rectOnTexture.h);

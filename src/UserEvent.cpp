@@ -2,7 +2,6 @@
 
 const unsigned int GAMESTATE_CHANGE = SDL_RegisterEvents(1);
 const unsigned int ITEM_USED = SDL_RegisterEvents(1);
-const unsigned int CAUGHT = SDL_RegisterEvents(1);
 const unsigned int TIMERCHANGE = SDL_RegisterEvents(1);
 
 void createUserEvent(unsigned int _type, unsigned int _code, void *_data1 = NULL, void *_data2 = NULL)

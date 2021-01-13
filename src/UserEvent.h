@@ -6,7 +6,6 @@
 
 extern const unsigned int GAMESTATE_CHANGE;
 extern const unsigned int ITEM_USED;
-extern const unsigned int CAUGHT;
 extern const unsigned int TIMERCHANGE;
 
 void createUserEvent(unsigned int, unsigned int, void *, void *);
