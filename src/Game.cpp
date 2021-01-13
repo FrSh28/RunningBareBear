@@ -165,7 +165,6 @@ void Game::HandleEvents()
 			Layer *topLayer = layers.back();
 			if(topLayer->isActive())
 				topLayer->handleEvents(event);
-			continue;
 		}
 
 		for(auto it = layers.rbegin(); !handled and it != layers.rend(); ++it)

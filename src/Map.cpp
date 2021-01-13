@@ -180,7 +180,7 @@ void Map::start()
 	Game &game = Game::GetGame();
 	game.pushLayer(L_ground);
 	game.pushLayer(L_character);
-	//game.pushOverlayer(L_front);
+	game.pushOverlayer(L_front);
 	game.pushOverlayer(createLayer(L_STATUS, NULL));
 	createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
 	started = true;

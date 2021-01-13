@@ -41,6 +41,7 @@ Button::Button(button_type tmp) :
 		case STARTS:
 			name = "Starts";
 			texture = loadImage(START_BUTTON_IMAGE);
+	printf("St\n");
 			break;
 		case INTRO1:
 			name = "Intro1";
@@ -81,9 +82,10 @@ Button::Button(button_type tmp) :
 		case OK:
 			name = "OK";
 			texture = loadImage(OK_BUTTON_IMAGE);
+	printf("ooooo\n");
 			break;
-		default://
-			texture = loadImage(SAMPLE_IMAGE);//
+		default:
+			texture = loadImage(SAMPLE_IMAGE);
 	}
 	Inside = false;
 }
@@ -135,13 +137,13 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 				if(Inside)
 				{
-					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 					Game &game = Game::GetGame();
-					game.pushOverlayer(createLayer(L_INTRO, new BackGround(INTRO_IMAGE )));
+					game.pushOverlayer(createLayer(L_INTRO, new BackGround(INTRO_IMAGE)));
+					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 				}
 			}
 			break;
-		case LEAVEINTRO://
+		case LEAVEINTRO:
 			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
 				
@@ -153,13 +155,13 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 				if(Inside)
 				{
-					createUserEvent(GAMESTATE_CHANGE, RESUME, NULL, NULL);
 					Game &game = Game::GetGame();
 					game.popTopOverlayer();
+					createUserEvent(GAMESTATE_CHANGE, RESUME, NULL, NULL);
 				}
 			}
 			break;
-		case MISSION://
+		case MISSION:
 			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
 				
@@ -175,8 +177,7 @@ bool Button::handleEvents(SDL_Event &e)
 					current = Mission::getMission();
 					if(current == MissionTotal)
 						break;
-					
-					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
+
 					if(current == Mission1Type1)
 						game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_1_1_IMAGE )));
 					else if(current == Mission1Type2)
@@ -187,16 +188,14 @@ bool Button::handleEvents(SDL_Event &e)
 						
 					else if(current == Mission2Type1)
 						game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_2_1_IMAGE )));
-					/*	
-					else if(current == Mission2Type2)
-						game.pushOverlayer(new boardLayer("M2-2", MISSION_2_2_IMAGE));
-					*/	
+					/*else if(current == Mission2Type2)
+						game.pushOverlayer(new boardLayer("M2-2", MISSION_2_2_IMAGE));*/	
 					else if(current == Mission2Type3)
 						game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_2_2_IMAGE )));
 				}
 			}
 			break;
-		case LEAVEMISSION://
+		case LEAVEMISSION:
 			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
 				
@@ -208,13 +207,12 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 				if(Inside)
 				{
-					createUserEvent(GAMESTATE_CHANGE, RESUME, NULL, NULL);
 					Game &game = Game::GetGame();
 					game.popTopOverlayer();
 				}
 			}
 			break;
-		case PAUSES:////////////////////////////
+		case PAUSES:
 			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
 				
@@ -226,11 +224,9 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 				if(Inside)
 				{
-					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 					Game &game = Game::GetGame();
 					game.pushOverlayer(createLayer(L_PAUSE, new BackGround(BOARD_IMAGE, SDL_Rect({300,200,680,320}))));
-					
-					//some user event
+					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 				}
 			}
 			break;
@@ -250,7 +246,7 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 			}
 			break;
-		case RESUMES://SDL_MOUSEBUTTONDOWN
+		case RESUMES:
 			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)// && e.button.button == SDL_BUTTON_LEFT)
 			{
 				
@@ -263,13 +259,13 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 				if(Inside)
 				{
-					createUserEvent(GAMESTATE_CHANGE, RESUME, NULL, NULL);
 					Game &game = Game::GetGame();
 					game.popTopOverlayer();
+					createUserEvent(GAMESTATE_CHANGE, RESUME, NULL, NULL);
 				}
 			}
 			break;
-		case INTRO2://SDL_MOUSEBUTTONDOWN
+		case INTRO2:
 			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
 				
@@ -281,9 +277,9 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 				if(Inside)
 				{
-					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 					Game &game = Game::GetGame();
 					game.pushOverlayer(createLayer(L_INTRO, new BackGround(INTRO_IMAGE )));
+					createUserEvent(GAMESTATE_CHANGE, PAUSE, NULL, NULL);
 				}
 			}
 			break;
@@ -299,9 +295,9 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 				if(Inside)
 				{
-					createUserEvent(GAMESTATE_CHANGE, RESUME, NULL, NULL);
 					Game &game = Game::GetGame();
 					game.popTopOverlayer();
+					createUserEvent(GAMESTATE_CHANGE, RESUME, NULL, NULL);
 				}
 			}
 			break;
