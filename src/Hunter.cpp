@@ -11,18 +11,18 @@ using namespace std;
 SDL_Rect Hunter_Clip[TOTAL];
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
-	Hvelocity(0), arrive(false), SetSuccess(false), Discovered(false),
-	Animation_Frame(4), Run(8), Walk(5), updateRate(30), frame(0), map(&Map::getMap())//SPEED
+	BasicObject("Hunter"), Hvelocity(0), arrive(false), SetSuccess(false), Discovered(false),
+	Animation_Frame(4), Run(8), Walk(4), updateRate(30), frame(0), map(&Map::getMap())//SPEED
 {
 	direction = DOWN_1;
+	initHunter_Clips();
 	texture = loadImage(HUNTER_IMAGE);
 	rectOnTexture = Hunter_Clip[direction+frame/updateRate];
-	initHunter_Clips();
+	rectOnScreen.w = Map::getPixelWidth();
+	rectOnScreen.h = Map::getPixelHeight();
 	setMapPos(MapPos);
 	setPixelPos(PixelPos);
 	directPos = HunterPixelPos;
-	rectOnScreen.w = Map::getPixelWidth();
-	rectOnScreen.h = Map::getPixelHeight();
 }
 
 void Hunter::setMapPos(SDL_Point &MapPos)
@@ -53,8 +53,7 @@ bool Hunter::handleEvents(SDL_Event &e)
 bool Hunter::update()
 {
 	frame++;
-	if(frame % 2)
-		return false;
+
 	HunterCenterPixel.x = HunterPixelPos.x + rectOnScreen.w/2;
 	HunterCenterPixel.y = HunterPixelPos.y + rectOnScreen.h/2;
 	HunterMapPos = map->pixelPosTomapPos(HunterCenterPixel);

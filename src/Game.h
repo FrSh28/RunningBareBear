@@ -40,7 +40,7 @@ public:
 	void popOverlayer(Layer *);		// pop overlayer from layers
 	void popTopOverlayer();			// pop top pverlayer from layers
 	void popAllLayers();
-	inline void setGameMap(BasicObject *_map) { gameMap = _map; }
+	inline void setGameMap(Map *_map) { gameMap = _map; }
 
 	inline bool isRunning() const { return running; }
 	inline std::string getName() const { return name; }
@@ -68,7 +68,7 @@ private:
 
 	std::vector<Layer*> layers;
 	unsigned int layerInsertIndex;
-	BasicObject *gameMap;
+	Map *gameMap;
 	Mix_Music *bgm;
 
 	unsigned int startTime;

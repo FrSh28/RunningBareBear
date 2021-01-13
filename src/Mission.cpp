@@ -12,7 +12,6 @@ using namespace std;
 MissionTypes Mission::curMission = MissionTotal;
 
 Mission :: Mission(string _name)
- : BasicObject(_name)
 {
 	total = 0;
 	success = false;

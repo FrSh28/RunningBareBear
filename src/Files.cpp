@@ -70,10 +70,17 @@ SDL_Texture *loadImage(Images index)
 
 	SDL_Texture *texture = NULL;
 	SDL_Surface *surface = IMG_Load(Files::P_Images[index].c_str());
-	if(surface)
+	if(!surface)
 	{
-		texture = SDL_CreateTextureFromSurface(Game::GetGame().getRenderer(), surface);
-		SDL_FreeSurface(surface);
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "IMG_Load: Failed to load image %s: %s", Files::P_Images[index].c_str(), IMG_GetError());
+		return NULL;
+	}
+	texture = SDL_CreateTextureFromSurface(Game::GetGame().getRenderer(), surface);
+	SDL_FreeSurface(surface);
+	if(!texture)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create texture for image %s: %s", Files::P_Images[index].c_str(), SDL_GetError());
+		return NULL;
 	}
 	Files::loadedImage[index] = texture;
 	return texture;
@@ -128,5 +135,19 @@ void freeMusic(Musics index)
 	{
 		Mix_FreeMusic(Files::loadedMusic[index]);
 		Files::loadedMusic[index] = NULL;
+	}
+}
+
+void freeAllFiles()
+{
+	for(SDL_Texture *image : Files::loadedImage)
+	{
+		SDL_DestroyTexture(image);
+		image = NULL;
+	}
+	for(Mix_Music *music : Files::loadedMusic)
+	{
+		Mix_FreeMusic(music);
+		music = NULL;
 	}
 }

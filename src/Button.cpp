@@ -3,6 +3,7 @@
 #include "Button.h"
 #include "UserEvent.h"
 #include "Layer.h"
+#include "Files.h"
 #include <cmath>
 using namespace std;
 
@@ -30,7 +31,7 @@ double operator^(SDL_Point center, SDL_Point mouse)
 }
 
 Button::Button(button_type tmp) :
-	type(tmp), UpdateReturnType(false), EventReturnType(false), Last(false)
+	BasicObject("Button"), type(tmp), UpdateReturnType(false), EventReturnType(false), Last(false)
 {
 	Center.x = buttons[tmp].x + buttons[tmp].w/2;
 	Center.y = buttons[tmp].y + buttons[tmp].h/2;
@@ -38,36 +39,47 @@ Button::Button(button_type tmp) :
 	switch(tmp)
 	{
 		case STARTS:
+			name = "Starts";
 			texture = loadImage(START_BUTTON_IMAGE);
 			break;
 		case INTRO1:
+			name = "Intro1";
 			texture = loadImage(INTRO_BUTTON_IMAGE);
 			break;
 		case LEAVEINTRO:
+			name = "LeaveIntro";
 			texture = loadImage(LEAVE_BUTTON_IMAGE);
 			break;
 		case MISSION:
+			name = "Mission";
 			texture = loadImage(MISSION_BUTTON_IMAGE);
 			break;
 		case LEAVEMISSION:
+			name = "LeaveMission";
 			texture = loadImage(LEAVE_BUTTON_IMAGE);
 			break;
 		case PAUSES:
+			name = "Pause";
 			texture = loadImage(PAUSE_BUTTON_IMAGE);
 			break;
 		case LEAVE:
+			name = "Leave";
 			texture = loadImage(RESTART_BUTTON_IMAGE);
 			break;
 		case RESUMES:
+			name = "Resumes";
 			texture = loadImage(RESUME_BUTTON_IMAGE);
 			break;
 		case INTRO2:
+			name = "Intro2";
 			texture = loadImage(INTRO_BUTTON_IMAGE);
 			break;
 	    case LEAVEINTRO2:
+	    	name = "LeaveIntro2";
 			texture = loadImage(LEAVE_BUTTON_IMAGE);
 			break;
 		case OK:
+			name = "OK";
 			texture = loadImage(OK_BUTTON_IMAGE);
 			break;
 		default://

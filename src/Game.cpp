@@ -228,7 +228,7 @@ void Game::Render()
 	for(auto it = layers.begin(); it != layers.end(); ++it)
 	{
 		if((*it)->isActive())
-			SDL_RenderCopy(renderer, (*it)->getTexture(), (*it)->getRectViewPort(), NULL);
+			SDL_RenderCopy(renderer, (*it)->getTexture(), (*it)->getRectViewPortPtr(), NULL);
 	}
 	SDL_RenderPresent(renderer);
 	++frameCount;
@@ -253,9 +253,10 @@ void Game::Quit()
 	}
 	if(window)
 	{
-			SDL_DestroyWindow(window);
+		SDL_DestroyWindow(window);
 		window = NULL;
 	}
+	freeAllFiles();
 	IMG_Quit();
 	while(Mix_Init(0))
 		Mix_Quit();

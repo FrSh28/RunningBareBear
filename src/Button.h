@@ -1,5 +1,6 @@
 #ifndef BUTTON_H
 #define BUTTON_H
+#include <string>
 #include "includeSDL.h"
 #include "BasicObject.h"
 #include "Mission.h"

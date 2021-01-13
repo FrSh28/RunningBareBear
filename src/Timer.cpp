@@ -6,7 +6,7 @@
 #include "Timer.h"
 using namespace std;
 
-Timer::Timer():gametime(600000), mPaused(false), mStarted(false), mStartTicks(0), mPausedTicks(0), timerFont(NULL),
+Timer::Timer():BasicObject("Timer"), gametime(600000), mPaused(false), mStarted(false), mStartTicks(0), mPausedTicks(0), timerFont(NULL),
 timerText("0"), minute(10), second(0), missionOngoing(false), currentMission(NULL),game(&Game::GetGame())
 {
     loadTimerFont();

@@ -18,20 +18,14 @@ SDL_Rect Clip [TOTAL_FRAMES];
 const int Runner::gridWidth = Map::getPixelWidth();
 const int Runner::gridHeight = Map::getPixelHeight();
 Runner::Runner(SDL_Point& InitialMapPos, SDL_Point& InitialPixelPos, character_list character):
-BasicObject("Runner"), strength(100), map(&Map::getMap()), width(gridWidth),
-height(gridHeight), updateRate(20), direction(DOWN), velocity_x(0),velocity_y(0)
+BasicObject("Runner"), strength(100), map(&Map::getMap()), width(gridWidth*0.9),
+height(gridHeight*0.9), updateRate(20), direction(DOWN), velocity_x(0),velocity_y(0)
 {
     initclips();
 
     //set Initial PixelPos
-    InitialPixelPos.x = 50;
-    InitialPixelPos.y = 50;
     setPixelPos(InitialPixelPos);
     //set Initial MapPos
-    SDL_Point tmp;
-    tmp.x = InitialPixelPos.x + gridWidth/2;
-    tmp.y = InitialPixelPos.y + gridHeight/2;
-    InitialMapPos = map->pixelPosTomapPos(tmp);
     setMapPos(InitialMapPos);
     if (mode == 1) {
         /*posOnWindow->x = (int);
@@ -66,11 +60,9 @@ void Runner::setMapPos(SDL_Point& Set)
 }
 void Runner::setPixelPos(SDL_Point& Set)
 {
-    PixelPos.x = Set.x;
-    PixelPos.y = Set.y;
     // change PixelPos to top left
-    PixelPos.x -=  width/2;
-    PixelPos.y -=  height/2;
+    PixelPos.x = Set.x - width/2;
+    PixelPos.y = Set.y - height/2;
 }
 
 /*
@@ -208,9 +200,9 @@ bool Runner::collisionBox(SDL_Rect& square)
 {
     bool collision = true;
     if(PixelPos.x            > square.x+square.w){return false;}
-    if(PixelPos.x+width*0.8  < square.x){return false;}
+    if(PixelPos.x+width      < square.x){return false;}
     if(PixelPos.y            > square.y+square.h){return false;}
-    if(PixelPos.y+height*0.8 < square.y){return false;}
+    if(PixelPos.y+height     < square.y){return false;}
     return collision;
 }
 

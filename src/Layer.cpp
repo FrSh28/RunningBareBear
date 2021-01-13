@@ -51,7 +51,6 @@ void Layer::free()
 
 bool Layer::handleEvents(SDL_Event &e)
 {
-	//printf("%sEvent ", name.c_str());
 	for(auto it = elements.rbegin(); it != elements.rend(); ++it)
 	{
 		if((*it)->isEventEnable())
@@ -66,7 +65,6 @@ bool Layer::handleEvents(SDL_Event &e)
 
 void Layer::update()
 {
-	//printf("%sUpdate ", name.c_str());
 	for(auto it = elements.begin(); it != elements.end(); ++it)
 	{
 		if((*it)->isUpdateEnable())
@@ -79,7 +77,6 @@ void Layer::render()
 {
 	if(changed)
 	{
-		//printf("%sRender ", name.c_str());
 		SDL_Renderer *renderer = Game::GetGame().getRenderer();
 		SDL_SetRenderTarget(renderer, mainTexture);
 		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
@@ -110,10 +107,11 @@ void Layer::popElement(BasicObject *_element)
 }
 
 BackGround::BackGround(Images index, SDL_Rect _rectOnScreen)
+ : BasicObject(Files::P_Images[index])
 {
 	texture = loadImage(index);
 	SDL_QueryTexture(texture, NULL, NULL, &rectOnTexture.w, &rectOnTexture.h);
-printf("%d %d\n", rectOnTexture.w, rectOnTexture.h);
+
 	if(_rectOnScreen.w > 0 and _rectOnScreen.h > 0)
 		rectOnScreen = _rectOnScreen;
 	else
@@ -121,7 +119,6 @@ printf("%d %d\n", rectOnTexture.w, rectOnTexture.h);
 		rectOnScreen.w = Game::GetGame().getWidth();
 		rectOnScreen.h = Game::GetGame().getHeight();
 	}
-printf("%d %d\n", rectOnScreen.w, rectOnScreen.h);
 }
 
 BackGround::~BackGround()

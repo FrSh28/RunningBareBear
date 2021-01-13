@@ -5,7 +5,6 @@
 #include <vector>
 #include <map>
 #include "includeSDL.h"
-#include "BasicObject.h"
 #include "Layer.h"
 #include "Files.h"
 #include "Item.h"
@@ -20,15 +19,15 @@ enum ObjOnMap
 	ITEM,
 };
 
-class Map : public BasicObject
+class Map
 {
 public:
 	Map(Maps index, std::string _name = "");
 	~Map();
 
 	void loadMap(Maps index);
-	void addHunter(int);
 	void addRunner();
+	void addHunter(int);
 	void addItems(int);
 	void free();
 	void start();
@@ -57,7 +56,7 @@ public:
 
 	inline static Map &getMap() { return *s_mapInstance;}
 private:
-	void buildMap(BackGround *, BackGround *);
+	void buildMap();
 
 	//std::string name;
 	int colNum, rowNum;
@@ -83,6 +82,8 @@ private:
 	Layer *L_ground;
 	Layer *L_character;
 	Layer *L_front;	// overlayer
+	SDL_Texture *groundTexture;
+	SDL_Texture *frontTexture;
 
 	static const int sc_pixelWidth, sc_pixelHeight;
 	static Map *s_mapInstance;

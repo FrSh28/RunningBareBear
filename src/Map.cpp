@@ -2,6 +2,7 @@
 #include <sstream>
 #include "Map.h"
 #include "Game.h"
+#include "BasicObject.h"
 #include "Timer.h"
 #include "UserEvent.h"
 using namespace std;
@@ -13,22 +14,17 @@ int operator~(SDL_Point pos)
 }
 #endif
 
-const int Map::sc_pixelWidth = 30, Map::sc_pixelHeight = 30;
+const int Map::sc_pixelWidth = 70, Map::sc_pixelHeight = 70;
 Map *Map::s_mapInstance = NULL;
 
 Map::Map(Maps index, string _name)
- : BasicObject(_name, true, true, false), colNum(0), rowNum(0), width(0), height(0), mapPixelPos({0, 0}), started(false), L_ground(NULL), L_character(NULL), L_front(NULL)
+ : colNum(0), rowNum(0), width(0), height(0), mapPixelPos({0, 0}), started(false),
+	L_ground(NULL), L_character(NULL), L_front(NULL), groundTexture(NULL), frontTexture(NULL)
 {
 	s_mapInstance = this;
 	loadMap(index);
 
-	BackGround *background = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, width, height}));
-	BackGround *front = new BackGround(BACKGROUND_IMAGE, SDL_Rect({0, 0, width, height}));
-	L_ground = createLayer(L_MAP_GROUND, background);
-	L_character = createLayer(L_CHARACTER, NULL);
-	L_front = createLayer(L_MAP_FRONT, front);
-
-	buildMap(background, front);
+	buildMap();
 
 	addRunner();
 	addHunter(10);
@@ -90,6 +86,23 @@ void Map::loadMap(Maps index)
 	height = rowNum * sc_pixelHeight;
 }
 
+void Map::addRunner()
+{
+	Game &game = Game::GetGame();
+	SDL_Point tmpMapPos, tmpPixelPos;
+	do
+	{
+		tmpMapPos.x = game.rdEngine() % rowNum;
+		tmpMapPos.y = game.rdEngine() % colNum;
+	}while(!isSpace(tmpMapPos));
+	tmpPixelPos = mapPosTopixelPos(tmpMapPos);
+	tmpPixelPos.x += sc_pixelWidth / 2;
+	tmpPixelPos.y += sc_pixelHeight / 2;
+	runnerMapPos = tmpMapPos;
+	runner = new Runner(tmpMapPos, tmpPixelPos);
+	L_character->pushElement(runner);
+}
+
 void Map::addHunter(int num)
 {
 	SDL_Point tmpMapPos, tmpPixelPos;
@@ -108,23 +121,6 @@ void Map::addHunter(int num)
 		L_character->pushElement(hunters.back());
 		huntersMapPos.push_back(tmpMapPos);
 	}
-}
-
-void Map::addRunner()
-{
-	Game &game = Game::GetGame();
-	SDL_Point tmpMapPos, tmpPixelPos;
-	do
-	{
-		tmpMapPos.x = game.rdEngine() % rowNum;
-		tmpMapPos.y = game.rdEngine() % colNum;
-	}while(!isSpace(tmpMapPos));
-	tmpPixelPos = mapPosTopixelPos(tmpMapPos);
-	tmpPixelPos.x += sc_pixelWidth / 2;
-	tmpPixelPos.y += sc_pixelHeight / 2;
-	runnerMapPos = tmpMapPos;
-	runner = new Runner(tmpMapPos, tmpPixelPos);
-	L_character->pushElement(runner);
 }
 
 void Map::addItems(int num)
@@ -158,6 +154,11 @@ void Map::addItems(int num)
 
 void Map::free()
 {
+	SDL_DestroyTexture(groundTexture);
+	groundTexture = NULL;
+	SDL_DestroyTexture(frontTexture);
+	frontTexture = NULL;
+
 	Game &game = Game::GetGame();
 	game.popOverlayer(L_front);
 	delete L_front;
@@ -291,12 +292,12 @@ SDL_Point Map::mapPosTopixelPos(SDL_Point mapPos)
 	return SDL_Point({mapPos.x * sc_pixelWidth, mapPos.y * sc_pixelHeight});
 }
 
-void Map::buildMap(BackGround *background, BackGround *front)
+void Map::buildMap()
 {
 	Game &game = Game::GetGame();
 	SDL_Renderer *renderer = game.getRenderer();
-	SDL_Texture *groundTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET, width, height);
-	SDL_Texture *frontTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET, width, height);
+	groundTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET, width, height);
+	frontTexture  = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET, width, height);
 	SDL_SetTextureBlendMode(groundTexture, SDL_BLENDMODE_BLEND);
 	SDL_SetTextureBlendMode(frontTexture, SDL_BLENDMODE_BLEND);
 
@@ -336,8 +337,23 @@ void Map::buildMap(BackGround *background, BackGround *front)
 			}
 		}
 	}
-	background->setTexture(groundTexture);
+
+	SDL_Rect tmpRect = {0, 0, width, height};
+	L_ground = createLayer(L_MAP_GROUND, NULL);
+	BasicObject* ground = new BasicObject("Ground", false, true, true);
+	ground->setTexture(groundTexture);
+	ground->setRectOnTexture(tmpRect);
+	ground->setRectOnScreen(tmpRect);
+	L_ground->pushElement(ground);
+
+	L_front = createLayer(L_MAP_FRONT, NULL);
+	BasicObject* front = new BasicObject("Front", false, true, true);
 	front->setTexture(frontTexture);
+	front->setRectOnTexture(tmpRect);
+	front->setRectOnScreen(tmpRect);
+	L_front->pushElement(front);
+
+	L_character = createLayer(L_CHARACTER, NULL);
 }
 
 #ifdef _WIN32

@@ -13,7 +13,7 @@ enum MissionTypes
 	MissionTotal
 };
 
-class Mission : public BasicObject
+class Mission
 {
 protected:
 	int total;

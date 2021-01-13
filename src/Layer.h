@@ -40,7 +40,7 @@ public:
 	inline std::string getName() const { return name; }
 	inline bool isActive() const { return active; }
 	inline SDL_Texture *getTexture() { return mainTexture; }
-	inline SDL_Rect *getRectViewPort() { return &rectViewPort; }
+	inline SDL_Rect *getRectViewPortPtr() { return &rectViewPort; }
 	inline unsigned int getElementsSize() const { return elements.size(); }
 
 protected:

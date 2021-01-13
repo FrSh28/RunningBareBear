@@ -47,13 +47,13 @@ enum Images
 	WALL_IMAGE,
 	IMAGE_COUNT,
 };
-
+/*
 enum Fonts
 {
 	SAMPLE_FONT,
 	FONT_COUNT,
 };
-
+*/
 enum Musics
 {
 	SAMPLE_MUSIC,
@@ -78,8 +78,9 @@ Mix_Music *loadMusic(Musics index);
 std::ifstream *openMapFile(Maps index);
 
 void freeImage(Images index);
-void freeFont(Fonts index);
+//void freeFont(Fonts index);
 void freeMusic(Musics index);
+void freeAllFiles();
 
 namespace Files
 {
