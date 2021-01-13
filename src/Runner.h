@@ -19,7 +19,8 @@ private:
     int velocity_y;             // runner y velocity
     int velocity;               // the velocity when pressing button
     double strength;            // the strength of runner
-    int sprint_velocity;        // the velocity added when sprinting
+    //int sprint_velocity;        // the velocity added when sprinting
+    bool sprint;                 // check is sprinting or not
     int width;                  // rectangle width (for collision box)
     int height;                 // rectangle height (for collision box)
     int updateRate;             // different update rate according to running or walking
