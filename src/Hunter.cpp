@@ -11,9 +11,10 @@ using namespace std;
 SDL_Rect Hunter_Clip[TOTAL];
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
-	BasicObject("Hunter"), Hvelocity(0), arrive(false), SetSuccess(false), Discovered(false),
-	Animation_Frame(4), Run(4), Walk(3), updateRate(30), frame(0), map(&Map::getMap())
+	BasicObject("Hunter"), arrive(false), SetSuccess(false), Discovered(false),
+	Animation_Frame(4), Run(2), Walk(1), updateRate(30), frame(0), map(&Map::getMap())
 {
+	Hvelocity = Walk;
 	direction = DOWN_1;
 	check = true;
 	initHunter_Clips();
@@ -76,24 +77,22 @@ bool Hunter::update()
 	else 
 	{
 		Discovered = false;
-		Hvelocity = Walk;
+		
 		updateRate = 20;
-		if(!check) check = true;
-		if(Arrive(directPos))
-		{
-			if(!check)
+		//if(!check) check = true;
+		if(!check)
 			{
 				check = true;
 				directPos = map->mapPosTopixelPos(Place);
 				Chase(HunterMapPos, Place);
 				NextPixel = map->mapPosTopixelPos(HunterMapPos);
 			}
-			else
-			{
-				directPos = Set();
-				Chase(HunterMapPos, map->pixelPosTomapPos(directPos));
-				NextPixel = map->mapPosTopixelPos(HunterMapPos);
-			}
+		if(Arrive(directPos))
+		{
+			Hvelocity = Walk;
+			directPos = Set();
+			Chase(HunterMapPos, map->pixelPosTomapPos(directPos));
+			NextPixel = map->mapPosTopixelPos(HunterMapPos);		
 		}
 	}
 
