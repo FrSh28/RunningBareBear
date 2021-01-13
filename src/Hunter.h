@@ -29,6 +29,7 @@ class Hunter : public BasicObject
 	bool Discovered;
 	bool arrive;
 	bool visible;
+	bool check;
 	int frame;
 	int updateRate;
 	int Animation_Frame;
