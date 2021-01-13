@@ -80,6 +80,7 @@ void Timer::unpause()
 
 bool Timer::handleEvents(SDL_Event& e)
 {
+    //printf("hihihi\n");
     if(e.type == TIMERCHANGE)
     {
         //Start Timer
@@ -193,7 +194,7 @@ bool Timer::loadTimerFont()
     timerFont = TTF_OpenFont( "../media/font/octin_college_rg.ttf", 28 );
     if( timerFont == NULL )
     {
-        printf( "Failed to load timer font! SDL_ttf Error: %s\n", TTF_GetError() );
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to load timer font: %s\n", TTF_GetError());
         success = false;
     }
     else

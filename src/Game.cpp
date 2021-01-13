@@ -100,6 +100,7 @@ void Game::HandleEvents()
 	static bool handled = false;
 	while(SDL_PollEvent(&event) or SDL_GetTicks() - startTime < frameCount * 1000 / frameRate)
 	{
+		handled = false;
 		if(event.type == SDL_QUIT)
 		{
 			handled = true;
@@ -148,7 +149,6 @@ void Game::HandleEvents()
 					Render();
 					break;
 				case STARTMENU:
-				printf("aaaaa\n");
 					state = STARTMENU;
 					popAllLayers();
 					Mix_PlayMusic(bgm, -1);
@@ -180,7 +180,6 @@ void Game::HandleEvents()
 		if(!handled and gameMap)
 			gameMap->handleEvents(event);
 		SDL_zero(event);
-		handled = false;
 	}
 }
 

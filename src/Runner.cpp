@@ -116,36 +116,36 @@ bool Runner::handleEvents(SDL_Event &e)
             switch(e.key.keysym.sym)
             {
                 case SDLK_SPACE:
-                    printf("start sprint\n");
-                    printf("velocity%d\n",velocity);
-                    printf("velocity y%d\n",velocity_y);
+                    //printf("start sprint\n");
+                    //printf("velocity%d\n",velocity);
+                    //printf("velocity y%d\n",velocity_y);
                     velocity *= 2;
                     velocity_x *= 2;
                     velocity_y *= 2;
                     sprint = true;
-                    printf("velocity%d\n",velocity);
-                    printf("velocity y%d\n",velocity_y);
+                    //printf("velocity%d\n",velocity);
+                    //printf("velocity y%d\n",velocity_y);
                     return true;
                 case SDLK_s:
-                    printf("start down\n");
+                    //printf("start down\n");
                     velocity_y += velocity;
                     velocity_x += 0;
                     direction = DOWN;
                     return  true;
                 case SDLK_w:
-                    printf("start up\n");
+                    //printf("start up\n");
                     velocity_y -= velocity;
                     velocity_x += 0;
                     direction = UP;
                     return true;
                 case SDLK_d:
-                    printf("start right\n");
+                    //printf("start right\n");
                     velocity_x += velocity;
                     velocity_y += 0;
                     direction = RIGHT;
                     return true;
                 case SDLK_a:
-                    printf("start left\n");
+                    //printf("start left\n");
                     velocity_x -= velocity;
                     velocity_y += 0;
                     direction = LEFT;
@@ -168,7 +168,7 @@ bool Runner::handleEvents(SDL_Event &e)
             switch(e.key.keysym.sym)
             {
                 case SDLK_SPACE:
-                    printf("sprint end\n");
+                    //printf("sprint end\n");
                     velocity /= 2;
                     velocity_x /= 2;
                     velocity_y /= 2;
@@ -176,19 +176,19 @@ bool Runner::handleEvents(SDL_Event &e)
                     //updateRate = 10;
                     return true;
                 case SDLK_w:
-                    printf("stop going up\n");
+                    //printf("stop going up\n");
                     velocity_y += velocity;
                     return true;
                 case SDLK_s:
-                    printf("stop going down\n");
+                    //printf("stop going down\n");
                     velocity_y -= velocity;
                     return true;
                 case SDLK_a:
-                    printf("stop going left\n");
+                    //printf("stop going left\n");
                     velocity_x += velocity;
                     return true;
                 case SDLK_d:
-                    printf("stop going right\n");
+                    //printf("stop going right\n");
                     velocity_x -= velocity;
                     return true;
             }
