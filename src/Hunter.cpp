@@ -90,7 +90,7 @@ bool Hunter::update()
 		if(Arrive(directPos))
 		{
 			Hvelocity = Walk;
-			directPos = Set();
+			directPos = ~(*this);
 			Chase(HunterMapPos, map->pixelPosTomapPos(directPos));
 			NextPixel = map->mapPosTopixelPos(HunterMapPos);		
 		}
@@ -190,7 +190,7 @@ void Hunter::Move()
 	}
 }
 
-SDL_Point Hunter::Set()		
+SDL_Point Hunter::operator~()	
 {
 	SetSuccess = false;
 	SDL_Point SetPos;

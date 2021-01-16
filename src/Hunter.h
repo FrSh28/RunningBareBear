@@ -44,7 +44,7 @@ public:
 	~Hunter();
 	bool handleEvents(SDL_Event &e);
 	bool update();
-	SDL_Point Set();
+	SDL_Point operator~();
 	SDL_Point getMapPos() {return HunterMapPos;}
 	virtual SDL_Point getPixelPos()const {return HunterCenterPixel;}
 	bool RunnerVisible();
