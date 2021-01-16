@@ -1,6 +1,6 @@
 #ifndef MISSION_H
 #define MISSION_H
-
+#include "Item.h"
 #include <vector>
 #include <string>
 #include "includeSDL.h"
@@ -32,6 +32,7 @@ protected:
 };
 class Mission1_1 : public Mission
 {
+	Sheet* sheet;
 public:
 	Mission1_1();
 	~Mission1_1();
@@ -40,6 +41,7 @@ public:
 };
 class Mission1_2 : public Mission
 {
+	Library* lib;
 public:
 	Mission1_2();
 	~Mission1_2();
@@ -48,6 +50,7 @@ public:
 };
 class Mission1_3 : public Mission
 {
+	PE_Teacher* pe;
 public:
 	Mission1_3();
 	~Mission1_3();
@@ -56,6 +59,9 @@ public:
 };
 class Mission2_1 : public Mission
 {
+	TeacherAssistant1* ta1;
+	TeacherAssistant2* ta2;
+	TeacherAssistant3* ta3;
 public:
 	Mission2_1();
 	~Mission2_1();
@@ -74,6 +80,9 @@ public:
 */ 
 class Mission2_3 : public Mission
 {
+	WebWork1* web1;
+	WebWork2* web2;
+	WebWork3* web3;
 public:
 	Mission2_3();
 	~Mission2_3();

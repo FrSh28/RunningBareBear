@@ -74,7 +74,7 @@ Mission1_1 :: Mission1_1 ()
 			SetSuccess = true;
 		} 
 	}
-	Sheet* sheet;
+	
 	sheet = new Sheet;
 
 	map.placeItem(SetPos, sheet);
@@ -82,10 +82,8 @@ Mission1_1 :: Mission1_1 ()
 }
 Mission1_1 :: ~Mission1_1 ()
 {
-	if(!success)
-	{
-		//timer + time
-	}
+	delete sheet;
+	sheet = NULL;
 }
 bool Mission1_1 :: handleEvents(SDL_Event &e)
 {
@@ -94,6 +92,7 @@ bool Mission1_1 :: handleEvents(SDL_Event &e)
 		{
 			if(e.user.code == SHEET)
 			{
+				sheet = NULL;
 				success = true;
 				return true;
 			}
@@ -124,7 +123,7 @@ Mission1_2 :: Mission1_2 ()
 			SetSuccess = true;
 		} 
 	}
-	Library* lib;
+	
 	lib = new Library;
 	map.placeItem(SetPos, lib);
 
@@ -132,7 +131,8 @@ Mission1_2 :: Mission1_2 ()
 
 Mission1_2 :: ~Mission1_2 ()
 {
-	
+	delete lib;
+	lib = NULL;
 }
 
 bool Mission1_2 :: handleEvents(SDL_Event &e)
@@ -142,6 +142,7 @@ bool Mission1_2 :: handleEvents(SDL_Event &e)
 		{
 			if(e.user.code == LIBRARY)
 			{
+				lib = NULL;
 				success = true;
 				return true;
 			}
@@ -173,7 +174,7 @@ Mission1_3 :: Mission1_3 ()
 		} 
 	}
 	//PE_Teacher
-	PE_Teacher* pe;
+	
 	pe = new PE_Teacher;
 	map.placeItem(SetPos, pe);
 
@@ -181,10 +182,8 @@ Mission1_3 :: Mission1_3 ()
 
 Mission1_3 :: ~Mission1_3 ()
 {
-	if(!success)
-	{
-		// 
-	}
+	delete pe;
+	pe = NULL;
 }
 
 bool Mission1_3 :: handleEvents(SDL_Event &e)
@@ -194,6 +193,7 @@ bool Mission1_3 :: handleEvents(SDL_Event &e)
 		{
 			if(e.user.code == PE_TEACHER)
 			{
+				pe = NULL;
 				success = true;
 				return true;
 			}
@@ -226,7 +226,6 @@ Mission2_1 :: Mission2_1 ()
 			SetSuccess1 = true;
 		} 
 	}
-	TeacherAssistant1* ta1;
 	ta1 = new TeacherAssistant1;
 	map.placeItem(SetPos1, ta1);
 	
@@ -242,7 +241,7 @@ Mission2_1 :: Mission2_1 ()
 			SetSuccess2 = true;
 		} 
 	}
-	TeacherAssistant2* ta2;
+	
 	ta2 = new TeacherAssistant2;
 	map.placeItem(SetPos2, ta2);
 	
@@ -258,7 +257,7 @@ Mission2_1 :: Mission2_1 ()
 			SetSuccess3 = true;
 		} 
 	}
-	TeacherAssistant3* ta3;
+	
 	ta3 = new TeacherAssistant3;
 	map.placeItem(SetPos3, ta3);
 
@@ -266,7 +265,12 @@ Mission2_1 :: Mission2_1 ()
 
 Mission2_1 :: ~Mission2_1 ()
 {
-	
+	delete ta1;
+	ta1 = NULL;
+	delete ta2;
+	ta2 = NULL;
+	delete ta3;
+	ta3 = NULL;
 }
 
 bool Mission2_1 :: handleEvents(SDL_Event &e)//
@@ -276,14 +280,17 @@ bool Mission2_1 :: handleEvents(SDL_Event &e)//
 		{
 			if(e.user.code == TA1)
 			{
+				ta1 = NULL;
 				total++;
 			}
 			if(e.user.code == TA2)
 			{
+				ta2 = NULL;
 				total++;
 			}
 			if(e.user.code == TA3)
 			{
+				ta3 = NULL;
 				total++;
 			}
 		}
@@ -365,7 +372,7 @@ Mission2_3 :: Mission2_3 ()
 			SetSuccess1 = true;
 		} 
 	}
-	WebWork1* web1;
+	
 	web1 = new WebWork1;
 	map.placeItem(SetPos1, web1);
 	
@@ -381,7 +388,7 @@ Mission2_3 :: Mission2_3 ()
 			SetSuccess2 = true;
 		} 
 	}
-	WebWork2* web2;
+	
 	web2 = new WebWork2;
 	map.placeItem(SetPos1, web2);
 	
@@ -397,7 +404,7 @@ Mission2_3 :: Mission2_3 ()
 			SetSuccess3 = true;
 		} 
 	}
-	WebWork3* web3;
+	
 	web3 = new WebWork3;
 	map.placeItem(SetPos1, web3);
 
@@ -405,7 +412,12 @@ Mission2_3 :: Mission2_3 ()
 
 Mission2_3 :: ~Mission2_3 ()
 {
-	
+	delete web1;
+	web1 = NULL;
+	delete web2;
+	web2 = NULL;
+	delete web3;
+	web3 = NULL;
 }
 
 bool Mission2_3 :: handleEvents(SDL_Event &e)
@@ -414,15 +426,20 @@ bool Mission2_3 :: handleEvents(SDL_Event &e)
 	if(e.type == ITEM_USED) 
 		{
 			if(e.user.code == WEBWORK1)
-			total++;
-		}
-		{
+			{
+				web1 = NULL;
+				total++;
+			}
 			if(e.user.code == WEBWORK2)
-			total++;
-		}
-		{
+			{
+				web2 = NULL;
+			    total++;
+			}
 			if(e.user.code == WEBWORK3)
-			total++;
+			{
+				web3 = NULL;
+			    total++;
+			}
 		}
 	if(total == 3)
 	{
