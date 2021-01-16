@@ -6,7 +6,7 @@
 #include "Map.h"
 #include "UserEvent.h"
 using namespace std;
-int tmp_velocity_of_runner;
+static int tmp_velocity_of_runner;
 Runner *Runner::runnerInstance = NULL;
 
 character_list character;
