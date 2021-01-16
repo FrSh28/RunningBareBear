@@ -6,7 +6,7 @@
 #include "Map.h"
 #include "UserEvent.h"
 using namespace std;
-
+int tmp_velocity_of_runner;
 Runner *Runner::runnerInstance = NULL;
 
 character_list character;
@@ -45,7 +45,8 @@ height(gridHeight*0.9), updateRate(20), direction(DOWN), velocity_x(0),velocity_
 
         switch (character) {
             case BEAR:
-                velocity = 1;
+                velocity = 4;
+                tmp_velocity_of_runner = velocity;
                 //sprint_velocity = 2;
                 username = "bear";
                 texture = loadImage(RUNNER_IMAGE);
@@ -123,6 +124,7 @@ bool Runner::handleEvents(SDL_Event &e)
                     velocity_x *= 2;
                     velocity_y *= 2;
                     sprint = true;
+                    tmp_velocity_of_runner = velocity;
                     //printf("velocity%d\n",velocity);
                     //printf("velocity y%d\n",velocity_y);
                     return true;
@@ -130,25 +132,25 @@ bool Runner::handleEvents(SDL_Event &e)
                     //printf("start down\n");
                     velocity_y += velocity;
                     velocity_x += 0;
-                    direction = DOWN;
+                    tmp_velocity_of_runner = velocity;
                     return  true;
                 case SDLK_w:
                     //printf("start up\n");
                     velocity_y -= velocity;
                     velocity_x += 0;
-                    direction = UP;
+                    tmp_velocity_of_runner = velocity;
                     return true;
                 case SDLK_d:
                     //printf("start right\n");
                     velocity_x += velocity;
                     velocity_y += 0;
-                    direction = RIGHT;
+                    tmp_velocity_of_runner = velocity;
                     return true;
                 case SDLK_a:
                     //printf("start left\n");
                     velocity_x -= velocity;
                     velocity_y += 0;
-                    direction = LEFT;
+                    tmp_velocity_of_runner = velocity;
                     return true;
                 case SDLK_e:
                     //pickup throw switch
@@ -177,19 +179,19 @@ bool Runner::handleEvents(SDL_Event &e)
                     return true;
                 case SDLK_w:
                     //printf("stop going up\n");
-                    velocity_y += velocity;
+                    velocity_y += tmp_velocity_of_runner;
                     return true;
                 case SDLK_s:
                     //printf("stop going down\n");
-                    velocity_y -= velocity;
+                    velocity_y -= tmp_velocity_of_runner;
                     return true;
                 case SDLK_a:
                     //printf("stop going left\n");
-                    velocity_x += velocity;
+                    velocity_x += tmp_velocity_of_runner;
                     return true;
                 case SDLK_d:
                     //printf("stop going right\n");
-                    velocity_x -= velocity;
+                    velocity_x -= tmp_velocity_of_runner;
                     return true;
             }
         }
@@ -455,14 +457,14 @@ bool Runner::update()
     // deal strength
     if(velocity_x!=0||velocity_y!=0)
     {
-        strength -= 0.0005;
+        strength -= 0.005;
         if((abs(velocity_x) != 0 || abs(velocity_y) != 0) && sprint)
         {strength -= 0.05;}
     }
     if(strength > 100)
     {
         strength = 100;
-        velocity =4;
+        velocity = 4;
     }
     else if(strength > 75)
     {
@@ -505,6 +507,10 @@ bool Runner::update()
     MapPos = map->pixelPosTomapPos(SDL_Point({PixelPos.x+width/2,PixelPos.y+height/2}));
 
     //Render current frame
+    if(velocity_x > 0){direction = RIGHT;}
+    else if(velocity_x < 0){direction = LEFT;}
+    else if(velocity_y > 0){direction = DOWN;}
+    else if(velocity_y < 0){direction = UP;}
     rectOnTexture = Clip[direction*3+frame/updateRate];
     //render??;
 
