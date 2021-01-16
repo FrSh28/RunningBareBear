@@ -130,7 +130,7 @@ bool Timer::update()
     }
 
     //Deal Mission2
-    if(minute == 5 &&(!missionOngoing))
+    if(minute == 4 &&(!missionOngoing))
     {
         int tmp = game->rdEngine()%2+3;
         MissionTypes choice;
