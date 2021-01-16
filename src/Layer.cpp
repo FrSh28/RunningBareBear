@@ -75,8 +75,10 @@ void Layer::update()
 
 void Layer::render()
 {
+	static int renderCount = 0;
 	if(changed)
 	{
+		++renderCount;
 		SDL_Renderer *renderer = Game::GetGame().getRenderer();
 		SDL_SetRenderTarget(renderer, mainTexture);
 		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
@@ -87,7 +89,11 @@ void Layer::render()
 				SDL_RenderCopy(renderer, (*it)->getTexture(), (*it)->getRectOnTexturePtr(), (*it)->getRectOnScreenPtr());
 		}
 	}
-	changed = false;
+	if(renderCount > 1)
+	{
+		changed = false;
+		renderCount = 0;
+	}
 }
 
 void Layer::pushElement(BasicObject *_element)

@@ -97,6 +97,7 @@ void Game::Start(unsigned int _startTime)
 
 void Game::HandleEvents()
 {
+	//printf("Event\n");
 	static bool handled = false;
 	while(SDL_PollEvent(&event) or SDL_GetTicks() - startTime < frameCount * 1000 / frameRate)
 	{
@@ -150,10 +151,13 @@ void Game::HandleEvents()
 					break;
 				case STARTMENU:
 					state = STARTMENU;
+					delete gameMap;
+					gameMap = NULL;
 					popAllLayers();
 					Mix_PlayMusic(bgm, -1);
 					pushLayer(createLayer(L_STARTMENU, new BackGround(START_IMAGE)));
 					Render();
+					
 				default:
 					break;
 			}
@@ -184,7 +188,7 @@ void Game::HandleEvents()
 
 void Game::Update()
 {
-	//printf("%d\n", state);
+	//printf("%dUpdate\n", state);
 	if(state == PAUSE or state == LOADING or state == END)
 	{
 		Layer *topLayer = layers.back();
@@ -208,11 +212,14 @@ void Game::Update()
 			(*it)->update();
 	}
 	if(gameMap)
+	{
 		gameMap->update();
+	}
 }
 
 void Game::Render()
 {
+	//printf("Render\n");
 	if(state == PAUSE or state == LOADING  or state == END)
 	{
 		Layer *topLayer = layers.back();

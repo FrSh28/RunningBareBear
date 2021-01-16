@@ -46,6 +46,7 @@ Button::Button(button_type tmp) :
 		case INTRO1:
 			name = "Intro1";
 			texture = loadImage(INTRO_BUTTON_IMAGE);
+	printf("sdfsdfsfsdf\n");
 			break;
 		case LEAVEINTRO:
 			name = "LeaveIntro";
@@ -82,7 +83,7 @@ Button::Button(button_type tmp) :
 		case OK:
 			name = "OK";
 			texture = loadImage(OK_BUTTON_IMAGE);
-	printf("ooooo\n");
+	//printf("ooooo\n");
 			break;
 		default:
 			texture = loadImage(SAMPLE_IMAGE);
@@ -313,7 +314,9 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 				if(Inside)
 				{
+					//printf("dsscsd\n"); 
 					createUserEvent(GAMESTATE_CHANGE, STARTMENU, NULL, NULL);
+					//printf("ddfsdcsdcsscsd\n");
 				}
 			}
 			break;
