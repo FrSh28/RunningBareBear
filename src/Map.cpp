@@ -27,7 +27,7 @@ Map::Map(Maps index, string _name)
 	buildMap();
 
 	addRunner();
-	addHunter(10);
+	addHunter(20);
 	addItems(30);
 }
 

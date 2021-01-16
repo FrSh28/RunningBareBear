@@ -8,7 +8,7 @@
 using namespace std;
 
 Layer::Layer(string _name, int _texWidth, int _texHeight)
- : name(_name), active(true), changed(true), mainTexture(NULL), rectViewPort({0, 0, 0, 0})
+ : name(_name), active(true), changed(true), renderCount(0), mainTexture(NULL), rectViewPort({0, 0, 0, 0})
 {
 	Game &game = Game::GetGame();
 	if(_texWidth < 0 or _texHeight < 0)
@@ -75,7 +75,6 @@ void Layer::update()
 
 void Layer::render()
 {
-	static int renderCount = 0;
 	if(changed)
 	{
 		++renderCount;
@@ -184,7 +183,7 @@ Layer *createLayer(Layers index, BackGround *_bg)
 				lay->pushElement(_bg);
 			break;
 		case L_MAP_GROUND:
-			lay = new Layer("MapGroung", Map::getMap().getWidth(), Map::getMap().getHeight());
+			lay = new Layer("MapGround", Map::getMap().getWidth(), Map::getMap().getHeight());
 			if(_bg)
 				lay->pushElement(_bg);
 			break;

@@ -47,6 +47,7 @@ protected:
 	std::string name;
 	bool active;
 	bool changed;
+	int renderCount;
 
 	SDL_Texture* mainTexture;
 	SDL_Rect rectViewPort;

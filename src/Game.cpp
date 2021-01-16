@@ -97,7 +97,6 @@ void Game::Start(unsigned int _startTime)
 
 void Game::HandleEvents()
 {
-	//printf("Event\n");
 	static bool handled = false;
 	while(SDL_PollEvent(&event) or SDL_GetTicks() - startTime < frameCount * 1000 / frameRate)
 	{
@@ -188,7 +187,6 @@ void Game::HandleEvents()
 
 void Game::Update()
 {
-	//printf("%dUpdate\n", state);
 	if(state == PAUSE or state == LOADING or state == END)
 	{
 		Layer *topLayer = layers.back();
@@ -219,7 +217,6 @@ void Game::Update()
 
 void Game::Render()
 {
-	//printf("Render\n");
 	if(state == PAUSE or state == LOADING  or state == END)
 	{
 		Layer *topLayer = layers.back();
