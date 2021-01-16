@@ -165,7 +165,7 @@ bool Timer::update()
     //End Game
     if(gametime-timepassed<10)
     {
-        createUserEvent(TIMERCHANGE, TIMERSTOP , new bool(true), NULL);
+        createUserEvent(GAMESTATE_CHANGE, END, new bool(true), NULL);
     }
 
     //Put Timertext to timertexture (uncertained due to renderer)

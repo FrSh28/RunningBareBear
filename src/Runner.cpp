@@ -159,7 +159,9 @@ bool Runner::handleEvents(SDL_Event &e)
                     backpack = tmp;
                     return true;
                 case SDLK_q:
+                    use(backpack);
                     createUserEvent(ITEM_USED, backpack->getItemType(), NULL, NULL);
+                    if(backpack!=NULL){delete backpack;}
                     return true;
             }
         }
@@ -444,6 +446,12 @@ void Runner::checkCollision()
             }
         }
     }
+}
+
+void Runner::use(Item* backpack)
+{
+    if(backpack->getItemType() == POTION){strength = 100;}
+    if(backpack->getItemType() == MEAT){strength += 30;}
 }
 
 bool Runner::update()

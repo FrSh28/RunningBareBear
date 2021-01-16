@@ -30,6 +30,7 @@ private:
     static Runner* runnerInstance;
 
     inline void operator++(int);// operator overloading to add strength (meat)
+    inline void use(Item*);
 
 public:
     Runner(SDL_Point&, SDL_Point&, character_list = BEAR);
