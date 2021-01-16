@@ -105,7 +105,7 @@ void Layer::pushElement(BasicObject *_element)
 void Layer::popElement(BasicObject *_element)
 {
 	changed = true;
-	auto iter = find(elements.begin(), elements.begin(), _element);
+	auto iter = find(elements.begin(), elements.end(), _element);
 	if (iter != elements.end())
 	{
 		elements.erase(iter);

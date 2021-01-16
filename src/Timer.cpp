@@ -80,7 +80,6 @@ void Timer::unpause()
 
 bool Timer::handleEvents(SDL_Event& e)
 {
-    //printf("hihihi\n");
     if(e.type == TIMERCHANGE)
     {
         //Start Timer
