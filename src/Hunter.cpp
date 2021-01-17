@@ -12,7 +12,7 @@ SDL_Rect Hunter_Clip[TOTAL];
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	BasicObject("Hunter"), arrive(false), SetSuccess(false), Discovered(false),
-	Animation_Frame(4), Run(2), Walk(1), updateRate(30), frame(0), map(&Map::getMap())
+	Animation_Frame(4), Run(3), Walk(2), updateRate(30), frame(0), map(&Map::getMap())
 {
 	Hvelocity = Walk;
 	direction = DOWN_1;
@@ -78,8 +78,7 @@ bool Hunter::update()
 	{
 		Discovered = false;
 		
-		updateRate = 20;
-		//if(!check) check = true;
+		updateRate = 30;
 		if(!check)
 			{
 				check = true;
@@ -233,7 +232,7 @@ bool visited[map->getRowNum()][map->getColNum()];
 		}
 	};
 	
-	std::queue<Node> q; //
+	std::queue<Node> q; 
 	Node init; 
 	init.step = 0;
 	init.way.push_back(HunterMapPos);  
@@ -241,10 +240,9 @@ bool visited[map->getRowNum()][map->getColNum()];
 	q.push(init);
 	while(!q.empty())
 	{
-		Node curNode = q.front(); //
+		Node curNode = q.front(); 
 		q.pop();
 		SDL_Point curP = curNode.way.back();
-
 		//right
 		SDL_Point nextP1;
 		nextP1.x = curP.x + 1;
@@ -309,7 +307,6 @@ bool visited[map->getRowNum()][map->getColNum()];
 				q.push(tmp);
 			}
 		}
-		
 		//down
 		SDL_Point nextP3;
 		nextP3.x = curP.x;
@@ -342,7 +339,6 @@ bool visited[map->getRowNum()][map->getColNum()];
 				q.push(tmp);
 			}
 		}
-		
 		//up
 		SDL_Point nextP4;
 		nextP4.x = curP.x;
@@ -377,37 +373,9 @@ bool visited[map->getRowNum()][map->getColNum()];
 		}
 	}
 }
-/*
-if(!(map->isWall(nextP)) && !visited[nextP.x][nextP.y])
-		{
-			if(nextP == directPos)
-			{
-				while(!go.empty())
-				{
-					go.pop();
-				}
-				for(int i=0; i<step; i++)
-				{
-					go.push(curNode.way[i]);
-				}
-				break;
-			}
-			else
-			{
-				visited[nextP.x][nextP.y] = true;
-				Node tmp;
-				tmp.step = curNode.step + 1;
-				for(int i=0; i<step; i++)
-				{
-					tmp.way.push_back(curNode.way[i]);
-				}
-				tmp.way.push_back(nextP);
-				q.push(tmp);
-			}
-		}
-*/
-//UP_1, UP_2, UP_3, DOWN_1, DOWN_2, DOWN_3, RIGHT_1, RIGHT_2, RIGHT_3, LEFT_1, LEFT_2, LEFT_3, TOTAL
-void Hunter::initHunter_Clips()                // init render Hunter_Clips
+
+
+void Hunter::initHunter_Clips()               
 {
     //Up
     Hunter_Clip[UP_1].x = 32;

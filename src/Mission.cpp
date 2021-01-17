@@ -15,22 +15,14 @@ Mission :: Mission(string _name)
 {
 	total = 0;
 	success = false;
-	//posOnWindow->x = ;
-	//posOnWindow->y = ;
-	//posOnWindow->w = ;
-	//posOnWindow->h = ;
-	//posOnTexture->x = ;
-	//posOnTexture->y = ;
-	//posOnTexture->w = ;
-	//posOnTexture->h = ;
 }
-Mission :: ~Mission() //call when mission is complete or timeover ,Current_Mission = 0
+Mission :: ~Mission() 
 { }
 
 Mission *createMission(MissionTypes choice)
 {
 	
-	switch (choice) //somewhere : srand(time(0)); CreateMission(rand()%MissionTotal);
+	switch (choice) 
 	{
 		case Mission1Type1:
 			return new Mission1_1();
@@ -38,10 +30,6 @@ Mission *createMission(MissionTypes choice)
 			return new Mission1_2();
 		case Mission1Type3:
 			return new Mission1_3();
-		/*
-		case Mission2Type2:
-			return new Mission2_2();
-		*/
 		case Mission2Type1:
 			return new Mission2_1();
 		case Mission2Type3:
@@ -54,7 +42,7 @@ void Mission::timeup()
 	if(!success)
 	{
 		Map &map = Map::getMap();
-		map.addHunter(3-total); 
+		map.addHunter(30*(3-total)); 
 	}
 }
 Mission1_1 :: Mission1_1 ()
@@ -122,8 +110,7 @@ Mission1_2 :: Mission1_2 ()
 		{
 			SetSuccess = true;
 		} 
-	}
-	
+	}	
 	lib = new Library;
 	map.placeItem(SetPos, lib);
 
@@ -173,8 +160,6 @@ Mission1_3 :: Mission1_3 ()
 			SetSuccess = true;
 		} 
 	}
-	//PE_Teacher
-	
 	pe = new PE_Teacher;
 	map.placeItem(SetPos, pe);
 
@@ -240,8 +225,7 @@ Mission2_1 :: Mission2_1 ()
 		{
 			SetSuccess2 = true;
 		} 
-	}
-	
+	}	
 	ta2 = new TeacherAssistant2;
 	map.placeItem(SetPos2, ta2);
 	
@@ -256,8 +240,7 @@ Mission2_1 :: Mission2_1 ()
 		{
 			SetSuccess3 = true;
 		} 
-	}
-	
+	}	
 	ta3 = new TeacherAssistant3;
 	map.placeItem(SetPos3, ta3);
 
@@ -273,7 +256,7 @@ Mission2_1 :: ~Mission2_1 ()
 	ta3 = NULL;
 }
 
-bool Mission2_1 :: handleEvents(SDL_Event &e)//
+bool Mission2_1 :: handleEvents(SDL_Event &e)
 {
 	
 	if(e.type == ITEM_USED) 
@@ -305,53 +288,6 @@ bool Mission2_1 :: update()
 {
 	 return false;
 }
-
-/*
-Mission2_2 :: Mission2_2 ()
- : Mission("Mission 2 ")
-{
-	curMission = Mission2Type2;
-	Map &map = Map::getMap();
-	
-	bool SetSuccess = false;
-	SDL_Point SetPos;
-	while(!SetSuccess)
-	{
-		Game &game = Game::GetGame();
-		SetPos.x = game.rdEngine()%(map->getRowNum()); 
-		SetPos.y = game.rdEngine()%(map->getColNum());
-		if(map->isSpace(SetPos)) 
-		{
-			SetSuccess = true;
-		} 
-	}
-	Library* lib;
-	lib = new Library;
-	map.placeItem(SetPos, lib);
-
-}
-
-Mission2_2 :: ~Mission2_2 ()
-{
-	
-}
-
-bool Mission2_2 :: handleEvents(SDL_Event &e)
-{
-	
-	if(e.type == ITEM_USED) 
-		{
-			if(e.user.code == LIBRARY)
-			
-			success = true;
-		}
-}
-
-void Mission2_2 :: update()
-{
-	 
-}
-*/
 
 Mission2_3 :: Mission2_3 ()
  : Mission("Mission 2 ")

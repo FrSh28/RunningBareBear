@@ -103,7 +103,7 @@ bool Button::handleEvents(SDL_Event &e)
 	mouse.y = Y;
 	switch(type)
 	{
-		case STARTS://
+		case STARTS:
 			if(e.type == SDL_MOUSEMOTION)
 			{
 				EventReturnType = true;
@@ -186,8 +186,7 @@ bool Button::handleEvents(SDL_Event &e)
 						
 					else if(current == Mission2Type1)
 						game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_2_1_IMAGE )));
-					/*else if(current == Mission2Type2)
-						game.pushOverlayer(new boardLayer("M2-2", MISSION_2_2_IMAGE));*/	
+						
 					else if(current == Mission2Type3)
 						game.pushOverlayer(createLayer(L_MISSION, new BackGround(MISSION_2_2_IMAGE )));
 				}
@@ -245,7 +244,7 @@ bool Button::handleEvents(SDL_Event &e)
 			}
 			break;
 		case RESUMES:
-			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)// && e.button.button == SDL_BUTTON_LEFT)
+			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
 				
 				
@@ -281,7 +280,7 @@ bool Button::handleEvents(SDL_Event &e)
 				}
 			}
 			break;
-		case LEAVEINTRO2://
+		case LEAVEINTRO2:
 			if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 			{
 				

@@ -30,4 +30,4 @@ public:
 
 double operator ^(SDL_Point, SDL_Point);
 
-#endif // BUTTON_H
+#endif
