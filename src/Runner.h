@@ -10,6 +10,8 @@ class Map;
 enum character_list{BEAR};
 enum face {DOWN,LEFT,RIGHT,UP};
 class Runner:public BasicObject{
+    friend class Backpack;
+    friend class Strength;
 private:
     std::string username;
     face direction;             // character direction(used for render different graphs)
@@ -55,5 +57,22 @@ public:
     inline static Runner& getRunner() { return *runnerInstance; }
 };
 
+class Backpack : public BasicObject
+{
+public:
+    Backpack();
+    ~Backpack();
+    bool update();
+private:
+    Item *item;
+};
+
+class Strength : public BasicObject
+{
+public:
+    Strength();
+    ~Strength();
+    bool update();
+};
 
 #endif //RUNNER_H

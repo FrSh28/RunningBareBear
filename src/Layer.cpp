@@ -148,7 +148,7 @@ Layer *createLayer(Layers index, BackGround *_bg)
 			lay->pushElement(new Button(PAUSES));
 			lay->pushElement(new Button(MISSION));
 			lay->pushElement(new Timer());
-			//lay->pushElement(new backPack);
+			lay->pushElement(new Backpack());
 			//lay->pushElement(new strengthBar);
 			break;
 		case L_INTRO:

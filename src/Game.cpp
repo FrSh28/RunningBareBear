@@ -199,6 +199,7 @@ void Game::Update()
 				started = true;
 				popTopOverlayer();
 				state = GAME;
+				while(SDL_PollEvent(&event)){}
 			}
 		}
 		return;

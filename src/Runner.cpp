@@ -28,6 +28,14 @@ backpack(NULL)
     //set Initial MapPos
     setMapPos(InitialMapPos);
     if (mode == 1) {
+        /*posOnWindow->x = (int);
+        posOnTexture->x = (int);
+        posOnWindow->y = (int);
+        posOnTexture->y = (int);
+        posOnWindow->w = (int);
+        posOnTexture->w = (int);
+        posOnWindow->h = (int);
+        posOnTexture->h = (int);*/
         runnerInstance = this;
         rectOnTexture  = Clip[0];
         rectOnScreen.x = PixelPos.x;
@@ -39,6 +47,7 @@ backpack(NULL)
             case BEAR:
                 velocity = 4;
                 tmp_velocity_of_runner = velocity;
+                //sprint_velocity = 2;
                 username = "bear";
                 texture = loadImage(RUNNER_IMAGE);
                 break;
@@ -102,7 +111,6 @@ bool Runner::handleEvents(SDL_Event &e)
     if(mode==1)
     {
         //if a key is pressed
-        //printf("runner handle event");
         if(e.type==SDL_KEYDOWN && e.key.repeat == 0)
         {
             //adjust velocity
@@ -110,6 +118,7 @@ bool Runner::handleEvents(SDL_Event &e)
             {
                 case SDLK_SPACE:
                     //printf("start sprint\n");
+                    //printf("velocity%d\n",velocity);
                     //printf("velocity y%d\n",velocity_y);
                     velocity *= 2;
                     velocity_x *= 2;
@@ -120,6 +129,7 @@ bool Runner::handleEvents(SDL_Event &e)
                     //printf("velocity y%d\n",velocity_y);
                     return true;
                 case SDLK_s:
+                    //printf("start down\n");
                     velocity_y += velocity;
                     velocity_x += 0;
                     tmp_velocity_of_runner = velocity;
@@ -555,7 +565,8 @@ bool Runner::update()
     else if(velocity_y > 0){direction = DOWN;}
     else if(velocity_y < 0){direction = UP;}
     rectOnTexture = Clip[direction*3+frame/updateRate];
-    if(velocity_x == 0&&velocity_y == 0){rectOnTexture = Clip[direction*3];}
+    //render??;
+
     // go to next frame
     frame ++;
     // cycle animation
@@ -632,4 +643,54 @@ void Runner::initclips()                // init render clips
     Clip[11].y = 168;
     Clip[11].w = 56;
     Clip[11].h = 56;
+}
+
+Backpack::Backpack()
+ : BasicObject("Backpack"), item(NULL)
+{
+    setEventEnable(false);
+    setRenderEnable(false);
+    texture = NULL;
+    rectOnScreen = SDL_Rect({50, 520, 150, 150});
+}
+
+Backpack::~Backpack()
+{}
+
+bool Backpack::update()
+{
+    Runner &runner = Runner::getRunner();
+    if(runner.backpack != item)
+    {
+        item = runner.backpack;
+        if(item != NULL)
+        {
+            texture = item->getTexture();
+            rectOnTexture = *(item->getRectOnTexturePtr());
+            setRenderEnable(true);
+        }
+        else
+        {
+            texture = NULL;
+            rectOnTexture = SDL_Rect({0, 0, 0, 0});
+            setRenderEnable(false);
+        }
+        return true;
+    }
+    return false;
+}
+
+Strength::Strength()
+{
+
+}
+
+Strength::~Strength()
+{
+
+}
+
+bool Strength::update()
+{
+    
 }
