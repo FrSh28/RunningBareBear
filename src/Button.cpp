@@ -52,6 +52,7 @@ Button::Button(button_type tmp) :
 			break;
 		case MISSION:
 			name = "Mission";
+			setRenderEnable(false);
 			texture = loadImage(MISSION_BUTTON_IMAGE);
 			break;
 		case LEAVEMISSION:
@@ -172,7 +173,6 @@ bool Button::handleEvents(SDL_Event &e)
 				if(Inside)
 				{
 					Game &game = Game::GetGame();
-					current = Mission::getMission();
 					if(current == MissionTotal)
 						break;
 
@@ -327,6 +327,22 @@ bool Button::update()
 		rectOnTexture = SDL_Rect( {0, 0, 512, 512} );
 	else
 		rectOnTexture = SDL_Rect( {0, 0, 214, 215} );
+
+	if(type == MISSION)
+	{
+		current = Mission::getMission();
+		if(isRenderEnable() and current == MissionTotal)
+		{
+			setRenderEnable(false);
+			return true;
+		}
+		else if(!isRenderEnable() and current != MissionTotal)
+		{
+			setRenderEnable(true);
+			return true;
+		}
+	}
+
 	if(Last != Inside)
 		UpdateReturnType = true;
 	else

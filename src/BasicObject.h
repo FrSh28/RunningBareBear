@@ -11,9 +11,9 @@ public:
 	BasicObject(BasicObject &);
 	virtual ~BasicObject();
 
-	inline void setEventEnable(bool _evEn)  { eventEnable = _evEn; }
-	inline void setUpdateEnable(bool _upEn) { eventEnable = _upEn; }
-	inline void setRenderEnable(bool _rdEn) { eventEnable = _rdEn; }
+	inline void setEventEnable(bool _evEn)  { eventEnable  = _evEn; }
+	inline void setUpdateEnable(bool _upEn) { updateEnable = _upEn; }
+	inline void setRenderEnable(bool _rdEn) { renderEnable = _rdEn; }
 
 	virtual bool handleEvents(SDL_Event &);	// return true if handled
 	virtual bool update();
