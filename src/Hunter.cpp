@@ -13,7 +13,7 @@ SDL_Rect Hunter_Clip[TOTAL];
 
 ostream &operator<<(ostream &output, const Hunter &h)
 {
-	output << h.directPos.x << "," << h.directPos.y;
+	output << h.directPos.x << "," << h.directPos.y << '\n';
 	return output;
 }
 
