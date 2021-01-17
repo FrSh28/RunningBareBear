@@ -72,6 +72,7 @@ Mission1_1 :: ~Mission1_1 ()
 {
 	delete sheet;
 	sheet = NULL;
+	curMission = MissionTotal;
 }
 bool Mission1_1 :: handleEvents(SDL_Event &e)
 {
@@ -118,6 +119,7 @@ Mission1_2 :: ~Mission1_2 ()
 {
 	delete lib;
 	lib = NULL;
+	curMission = MissionTotal;
 }
 
 bool Mission1_2 :: handleEvents(SDL_Event &e)
@@ -165,6 +167,7 @@ Mission1_3 :: ~Mission1_3 ()
 {
 	delete pe;
 	pe = NULL;
+	curMission = MissionTotal;
 }
 
 bool Mission1_3 :: handleEvents(SDL_Event &e)
@@ -248,6 +251,7 @@ Mission2_1 :: ~Mission2_1 ()
 	ta2 = NULL;
 	delete ta3;
 	ta3 = NULL;
+	curMission = MissionTotal;
 }
 
 bool Mission2_1 :: handleEvents(SDL_Event &e)
@@ -343,6 +347,7 @@ Mission2_3 :: ~Mission2_3 ()
 	web2 = NULL;
 	delete web3;
 	web3 = NULL;
+	curMission = MissionTotal;
 }
 
 bool Mission2_3 :: handleEvents(SDL_Event &e)
