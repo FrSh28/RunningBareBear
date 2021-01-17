@@ -100,8 +100,6 @@ bool Hunter::update()
 	rectOnTexture = Hunter_Clip[direction+frame/updateRate];
 	rectOnScreen.x = HunterPixelPos.x;
 	rectOnScreen.y = HunterPixelPos.y;
-	printf("direction = %d",direction);
-	printf("\n");
 	return true;
 }
 
