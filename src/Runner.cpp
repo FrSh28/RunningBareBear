@@ -17,7 +17,7 @@ SDL_Rect Clip [TOTAL_FRAMES];
 const int Runner::gridWidth = Map::getPixelWidth();
 const int Runner::gridHeight = Map::getPixelHeight();
 Runner::Runner(SDL_Point& InitialMapPos, SDL_Point& InitialPixelPos, character_list character):
-BasicObject("Runner"), strength(10), map(&Map::getMap()), width(gridWidth*0.9),
+BasicObject("Runner"), strength(100), map(&Map::getMap()), width(gridWidth*0.9),
 height(gridHeight*0.9), updateRate(20), direction(DOWN), velocity_x(0),velocity_y(0),sprint(false),
 backpack(NULL)
 {
@@ -630,7 +630,7 @@ Backpack::Backpack()
     setEventEnable(false);
     setRenderEnable(false);
     texture = NULL;
-    rectOnScreen = SDL_Rect({50, 520, 150, 150});
+    rectOnScreen = SDL_Rect({40, 550, 120, 120});
 }
 
 Backpack::~Backpack()
@@ -663,7 +663,7 @@ StrengthBar::StrengthBar()
  : BasicObject("StrengthBar")
 {
     texture = loadImage(STRENGTH_IMAGE);
-    rectOnScreen = SDL_Rect({250, 630, 200, 20});
+    rectOnScreen = SDL_Rect({200, 630, 200, 20});
     rectOnTexture = SDL_Rect({0, 0, 200, 20});
 }
 
