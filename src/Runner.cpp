@@ -28,14 +28,6 @@ backpack(NULL)
     //set Initial MapPos
     setMapPos(InitialMapPos);
     if (mode == 1) {
-        /*posOnWindow->x = (int);
-        posOnTexture->x = (int);
-        posOnWindow->y = (int);
-        posOnTexture->y = (int);
-        posOnWindow->w = (int);
-        posOnTexture->w = (int);
-        posOnWindow->h = (int);
-        posOnTexture->h = (int);*/
         runnerInstance = this;
         rectOnTexture  = Clip[0];
         rectOnScreen.x = PixelPos.x;
@@ -47,7 +39,6 @@ backpack(NULL)
             case BEAR:
                 velocity = 4;
                 tmp_velocity_of_runner = velocity;
-                //sprint_velocity = 2;
                 username = "bear";
                 texture = loadImage(RUNNER_IMAGE);
                 break;
@@ -117,37 +108,28 @@ bool Runner::handleEvents(SDL_Event &e)
             switch(e.key.keysym.sym)
             {
                 case SDLK_SPACE:
-                    //printf("start sprint\n");
-                    //printf("velocity%d\n",velocity);
-                    //printf("velocity y%d\n",velocity_y);
                     velocity *= 2;
                     velocity_x *= 2;
                     velocity_y *= 2;
                     sprint = true;
                     tmp_velocity_of_runner = velocity;
-                    //printf("velocity%d\n",velocity);
-                    //printf("velocity y%d\n",velocity_y);
                     return true;
                 case SDLK_s:
-                    //printf("start down\n");
                     velocity_y += velocity;
                     velocity_x += 0;
                     tmp_velocity_of_runner = velocity;
                     return  true;
                 case SDLK_w:
-                    //printf("start up\n");
                     velocity_y -= velocity;
                     velocity_x += 0;
                     tmp_velocity_of_runner = velocity;
                     return true;
                 case SDLK_d:
-                    //printf("start right\n");
                     velocity_x += velocity;
                     velocity_y += 0;
                     tmp_velocity_of_runner = velocity;
                     return true;
                 case SDLK_a:
-                    //printf("start left\n");
                     velocity_x -= velocity;
                     velocity_y += 0;
                     tmp_velocity_of_runner = velocity;
@@ -164,6 +146,7 @@ bool Runner::handleEvents(SDL_Event &e)
                     use(backpack);
                     createUserEvent(ITEM_USED, backpack->getItemType(), NULL, NULL);
                     delete backpack;
+                    backpack = NULL;
                     return true;
             }
         }
@@ -181,19 +164,15 @@ bool Runner::handleEvents(SDL_Event &e)
                     //updateRate = 10;
                     return true;
                 case SDLK_w:
-                    //printf("stop going up\n");
                     velocity_y += tmp_velocity_of_runner;
                     return true;
                 case SDLK_s:
-                    //printf("stop going down\n");
                     velocity_y -= tmp_velocity_of_runner;
                     return true;
                 case SDLK_a:
-                    //printf("stop going left\n");
                     velocity_x += tmp_velocity_of_runner;
                     return true;
                 case SDLK_d:
-                    //printf("stop going right\n");
                     velocity_x -= tmp_velocity_of_runner;
                     return true;
             }
@@ -565,7 +544,7 @@ bool Runner::update()
     else if(velocity_y > 0){direction = DOWN;}
     else if(velocity_y < 0){direction = UP;}
     rectOnTexture = Clip[direction*3+frame/updateRate];
-    //render??;
+    if(velocity_x == 0 && velocity_y == 0){rectOnTexture = Clip[direction*3];}
 
     // go to next frame
     frame ++;
