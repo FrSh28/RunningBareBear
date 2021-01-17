@@ -117,11 +117,13 @@ bool Runner::handleEvents(SDL_Event &e)
                     sprint = true;
                     tmp_velocity_of_runner = velocity;
                     //updateRate = 10;
+                    printf("press space %d\n",tmp_velocity_of_runner);
                     return true;
                 case SDLK_s:
                     velocity_y += velocity;
                     velocity_x += 0;
                     tmp_velocity_of_runner = velocity;
+                    printf("press s %d\n",tmp_velocity_of_runner);
                     return  true;
                 case SDLK_w:
                     velocity_y -= velocity;
@@ -160,17 +162,20 @@ bool Runner::handleEvents(SDL_Event &e)
             switch(e.key.keysym.sym)
             {
                 case SDLK_SPACE:
-                    //printf("sprint end\n");
+                    printf("key up space %d\n",tmp_velocity_of_runner);
                     velocity /= 2;
                     velocity_x /= 2;
                     velocity_y /= 2;
                     sprint = false;
                     //updateRate = 20;
+                    printf("key up space %d\n",tmp_velocity_of_runner);
+                    //updateRate = 10;
                     return true;
                 case SDLK_w:
                     velocity_y += tmp_velocity_of_runner;
                     return true;
                 case SDLK_s:
+                    printf("keyup s %lf\n",tmp_velocity_of_runner);
                     velocity_y -= tmp_velocity_of_runner;
                     return true;
                 case SDLK_a:

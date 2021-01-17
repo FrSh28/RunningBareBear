@@ -166,8 +166,9 @@ bool Timer::update()
     }
 
     //End Game
-    if(gametime-timepassed<10)
+    if(gametime-timepassed<100)
     {
+        printf("end game\n");
         createUserEvent(GAMESTATE_CHANGE, END, new bool(true), NULL);
     }
 
