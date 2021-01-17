@@ -116,7 +116,7 @@ bool Runner::handleEvents(SDL_Event &e)
                     velocity_y *= 2;
                     sprint = true;
                     tmp_velocity_of_runner = velocity;
-                    //updateRate = 10;
+                    updateRate = 20;
                     printf("press space %d\n",tmp_velocity_of_runner);
                     return true;
                 case SDLK_s:
@@ -167,15 +167,14 @@ bool Runner::handleEvents(SDL_Event &e)
                     velocity_x = velocity_x/2;
                     velocity_y = velocity_y/2;
                     sprint = false;
-                    //updateRate = 20;
+                    updateRate = 20;
                     printf("key up space %d\n",tmp_velocity_of_runner);
-                    //updateRate = 10;
                     return true;
                 case SDLK_w:
                     velocity_y += tmp_velocity_of_runner;
                     return true;
                 case SDLK_s:
-                    printf("keyup s %lf\n",tmp_velocity_of_runner);
+                    printf("keyup s %d\n",tmp_velocity_of_runner);
                     velocity_y -= tmp_velocity_of_runner;
                     return true;
                 case SDLK_a:
@@ -447,6 +446,7 @@ bool Runner::update()
     // move(update PixelPos)
     move();
     // deal strength
+    if(strength <0){strength = 0;}
     if((velocity_x!=0||velocity_y!=0)&&strength>0)
     {
         strength -= 0.005;
@@ -469,14 +469,10 @@ bool Runner::update()
             if(velocity_y>0 ){velocity_y = velocity;}
             else if(velocity_y<0 ){velocity_y = -velocity;}
         }
-        /*if(sprint)
+        if(sprint)
         {
-            tmp_velocity_of_runner = 2*tmp_velocity_of_runner;
-            if(velocity_x>0 ){velocity_x = 2*velocity;}
-            else if(velocity_x<0 ){velocity_x = -2*velocity;}
-            if(velocity_y>0 ){velocity_y = 2*velocity;}
-            else if(velocity_y<0 ){velocity_y = -2*velocity;}
-        }*/
+            tmp_velocity_of_runner = velocity;
+        }
     }
     else if(strength >= 50 && strength < 75)
     {
@@ -489,14 +485,10 @@ bool Runner::update()
             if(velocity_y>0 ){velocity_y = velocity;}
             else if(velocity_y<0 ){velocity_y = -velocity;}
         }
-        /*if(sprint)
+        if(sprint)
         {
-            tmp_velocity_of_runner = 2*tmp_velocity_of_runner;
-            if(velocity_x>0 ){velocity_x = 2*velocity;}
-            else if(velocity_x<0 ){velocity_x = -2*velocity;}
-            if(velocity_y>0 ){velocity_y = 2*velocity;}
-            else if(velocity_y<0 ){velocity_y = -2*velocity;}
-        }*/
+            tmp_velocity_of_runner = velocity;
+        }
     }
     else if(strength >= 25 && strength < 50)
     {
@@ -509,14 +501,10 @@ bool Runner::update()
             if(velocity_y>0 ){velocity_y = velocity;}
             else if(velocity_y<0 ){velocity_y = -velocity;}
         }
-        /*if(sprint)
+        if(sprint)
         {
-            tmp_velocity_of_runner = 2*tmp_velocity_of_runner;
-            if(velocity_x>0 ){velocity_x = 2*velocity;}
-            else if(velocity_x<0 ){velocity_x = -2*velocity;}
-            if(velocity_y>0 ){velocity_y = 2*velocity;}
-            else if(velocity_y<0 ){velocity_y = -2*velocity;}
-        }*/
+            tmp_velocity_of_runner = velocity;
+        }
     }
     else if(strength >= 0  && strength < 25)
     {
@@ -529,14 +517,10 @@ bool Runner::update()
             if(velocity_y>0 ){velocity_y = velocity;}
             else if(velocity_y<0 ){velocity_y = -velocity;}
         }
-        /*if(sprint)
+        if(sprint)
         {
-            tmp_velocity_of_runner = 2*tmp_velocity_of_runner;
-            if(velocity_x>0 ){velocity_x = 2*velocity;}
-            else if(velocity_x<0 ){velocity_x = -2*velocity;}
-            if(velocity_y>0 ){velocity_y = 2*velocity;}
-            else if(velocity_y<0 ){velocity_y = -2*velocity;}
-        }*/
+            tmp_velocity_of_runner = velocity;
+        }
     }
     // use map function to calculate MapPos and update
     MapPos = map->pixelPosTomapPos(SDL_Point({PixelPos.x+width/2,PixelPos.y+height/2}));
