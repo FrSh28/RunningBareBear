@@ -12,7 +12,7 @@ SDL_Rect Hunter_Clip[TOTAL];
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	BasicObject("Hunter"), arrive(false), SetSuccess(false), Discovered(false),
-	Animation_Frame(4), Run(3), Walk(2), updateRate(20), frame(0), map(&Map::getMap())
+	Animation_Frame(4), Run(1), Walk(10), updateRate(20), frame(0), map(&Map::getMap())
 {
 	Hvelocity = Walk;
 	direction = DOWN_1;
@@ -96,10 +96,12 @@ bool Hunter::update()
 	
 
 	Move();
-	rectOnTexture = Hunter_Clip[direction+frame/updateRate];
 	if(frame/updateRate == Animation_Frame){frame=0;}
+	rectOnTexture = Hunter_Clip[direction+frame/updateRate];
 	rectOnScreen.x = HunterPixelPos.x;
 	rectOnScreen.y = HunterPixelPos.y;
+	printf("direction = %d",direction);
+	printf("\n");
 	return true;
 }
 
@@ -155,13 +157,22 @@ void Hunter::Move()
 			if(abs(HunterPixelPos.x - NextPixel.x) < Hvelocity)
 			{
 				HunterPixelPos.x = NextPixel.x;
+				/*
+				if(HunterPixelPos.x - NextPixel.x > 0)
+				{
+					direction = LEFT_1;
+				}
+				else
+				{
+					direction = RIGHT_1;
+				}*/
 			}
 			else if(HunterPixelPos.x < NextPixel.x)
 			{
 				HunterPixelPos.x += Hvelocity;
 				direction = RIGHT_1;
 			}
-			else 
+			else if(HunterPixelPos.x > NextPixel.x)
 			{
 				HunterPixelPos.x -= Hvelocity;
 				direction = LEFT_1;
@@ -172,13 +183,22 @@ void Hunter::Move()
 			if(abs(HunterPixelPos.y - NextPixel.y) < Hvelocity)
 			{
 				HunterPixelPos.y = NextPixel.y;
+				/*
+				if(HunterPixelPos.y - NextPixel.y > 0)
+				{
+					direction = UP_1;
+				}
+				else
+				{
+					direction = DOWN_1;
+				}*/
 			}
 			else if(HunterPixelPos.y < NextPixel.y)
 			{
 				HunterPixelPos.y += Hvelocity;
 				direction = DOWN_1;
 			}
-			else
+			else if(HunterPixelPos.y > NextPixel.y)
 			{
 				HunterPixelPos.y -= Hvelocity;
 				direction = UP_1;
