@@ -87,8 +87,8 @@ Potion::Potion():Item("Potion")
 {
     itemNumber++;
     texture = loadImage(POTION_IMAGE);
-    rectOnTexture.x = 90;
-    rectOnTexture.y = 80;
+    rectOnTexture.x = 84;
+    rectOnTexture.y = 88;
     rectOnTexture.w = 45;
     rectOnTexture.h = 45;
     type = POTION;
