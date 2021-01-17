@@ -149,7 +149,7 @@ Layer *createLayer(Layers index, BackGround *_bg)
 			lay->pushElement(new Button(MISSION));
 			lay->pushElement(new Timer());
 			lay->pushElement(new Backpack());
-			//lay->pushElement(new strengthBar);
+			lay->pushElement(new StrengthBar());
 			break;
 		case L_INTRO:
 			lay = new Layer("Intro");

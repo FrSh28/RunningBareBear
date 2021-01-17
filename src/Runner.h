@@ -11,7 +11,7 @@ enum character_list{BEAR};
 enum face {DOWN,LEFT,RIGHT,UP};
 class Runner:public BasicObject{
     friend class Backpack;
-    friend class Strength;
+    friend class StrengthBar;
 private:
     std::string username;
     face direction;             // character direction(used for render different graphs)
@@ -67,11 +67,11 @@ private:
     Item *item;
 };
 
-class Strength : public BasicObject
+class StrengthBar : public BasicObject
 {
 public:
-    Strength();
-    ~Strength();
+    StrengthBar();
+    ~StrengthBar();
     bool update();
 };
 

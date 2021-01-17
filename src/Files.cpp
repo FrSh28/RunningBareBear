@@ -42,6 +42,7 @@ namespace Files
 										"../media/image/parenthesis.png", //WEBWORK2
 										"../media/image/webwork.png", //WEBWORK3
 										"../media/image/wall.png",
+										"../media/image/StrengthBar.png"
 										};
 
 	//string P_Fonts[FONT_COUNT]	= { "../media/font/fonts.txt",};
