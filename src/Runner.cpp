@@ -619,3 +619,18 @@ bool StrengthBar::update()
     rectOnTexture.w = Runner::getRunner().strength * 200/100; 
     rectOnScreen.w  = Runner::getRunner().strength * 200/100;
 }
+
+std::ostream& operator <<(ostream& output ,const Runner & runner)
+{
+    output<<"facing"<<runner.direction<<endl;
+    output<<"PixelPos_x/PixelPos_y"<<runner.PixelPos.x<<'/'<<runner.PixelPos.y<<endl;
+    output<<"MapPos_x/MapPos_y"<<runner.MapPos.x<<'/'<<runner.MapPos.y<<endl;
+    output<<"velocity_x: "<<runner.velocity_x<<endl;
+    output<<"velocity_y: "<<runner.velocity_y<<endl;
+    output<<"velocity:  "<<runner.velocity<<endl;
+    output<<"strength"<<runner.strength<<endl;
+    output<<"sprint"<<runner.sprint<<endl;
+    output<<"width"<<runner.width<<endl;
+    output<<"height"<<runner.height<<endl;
+    output<<"backpack"<<runner.backpack->getItemType()<<endl;
+}

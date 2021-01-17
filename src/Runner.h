@@ -2,6 +2,7 @@
 #define RUNNER_H
 #include "includeSDL.h"
 #include "BasicObject.h"
+#include <iostream>
 extern int mode;
 
 class Item;
@@ -12,6 +13,7 @@ enum face {DOWN,LEFT,RIGHT,UP};
 class Runner:public BasicObject{
     friend class Backpack;
     friend class StrengthBar;
+    friend std::ostream & operator<<(std::ostream &,const Runner&);
 private:
     std::string username;
     face direction;             // character direction(used for render different graphs)
@@ -55,6 +57,9 @@ public:
     int getStrength()const;  // get strength
     inline static Runner& getRunner() { return *runnerInstance; }
 };
+
+
+std::ostream & operator<<(std::ostream output,const Runner& runner);
 
 class Backpack : public BasicObject
 {
