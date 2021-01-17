@@ -15,20 +15,21 @@ enum MissionTypes
 
 class Mission
 {
+	friend class Timer;
 protected:
 	int total;
+	bool success;
+	static MissionTypes curMission;
 public:
 	Mission(std::string _name = "");
 	~Mission();
 	virtual bool handleEvents(SDL_Event &) = 0;
 	virtual bool update() = 0;
 	void timeup();
-	inline bool isSuccess() const { return success; }
+	//inline bool isSuccess() const { return success; }
 	inline static MissionTypes &getMission() { return curMission; }
-protected:
-	bool success;
-	static MissionTypes curMission;
-	
+
+		
 };
 class Mission1_1 : public Mission
 {
