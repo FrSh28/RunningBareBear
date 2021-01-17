@@ -36,6 +36,8 @@ public:
 
 	void pushElement(BasicObject *);
 	void popElement(BasicObject *);
+	Layer &operator+(BasicObject *);
+	Layer &operator-(BasicObject *);
 
 	inline std::string getName() const { return name; }
 	inline bool isActive() const { return active; }

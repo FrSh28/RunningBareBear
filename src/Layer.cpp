@@ -113,6 +113,24 @@ void Layer::popElement(BasicObject *_element)
 	}
 }
 
+Layer &Layer::operator+(BasicObject *_element)
+{
+	changed = true;
+	elements.push_back(_element);
+	return *this;
+}
+
+Layer &Layer::operator-(BasicObject *_element)
+{
+	changed = true;
+	auto iter = find(elements.begin(), elements.end(), _element);
+	if (iter != elements.end())
+	{
+		elements.erase(iter);
+	}
+	return *this;
+}
+
 BackGround::BackGround(Images index, SDL_Rect _rectOnScreen)
  : BasicObject(Files::P_Images[index])
 {
@@ -139,60 +157,53 @@ Layer *createLayer(Layers index, BackGround *_bg)
 		case L_STARTMENU:
 			lay = new Layer("StartMenu");
 			if(_bg)
-				lay->pushElement(_bg);
-			lay->pushElement(new Button(STARTS));
-			lay->pushElement(new Button(INTRO1));
+				(*lay) + _bg;
+			(*lay) + new Button(STARTS) + new Button(INTRO1);
 			break;
 		case L_STATUS:
 			lay = new Layer("Status");
 			if(_bg)
-				lay->pushElement(_bg);
-			lay->pushElement(new Button(PAUSES));
-			lay->pushElement(new Button(MISSION));
-			lay->pushElement(new Timer());
-			lay->pushElement(new Backpack());
-			lay->pushElement(new StrengthBar());
+				(*lay) + _bg;
+			(*lay) + new Button(PAUSES) + new Button(MISSION) + new Timer() + new Backpack() + new StrengthBar();
 			break;
 		case L_INTRO:
 			lay = new Layer("Intro");
 			if(_bg)
-				lay->pushElement(_bg);
-			lay->pushElement(new Button(LEAVEINTRO));
+				(*lay) + _bg;
+			(*lay) + new Button(LEAVEINTRO);
 			break;
 		case L_MISSION:
 			lay = new Layer("Mission");
 			if(_bg)
-				lay->pushElement(_bg);
-			lay->pushElement(new Button(LEAVEMISSION));
+				(*lay) + _bg;
+			(*lay) + new Button(LEAVEMISSION);
 			break;
 		case L_PAUSE:
 			lay = new Layer("Pause");
 			if(_bg)
-				lay->pushElement(_bg);
-			lay->pushElement(new Button(RESUMES));
-			lay->pushElement(new Button(INTRO2));
-			lay->pushElement(new Button(LEAVE));
+				(*lay) + _bg;
+			(*lay) + new Button(RESUMES) + new Button(INTRO2) + new Button(LEAVE);
 			break;
 		case L_END:
 			lay = new Layer("End");
 			if(_bg)
-				lay->pushElement(_bg);
-			lay->pushElement(new Button(OK));
+				(*lay) + _bg;
+			(*lay) + new Button(OK);
 			break;
 		case L_LOADING:
 			lay = new Layer("Loading");
 			if(_bg)
-				lay->pushElement(_bg);
+				(*lay) + _bg;
 			break;
 		case L_MAP_GROUND:
 			lay = new Layer("MapGround", Map::getMap().getWidth(), Map::getMap().getHeight());
 			if(_bg)
-				lay->pushElement(_bg);
+				(*lay) + _bg;
 			break;
 		case L_MAP_FRONT:
 			lay = new Layer("MapFront", Map::getMap().getWidth(), Map::getMap().getHeight());
 			if(_bg)
-				lay->pushElement(_bg);
+				(*lay) + _bg;
 			break;
 		case L_CHARACTER:
 			lay = new Layer("Character", Map::getMap().getWidth(), Map::getMap().getHeight());
