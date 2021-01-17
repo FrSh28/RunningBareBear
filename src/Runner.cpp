@@ -458,7 +458,7 @@ void Runner::use(Item* backpack)
 
 bool Runner::update()
 {
-    printf("before update strength velocity_x velocity_y: %lf,%d,%d,%d\n",strength,velocity_x,velocity_y,velocity);
+    //printf("before update strength velocity_x velocity_y: %lf,%d,%d,%d\n",strength,velocity_x,velocity_y,velocity);
     rectOnScreen.x = PixelPos.x ;
     rectOnScreen.y = PixelPos.y ;
     static int frame = 0;
@@ -571,7 +571,7 @@ bool Runner::update()
     frame ++;
     // cycle animation
     if(frame/updateRate == ANIMATION_FRAMES){frame=0;}
-    printf("after update strength velocity_x velocity_y: %lf,%d,%d,%d\n",strength,velocity_x,velocity_y,velocity);
+    //printf("after update strength velocity_x velocity_y: %lf,%d,%d,%d\n",strength,velocity_x,velocity_y,velocity);
     return true;
 }
 
