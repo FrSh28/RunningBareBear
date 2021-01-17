@@ -17,18 +17,18 @@ Space:衝刺
 藥水:回大量體力 
 肉:回少量體力
 
-ProjectUnknown is a game to hide from hunters.
+RunningBareBear is a game to hide from hunters.
 The winning condition is to hide from hunters until time's up.
-Player can move by pressing w a s d keys on keyboard.
-When pressing e, player can pickup item on the position or throw out item in backpack.
-When pressing q, player can use the item in its own backpack.
-When pressing space, player can sprint for a period time. 
+The player can move by pressing w a s d keys on keyboard.
+When pressing e, the player can pickup item on the position or throw out item in backpack.
+When pressing q, the player can use the item in its own backpack.
+When pressing space, the player can sprint for a period of time. 
 Moving and sprinting will make player exausted, which will lead to strength declining and solwer moving velocity.
 Hunters will be randomly placed on map.
-During game, missions will be randomly created.
+During the game, missions will be randomly created.
 If one does not complete the missions, it will be more difficult to win.
 When one finds the items required by mission, press e to pickup and press q to finish the mission.
-There are three kinds of items can be used, star, potion and meat.
+The player can use three kinds of items: the invincible star, potion and meat.
 The invincible star is useless.
 Potion will fully recover player's strength.
 Meat will slightly recover player's strength.
