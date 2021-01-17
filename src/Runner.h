@@ -20,7 +20,6 @@ private:
     int velocity;               // the velocity when pressing button
     int tmp_velocity_of_runner;
     double strength;            // the strength of runner
-    //int sprint_velocity;        // the velocity added when sprinting
     bool sprint;                 // check is sprinting or not
     int width;                  // rectangle width (for collision box)
     int height;                 // rectangle height (for collision box)

@@ -13,6 +13,7 @@ enum ItemList{BAD_ITEM, STAR, INVISIBLE_CLOAK, POTION, MEAT, SHEET, LIBRARY, PE_
 
 class Item :public BasicObject
 {
+    friend class Runner;
 protected:
     ItemList type;
     SDL_Point PixelPos;         // small grid on map

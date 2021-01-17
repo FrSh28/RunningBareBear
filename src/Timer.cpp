@@ -13,10 +13,10 @@ timerText("0"), minute(10), second(0), missionOngoing(false), currentMission(NUL
     TTF_SetFontStyle(timerFont, TTF_STYLE_BOLD);
 
     timercolor = {0,0,0,255};
-    rectOnScreen.x = 400;
+    rectOnScreen.w = 250;
+    rectOnScreen.h = 120;
+    rectOnScreen.x = 1280/2-rectOnScreen.w/2;
     rectOnScreen.y = 0;
-    rectOnScreen.w = 500;
-    rectOnScreen.h = 100;
 }
 
 Timer::~Timer()
@@ -104,7 +104,7 @@ bool Timer::update()
     minute = restTime/60;               //left minute
     second = restTime - minute*60;      //left second
     timerText << std::setw(2) << std::setfill('0') << minute << ":" ;
-    if(second > 1) timerText << std::setw(2) << std::setfill('0') << second << " left";
+    if(second > 1) timerText << std::setw(2) << std::setfill('0') << second;
     else timerText << "00 left";         //remain 00 at the end
 
     //Deal Mission1
@@ -168,7 +168,7 @@ bool Timer::update()
     }
 
     //Put Timertext to timertexture (uncertained due to renderer)
-    SDL_Surface *surface = TTF_RenderText_Solid(timerFont, timerText.str().c_str(), timercolor);
+    SDL_Surface *surface = TTF_RenderText_Blended(timerFont, timerText.str().c_str(), timercolor);
     if (!surface) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create surface for timer: %s", SDL_GetError());
         return 3;
@@ -190,7 +190,7 @@ bool Timer::update()
 bool Timer::loadTimerFont()
 {
     bool success = true;
-    timerFont = TTF_OpenFont( "../media/font/octin_college_rg.ttf", 28 );
+    timerFont = TTF_OpenFont( "../media/font/octin_college_rg.ttf", 80 );
     if( timerFont == NULL )
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to load timer font: %s\n", TTF_GetError());

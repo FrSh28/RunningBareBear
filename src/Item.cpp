@@ -69,6 +69,7 @@ Star::Star():Item("Star")
     rectOnTexture.y = 0;
     rectOnTexture.w = 512;
     rectOnTexture.h = 512;
+    type = STAR;
 }
 Star::~Star(){}
 bool Star::handleEvents(SDL_Event& e){return false;}
@@ -90,10 +91,7 @@ Potion::Potion():Item("Potion")
     rectOnTexture.y = 80;
     rectOnTexture.w = 45;
     rectOnTexture.h = 45;
-    //rectOnTexture.x = 110;
-    //rectOnTexture.y = 100;
-    //rectOnTexture.w = 2;
-    //rectOnTexture.h = 2;
+    type = POTION;
 }
 Potion::~Potion(){itemNumber--;}
 bool Potion::handleEvents(SDL_Event &e){return false;}
@@ -108,6 +106,7 @@ Meat::Meat():Item("Meat")
     rectOnTexture.y = 50;
     rectOnTexture.w = 45;
     rectOnTexture.h = 42;
+    type = MEAT;
 }
 Meat::~Meat(){itemNumber--;}
 bool Meat::handleEvents(SDL_Event &e) {return false;}
@@ -122,6 +121,7 @@ Sheet::Sheet():Item("Sheet")
     rectOnTexture.y = 0;
     rectOnTexture.w = 512;
     rectOnTexture.h = 512;
+    type = SHEET;
 }
 Sheet::~Sheet(){itemNumber--;}
 bool Sheet::handleEvents(SDL_Event &e) {return false;}
@@ -136,6 +136,7 @@ Library::Library():Item("Library")
     rectOnTexture.y = 0;
     rectOnTexture.w = 199;
     rectOnTexture.h = 250;
+    type = LIBRARY;
 }
 Library::~Library(){itemNumber--;}
 bool Library::handleEvents(SDL_Event &e) {return false;}
@@ -150,6 +151,7 @@ PE_Teacher::PE_Teacher():Item("Physical Education Teacher")
     rectOnTexture.y = 0;
     rectOnTexture.w = 260;
     rectOnTexture.h = 260;
+    type = PE_TEACHER;
 }
 PE_Teacher::~PE_Teacher(){itemNumber--;}
 bool PE_Teacher::handleEvents(SDL_Event &e) {return false;}
@@ -164,6 +166,7 @@ TeacherAssistant1::TeacherAssistant1():Item("Teacher Assistant")
     rectOnTexture.y = 0;
     rectOnTexture.w = 796;
     rectOnTexture.h = 888;
+    type = TA1;
 }
 TeacherAssistant1::~TeacherAssistant1(){itemNumber--;}
 bool TeacherAssistant1::handleEvents(SDL_Event &e) {return false;}
@@ -178,6 +181,7 @@ TeacherAssistant2::TeacherAssistant2():Item("Teacher Assistant")
     rectOnTexture.y = 0;
     rectOnTexture.w = 216;
     rectOnTexture.h = 122;
+    type = TA2;
 }
 TeacherAssistant2::~TeacherAssistant2(){itemNumber--;}
 bool TeacherAssistant2::handleEvents(SDL_Event &e) {return false;}
@@ -192,6 +196,7 @@ TeacherAssistant3::TeacherAssistant3():Item("Teacher Assistant")
     rectOnTexture.y = 0;
     rectOnTexture.w = 200;
     rectOnTexture.h = 250;
+    type = TA3;
 }
 TeacherAssistant3::~TeacherAssistant3(){itemNumber--;}
 bool TeacherAssistant3::handleEvents(SDL_Event &e) {return false;}
@@ -219,6 +224,7 @@ WebWork1::WebWork1():Item("WebWork")
     rectOnTexture.y = 0;
     rectOnTexture.w = 900;
     rectOnTexture.h = 577;
+    type = WEBWORK1;
 }
 WebWork1::~WebWork1(){}
 bool WebWork1::handleEvents(SDL_Event &e) {return false;}
@@ -231,6 +237,7 @@ WebWork2::WebWork2():Item("WebWork")
     rectOnTexture.y = 0;
     rectOnTexture.w = 512;
     rectOnTexture.h = 512;
+    type = WEBWORK2;
 }
 WebWork2::~WebWork2(){}
 bool WebWork2::handleEvents(SDL_Event &e) {return false;}
@@ -243,6 +250,7 @@ WebWork3::WebWork3():Item("WebWork")
     rectOnTexture.y = 0;
     rectOnTexture.w = 368;
     rectOnTexture.h = 86;
+    type = WEBWORK3;
 }
 WebWork3::~WebWork3(){}
 bool WebWork3::handleEvents(SDL_Event &e) {return false;}

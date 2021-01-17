@@ -27,14 +27,6 @@ height(gridHeight*0.9), updateRate(20), direction(DOWN), velocity_x(0),velocity_
     //set Initial MapPos
     setMapPos(InitialMapPos);
     if (mode == 1) {
-        /*posOnWindow->x = (int);
-        posOnTexture->x = (int);
-        posOnWindow->y = (int);
-        posOnTexture->y = (int);
-        posOnWindow->w = (int);
-        posOnTexture->w = (int);
-        posOnWindow->h = (int);
-        posOnTexture->h = (int);*/
         runnerInstance = this;
         rectOnTexture = Clip[0];
         rectOnScreen.x = PixelPos.x;
@@ -46,7 +38,6 @@ height(gridHeight*0.9), updateRate(20), direction(DOWN), velocity_x(0),velocity_
             case BEAR:
                 velocity = 4;
                 tmp_velocity_of_runner = velocity;
-                //sprint_velocity = 2;
                 username = "bear";
                 texture = loadImage(RUNNER_IMAGE);
                 break;
@@ -110,6 +101,7 @@ bool Runner::handleEvents(SDL_Event &e)
     if(mode==1)
     {
         //if a key is pressed
+        //printf("runner handle event");
         if(e.type==SDL_KEYDOWN && e.key.repeat == 0)
         {
             //adjust velocity
@@ -117,7 +109,6 @@ bool Runner::handleEvents(SDL_Event &e)
             {
                 case SDLK_SPACE:
                     //printf("start sprint\n");
-                    //printf("velocity%d\n",velocity);
                     //printf("velocity y%d\n",velocity_y);
                     velocity *= 2;
                     velocity_x *= 2;
@@ -128,7 +119,6 @@ bool Runner::handleEvents(SDL_Event &e)
                     //printf("velocity y%d\n",velocity_y);
                     return true;
                 case SDLK_s:
-                    //printf("start down\n");
                     velocity_y += velocity;
                     velocity_x += 0;
                     tmp_velocity_of_runner = velocity;
@@ -519,8 +509,7 @@ bool Runner::update()
     else if(velocity_y > 0){direction = DOWN;}
     else if(velocity_y < 0){direction = UP;}
     rectOnTexture = Clip[direction*3+frame/updateRate];
-    //render??;
-
+    if(velocity_x == 0&&velocity_y == 0){rectOnTexture = Clip[direction*3];}
     // go to next frame
     frame ++;
     // cycle animation
