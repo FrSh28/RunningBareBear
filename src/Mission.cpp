@@ -69,7 +69,6 @@ Mission1_1 :: Mission1_1 ()
 }
 Mission1_1 :: ~Mission1_1 ()
 {
-	printf("delete 1-1");
 	delete sheet;
 	sheet = NULL;
 	curMission = MissionTotal;
@@ -117,7 +116,6 @@ Mission1_2 :: Mission1_2 ()
 
 Mission1_2 :: ~Mission1_2 ()
 {
-	printf("delete 1-2");
 	delete lib;
 	lib = NULL;
 	curMission = MissionTotal;
@@ -166,7 +164,6 @@ Mission1_3 :: Mission1_3 ()
 
 Mission1_3 :: ~Mission1_3 ()
 {
-	printf("delete 1-3");
 	delete pe;
 	pe = NULL;
 	curMission = MissionTotal;

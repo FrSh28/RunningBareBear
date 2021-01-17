@@ -126,7 +126,6 @@ bool Timer::update()
         gametime += 60000;
         if(currentMission!=NULL)
         {
-            printf("fffffff\n");
             delete currentMission;
             currentMission = NULL;
         }
@@ -167,7 +166,7 @@ bool Timer::update()
     }
 
     //End Game
-    if(gametime-timepassed<10)
+    if(gametime-timepassed<20)
     {
         createUserEvent(GAMESTATE_CHANGE, END, new bool(true), NULL);
     }
