@@ -126,6 +126,7 @@ bool Timer::update()
         gametime += 60000;
         if(currentMission!=NULL)
         {
+            printf("fffffff\n");
             delete currentMission;
             currentMission = NULL;
         }

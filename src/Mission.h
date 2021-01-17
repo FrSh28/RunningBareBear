@@ -22,7 +22,7 @@ protected:
 	static MissionTypes curMission;
 public:
 	Mission(std::string _name = "");
-	~Mission();
+	virtual ~Mission();
 	virtual bool handleEvents(SDL_Event &) = 0;
 	void timeup();
 	//inline bool isSuccess() const { return success; }
