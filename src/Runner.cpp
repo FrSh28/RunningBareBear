@@ -550,7 +550,7 @@ bool Runner::update()
     frame ++;
     // cycle animation
     if(frame/updateRate == ANIMATION_FRAMES){frame=0;}
-    //printf("after update strength velocity_x velocity_y: %lf,%d,%d,%d\n",strength,velocity_x,velocity_y,velocity);
+    //printf("after update sstrength velocity_x velocity_y: %lf,%d,%d,%d\n",strength,velocity_x,velocity_y,velocity);
     return true;
 }
 

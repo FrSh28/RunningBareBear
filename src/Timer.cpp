@@ -16,7 +16,7 @@ timerText("0"), minute(10), second(0), missionOngoing(false), currentMission(NUL
     rectOnScreen.w = 250;
     rectOnScreen.h = 120;
     rectOnScreen.x = 1280/2-rectOnScreen.w/2;
-    rectOnScreen.y = 0;
+    rectOnScreen.y = 10;
 }
 
 Timer::~Timer()
@@ -110,7 +110,7 @@ bool Timer::update()
     //Deal Mission1
     if(minute == 8 &&(!missionOngoing))
     {
-        int tmp = game->rdEngine()%2;
+        int tmp = game->rdEngine()%3;
         MissionTypes choice;
         convert(choice, tmp);
         currentMission = createMission(choice);
