@@ -5,7 +5,7 @@
 #include "Game.h"
 using namespace std;
 
-string PROJECTNAME = "ProjectUnknown";
+string PROJECTNAME = "RunningBareBear";
 
 int mode = 1;
 int main(int argc, char* argv[])
