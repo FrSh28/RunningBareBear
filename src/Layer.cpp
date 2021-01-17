@@ -1,3 +1,4 @@
+#include <iostream>
 #include <algorithm>
 #include "Layer.h"
 #include "Game.h"
@@ -67,6 +68,7 @@ void Layer::update()
 {
 	for(auto it = elements.begin(); it != elements.end(); ++it)
 	{
+		//cout << *(*it);
 		if((*it)->isUpdateEnable())
 			if((*it)->update())
 				changed = true;

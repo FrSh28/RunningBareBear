@@ -1,11 +1,15 @@
 #ifndef BASICOBJECT_H
 #define BASICOBJECT_H
 
+#include <iostream>
 #include <string>
 #include "includeSDL.h"
 
 class BasicObject
 {
+
+	friend std::ostream &operator<<(std::ostream &, const BasicObject &);
+
 public:
 	BasicObject(std::string _name = "", bool _evEn = true, bool _upEn = true, bool _rdEn = true);
 	BasicObject(BasicObject &);
@@ -40,5 +44,7 @@ protected:
 	SDL_Rect rectOnScreen;
 	SDL_Rect rectOnTexture;
 };
+
+std::ostream &operator<<(std::ostream &, const BasicObject &);
 
 #endif	// BASICOBJECT_H

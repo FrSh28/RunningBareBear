@@ -19,3 +19,11 @@ bool BasicObject::handleEvents(SDL_Event &event)	// return true if handled
 
 bool BasicObject::update()
 { return false; }
+
+ostream &operator<<(ostream &output, const BasicObject &obj)
+{
+	output << obj.name << "\nEvEn: " << obj.eventEnable << " UpEn: " << obj.updateEnable << " ReEn: " << obj.renderEnable << "\nTexture: " << obj.texture << "\n"
+		<< "rectOnScreen (x, y, w, h): (" << obj.rectOnScreen.x  << ", " << obj.rectOnScreen.y  << ", " << obj.rectOnScreen.w  << ", " << obj.rectOnScreen.h  << ")\n"
+		<< "rectOnTexture(x, y, w, h): (" << obj.rectOnTexture.x << ", " << obj.rectOnTexture.y << ", " << obj.rectOnTexture.w << ", " << obj.rectOnTexture.h << ")\n";
+	return output;
+}
