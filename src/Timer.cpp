@@ -112,7 +112,7 @@ bool Timer::update()
     else timerText << "00";         //remain 00 at the end
 
     //Deal Mission1
-    if(minute == 8 &&(!missionOngoing))
+    if(minute == 8 && second == 59 &&(!missionOngoing))
     {
         int tmp = game->rdEngine()%3;
         MissionTypes choice;
@@ -133,7 +133,7 @@ bool Timer::update()
     }
 
     //Deal Mission2
-    if(minute == 4 &&(!missionOngoing))
+    if(minute == 4 && second ==59 && (!missionOngoing))
     {
         int tmp = game->rdEngine()%2+3;
         MissionTypes choice;
