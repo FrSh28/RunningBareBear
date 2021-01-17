@@ -34,6 +34,7 @@ Map::Map(Maps index, string _name)
 Map::~Map()
 {
 	free();
+	s_mapInstance NULL;
 }
 
 void Map::loadMap(Maps index)

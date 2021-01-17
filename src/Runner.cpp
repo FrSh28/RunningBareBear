@@ -64,7 +64,10 @@ void Runner::setScreenPos(SDL_Point& center)
     rectOnScreen.y = center.y - rectOnScreen.h/2;
 }
  */
-Runner::~Runner(){/*show win or lose*/}
+Runner::~Runner()
+{
+    runnerInstance = NULL;
+}
 SDL_Point Runner::getMapPos()const{return MapPos;}       // get big grid on map
 SDL_Point Runner::getPixelPos()const                     // get small grid on map (center)
 {

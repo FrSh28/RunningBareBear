@@ -22,6 +22,7 @@ Game::Game(string _name, unsigned int _width, unsigned int _height,  unsigned in
 Game::~Game()
 {
 	Quit();
+	s_gameInstance = NULL;
 }
 
 bool Game::Init()
