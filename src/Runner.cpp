@@ -116,6 +116,7 @@ bool Runner::handleEvents(SDL_Event &e)
                     velocity_y *= 2;
                     sprint = true;
                     tmp_velocity_of_runner = velocity;
+                    //updateRate = 10;
                     return true;
                 case SDLK_s:
                     velocity_y += velocity;
@@ -148,7 +149,6 @@ bool Runner::handleEvents(SDL_Event &e)
                     if(backpack == NULL){return false;}
                     use(backpack);
                     createUserEvent(ITEM_USED, backpack->getItemType(), NULL, NULL);
-                    printf("11111\n");
                     delete backpack;
                     backpack = NULL;
                     return true;
@@ -165,7 +165,7 @@ bool Runner::handleEvents(SDL_Event &e)
                     velocity_x /= 2;
                     velocity_y /= 2;
                     sprint = false;
-                    //updateRate = 10;
+                    //updateRate = 20;
                     return true;
                 case SDLK_w:
                     velocity_y += tmp_velocity_of_runner;
