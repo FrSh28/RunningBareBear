@@ -2,6 +2,7 @@
 bin/
 include/
 lib/
+cmake-build-debug
 *.sublime-project
 *.sublime-workspace
 .DS_Store

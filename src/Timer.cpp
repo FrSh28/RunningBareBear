@@ -151,7 +151,7 @@ bool Timer::update()
         missionOngoing = false;
     }
     //Mission Success
-    if(missionOngoing && currentMission->isSuccess())
+    if(missionOngoing && currentMission->success)
     {
         if(currentMission!=NULL)
         {
