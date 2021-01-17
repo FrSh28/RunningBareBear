@@ -105,7 +105,7 @@ bool Timer::update()
     second = restTime - minute*60;      //left second
     timerText << std::setw(2) << std::setfill('0') << minute << ":" ;
     if(second > 1) timerText << std::setw(2) << std::setfill('0') << second;
-    else timerText << "00 left";         //remain 00 at the end
+    else timerText << "00";         //remain 00 at the end
 
     //Deal Mission1
     if(minute == 8 &&(!missionOngoing))
