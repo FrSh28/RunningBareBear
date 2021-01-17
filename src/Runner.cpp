@@ -163,9 +163,9 @@ bool Runner::handleEvents(SDL_Event &e)
             {
                 case SDLK_SPACE:
                     printf("key up space %d\n",tmp_velocity_of_runner);
-                    velocity /= 2;
-                    velocity_x /= 2;
-                    velocity_y /= 2;
+                    velocity = velocity/2;
+                    velocity_x = velocity_x/2;
+                    velocity_y = velocity_y/2;
                     sprint = false;
                     //updateRate = 20;
                     printf("key up space %d\n",tmp_velocity_of_runner);
@@ -185,12 +185,6 @@ bool Runner::handleEvents(SDL_Event &e)
                     velocity_x -= tmp_velocity_of_runner;
                     return true;
             }
-        }
-        else if(e.type == ITEM_USED)
-        {
-            if(e.user.code == POTION){strength = 100;}
-            if(e.user.code == MEAT){(*this)++;}
-            return true;
         }
     }
     return true;
@@ -441,7 +435,7 @@ void Runner::checkCollision()
 void Runner::use(Item* backpack)
 {
     if(backpack->getItemType() == POTION){strength = 100;}
-    if(backpack->getItemType() == MEAT){strength += 30;}
+    if(backpack->getItemType() == MEAT){(*this)++;}
 }
 
 bool Runner::update()
@@ -475,14 +469,14 @@ bool Runner::update()
             if(velocity_y>0 ){velocity_y = velocity;}
             else if(velocity_y<0 ){velocity_y = -velocity;}
         }
-        if(sprint)
+        /*if(sprint)
         {
             tmp_velocity_of_runner = 2*tmp_velocity_of_runner;
             if(velocity_x>0 ){velocity_x = 2*velocity;}
             else if(velocity_x<0 ){velocity_x = -2*velocity;}
             if(velocity_y>0 ){velocity_y = 2*velocity;}
             else if(velocity_y<0 ){velocity_y = -2*velocity;}
-        }
+        }*/
     }
     else if(strength >= 50 && strength < 75)
     {
@@ -495,14 +489,14 @@ bool Runner::update()
             if(velocity_y>0 ){velocity_y = velocity;}
             else if(velocity_y<0 ){velocity_y = -velocity;}
         }
-        if(sprint)
+        /*if(sprint)
         {
             tmp_velocity_of_runner = 2*tmp_velocity_of_runner;
             if(velocity_x>0 ){velocity_x = 2*velocity;}
             else if(velocity_x<0 ){velocity_x = -2*velocity;}
             if(velocity_y>0 ){velocity_y = 2*velocity;}
             else if(velocity_y<0 ){velocity_y = -2*velocity;}
-        }
+        }*/
     }
     else if(strength >= 25 && strength < 50)
     {
@@ -515,14 +509,14 @@ bool Runner::update()
             if(velocity_y>0 ){velocity_y = velocity;}
             else if(velocity_y<0 ){velocity_y = -velocity;}
         }
-        if(sprint)
+        /*if(sprint)
         {
             tmp_velocity_of_runner = 2*tmp_velocity_of_runner;
             if(velocity_x>0 ){velocity_x = 2*velocity;}
             else if(velocity_x<0 ){velocity_x = -2*velocity;}
             if(velocity_y>0 ){velocity_y = 2*velocity;}
             else if(velocity_y<0 ){velocity_y = -2*velocity;}
-        }
+        }*/
     }
     else if(strength >= 0  && strength < 25)
     {
@@ -535,14 +529,14 @@ bool Runner::update()
             if(velocity_y>0 ){velocity_y = velocity;}
             else if(velocity_y<0 ){velocity_y = -velocity;}
         }
-        if(sprint)
+        /*if(sprint)
         {
             tmp_velocity_of_runner = 2*tmp_velocity_of_runner;
             if(velocity_x>0 ){velocity_x = 2*velocity;}
             else if(velocity_x<0 ){velocity_x = -2*velocity;}
             if(velocity_y>0 ){velocity_y = 2*velocity;}
             else if(velocity_y<0 ){velocity_y = -2*velocity;}
-        }
+        }*/
     }
     // use map function to calculate MapPos and update
     MapPos = map->pixelPosTomapPos(SDL_Point({PixelPos.x+width/2,PixelPos.y+height/2}));
