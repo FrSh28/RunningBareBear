@@ -23,17 +23,16 @@ class Hunter : public BasicObject
 	SDL_Point NextPixel;
 	SDL_Point Place;
 	double Hvelocity;
+	int frame;
+	int updateRate;
 	const int Run;
 	const int Walk;
+	const int Animation_Frame;
 	bool SetSuccess;
 	bool Discovered;
 	bool arrive;
 	bool visible;
 	bool check;
-	bool stage1,stage2,stage3;
-	int frame;
-	int updateRate;
-	int Animation_Frame;
 	std::queue<SDL_Point> go;
 	frames direction;
 	Map *map;
@@ -45,15 +44,12 @@ public:
 	bool handleEvents(SDL_Event &e);
 	bool update();
 	SDL_Point operator~();
-	SDL_Point getMapPos() {return HunterMapPos;}
+	SDL_Point getMapPos()const {return HunterMapPos;}
 	virtual SDL_Point getPixelPos()const {return HunterCenterPixel;}
 	bool RunnerVisible();
 	bool Arrive(SDL_Point);
 	void setPixelPos(SDL_Point &);
 	void setMapPos(SDL_Point &);
-	void Stage1();
-	void Stage2();
-	void Stage3();
 	void Chase(SDL_Point, SDL_Point);
 	void Move();
 	void initHunter_Clips();

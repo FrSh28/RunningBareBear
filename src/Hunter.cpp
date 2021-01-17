@@ -12,7 +12,7 @@ SDL_Rect Hunter_Clip[TOTAL];
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	BasicObject("Hunter"), arrive(false), SetSuccess(false), Discovered(false),
-	Animation_Frame(4), Run(3), Walk(2), updateRate(30), frame(0), map(&Map::getMap())
+	Animation_Frame(4), Run(3), Walk(2), updateRate(20), frame(0), map(&Map::getMap())
 {
 	Hvelocity = Walk;
 	direction = DOWN_1;
@@ -64,7 +64,6 @@ bool Hunter::update()
 	{
 		check = false;
 		Hvelocity = Run;
-		updateRate = 20;
 		Place = RunnerMapPos;
 		if(!Discovered || Arrive(directPos))
 		{
@@ -78,7 +77,6 @@ bool Hunter::update()
 	{
 		Discovered = false;
 		
-		updateRate = 30;
 		if(!check)
 			{
 				check = true;
