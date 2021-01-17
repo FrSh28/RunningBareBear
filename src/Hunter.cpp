@@ -12,7 +12,7 @@ SDL_Rect Hunter_Clip[TOTAL];
 
 Hunter::Hunter(SDL_Point MapPos, SDL_Point PixelPos) :
 	BasicObject("Hunter"), arrive(false), SetSuccess(false), Discovered(false),
-	Animation_Frame(4), Run(1), Walk(10), updateRate(20), frame(0), map(&Map::getMap())
+	Animation_Frame(4), Run(2), Walk(1), updateRate(20), frame(0), map(&Map::getMap())
 {
 	Hvelocity = Walk;
 	direction = DOWN_1;
