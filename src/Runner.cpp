@@ -668,7 +668,7 @@ StrengthBar::StrengthBar()
 {
     texture = loadImage(STRENGTH_IMAGE);
     rectOnScreen = SDL_Rect({200, 630, 200, 20});
-    rectOnTexture = SDL_Rect({0, 0, 200, 20});
+    rectOnTexture = SDL_Rect({0, 0, 200, 40});
 }
 
 StrengthBar::~StrengthBar()

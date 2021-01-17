@@ -15,7 +15,7 @@ timerText("0"), minute(10), second(0), missionOngoing(false), currentMission(NUL
     timercolor = {0,0,0,255};
     rectOnScreen.w = 250;
     rectOnScreen.h = 120;
-    rectOnScreen.x = 10;
+    rectOnScreen.x = 30;
     rectOnScreen.y = 10;
 }
 
