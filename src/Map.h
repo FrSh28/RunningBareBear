@@ -74,8 +74,8 @@ private:
 	std::map<int, Item *> items;
 	#endif
 
-	std::vector<Hunter *> hunters;
 	Runner *runner;
+	std::vector<Hunter *> hunters;
 	std::vector<SDL_Point> huntersMapPos;
 	SDL_Point runnerMapPos;
 
