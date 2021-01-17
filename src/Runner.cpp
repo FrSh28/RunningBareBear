@@ -636,4 +636,5 @@ std::ostream& operator <<(ostream& output ,const Runner & runner)
     output<<"width"<<runner.width<<endl;
     output<<"height"<<runner.height<<endl;
     output<<"backpack"<<runner.backpack->getItemType()<<endl;
+    return output;
 }
