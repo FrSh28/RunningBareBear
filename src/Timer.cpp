@@ -89,7 +89,10 @@ bool Timer::handleEvents(SDL_Event& e)
         if(e.user.code == TIMERSTOP){this->stop();}
         return true;
     }
-    if(e.type == ITEM_USED){currentMission->handleEvents(e);}
+    if(e.type == ITEM_USED and currentMission != NULL)
+    {
+        currentMission->handleEvents(e);
+    }
     return false;
 }
 bool Timer::update()

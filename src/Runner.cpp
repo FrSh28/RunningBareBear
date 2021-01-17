@@ -147,9 +147,8 @@ bool Runner::handleEvents(SDL_Event &e)
                 case SDLK_q:
                     if(backpack == NULL){return false;}
                     use(backpack);
-                    printf("use");
                     createUserEvent(ITEM_USED, backpack->getItemType(), NULL, NULL);
-                    printf("create events");
+                    printf("11111\n");
                     delete backpack;
                     backpack = NULL;
                     return true;
