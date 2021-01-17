@@ -16,7 +16,7 @@ timerText("0"), minute(10), second(0), missionOngoing(false), currentMission(NUL
     rectOnScreen.w = 250;
     rectOnScreen.h = 120;
     rectOnScreen.x = 30;
-    rectOnScreen.y = 10;
+    rectOnScreen.y = 15;
 }
 
 Timer::~Timer()
