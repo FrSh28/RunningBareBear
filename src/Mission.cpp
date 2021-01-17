@@ -42,7 +42,7 @@ void Mission::timeup()
 	if(!success)
 	{
 		Map &map = Map::getMap();
-		map.addHunter(30*(3-total)); 
+		map.addHunter(10*(3-total)); 
 	}
 }
 Mission1_1 :: Mission1_1 ()
@@ -69,6 +69,7 @@ Mission1_1 :: Mission1_1 ()
 }
 Mission1_1 :: ~Mission1_1 ()
 {
+	printf("delete 1-1");
 	delete sheet;
 	sheet = NULL;
 	curMission = MissionTotal;
@@ -81,7 +82,7 @@ bool Mission1_1 :: handleEvents(SDL_Event &e)
 			//printf("item used\n");
 			if(e.user.code == SHEET)
 			{
-			//	printf("item1-1 used\n");
+				//printf("item1-1 used\n");
 				sheet = NULL;
 				success = true;
 				return true;
@@ -116,6 +117,7 @@ Mission1_2 :: Mission1_2 ()
 
 Mission1_2 :: ~Mission1_2 ()
 {
+	printf("delete 1-2");
 	delete lib;
 	lib = NULL;
 	curMission = MissionTotal;
@@ -129,7 +131,7 @@ bool Mission1_2 :: handleEvents(SDL_Event &e)
 			//printf("item used\n");
 			if(e.user.code == LIBRARY)
 			{
-			//	printf("item1-2 used\n");
+				//printf("item1-2 used\n");
 				lib = NULL;
 				success = true;
 				return true;
@@ -164,6 +166,7 @@ Mission1_3 :: Mission1_3 ()
 
 Mission1_3 :: ~Mission1_3 ()
 {
+	printf("delete 1-3");
 	delete pe;
 	pe = NULL;
 	curMission = MissionTotal;
@@ -177,7 +180,7 @@ bool Mission1_3 :: handleEvents(SDL_Event &e)
 			//printf("item used\n");
 			if(e.user.code == PE_TEACHER)
 			{
-			//	printf("item1-3 used\n");
+				//printf("item1-3 used\n");
 				pe = NULL;
 				success = true;
 				return true;
