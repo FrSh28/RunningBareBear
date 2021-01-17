@@ -201,13 +201,13 @@ bool Map::update()
 	SDL_Point tmpPixelPos;
 	Game &game = Game::GetGame();
 	int scrWidth = game.getWidth(), scrHeight = game.getHeight();
-	cout << *runner;
+	//cout << *runner;
 	tmpPixelPos = runner->getPixelPos();
 	runnerMapPos = pixelPosTomapPos(tmpPixelPos);
 	mapPixelPos = SDL_Point({scrWidth/2 - tmpPixelPos.x, scrHeight/2 - tmpPixelPos.y});
 	for(long long unsigned int i = 0; i < hunters.size(); ++i)
 	{
-		cout << *hunters[i];
+		//cout << *hunters[i];
 		huntersMapPos[i] = pixelPosTomapPos(hunters[i]->getPixelPos());
 		if(huntersMapPos[i] == runnerMapPos)
 			createUserEvent(GAMESTATE_CHANGE, END, new bool(false), NULL);

@@ -22,8 +22,8 @@
 #ifndef SDL_POINT_OPERATOR_ADD
 #define SDL_POINT_OPERATOR_ADD
 
-extern SDL_Point &operator+(SDL_Point &, SDL_Point &);
-extern bool operator==(SDL_Point &, SDL_Point &);
-extern bool operator<(SDL_Point &, SDL_Point &);
+SDL_Point &operator+(SDL_Point &, SDL_Point &);
+bool operator==(SDL_Point &, SDL_Point &);
+bool operator<(SDL_Point &, SDL_Point &);
 
 #endif
