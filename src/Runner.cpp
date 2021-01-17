@@ -38,7 +38,6 @@ backpack(NULL)
         switch (character) {
             case BEAR:
                 velocity = 4;
-                tmp_velocity_of_runner = velocity;
                 username = "bear";
                 texture = loadImage(RUNNER_IMAGE);
                 break;
@@ -77,7 +76,8 @@ SDL_Point Runner::getPixelPos()const                     // get small grid on ma
     return center;
 }
 
-Runner::Runner(Runner &runner)
+Runner::Runner(Runner &runner):
+BasicObject(runner)
 {
     this->username = runner.username;
     this->direction = runner.direction;
@@ -89,7 +89,6 @@ Runner::Runner(Runner &runner)
     velocity_y = runner.velocity;
     velocity = runner.velocity;
     strength = runner.strength;
-    // sprint_velocity = runner.sprint_velocity;
     sprint = false;
     width = runner.width;
     height = runner.height;
@@ -115,30 +114,23 @@ bool Runner::handleEvents(SDL_Event &e)
                     velocity_x *= 2;
                     velocity_y *= 2;
                     sprint = true;
-                    tmp_velocity_of_runner = velocity;
                     updateRate = 20;
-                    printf("press space %d\n",tmp_velocity_of_runner);
                     return true;
                 case SDLK_s:
                     velocity_y += velocity;
                     velocity_x += 0;
-                    tmp_velocity_of_runner = velocity;
-                    printf("press s %d\n",tmp_velocity_of_runner);
                     return  true;
                 case SDLK_w:
                     velocity_y -= velocity;
                     velocity_x += 0;
-                    tmp_velocity_of_runner = velocity;
                     return true;
                 case SDLK_d:
                     velocity_x += velocity;
                     velocity_y += 0;
-                    tmp_velocity_of_runner = velocity;
                     return true;
                 case SDLK_a:
                     velocity_x -= velocity;
                     velocity_y += 0;
-                    tmp_velocity_of_runner = velocity;
                     return true;
                 case SDLK_e:
                     //pickup throw switch
@@ -162,26 +154,23 @@ bool Runner::handleEvents(SDL_Event &e)
             switch(e.key.keysym.sym)
             {
                 case SDLK_SPACE:
-                    printf("key up space %d\n",tmp_velocity_of_runner);
                     velocity = velocity/2;
                     velocity_x = velocity_x/2;
                     velocity_y = velocity_y/2;
                     sprint = false;
                     updateRate = 20;
-                    printf("key up space %d\n",tmp_velocity_of_runner);
                     return true;
                 case SDLK_w:
-                    velocity_y += tmp_velocity_of_runner;
+                    velocity_y += velocity;
                     return true;
                 case SDLK_s:
-                    printf("keyup s %d\n",tmp_velocity_of_runner);
-                    velocity_y -= tmp_velocity_of_runner;
+                    velocity_y -= velocity;
                     return true;
                 case SDLK_a:
-                    velocity_x += tmp_velocity_of_runner;
+                    velocity_x += velocity;
                     return true;
                 case SDLK_d:
-                    velocity_x -= tmp_velocity_of_runner;
+                    velocity_x -= velocity;
                     return true;
             }
         }
@@ -460,67 +449,35 @@ bool Runner::update()
     }
     if(strength >= 75)
     {
-        velocity = 4;
-        if(!sprint)
-        {
-            tmp_velocity_of_runner = velocity;
-            if(velocity_x>0 ){velocity_x = velocity;}
-            else if(velocity_x<0 ){velocity_x = -velocity;}
-            if(velocity_y>0 ){velocity_y = velocity;}
-            else if(velocity_y<0 ){velocity_y = -velocity;}
-        }
-        if(sprint)
-        {
-            tmp_velocity_of_runner = velocity;
-        }
+        velocity = 4*(1+sprint);
+        if(velocity_x>0 ){velocity_x = velocity;}
+        else if(velocity_x<0 ){velocity_x = -velocity;}
+        if(velocity_y>0 ){velocity_y = velocity;}
+        else if(velocity_y<0 ){velocity_y = -velocity;}
     }
     else if(strength >= 50 && strength < 75)
     {
-        velocity = 3;
-        if(!sprint)
-        {
-            tmp_velocity_of_runner = velocity;
-            if(velocity_x>0 ){velocity_x = velocity;}
-            else if(velocity_x<0 ){velocity_x = -velocity;}
-            if(velocity_y>0 ){velocity_y = velocity;}
-            else if(velocity_y<0 ){velocity_y = -velocity;}
-        }
-        if(sprint)
-        {
-            tmp_velocity_of_runner = velocity;
-        }
+        velocity = 3*(1+sprint);
+        if(velocity_x>0 ){velocity_x = velocity;}
+        else if(velocity_x<0 ){velocity_x = -velocity;}
+        if(velocity_y>0 ){velocity_y = velocity;}
+        else if(velocity_y<0 ){velocity_y = -velocity;}
     }
     else if(strength >= 25 && strength < 50)
     {
-        velocity = 2;
-        if(!sprint)
-        {
-            tmp_velocity_of_runner = velocity;
-            if(velocity_x>0 ){velocity_x = velocity;}
-            else if(velocity_x<0 ){velocity_x = -velocity;}
-            if(velocity_y>0 ){velocity_y = velocity;}
-            else if(velocity_y<0 ){velocity_y = -velocity;}
-        }
-        if(sprint)
-        {
-            tmp_velocity_of_runner = velocity;
-        }
+        velocity = 2*(1+sprint);
+        if(velocity_x>0 ){velocity_x = velocity;}
+        else if(velocity_x<0 ){velocity_x = -velocity;}
+        if(velocity_y>0 ){velocity_y = velocity;}
+        else if(velocity_y<0 ){velocity_y = -velocity;}
     }
     else if(strength >= 0  && strength < 25)
     {
-        velocity = 1;
-        if(!sprint)
-        {
-            tmp_velocity_of_runner = velocity;
-            if(velocity_x>0 ){velocity_x = velocity;}
-            else if(velocity_x<0 ){velocity_x = -velocity;}
-            if(velocity_y>0 ){velocity_y = velocity;}
-            else if(velocity_y<0 ){velocity_y = -velocity;}
-        }
-        if(sprint)
-        {
-            tmp_velocity_of_runner = velocity;
-        }
+        velocity = 1*(1+sprint);
+        if(velocity_x>0 ){velocity_x = velocity;}
+        else if(velocity_x<0 ){velocity_x = -velocity;}
+        if(velocity_y>0 ){velocity_y = velocity;}
+        else if(velocity_y<0 ){velocity_y = -velocity;}
     }
     // use map function to calculate MapPos and update
     MapPos = map->pixelPosTomapPos(SDL_Point({PixelPos.x+width/2,PixelPos.y+height/2}));
