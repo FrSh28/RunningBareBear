@@ -31,6 +31,9 @@ private:
     inline void operator++(int);// operator overloading to add strength (meat)
     inline void use(Item*);
 
+    static const int gridWidth; // the width of grid on map
+    static const int gridHeight;// the height of grid on map
+
 public:
     Runner(SDL_Point&, SDL_Point&, character_list = BEAR);
     Runner(Runner&);
@@ -49,9 +52,7 @@ public:
     SDL_Point getMapPos() const;        // get big grid on map
     virtual SDL_Point getPixelPos()const;       // get small grid on map (center)
     int getStrength()const;  // get strength
-    static const int gridWidth; // the width of grid on map
-    static const int gridHeight;// the height of grid on map
-    inline static Runner& GetRunner() { return *runnerInstance; }
+    inline static Runner& getRunner() { return *runnerInstance; }
 };
 
 

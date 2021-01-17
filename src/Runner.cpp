@@ -18,7 +18,8 @@ const int Runner::gridWidth = Map::getPixelWidth();
 const int Runner::gridHeight = Map::getPixelHeight();
 Runner::Runner(SDL_Point& InitialMapPos, SDL_Point& InitialPixelPos, character_list character):
 BasicObject("Runner"), strength(100), map(&Map::getMap()), width(gridWidth*0.9),
-height(gridHeight*0.9), updateRate(20), direction(DOWN), velocity_x(0),velocity_y(0),sprint(false)
+height(gridHeight*0.9), updateRate(20), direction(DOWN), velocity_x(0),velocity_y(0),sprint(false),
+backpack(NULL)
 {
     initclips();
 
@@ -28,7 +29,7 @@ height(gridHeight*0.9), updateRate(20), direction(DOWN), velocity_x(0),velocity_
     setMapPos(InitialMapPos);
     if (mode == 1) {
         runnerInstance = this;
-        rectOnTexture = Clip[0];
+        rectOnTexture  = Clip[0];
         rectOnScreen.x = PixelPos.x;
         rectOnScreen.y = PixelPos.y;
         rectOnScreen.w = width;
@@ -149,9 +150,10 @@ bool Runner::handleEvents(SDL_Event &e)
                     backpack = tmp;
                     return true;
                 case SDLK_q:
+                    if(backpack == NULL){return false;}
                     use(backpack);
                     createUserEvent(ITEM_USED, backpack->getItemType(), NULL, NULL);
-                    if(backpack!=NULL){delete backpack;}
+                    delete backpack;
                     return true;
             }
         }
@@ -446,13 +448,14 @@ void Runner::use(Item* backpack)
 
 bool Runner::update()
 {
+    printf("before update strength velocity_x velocity_y: %lf,%d,%d,%d\n",strength,velocity_x,velocity_y,velocity);
     rectOnScreen.x = PixelPos.x ;
     rectOnScreen.y = PixelPos.y ;
     static int frame = 0;
     // move(update PixelPos)
     move();
     // deal strength
-    if(velocity_x!=0||velocity_y!=0)
+    if((velocity_x!=0||velocity_y!=0)&&strength>0)
     {
         strength -= 0.005;
         if((abs(velocity_x) != 0 || abs(velocity_y) != 0) && sprint)
@@ -463,42 +466,85 @@ bool Runner::update()
         strength = 100;
         velocity = 4;
     }
-    else if(strength > 75)
+    if(strength >= 75)
     {
         velocity = 4;
-        if(velocity_x > 0){velocity_x = velocity;}
-        else if(velocity_x < 0){velocity_x = -velocity;}
-        if(velocity_y > 0){velocity_y = velocity;}
-        else if (velocity_y < 0){velocity_y = -velocity;}
+        if(!sprint)
+        {
+            tmp_velocity_of_runner = velocity;
+            if(velocity_x>0 ){velocity_x = velocity;}
+            else if(velocity_x<0 ){velocity_x = -velocity;}
+            if(velocity_y>0 ){velocity_y = velocity;}
+            else if(velocity_y<0 ){velocity_y = -velocity;}
+        }
+        if(sprint)
+        {
+            tmp_velocity_of_runner = 2*tmp_velocity_of_runner;
+            if(velocity_x>0 ){velocity_x = 2*velocity;}
+            else if(velocity_x<0 ){velocity_x = -2*velocity;}
+            if(velocity_y>0 ){velocity_y = 2*velocity;}
+            else if(velocity_y<0 ){velocity_y = -2*velocity;}
+        }
     }
-    else if(strength > 50 && strength < 75)
+    else if(strength >= 50 && strength < 75)
     {
         velocity = 3;
-        if(velocity_x > 0){velocity_x = velocity;}
-        else if(velocity_x < 0){velocity_x = -velocity;}
-        if(velocity_y > 0){velocity_y = velocity;}
-        else if (velocity_y < 0){velocity_y = -velocity;}
+        if(!sprint)
+        {
+            tmp_velocity_of_runner = velocity;
+            if(velocity_x>0 ){velocity_x = velocity;}
+            else if(velocity_x<0 ){velocity_x = -velocity;}
+            if(velocity_y>0 ){velocity_y = velocity;}
+            else if(velocity_y<0 ){velocity_y = -velocity;}
+        }
+        if(sprint)
+        {
+            tmp_velocity_of_runner = 2*tmp_velocity_of_runner;
+            if(velocity_x>0 ){velocity_x = 2*velocity;}
+            else if(velocity_x<0 ){velocity_x = -2*velocity;}
+            if(velocity_y>0 ){velocity_y = 2*velocity;}
+            else if(velocity_y<0 ){velocity_y = -2*velocity;}
+        }
     }
-    else if(strength > 25 && strength < 50)
+    else if(strength >= 25 && strength < 50)
     {
         velocity = 2;
-        if(velocity_x > 0){velocity_x = velocity;}
-        else if(velocity_x < 0){velocity_x = -velocity;}
-        if(velocity_y > 0){velocity_y = velocity;}
-        else if (velocity_y < 0){velocity_y = -velocity;}
+        if(!sprint)
+        {
+            tmp_velocity_of_runner = velocity;
+            if(velocity_x>0 ){velocity_x = velocity;}
+            else if(velocity_x<0 ){velocity_x = -velocity;}
+            if(velocity_y>0 ){velocity_y = velocity;}
+            else if(velocity_y<0 ){velocity_y = -velocity;}
+        }
+        if(sprint)
+        {
+            tmp_velocity_of_runner = 2*tmp_velocity_of_runner;
+            if(velocity_x>0 ){velocity_x = 2*velocity;}
+            else if(velocity_x<0 ){velocity_x = -2*velocity;}
+            if(velocity_y>0 ){velocity_y = 2*velocity;}
+            else if(velocity_y<0 ){velocity_y = -2*velocity;}
+        }
     }
-    else if(strength < 25 && strength > 0)
+    else if(strength >= 0  && strength < 25)
     {
         velocity = 1;
-        if(velocity_x > 0){velocity_x = velocity;}
-        else if(velocity_x < 0){velocity_x = -velocity;}
-        if(velocity_y > 0){velocity_y = velocity;}
-        else if (velocity_y < 0){velocity_y = -velocity;}
-    }
-    else if(strength <0)
-    {
-        strength = 0;
-        velocity = 1;
+        if(!sprint)
+        {
+            tmp_velocity_of_runner = velocity;
+            if(velocity_x>0 ){velocity_x = velocity;}
+            else if(velocity_x<0 ){velocity_x = -velocity;}
+            if(velocity_y>0 ){velocity_y = velocity;}
+            else if(velocity_y<0 ){velocity_y = -velocity;}
+        }
+        if(sprint)
+        {
+            tmp_velocity_of_runner = 2*tmp_velocity_of_runner;
+            if(velocity_x>0 ){velocity_x = 2*velocity;}
+            else if(velocity_x<0 ){velocity_x = -2*velocity;}
+            if(velocity_y>0 ){velocity_y = 2*velocity;}
+            else if(velocity_y<0 ){velocity_y = -2*velocity;}
+        }
     }
     // use map function to calculate MapPos and update
     MapPos = map->pixelPosTomapPos(SDL_Point({PixelPos.x+width/2,PixelPos.y+height/2}));
@@ -514,7 +560,7 @@ bool Runner::update()
     frame ++;
     // cycle animation
     if(frame/updateRate == ANIMATION_FRAMES){frame=0;}
-
+    printf("after update strength velocity_x velocity_y: %lf,%d,%d,%d\n",strength,velocity_x,velocity_y,velocity);
     return true;
 }
 
