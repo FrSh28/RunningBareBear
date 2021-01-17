@@ -59,7 +59,7 @@ public:
 };
 
 
-std::ostream & operator<<(std::ostream output,const Runner& runner);
+std::ostream & operator<<(std::ostream& output,const Runner& runner);
 
 class Backpack : public BasicObject
 {
