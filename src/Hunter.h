@@ -1,5 +1,6 @@
 #ifndef HUNTER_H
 #define HUNTER_H
+#include<iostream>
 #include <vector>
 #include <string>
 #include <queue>
@@ -15,6 +16,8 @@ enum frames
 
 class Hunter : public BasicObject
 {
+	friend std::ostream & operator<<(std::ostream &, const Hunter &);
+	
 	SDL_Point HunterMapPos;
 	SDL_Point RunnerMapPos; 
 	SDL_Point HunterPixelPos;
@@ -54,5 +57,5 @@ public:
 	void Move();
 	void initHunter_Clips();
 };
-
+std::ostream & operator<<(std::ostream &, const Hunter &);
 #endif
