@@ -64,7 +64,6 @@ Mission1_1 :: Mission1_1 ()
 	}
 	
 	sheet = new Sheet;
-	printf("Item create\n");
 	map.placeItem(SetPos, sheet);
 
 }
