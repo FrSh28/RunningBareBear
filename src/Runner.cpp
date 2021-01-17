@@ -676,5 +676,6 @@ StrengthBar::~StrengthBar()
 
 bool StrengthBar::update()
 {
-    rectOnScreen.w = Runner::getRunner().strength * 200/100;
+    rectOnTexture.w = Runner::getRunner().strength * 200/100; 
+    rectOnScreen.w  = Runner::getRunner().strength * 200/100;
 }

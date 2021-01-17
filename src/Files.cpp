@@ -8,6 +8,7 @@ namespace Files
 										"../media/image/donate.png",
 										"../media/image/startimage.png",
 										"../media/image/background.jpg",
+										"../media/image/Status.png",
 										"../media/image/fail.png",
 										"../media/image/success.png",
 										"../media/image/Board.png",
@@ -42,7 +43,7 @@ namespace Files
 										"../media/image/parenthesis.png", //WEBWORK2
 										"../media/image/webwork.png", //WEBWORK3
 										"../media/image/wall.png",
-										"../media/image/StrengthBar.png"
+										"../media/image/StrengthBar.png",
 										};
 
 	//string P_Fonts[FONT_COUNT]	= { "../media/font/fonts.txt",};

@@ -182,7 +182,7 @@ void Map::start()
 	game.pushLayer(L_ground);
 	game.pushLayer(L_character);
 	game.pushOverlayer(L_front);
-	game.pushOverlayer(createLayer(L_STATUS, NULL));
+	game.pushOverlayer(createLayer(L_STATUS, new BackGround(STATUS_IMAGE)));
 	createUserEvent(TIMERCHANGE, TIMERSTART, NULL, NULL);
 	started = true;
 }
