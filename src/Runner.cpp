@@ -180,10 +180,7 @@ bool Runner::handleEvents(SDL_Event &e)
 
 void Runner::move()
 {
-    //right and left
-    PixelPos.x += velocity_x;
-    //up and down
-    PixelPos.y += velocity_y;
+    (*this)++;
     checkCollision();
 }
 
@@ -423,7 +420,7 @@ void Runner::checkCollision()
 void Runner::use(Item* backpack)
 {
     if(backpack->getItemType() == POTION){strength = 100;}
-    if(backpack->getItemType() == MEAT){(*this)++;}
+    if(backpack->getItemType() == MEAT){this->strength += 30;}
 }
 
 bool Runner::update()
@@ -500,7 +497,13 @@ bool Runner::update()
 
 int Runner::getStrength() const {return strength;}
 
-void Runner::operator++(int) {strength += 30;}
+void Runner::operator++(int)
+{
+    //right and left
+    PixelPos.x += velocity_x;
+    //up and down
+    PixelPos.y += velocity_y;
+}
 void Runner::initclips()                // init render clips
 {
     // Down
