@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 		cout << "Game init failed." << endl;
 		return -1;
 	}
-	cout << "Game started!" << endl;
+	//cout << "Game started!" << endl;
 
 	game.Start(SDL_GetTicks());
 	while(game.isRunning())
@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
 		game.Render();
 	}
 	game.Quit();
-	cout << "Game ended!" << endl;
+	//cout << "Game ended!" << endl;
 
 	return 0;
 }
