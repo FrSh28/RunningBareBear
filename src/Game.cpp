@@ -268,6 +268,9 @@ void Game::Quit()
 	}
 	freeAllFiles();
 	IMG_Quit();
+	Mix_HaltMusic();
+	Mix_FreeMusic(bgm);
+	bgm = NULL;
 	for(int i = Mix_QuerySpec(NULL, NULL, NULL); i > 0; --i)
 		Mix_CloseAudio();
 	while(Mix_Init(0))
