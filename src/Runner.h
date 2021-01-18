@@ -31,7 +31,7 @@ private:
     Map* map;
     static Runner* runnerInstance;
 
-    inline void operator++(int);// operator overloading to add strength (meat)
+    inline void operator++(int);// operator overloading to update current position
     inline void use(Item*);
 
     static const int gridWidth; // the width of grid on map
