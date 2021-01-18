@@ -18,7 +18,7 @@ const int Map::sc_pixelWidth = 70, Map::sc_pixelHeight = 70;
 Map *Map::s_mapInstance = NULL;
 
 Map::Map(Maps index, string _name)
- : colNum(0), rowNum(0), width(0), height(0), mapPixelPos({0, 0}), started(false),
+ : name(_name), colNum(0), rowNum(0), width(0), height(0), mapPixelPos({0, 0}), started(false),
 	L_ground(NULL), L_character(NULL), L_front(NULL), groundTexture(NULL), frontTexture(NULL)
 {
 	s_mapInstance = this;

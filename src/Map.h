@@ -39,7 +39,7 @@ public:
 	inline bool isItem(SDL_Point mapPos)  const { return map[mapPos.y][mapPos.x] == ITEM; }
 	bool placeItem(SDL_Point &, Item *);	// mapPos
 	Item *pickItem(SDL_Point &);			// mapPos
-	ItemList peekItem(SDL_Point &);		// mapPos
+	ItemList peekItem(SDL_Point &);			// mapPos
 
 	SDL_Point pixelPosTomapPos(SDL_Point);
 	SDL_Point mapPosTopixelPos(SDL_Point);
@@ -58,7 +58,7 @@ public:
 private:
 	void buildMap();
 
-	//std::string name;
+	std::string name;
 	int colNum, rowNum;
 	std::vector<std::vector<int>> map;
 	int width, height;
