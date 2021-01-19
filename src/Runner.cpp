@@ -95,6 +95,7 @@ BasicObject(runner)
     updateRate = runner.updateRate;
     backpack = runner.backpack;
     map = runner.map;
+    runnerInstance = this;
 }
 void Runner::updateMapPos(SDL_Point& currentMappos)       // ask map for big grid and update MapPos
 {currentMappos = map->getRunnerMapPos();}

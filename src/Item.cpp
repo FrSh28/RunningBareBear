@@ -71,7 +71,7 @@ Star::Star():Item("Star")
     rectOnTexture.h = 512;
     type = STAR;
 }
-Star::~Star(){}
+Star::~Star(){itemNumber--;}
 bool Star::handleEvents(SDL_Event& e){return false;}
 bool Star::update(){return false;}
 
